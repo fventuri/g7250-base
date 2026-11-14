@@ -1,0 +1,14 @@
+# Ghidra scratch / project (reproducible via tools/import.sh)
+/tmp/
+*.rep/
+*.gpr
+*.lock
+
+# OS / editor noise
+.DS_Store
+*~
+
+# Decompiler output is retained as reference EVIDENCE only. It must never
+# be copied into any independent implementation (see AGENTS.md).
+# Evidence files (*_decompile.c, *_disassembly.txt, CSVs) under */analysis/
+# are intentionally tracked.

@@ -1,0 +1,19 @@
+offset,width,type,field,confidence
+0x008,4,uint,flags_1 (bitfield),HIGH
+0x074,2,int16,RIT frequency,HIGH
+0x076,2,int16,XIT frequency,HIGH
+0x088,4,int32,sample rate,HIGH
+0x0c4,2,int16,handle MIC gain,HIGH
+0x0da,2,int16,AM LPF TX filter,HIGH
+0x0de,2,int16,SSB LPF TX filter,HIGH
+0x0e2,2,int16,FM LPF TX filter,HIGH
+0x0e6,2,int16,PTT signals,HIGH
+0x0e8,2,int16,SSB HPF TX filter,HIGH
+0x0ea,2,int16,VOX switch,HIGH
+0x138,2,uint16,remote controller online/offline status,MEDIUM
+0x154,4,float,TX power (W; drives a PA DAC value),HIGH
+0x158,1,byte,status flag (read by RX handler post-copy),MEDIUM
+0x174,4,uint,IPv4 address (big-endian in log: b[31:24].b[23:16]...),HIGH
+0x178,4,uint,IPv4 gateway,HIGH
+0x17c,4,uint,IPv4 netmask,HIGH
+0x180,2,int16,network mode,HIGH

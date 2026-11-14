@@ -1,0 +1,6 @@
+bus,addr_7bit,addr_8bit,device,driver_fn,evidence,confidence
+I2C1,0x50,0xA0,24Cxx EEPROM (NVPARAM/calibration/ATU),FUN_0803c08c;FUN_0803c448;FUN_0803c5e4;FUN_080411d8,"strings: EEPROM NVPARAM Saved / Read EEPROM error; mem 0/0x800/0x1000/0x1800; backup-SRAM 0x38800000 cache",VERIFIED
+I2C1,0x34,0x68,AXP223 PMIC,FUN_0804a8e8,"strings: axp223 (0x68) write reg; Set ALDO1/DCDC1/2/3/5/DLDO1 Vout; Init PSU",VERIFIED
+I2C1,0x6A,0xD4,VersaClock 6 (5P49V6xxx) clock generator,FUN_0804abbc,"strings: vc6clkgen(%02X): write init table ok; 0x70-byte init table; address auto-scanned",VERIFIED
+I2C2,,,unused by drivers (initialized only),FUN_08021920,handle 0x24004ee0 referenced only by init + reboot,HIGH
+I2C3,,,unused by drivers (initialized only),FUN_0802198c,handle 0x24004e88 referenced only by init + reboot,HIGH
