@@ -39,7 +39,9 @@ From base-address references and register-access counts:
 | **I2C1** | init `FUN_080218b4`; 13 driver funcs | EEPROM + AXP223 PMIC + VersaClock 6 (see I2C section) | VERIFIED |
 | I2C2, I2C3 | init only | initialized but unused by any driver (idle/reserved) | HIGH |
 | **SPI6** | init `FUN_08023120`, MSP in `FUN_0802317c`, IRQ86, BDMA ch0/ch1 | **WCH CH394 SPI-Ethernet**, exclusive bus (see SPI6 section) | VERIFIED |
-| SPI1/2/3 | base refs; no active IRQ | audio I²S + SPI (open) | MED |
+| **SPI1** | init `FUN_08023060`, TX-only | two shift-register chains: TX low-pass filter bank + RX front-end/BPF control (see SPI1 section) | HIGH |
+| SPI2 | init `FUN_080230c0`, TX-only | initialised, PB13/PB15 configured, **no users** (idle/reserved) | HIGH |
+| **SPI3 = I²S3** | init `FUN_08021c78`, DMA1 Str5/Str0 (IRQ16/11) | full-duplex 48 kHz audio/IQ sample stream (see I²S3 section) | VERIFIED |
 | **USART2** | IRQ38 + DMA | inter-MCU SLIP link (↔ Control USART2) | HIGH |
 | USART1 | base refs (×6) | debug console / CAT | MED |
 | **ADC1/2 + ADC3** | IRQ18 + 27/41 accesses | RF metering: fwd/ref power, SWR, Vext, temp, S-meter | HIGH |
@@ -115,6 +117,98 @@ detection on the LAN link, so expect a RST GPIO and possibly an EXTI
 line. The socket register map is not documented yet. A per-socket
 command register and 8 sockets sharing a 16 KB TX/RX pool would fit a
 WIZnet-style register model (HYPOTHESIS until traced).
+
+## SPI1 — RF filter/switch shift registers, HIGH CONFIDENCE
+
+SPI1 has no IRQ and no DMA. The init (`FUN_08023060`) sets it up as a
+**transmit-only master**: 8-bit, mode 0, software NSS, prescaler /2.
+The MSP init (`FUN_0802317c`, SPI1 branch) selects the SPI1/2/3 kernel
+clock and puts **PG11** (SCK) and **PD7** (MOSI) in AF5. There is no
+MISO pin.
+
+A small device layer drives it (`FUN_08044010` binds a device,
+`FUN_08043fe0` writes a frame). Each device has its own SPI handle and
+two GPIO callbacks:
+
+- a **latch line**, pulled low before each frame and high after it;
+- an **output-enable line**, held inactive during init and made active
+  after the first frame is written.
+
+This latch-plus-output-enable pattern, with write-only frames and a
+RAM shadow copy, is that of serial-in/parallel-out shift registers of
+the 74HC595 kind (chip type: HYPOTHESIS). SPI1 carries two such chains:
+
+| Chain | Shadow | Frame | Latch | Output enable | Driver functions |
+| --- | --- | --- | --- | --- | --- |
+| A (8 bit) | `0x24017884` | 1 byte | **PA11** | **PA10** | init `FUN_080495a0`; band `FUN_080495d8`; bit 7 `FUN_0804960c` |
+| B (24 bit) | `0x24019148` | 3 bytes, MSB first | **PH12** | **PH10** | init `FUN_0804a2f0`; BPF `FUN_0804a430`; others below |
+
+Both chains are written from the band and frequency update path
+(`FUN_0803ec3c`, `FUN_0803ebb0`) and from the RX/TX switch-over paths
+(`FUN_0803d03c` to RX, `FUN_0803e338` to TX).
+
+**Chain A: TX low-pass filter bank plus T/R line**
+- **Bits 0–6** select one filter at a time from the operating
+  frequency. Edges: 2, 4, 8, 15, 23, 33 and 60 MHz, giving 7 bands.
+  Above 60 MHz no bit is set. (HIGH CONFIDENCE.) These are the usual
+  edges of an HF+6 m PA low-pass bank (role: HIGH CONFIDENCE).
+- **Bit 7** is set by the switch-to-TX path and cleared by the
+  switch-to-RX path, so it is a T/R relay or PA-enable line. (HIGH
+  CONFIDENCE.)
+
+**Chain B: RX band-pass bank and front-end switches**
+- **Bits 0–15 and 23** select an RX band-pass/preselector segment from
+  the frequency (`FUN_0804a430`). Edges are at about 1.6, 2, 3, 4.5,
+  6.5, 8, 10, 15, 22, 30, 50, 54 and 70 MHz. A few segments have an
+  alternate selection that depends on two caller flags (TX state and
+  one other). The firmware only rewrites the chain when the value
+  changes. (Mechanism HIGH CONFIDENCE; exact segment edges MEDIUM
+  CONFIDENCE.)
+- **Bits 16 and 17** are set by operating mode: bit 16 for mode codes
+  4, 8 and 9, bit 17 for mode codes 6 and 7, and neither for the
+  others. This is probably an IF/filter path per mode. (Mechanism HIGH
+  CONFIDENCE; meaning HYPOTHESIS.)
+- **Bits 18–20** form a 1-of-3 selector from one TRX-state setting
+  (`FUN_0804a370`). **Bits 21–22** form a 2-way selector from another
+  setting (`FUN_0804a608`). The switch-to-TX path sets both to the "off"
+  value. They are probably the RX attenuator and preamp (HYPOTHESIS).
+- **Init value:** bits 17, 20 and 22 set, all others cleared.
+
+## SPI2 — idle, HIGH CONFIDENCE
+
+`FUN_080230c0` initialises SPI2 with the same transmit-only settings
+as SPI1, and the MSP init puts PB13 (SCK) and PB15 (MOSI) in AF5. No
+code outside init refers to its handle (`0x240054a8`). It is unused
+in V1.0.1, possibly reserved for a hardware variant.
+
+## SPI3 = I²S3 — sample stream, VERIFIED (peer device: see audio item)
+
+SPI3 runs in **I²S mode**: init `FUN_08021c78` (HAL I²S init
+`FUN_0802bde8`), MSP init `FUN_08021ccc`.
+
+| Parameter | Value |
+| --- | --- |
+| Mode | **master, full-duplex** |
+| Standard | Philips I²S, clock polarity low, MSB first |
+| Data format | 32-bit data field |
+| Audio frequency | **48 kHz** |
+| MCLK output | disabled |
+| Kernel clock | SPI1/2/3 mux set to the external clock pin I2S_CKIN (HIGH CONFIDENCE; value 3 of the mux). SPI1 and SPI2 share this mux |
+| Pins (AF6, very high speed, pull-up) | **PA15** WS, **PC10** CK, **PC11** SDI, **PC12** SDO |
+| TX DMA | **DMA1 Stream5**, request 62 (SPI3_TX), mem→periph, half-word, **circular**, very high priority, IRQ16 |
+| RX DMA | **DMA1 Stream0**, request 61 (SPI3_RX), periph→mem, word, **circular**, very high priority, IRQ11 |
+
+The stream starts in `FUN_08035fac` (called from `FUN_0803e2f4`). It
+clears two 3 KiB buffers and starts a full-duplex DMA transfer over
+both. Half-transfer and transfer-complete callbacks
+(`FUN_08035ed4`, `FUN_08035f40`) set ping-pong flags for the audio/DSP
+code. This explains the active IRQs 11 and 16 and accounts for
+DMA1 Streams 0 and 5.
+
+**Why this needed the firmware:** no G7250 schematic is public. The
+STM32 datasheet only lists possible pin functions. The filter edges,
+the shift-register bit assignment, the latch/enable pins and the I²S
+format exist only in the firmware's behaviour.
 
 ## I2C devices — VERIFIED
 

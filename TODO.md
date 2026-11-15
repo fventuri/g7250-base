@@ -51,6 +51,9 @@ Roadmap mirrors `REVERSE_ENGINEERING_GUIDE.md`, tracked per unit.
       mode 0, /8, PG12/13/14 AF5, BDMA ch0 RX (req 11) / ch1 TX (req 12),
       IRQ86; handle 0x24005420. See main_unit/docs/peripherals.md and
       analysis/peripherals/spi6_ch394.csv.
+- [x] Main Unit SPI1/2/3: SPI1 = two RF shift-register chains (TX LPF bank +
+      T/R; RX BPF + front-end switches), SPI2 idle, SPI3 = I2S3 48 kHz
+      full-duplex sample stream (DMA1 Str5/Str0). See peripherals.md.
 - [x] Main Unit I2C devices (all on I2C1): 24Cxx EEPROM @0x50 (NVPARAM/
       calib/ATU), AXP223 PMIC @0x34, VersaClock 6 clock gen @~0x6A.
       I2C2/I2C3 idle. Read/write helpers FUN_0802BB3C / FUN_0802B940.
