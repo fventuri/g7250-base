@@ -103,15 +103,16 @@ Roadmap mirrors `REVERSE_ENGINEERING_GUIDE.md`, tracked per unit.
 
 ## Phase 2 — Interrupts
 
-- [ ] Map active IRQ numbers → H7 peripherals (main: 16, control: 13
-      active). Note H7 IRQ numbering differs from F4.
+- [x] Map active IRQ numbers → H7 peripherals (main: 16, control: 13
+      active) — done, see Phase 2/3 above and per-unit `docs/peripherals.md`.
 - [ ] Identify Default_Handler and DMA callbacks per unit.
 
 ## Later phases (per RE guide)
 
 - [ ] Phase 3 Hardware init (RCC/GPIO/DMA/SPI/I2C/USART/TIM/WDG).
-- [ ] Phase 4 Scheduler (bare-metal vs RTOS).
-- [ ] Phase 5 Inter-MCU protocol (Main <-> Control) — top-level `docs/`.
+- [x] Phase 4 Scheduler: bare-metal superloops, no RTOS, on both units
+      (see Done; `*/docs/flow.md`).
+- Phase 5 Inter-MCU protocol: tracked in its own section above.
 - [ ] Phase 6 RX DSP pipeline.
 - [ ] Phase 7 TX DSP pipeline.
 - [ ] Compare with X6100 and G90 findings where behavior overlaps.
