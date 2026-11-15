@@ -47,6 +47,10 @@ Roadmap mirrors `REVERSE_ENGINEERING_GUIDE.md`, tracked per unit.
 - [x] Bus/peripheral inventory from base refs + access counts.
 - [x] Inter-MCU SLIP link identified as **USART2** on both MCUs.
 - [x] Control I2C1: GT911 touch @ 0x5D VERIFIED.
+- [x] Main Unit SPI6 = **WCH CH394 Ethernet**, exclusive bus: master,
+      mode 0, /8, PG12/13/14 AF5, BDMA ch0 RX (req 11) / ch1 TX (req 12),
+      IRQ86; handle 0x24005420. See main_unit/docs/peripherals.md and
+      analysis/peripherals/spi6_ch394.csv.
 - [x] Main Unit I2C devices (all on I2C1): 24Cxx EEPROM @0x50 (NVPARAM/
       calib/ATU), AXP223 PMIC @0x34, VersaClock 6 clock gen @~0x6A.
       I2C2/I2C3 idle. Read/write helpers FUN_0802BB3C / FUN_0802B940.
@@ -56,8 +60,8 @@ Roadmap mirrors `REVERSE_ENGINEERING_GUIDE.md`, tracked per unit.
       Manual lead: the digital-mode line-in is the **Controller's USB
       "sound card"** (DIG-ON), audio relayed to Main over SLIP — look on
       the Control Unit USB-audio / I2S path (docs/hardware.md §6).
-- [ ] Identify SPI6 device on Main (CH394 Ethernet candidate). Manual
-      confirms the **LAN connector is on the Main Unit** (docs/hardware.md).
+- [ ] CH394: find the chip-select, reset and interrupt GPIOs, and the
+      absolute SPI6 SCK rate (needs PCLK4, see the clock-config item).
 - [ ] EEPROM NVPARAM layout (header/checksum/ENDBit) + ATU network format.
 - [ ] AXP223 rail map (which rail powers what) + VersaClock output plan.
 - [ ] GPIO pin maps (I2C/SPI/UART AF pins) — compare X6100 assignments.

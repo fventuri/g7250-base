@@ -44,7 +44,7 @@ Two physically separate boxes joined by a **dedicated CTRL cable**:
 | **LAN** | wired Ethernet | **CH394 SPI-Ethernet** (Main); HDSDR / wfview network RX, CI-V over LAN, baseband streaming |
 
 > **The LAN/Ethernet port is on the MAIN unit** — confirms CH394 is on
-> the Main Unit (SPI6 candidate). There is **no USB on the Main Unit**.
+> the Main Unit, on SPI6 (VERIFIED, `main_unit/docs/peripherals.md`). There is **no USB on the Main Unit**.
 
 ### Controller Unit — connectors
 
@@ -215,7 +215,7 @@ pinning the still-unmapped `0x01` offsets.
 | Shipped mic | "HM-133" | **H-22** | Corrected in `architecture.md`; firmware handler note added (§3) |
 | PC USB (CAT+audio) | HIGH on **Main** USB_OTG_FS | USB is on the **Controller** (CH342); Main has **no USB** | Flagged; see open item below |
 | Controller USB | "firmware update / MSC?" | CAT + **audio (sound card)** + firmware update | Role broadened |
-| Ethernet/LAN | CH394 on Main (SPI6 cand.) | LAN connector **on Main** | Confirmed |
+| Ethernet/LAN | CH394 on Main, SPI6 (VERIFIED) | LAN connector **on Main** | Confirmed |
 | Power | AXP223, no battery | 13.8 V mains, no battery | Confirmed |
 | Touch | GT911 @0x5D | capacitive touchscreen | Confirmed |
 | Storage | SDMMC1 + FatFS | TF/microSD FAT32 | Confirmed |

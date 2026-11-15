@@ -67,5 +67,7 @@ Main Unit has no external USB connector.
 The Main Unit's Ethernet stack (WCH **CH394** SPI-Ethernet) carries CI-V
 (Icom CAT) and audio/waterfall ("WFV") streaming, with LAN link
 monitoring and self-heal — i.e. the radio supports networked/remote
-operation. This has no X6100 analogue. (HIGH CONFIDENCE from strings;
-implementation not yet traced.)
+operation. This has no X6100 analogue. The CH394 is attached to
+**SPI6** (master, mode 0, BDMA ch0/ch1, IRQ86), which it uses
+exclusively — VERIFIED, see `main_unit/docs/peripherals.md`. The
+socket/streaming layer above it is not yet traced.

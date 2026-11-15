@@ -1,0 +1,27 @@
+item,address,value,source_function,note
+spi6_instance,0x58001400,SPI6,FUN_08023120,literal at 0x08023178
+spi6_handle,0x24005420,hspi6,FUN_08023120,literal at 0x08023174; also loaded by IRQ86 stub (literal 0x08023a80)
+spi_init_call,0x0802ebb0,HAL_SPI_Init,FUN_08023120,called after handle fill
+msp_init,0x0802317c,HAL_SPI_MspInit,FUN_0802317c,SPI6 branch selected by literal at 0x080233bc
+init_mode,,0x00400000,FUN_08023120,master
+init_direction,,0,FUN_08023120,2 lines full duplex
+init_datasize,,7,FUN_08023120,8 bit
+init_cpol_cpha,,0/0,FUN_08023120,SPI mode 0
+init_nss,,0x04000000,FUN_08023120,software NSS (SSM)
+init_baud_prescaler,,0x20000000,FUN_08023120,div 8
+init_firstbit,,0,FUN_08023120,MSB first
+init_nsspmode,,0x40000000,FUN_08023120,NSS pulse enable (no NSS AF pin configured)
+kernel_clock_sel,0x58024458,PeriphClockSelection=0x4000 src=0,FUN_0802317c,RCC_PERIPHCLK_SPI6 from PCLK4
+rcc_apb4enr,0x580244f4,|=0x20,FUN_0802317c,SPI6EN
+rcc_ahb4enr,0x580244e0,|=0x40,FUN_0802317c,GPIOGEN
+gpio_port,0x58021800,GPIOG,FUN_0802317c,literal at 0x080233c4
+gpio_pins,,0x7000,FUN_0802317c,PG12 MISO / PG13 SCK / PG14 MOSI; AF5 push-pull
+dma_rx_channel,0x58025408,BDMA_Channel0,FUN_0802317c,request 11 SPI6_RX; periph->mem; mem inc; byte
+dma_tx_channel,0x5802541c,BDMA_Channel1,FUN_0802317c,request 12 SPI6_TX; mem->periph; mem inc; byte
+dma_init_call,0x0802909c,HAL_DMA_Init,FUN_0802317c,called for both channels
+nvic_irq,86,priority 13 sub 0,FUN_0802317c,SPI6_IRQn enabled
+irq86_vector,0x08023a78,ldr hspi6; b 0x0802f570,,HAL SPI IRQ dispatcher
+driver_cluster,0x080450c8-0x08048d6f,26 functions,,all non-init users of hspi6; all log messages carry the CH394 tag
+ch394_chip_version,0x080487d4,logs chip version,FUN_080487d4,uses hspi6 directly
+ch394_spi_wr_verify,0x08047abc,logs SPI write-verify error,FUN_08047abc,uses hspi6 directly
+ch394_tx_dma_stuck,0x080455dc,logs stuck TX DMA,FUN_080455dc,uses hspi6 directly
