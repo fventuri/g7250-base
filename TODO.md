@@ -86,8 +86,7 @@ Roadmap mirrors `REVERSE_ENGINEERING_GUIDE.md`, tracked per unit.
       in this repo.
 - [ ] Roles of unknown Main outputs (PH9/PH13/PH15, PE14/PE15, PA8/PC8,
       PA12, PB11/PB12/PB14, PF14) and inputs (PH5, PF13).
-- [ ] Main Unit: confirm whether external SDRAM/FMC exists at all (no FMC
-      pins or kernel clock configured).
+- [x] Main Unit has no external SDRAM/FMC (VERIFIED).
 - [ ] Control Unit: roles of the pull-up inputs (keys/encoders); confirm
       whether PC USB is the MCU's own OTG_FS port or a CH342.
 - [x] Init functions from `main()` identified on both units (*/docs/flow.md,
@@ -174,7 +173,7 @@ Roadmap mirrors `REVERSE_ENGINEERING_GUIDE.md`, tracked per unit.
 - [x] N21 PA bias / power control (SPI2 is the bias DAC, not idle) · [x] N22 PTT arbitration + T/R sequencing · [x] N31 power on/off
 - [ ] N07 stale doc claims · [x] N08 exception handlers · [x] N16 H72x Ghidra memory map
 - [x] N18 MPU/cache/RAM placement · [x] N19 timer map
-- [x] N10 UART roles · [ ] N11 Main SDRAM? · [ ] N12 Control I2C · [ ] N13 Control SPI5/SPI flash
+- [x] N10 UART roles · [x] N11 Main SDRAM? · [ ] N12 Control I2C · [ ] N13 Control SPI5/SPI flash
 - [ ] N14 GT911 · [ ] N28 Control inputs · [ ] N29 Control USB descriptors · [ ] N30 display bring-up
 - [ ] N32 unknown GPIOs
 - [x] N23 CW · [x] N24 ATU algorithm · [x] N35 H-22 mic protocol · [x] N37 voice recorder · [x] N41 SWR scanner

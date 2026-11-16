@@ -139,9 +139,10 @@ F1/F2/F3 defaults (M1 menu `HANDLE F1/F2/F3`): **PRE / ATT / AGC**.
 | Main unit | ~240×210×75 mm (LWH), ~2.97 kg |
 | Controller | ~249×148×38 mm (LWH), ~1.33 kg |
 
-Direct-sampling RX confirms the Main Unit is a direct-sampling SDR
-(ADC-fed DSP) — consistent with the heavy ADC + FMC-SDRAM + DSP evidence
-on the Main Unit.
+Direct-sampling RX confirms the Main Unit is a direct-sampling SDR. In
+the firmware, the RF sampling sits in the FPGA, which delivers 24-bit
+I/Q to the MCU DSP. The Main Unit has no external SDRAM (VERIFIED, see
+`main_unit/docs/peripherals.md`).
 
 ------------------------------------------------------------------------
 

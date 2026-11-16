@@ -51,7 +51,7 @@ From base-address references and register-access counts:
 | **ADC1** | IRQ18 + DMA1 Stream7 | RF metering: Vext, forward/reflected power, Idd, PA temperature, EALC, ALC (see ADC1 metering); ADC2/ADC3 unused | VERIFIED |
 | TIM5/6/7 | active IRQs | time bases / DAC & audio triggers | HIGH |
 | USB OTG | none (earlier "×32 refs" were false positives) | **not used at runtime** (see USB section) | HIGH |
-| FMC @ 0xC0000000 | ×65 refs (earlier count); **no FMC pins (AF12) configured and no FMC kernel clock set** | external SDRAM doubtful — re-check (see GPIO pin map) | LOW |
+| FMC | none: the only FMC access is the stock SystemInit write that disables bank 1; FMCEN is never set; no AF12 pins; the single aligned 0xC0000000 word is −2.0f in a float table (the earlier ×65 was a byte-pattern count) | **no external memory** | VERIFIED |
 | DMA1 (str0/4/5/7), DMA2 (str5) | active IRQs | peripheral DMA | HIGH |
 | GPIOA/B/E/G/H | heavy GPIOE/G access | RF band switching, PA control, discretes | HIGH |
 | RTC, IWDG1, EXTI | accesses + IRQs | wakeup, watchdog, external lines | HIGH |
@@ -657,10 +657,9 @@ mapping follows the STM32H7 datasheet tables (HIGH CONFIDENCE).
   - The roles of several other outputs and inputs are open; see the CSV.
 
 **Two absences (MEDIUM CONFIDENCE):**
-- **No FMC pins are configured.** No pin uses AF12; the FMC data pins
-  are analog or used as the FPGA bus. Together with the missing FMC
-  kernel-clock setup, this casts doubt on the "external SDRAM" row
-  above, unless something reprograms the pins with raw register writes.
+- **No FMC pins are configured.** No pin uses AF12, and the FMC is
+  never enabled: the Main Unit has **no external memory** (VERIFIED,
+  see the FMC row above).
 - **No USB pins are configured.** PA11/PA12 are plain outputs, which
   supports the vestigial-USB reading.
 
@@ -684,7 +683,8 @@ or driver actually used.
 ## Differences vs. X6100
 
 - MCU is STM32H7/M7 (vs. F427/M4): different NVIC table and peripheral
-  map; adds caches, FMC external SDRAM, LTDC-class peripherals.
+  map; adds caches. The Main Unit has no external SDRAM (the Control
+  Unit does, for its display).
 - **Networking:** CH394 Ethernet (**LAN connector is on the Main Unit**,
   per the manual) + wfview remote (no X6100 equivalent). The CH394 sits
   on **SPI6** with BDMA (VERIFIED, see SPI6 section). The PC CAT/audio USB is on the
