@@ -27,3 +27,6 @@ i2s3_dma_tx,0x40020088,DMA1_Stream5 req 62,FUN_08021ccc,mem->periph; half-word; 
 i2s3_dma_rx,0x40020010,DMA1_Stream0 req 61,FUN_08021ccc,periph->mem; word; circular; very high; IRQ11
 i2s3_start,0x08035fac,full-duplex DMA start,FUN_08035fac,two 3 KiB buffers; called from FUN_0803e2f4
 i2s3_callbacks,,half/complete,FUN_08035ed4 / FUN_08035f40,ping-pong flags
+atu_ctrl_latch,0x2400484c,CS PD13,FUN_08044d38 / FUN_08044d78 / FUN_08044ea4,ATU style + bypass/enable bit pairs
+atu_bank1_latch,0x24004858,CS PG2,FUN_08044e34,8-bit reactance bank (L or C)
+atu_bank2_latch,0x24004864,CS PG5,FUN_08044dc0,8-bit reactance bank mirrored bit order

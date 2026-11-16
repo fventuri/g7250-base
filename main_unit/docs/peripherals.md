@@ -39,7 +39,7 @@ From base-address references and register-access counts:
 | **I2C1** | init `FUN_080218b4`; 13 driver funcs | EEPROM + AXP223 PMIC + VersaClock 6 (see I2C section) | VERIFIED |
 | I2C2, I2C3 | init only | initialized but unused by any driver (idle/reserved) | HIGH |
 | **SPI6** | init `FUN_08023120`, MSP in `FUN_0802317c`, IRQ86, BDMA ch0/ch1 | **WCH CH394 SPI-Ethernet**, exclusive bus (see SPI6 section) | VERIFIED |
-| **SPI1** | init `FUN_08023060`, TX-only | two shift-register chains: TX low-pass filter bank + RX front-end/BPF control (see SPI1 section) | HIGH |
+| **SPI1** | init `FUN_08023060`, TX-only | five serial-in latches: TX low-pass bank + T/R, RX BPF/front-end, and three built-in ATU latches (see SPI1 section) | HIGH |
 | SPI2 | init `FUN_080230c0`, TX-only | initialised, PB13/PB15 configured, **no users** (idle/reserved) | HIGH |
 | **SPI3 = I²S3** | init `FUN_08021c78`, DMA1 Str5/Str0 (IRQ16/11) | full-duplex 48 kHz audio/IQ sample stream (see I²S3 section) | VERIFIED |
 | **USART2** | IRQ38 + DMA | inter-MCU SLIP link (↔ Control USART2) | HIGH |
@@ -173,6 +173,26 @@ Both chains are written from the band and frequency update path
   setting (`FUN_0804a608`). The switch-to-TX path sets both to the "off"
   value. They are probably the RX attenuator and preamp (HYPOTHESIS).
 - **Init value:** bits 17, 20 and 22 set, all others cleared.
+
+**Built-in ATU latches, also on SPI1 (HIGH CONFIDENCE).**
+
+Three more SPI1 devices sit in the initial `.data` image as
+{SPI handle, CS port, CS pin} records. Each keeps an 8-bit shadow and
+sends it as one byte, with the CS line acting as the latch.
+
+| Record | CS | Driver functions | Callers | Role |
+| --- | --- | --- | --- | --- |
+| `0x2400484c` | **PD13** | `FUN_08044d38`, `FUN_08044d78`, `FUN_08044ea4` (bit pairs 0–1, 2–3, 4–5) | ATU tune/recall (`FUN_08041358`, `FUN_080412bc`) and the settings consumer | ATU control: network style and bypass/enable lines |
+| `0x24004858` | **PG2** | `FUN_08044e34` (8-bit value, bit order kept) | ATU tuning engine (`FUN_08042bd8`, `FUN_08042c48`, `FUN_08042d34`) | one reactance bank (L or C) |
+| `0x24004864` | **PG5** | `FUN_08044dc0` (8-bit value, bit order mirrored) | same | the other reactance bank |
+
+The tuning engine logs coarse and fine search steps over a style, an
+L value and a C value. These are the same three bytes the EEPROM ATU
+table stores per 100 kHz slot (`memory_map.md`). Which bank is L and
+which is C is open.
+
+SPI1 therefore drives five serial-in latches in total: chain A, chain
+B and these three ATU latches.
 
 ## SPI2 — idle, HIGH CONFIDENCE
 
