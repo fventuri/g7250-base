@@ -114,7 +114,9 @@ DSP.
 4. A fuse suspends automatic recovery for 5 minutes after 3 resets in
    60 s.
 
-SLIP traffic is held off while streaming is lost.
+When streaming is lost, Main keeps network ownership for up to 60 s or
+three revival attempts. During that time the front panel's VFO settings
+stay ignored; SLIP traffic itself is not interrupted.
 
 **CI-V layer (PARTIAL, structure HIGH CONFIDENCE).** A parser at
 `0x080504E8` finds FE FE … FD frames and accepts only address 0xA0 or

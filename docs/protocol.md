@@ -263,6 +263,60 @@ inside the payload, the timers behind each type, and the fact that
 `0x02` has no sender are software choices. A capture of the wire would
 show frames but not their purpose or what is unused.
 
+## Link state machine — VERIFIED unless noted
+
+**Start-up.**
+- **Main speaks first.** Main sends `0x03` from boot and never waits
+  for Control. Until the first `0x01` arrives, it runs on its stored
+  settings and has no offline timer running.
+- **Control starts early.** Control starts its 20 ms SLIP client early
+  in boot, before its settings exist. The first `0x01` frames carry an
+  all-zero image, then the compiled defaults. The values loaded from
+  its configuration file appear only once its superloop runs, a few
+  seconds after power-up (HIGH CONFIDENCE).
+- **Last image wins.** Main applies every `0x01` by diffing it against
+  its working copy.
+
+**Steady state.**
+- **Control → Main.** Control sends `0x01` every 20 ms while its TX lock
+  is free. There is no acknowledge: each frame is a full state image.
+- **Main → Control.** Main sends `0x03` once per FFT frame and `0x08` on
+  change. A pass that sends `0x08` skips that pass's `0x03`.
+- **Requests.** Control repeats the 5-byte `0x06` every 100 ms until
+  the reply arrives. Main waits up to 100 ms for its TX lock before
+  answering `0x02`/`0x06`; on timeout it frees the lock and drops the
+  reply.
+
+**TX locks.** Each side has one lock. The frame builder sets it and
+the UART TX-complete callback clears it. Periodic builders skip a frame
+while the lock is busy. The Control lock has no timeout.
+
+**Link loss.**
+- **Main.** Every `0x01` reloads a 1000-pass countdown (about 2–3 s).
+  When it expires, Main logs once and drops the built-in PTT, CW key and
+  tune requests. All other settings stay as they are, and
+  `0x03`/`0x08` keep flowing.
+- **Control** has no timeout. Its display freezes until frames return
+  (MEDIUM CONFIDENCE).
+- **Recovery** needs no handshake: the next valid `0x01` restarts the
+  countdown and is diff-applied.
+
+**Network hand-over.** While a network client controls the radio, Main
+ignores the `0x01` VFO block and sets `0x03` flags bit 7. If wfview
+streaming is lost, Main keeps network ownership until one of these:
+- streaming resumes;
+- the client disconnects normally;
+- 60 s or three revival attempts pass.
+
+SLIP traffic is never paused.
+
+**Power-off.** See `main_unit/docs/flow.md` (Power-on and power-off).
+This is the only time Control saves its settings.
+
+**RX re-arm.** After 100 polls without progress and with overrun set,
+Main resets its RX DMA (about 200 ms) and Control restarts its
+receive-to-idle DMA (about 2 s).
+
 ## Primitives (reference)
 
 | Role | Main Unit | Control Unit |
@@ -281,4 +335,5 @@ Evidence: `*/analysis/protocol/`.
 ## Unknowns
 
 - Who sends `0x02` in the field (a factory tool?).
+- What Main does with the all-zero `0x01` images at Control boot.
 - Direction/role handshake and the CH394-Ethernet relationship.
