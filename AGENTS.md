@@ -144,8 +144,9 @@ binary.
   protocol) go in top-level `docs/`.
 - Select the active unit before running wrappers:
   `source tools/env-main.sh` or `source tools/env-control.sh`.
-- MCU family is STM32H7 (Cortex-M7), HIGH CONFIDENCE — not STM32F427.
-  See README.md. Do not carry over X6100 F4 peripheral addresses without
-  re-verifying against the H7 memory map.
-- The two MCUs very likely talk to each other over a serial/SPI link;
-  expect a command protocol analogous to the X6100 Linux↔BASE protocol.
+- MCU family is STM32H7 (Cortex-M7), VERIFIED — not STM32F427. The two
+  units are different sub-families: Main is H72x/H73x-class, Control is
+  H743-class (see docs/mcu_identification.md). Do not carry over X6100 F4
+  peripheral addresses without re-verifying against the right H7 map.
+- The two MCUs talk over SLIP/CRC-16 on USART2 (VERIFIED; docs/protocol.md).
+- Never copy firmware strings verbatim into docs: paraphrase log messages.

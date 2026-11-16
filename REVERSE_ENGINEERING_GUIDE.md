@@ -2,8 +2,9 @@
 
 # G7250 Reverse Engineering Guide
 
-This document defines the recommended workflow for analyzing the X6100
-BASE firmware.
+This document defines the recommended workflow for analyzing the G7250
+Main Unit and Control Unit firmware (the method is ported from the X6100
+BASE project).
 
 The objective is to produce a complete behavioral specification and,
 eventually, an independent firmware implementation.
@@ -119,7 +120,7 @@ Deliverable:
 
 ------------------------------------------------------------------------
 
-# Phase 5 -- Linux ↔ BASE protocol
+# Phase 5 -- Inter-MCU protocol (Main ↔ Control, SLIP over USART2)
 
 Recover:
 
@@ -175,7 +176,7 @@ Recover:
 -   ATU
 -   PA
 -   sensors
--   battery
+-   power supply (PMIC; the G7250 has no battery)
 
 Deliverable:
 
