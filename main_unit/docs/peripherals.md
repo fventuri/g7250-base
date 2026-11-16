@@ -481,10 +481,28 @@ likely H725/H735 part there is in any case only an OTG_HS block at
    0x08000004, into the bootloader in flash sector 0, which is not part
    of this image.
 
-**What arms it.** Nothing in the application arms the RTC wake-up
-timer: the RTC init only sets the time and date. Strings about option
-bytes, read protection and a bootloader self-update exist, but no code
-refers to them. The bootloader probably arms the timer (HYPOTHESIS).
+**What arms it — nothing in V1.0.1 (HIGH CONFIDENCE).**
+- The RTC write-protection unlock appears only in the HAL RTC init,
+  set-time and set-date functions, so there is no wake-up-timer setup.
+- NVIC IRQ 3 is never enabled.
+- The RTC handle is used only by the RTC init.
+
+The jump is therefore dead code in this release. The bootloader runs
+only from reset, through the reset vector at `0x08000000`. Just
+before the branch, the routine clears all NVIC enable and pending bits,
+selects the MSP and re-enables interrupts.
+
+**Bootloader self-update — not present (HIGH CONFIDENCE).**
+- **Orphan strings.** Strings describe a checksum check of a new
+  bootloader, an erase of flash sector 0, a 128-block write, an erase
+  of sector 6 and a flash lock. No code refers to them, and the image
+  has no flash unlock key.
+- **Plausible design (HYPOTHESIS).** A staging copy in sector 6
+  (`0x080C0000` on a 1 MiB part), copied to sector 0 in 128 × 1 KiB
+  blocks.
+- **No transfer path.** The Main application has no firmware-transfer
+  path (no SLIP type, no LAN code), so updates are entirely the
+  bootloaders' job.
 
 **Why this needed the firmware:** the manual only says there is no USB
 connector. Only the absence of init code, vectors and base constants

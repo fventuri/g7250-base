@@ -98,7 +98,7 @@ Roadmap mirrors `REVERSE_ENGINEERING_GUIDE.md`, tracked per unit.
       tail partial (main_unit/analysis/memory/trx_runtime_fields.csv).
 - [x] Main Unit USB: not used at runtime (false-positive references); see
       main_unit/docs/peripherals.md. Bootloader jump via RTC wake-up documented.
-- [ ] Who arms the Main RTC wake-up timer (bootloader?).
+- [x] Main RTC wake-up timer: armed by nobody in V1.0.1; the bootloader jump is dead code.
 - [x] Bluetooth XG-BT-G7250 on Control USART1 (AT commands, PCA9557 power
       bit); see control_unit/docs/peripherals.md.
 - [ ] Bluetooth: identify the module chip, the meaning of +CZ/+B4/+CW, and
@@ -163,7 +163,7 @@ Roadmap mirrors `REVERSE_ENGINEERING_GUIDE.md`, tracked per unit.
 ## Round 2 — follow-up items (N01–N44)
 
 - [x] N01 Main option bytes · [x] N06 Main image tail · [ ] N09 IWDG · [ ] N17 RTC/backup regs
-- [ ] N33 Main bootloader self-update · [ ] N34 FPGA flash update · [ ] N36 Control FW update over USB
+- [x] N33 Main bootloader self-update · [ ] N34 FPGA flash update · [ ] N36 Control FW update over USB
 - [x] N02 full vector/IRQ CSVs (exporters fixed)
 - [x] N03 DMA/NVIC allocation (docs/dma.md)
 - [x] N04 protection thresholds · [x] N05 BandMap/TX band enforcement · [x] N20 ADC/DAC map
@@ -184,3 +184,4 @@ Roadmap mirrors `REVERSE_ENGINEERING_GUIDE.md`, tracked per unit.
 - [ ] Confirm on the Control side what the 1920-byte BandMap type is.
 - [ ] What drives PH5 (front-panel key over the CTRL cable?); is PH9 a power latch; Control PCA9557 bit 5 role.
 - [ ] Read the option bytes (RDP, BOOT_ADD, CPUFREQ_BOOST, IWDG_SW) from a unit over SWD, if RDP allows.
+- [ ] Main firmware update path (bootloader only; transport from Control unknown).
