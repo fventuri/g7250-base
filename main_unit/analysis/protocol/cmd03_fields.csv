@@ -1,0 +1,11 @@
+offset,width,type,field,confidence
+0x000,512,u8[512],spectrum bins; level dB = byte-145; zoom by setting 0x088,VERIFIED
+0x200,4,f32,S-meter dBm,VERIFIED
+0x204,4,f32,forward power W (0 when not transmitting),VERIFIED
+0x208,4,f32,SWR (1.0 when not transmitting),VERIFIED
+0x20c,4,f32,Vext V,VERIFIED
+0x210,4,f32,Idd A,VERIFIED
+0x214,4,f32,EALC %,VERIFIED
+0x218,4,f32,PA temperature C,VERIFIED
+0x21c,4,u32,not written by Main (Control copies raw),HIGH
+0x220,4,u32,flags: b1 TX b2 Main powering off b3/b4 two mode states b5/b6 two status flags b7 network client active,VERIFIED (b3-b6 meaning MEDIUM)

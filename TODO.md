@@ -93,7 +93,8 @@ Roadmap mirrors `REVERSE_ENGINEERING_GUIDE.md`, tracked per unit.
 - [x] Init functions from `main()` identified on both units (*/docs/flow.md,
       */analysis/flow/init_sequence.csv).
 - [ ] Purpose of TIM4 PWM (Main PD12; Control PD12/PD13 backlight?).
-- [ ] Main Unit TRX-state struct at `0x24013C0C` — recover layout.
+- [~] TRX-state struct `0x24013C0C`: first 0x1A8 B = 0x01 layout; runtime
+      tail partial (main_unit/analysis/memory/trx_runtime_fields.csv).
 - [x] Main Unit USB: not used at runtime (false-positive references); see
       main_unit/docs/peripherals.md. Bootloader jump via RTC wake-up documented.
 - [ ] Who arms the Main RTC wake-up timer (bootloader?).
@@ -112,10 +113,11 @@ Roadmap mirrors `REVERSE_ENGINEERING_GUIDE.md`, tracked per unit.
 - [x] 0x01 settings block: partial field map (18 fields) in
       docs/protocol.md + cmd01_fields.csv; consumer FUN_08041EF4.
 - [x] Header bytes after `type`: reserved, always zero (docs/protocol.md).
-- [ ] Finish the 0x01 424-B layout (VFO/freq/mode, RF gain, VOX, EQ,
-      DNR, wfview user/pass, flags 2 — offsets TBD).
-- [ ] Decode 0x02 calibration (358B @0x24013AA4) and 0x06 slave-info
-      (104B @0x24018F30) layouts; relate 0x02 to TRX struct 0x24013C0C.
+- [x] 0x01 settings layout mostly mapped (cmd01_fields.csv, cmd01_vfo_record.csv).
+- [ ] 0x01: unknown offsets 0x0C8/0x100/0x130/0x136/0x137/0x159/0x15A; names of
+      the RX filter half-words 0xD4–0xE8.
+- [x] 0x02 calibration, 0x03 spectrum/meters, 0x06 slave info and 0x08
+      network state decoded (*_fields.csv); 0x02 is separate from the TRX struct.
 - [x] Complete message-type map: 0x01/0x02/0x03/0x06/0x08 only, with timing
       and the 0x08 sequence/ack scheme.
 - [ ] Who sends SLIP 0x02 in the field (factory tool?).

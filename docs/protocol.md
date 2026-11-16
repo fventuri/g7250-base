@@ -95,10 +95,9 @@ Message identities (VERIFIED from the handlers' debug strings):
 - **`0x01` = remote-control settings/state** pushed to the Main Unit.
   Copied to a 424-B struct at `0x24018F9C`; consumed each superloop by
   `FUN_08041EF4` (diffs each field vs. a working copy and logs changes).
-- **`0x02` = calibration data** (`[DBG] Get calibrate data`). 358-B block
-  at `0x24013AA4`, immediately preceding the TRX-state struct
-  (`0x24013C0C`) — one contiguous radio-state region. Referenced by 14
-  functions (PA/filter/meter use).
+- **`0x02` = calibration data.** 358-B block at `0x24013AA4`. It ends two
+  bytes before the TRX-state struct (`0x24013C0C`), but it is a separate
+  block, with its own loader, EEPROM location and checksum (VERIFIED).
 - **`0x06` = "slave info"** (`[DBG] Get slave info`). 104-B block at
   `0x24018F30`.
 
@@ -106,44 +105,101 @@ The Main Unit emulates an **Icom-style network radio for wfview** — the
 settings block carries `wfview Username`/`Password`, IPv4 config, and a
 "Remote controller off line" state.
 
-### `0x01` settings block — partial field map
+### `0x01` settings block (424 B)
 
-Offsets are relative to the payload start (after the 3-byte header),
-i.e. into the struct at `0x24018F9C`. Evidence:
-`main_unit/analysis/protocol/cmd01_fields.csv` and
-`cmd01_consumer_08041ef4.txt`.
+**What it is.** The `0x01` payload is the radio's **settings image**.
+It has the same layout as the first 0x1A8 bytes of the Main TRX struct
+(`0x24013C0C`), which Main also loads from backup SRAM or the EEPROM
+(see `main_unit/docs/memory_map.md`).
 
-| Offset | Type | Field | Conf |
-| ---: | --- | --- | --- |
-| `0x008` | u32 | flags 1 (bitfield) | HIGH |
-| `0x074` | i16 | RIT frequency | HIGH |
-| `0x076` | i16 | XIT frequency | HIGH |
-| `0x088` | i32 | sample rate | HIGH |
-| `0x09F` | u8 | antenna select (bit 0 = ANT index; used by the ATU table) | HIGH |
-| `0x0C4` | i16 | MIC gain | HIGH |
-| `0x0DA` | i16 | AM LPF TX filter | HIGH |
-| `0x0DE` | i16 | SSB LPF TX filter | HIGH |
-| `0x0E2` | i16 | FM LPF TX filter | HIGH |
-| `0x0E6` | i16 | PTT signals | HIGH |
-| `0x0E8` | i16 | SSB HPF TX filter | HIGH |
-| `0x0EA` | i16 | VOX switch | HIGH |
-| `0x138` | u16 | remote-controller online status | MED |
-| `0x154` | f32 | TX power (→ PA DAC value) | HIGH |
-| `0x158` | u8 | status flag (checked by RX handler) | MED |
-| `0x174` | u32 | IPv4 address | HIGH |
-| `0x178` | u32 | IPv4 gateway | HIGH |
-| `0x17C` | u32 | IPv4 netmask | HIGH |
-| `0x180` | i16 | network mode | HIGH |
+**Producers and consumers.** Control fills the payload in
+`FUN_0803e76c` from its UI state, with byte 0 = 0xAA; Main ignores
+byte 0. Main applies the payload in `FUN_08041EF4`.
 
-The block also carries (offsets not yet pinned, from consumer strings):
-selected VFO / frequency / mode, RF gain, XIT/RIT switch, VOX
-threshold/timeout, EQ parameters, audio filters, ATU switch, CW zoom,
-DNR1/DNR2 threshold, global SQL threshold, monitor level, wfview
-username/password, flags 2. Full 424-byte layout is TODO.
+**Special handling:**
+- The VFO block (`0x024`–`0x073`, two 40-byte VFO records) is applied
+  only when no network client controls the radio.
+- Squelch travels as 0–100, and Main converts it to −100…−50 dB.
+- Some fields that Control sends are ignored by Main.
+- Control V1.0.1 never writes flags 2, the extra EQ bytes, the global
+  squelch threshold or the VFO AGC byte, so they keep their init values.
 
-The same 424-byte struct is the Main Unit's EEPROM / backup-SRAM
-settings image, with validity markers 0x64 at offsets 0x000, 0x1A3 and
-0x1A4 (see `main_unit/docs/memory_map.md`).
+**Files.**
+- Full field map: `main_unit/analysis/protocol/cmd01_fields.csv`.
+- VFO record: `cmd01_vfo_record.csv`. Mode codes: 0 LSB, 1 L-D, 2 USB,
+  3 U-D, 4 CW, 5 CWR, 6 AM, 7 SAM, 8 NFM, 9 WFM, 10 IQ, 11 LBK, 12 RTTY.
+
+**Key offsets:**
+
+| Offset | Field | Conf |
+| ---: | --- | --- |
+| `0x024` / `0x04C` | VFO A / VFO B records (frequency u64, filter edges, mode, notch, DNR, squelch, AGC, ATT, PRE) | VERIFIED |
+| `0x07B` | RF gain | VERIFIED |
+| `0x088` | sample-rate / spectrum-span index | HIGH |
+| `0x098` | selected VFO | VERIFIED |
+| `0x09F` | antenna select (selects the ATU table block) | HIGH |
+| `0x0DA`–`0x0E6` | TX filter edges (SSB LPF/HPF, AM LPF, FM LPF) | VERIFIED |
+| `0x0EA` / `0x117` / `0x11F` | VOX timeout / threshold / switch | VERIFIED |
+| `0x102`–`0x106` | RX EQ bands | VERIFIED |
+| `0x154` | TX power (f32 W) | VERIFIED |
+| `0x158` | acknowledge of the last `0x08` sequence number | VERIFIED |
+| `0x15E` | PTT sources (built-in, CW serial key, tune, SWR/tune, CI-V) | VERIFIED |
+| `0x174`–`0x180` | IPv4 address, gateway, netmask, LAN base port | VERIFIED |
+| `0x182` | LAN mode (1 = wfview, else HDSDR) | VERIFIED |
+| `0x183` / `0x193` | wfview username / password, 16 bytes each, NUL-padded | VERIFIED |
+
+Several of the original partial-map entries were wrong and are
+corrected in the CSV: the TX-filter offsets, VOX switch, PTT signals,
+port and network mode, and offset `0x158`.
+
+### `0x03` spectrum and meters (552 B)
+
+**Spectrum.** 512 bytes; the level in dB is the byte value minus 145,
+zoomed by setting `0x088`.
+
+**Tail (40 bytes).** S-meter (dBm), forward power, SWR, Vext, Idd, EALC
+and PA temperature as floats, followed by a flags word:
+- bit 1 = transmitting;
+- bit 2 = Main is powering off;
+- bit 7 = a network client is active.
+
+See `cmd03_fields.csv`.
+
+### `0x06` slave info (104 B)
+
+8 zero bytes, then three 32-byte NUL-terminated strings: MCU version,
+FPGA version, and build date/time. See `cmd06_slave_info.csv`.
+
+### `0x08` network state record (46 B)
+
+`[3][seq][0][0]` followed by 42 bytes of TRX fields changed by a
+network client: VFO frequencies, filters and modes, the selected VFO,
+the span, DNR, VOX, PRE/ATT, RF gain, squelch, MIC gain, TX power and
+monitor level. See `cmd08_fields.csv`.
+
+### `0x02` calibration (358 B)
+
+This is an independent EEPROM block (`0x0800`) with its own integrity
+fields:
+- layout id 10 at byte 0;
+- CRC-8 at `0x164`;
+- end marker 0x64 at `0x165`.
+
+It holds the 11-entry TX band-edge table (start/end in Hz plus an
+enable) and the three PA bias DAC values (driver, final 1, final 2). See
+`cal02_fields.csv`.
+
+### TRX struct runtime tail
+
+Past the 0x1A8-byte settings image, the TRX struct holds Main-only
+runtime state: the shadow of the active VFO, the PA drive DAC code,
+RIT/XIT as i32, the ADC maximum, TX-state flags, the per-source PTT
+flags and the global TX enable. This part is partial; see
+`main_unit/analysis/memory/trx_runtime_fields.csv`.
+
+**Why this needed the firmware:** field offsets, units and scaling,
+which side writes a field, and the checksum and marker scheme are
+invisible on the wire without the producer and consumer code.
 
 > **Decoding key:** the front-panel menu catalog in
 > [`hardware.md`](hardware.md) §5 lists the authoritative parameter set
@@ -153,8 +209,6 @@ settings image, with validity markers 0x64 at offsets 0x000, 0x1A3 and
 > enumerations/ranges against the unmapped `0x01` offsets to finish the
 > layout.
 
-`0x02` (calibration) and `0x06` (slave info) field layouts are not yet
-decoded (mostly numeric tables, few strings).
 
 ## Message types — complete map, VERIFIED
 

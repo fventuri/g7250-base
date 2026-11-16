@@ -1,0 +1,5 @@
+offset,width,type,field,confidence
+0x00,8,-,zero (unused),VERIFIED
+0x08,32,char[32],MCU version string,VERIFIED
+0x28,32,char[32],FPGA version string,VERIFIED
+0x48,32,char[32],build date and time,VERIFIED

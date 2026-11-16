@@ -1,0 +1,17 @@
+rel,width,type,field,confidence
+0x00,8,u64,frequency Hz (Control accepts 0.5-108 MHz from 0x08),VERIFIED
+0x08,8,u64,second frequency (init only; same default),LOW
+0x10,4,u16x2,filter low edge pair (Main FUN_0803d454 writes),MEDIUM
+0x14,4,u16x2,filter high edge pair,MEDIUM
+0x18,1,u8,mode code (0 LSB 1 L-D 2 USB 3 U-D 4 CW 5 CWR 6 AM 7 SAM 8 NFM 9 WFM 10 IQ 11 LBK 12 RTTY),VERIFIED
+0x1a,2,u16,notch centre frequency,VERIFIED
+0x1c,1,u8,DNR type,VERIFIED
+0x1d,1,i8,squelch level (wire 0..100; Main dB = wire/2-100),HIGH
+0x1e,1,u8,manual notch,VERIFIED
+0x1f,1,u8,auto notch,VERIFIED
+0x20,1,u8,AGC mode (Control never writes),VERIFIED
+0x21,1,u8,squelch-active (Main-derived),HIGH
+0x23,1,u8,unknown,LOW
+0x24,1,u8,non-FM squelch control (from UI float),MEDIUM
+0x25,1,u8,ATT,VERIFIED
+0x26,1,u8,PRE (preamp),VERIFIED
