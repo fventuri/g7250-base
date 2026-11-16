@@ -167,7 +167,7 @@ Roadmap mirrors `REVERSE_ENGINEERING_GUIDE.md`, tracked per unit.
 - [x] N02 full vector/IRQ CSVs (exporters fixed)
 - [x] N03 DMA/NVIC allocation (docs/dma.md)
 - [x] N04 protection thresholds · [x] N05 BandMap/TX band enforcement · [x] N20 ADC/DAC map
-- [x] N21 PA bias / power control (SPI2 is the bias DAC, not idle) · [x] N22 PTT arbitration + T/R sequencing · [ ] N31 power on/off
+- [x] N21 PA bias / power control (SPI2 is the bias DAC, not idle) · [x] N22 PTT arbitration + T/R sequencing · [x] N31 power on/off
 - [ ] N07 stale doc claims · [x] N08 exception handlers · [x] N16 H72x Ghidra memory map
 - [x] N18 MPU/cache/RAM placement · [x] N19 timer map
 - [ ] N10 UART roles · [ ] N11 Main SDRAM? · [ ] N12 Control I2C · [ ] N13 Control SPI5/SPI flash
@@ -182,3 +182,4 @@ Roadmap mirrors `REVERSE_ENGINEERING_GUIDE.md`, tracked per unit.
 - [ ] Identify the SPI2 DAC chip; circuit roles of DAC channels 5 and 6.
 - [ ] Confirm in hardware whether an analog SWR/ALC fold-back exists outside the MCU.
 - [ ] Confirm on the Control side what the 1920-byte BandMap type is.
+- [ ] What drives PH5 (front-panel key over the CTRL cable?); is PH9 a power latch; Control PCA9557 bit 5 role.

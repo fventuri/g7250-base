@@ -322,3 +322,55 @@ at RX. The LPF/BPF band bits are reselected by the band/frequency path
 PRE1 → 0, PRE2 → 1), and bits 21–22 the VFO ATT byte (VERIFIED).
 
 Open: which of PC7/PF6/PH11 is the rear SEND output.
+
+## Power-on and power-off — VERIFIED unless noted
+
+**Power-on** (after the HAL bring-up in `main`):
+1. PH9 high, 1000 ms.
+2. AXP223 init: safe state, program the rails, 10 ms, enable.
+3. 1000 ms.
+4. EEPROM records, VersaClock, CH394 and LAN.
+5. SPI1 latches, SPI2 DAC init (PB14 pulse), ATU table, DSP tables.
+6. TIM7, ADC calibration and ADC DMA.
+7. Codec, RX state and I²S, then audio.
+8. TIM5/6/17 (power key and PTT polling start here), then the FPGA.
+9. PH15 low, 100 ms; PH13 high, 100 ms.
+10. Bias trim.
+11. Final RX set-up: PF6 low, PF4 high, DAC1 = 0xFFF, SPI2 channel
+    5 = 0x3FF, channels 3/6 = 0.
+12. EXTI IRQs 9/10/23 enabled; the "ready" flag is set.
+
+**Power key.** The TIM6 tick (`FUN_08037c10`) arms only after it has
+seen **PH5** high. PH5 low for more than 100 consecutive ticks (> 1 s)
+raises a power-off request. The superloop then:
+1. sets SLIP `0x03` flags bit 2;
+2. waits 100 ms, so that at least one frame carries the bit;
+3. calls the shutdown routine `FUN_08021edc`.
+
+**Shutdown** (`FUN_08021edc`), in order:
+1. Watchdog kick and a log line.
+2. PF6, PF4 and PC7 low.
+3. SPI2 DAC channels 2, 3, 8, 7, 5 and 6 = 0.
+4. PA12, PA10 and PH10 high. PA10 and PH10 disable the shift-register
+   outputs.
+5. PB5 low (CH394 reset), and the other GPIOB outputs low except PB10.
+6. Save the calibration and ATU tables if they are dirty.
+7. Clear the ready flag and mute the audio.
+8. AXP223 safe state.
+9. Disable interrupts.
+10. Spin until PH5 reads high (the key is released).
+11. System reset.
+
+PH9 is never cleared explicitly. It is probably a power-hold line that
+the reset releases (HYPOTHESIS).
+
+**Control Unit reaction** (VERIFIED). When a `0x03` frame carries flags
+bit 2, Control sets its only shutdown trigger and sets bit 5 of its
+PCA9557 expander. Its main loop then:
+1. stops its service timers and shows a shutdown message;
+2. saves its configuration and stores;
+3. blanks the display;
+4. de-initialises its peripherals;
+5. clears expander bit 5.
+
+The role of bit 5 is a HYPOTHESIS (power/standby latch or indicator).

@@ -157,6 +157,11 @@ port and network mode, and offset `0x158`.
 **Spectrum.** 512 bytes; the level in dB is the byte value minus 145,
 zoomed by setting `0x088`.
 
+**Power-off flag.** Flags bit 2 is set once Main has accepted a
+power-off request (PH5 held low for more than 1 s). It persists, and
+Main waits 100 ms before shutting down. Control reacts only to this
+bit (see `main_unit/docs/flow.md`, Power-on and power-off).
+
 **Tail (40 bytes).** S-meter (dBm), forward power, SWR, Vext, Idd, EALC
 and PA temperature as floats, followed by a flags word:
 - bit 1 = transmitting;

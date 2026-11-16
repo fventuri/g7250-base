@@ -57,11 +57,11 @@ PG14,AF PP,none,5,,SPI6_MOSI,FUN_0802317c,VERIFIED
 PG15,output PP,none,,1,CH394 CS#,FUN_080487d4,VERIFIED
 PH3,IT both,pull-up,,,CW key contact A,FUN_08023ab4,HIGH
 PH4,IT both,pull-up,,,CW key contact B,FUN_08023ab4,HIGH
-PH5,input,pull-up,,,unknown (read in power-off),FUN_08021edc,VERIFIED
+PH5,input,pull-up,,,power-key sense (low > 1 s = power-off),FUN_08037c10,HIGH
 PH6,IT both,pull-up,,,PTT input,FUN_08023ab4,HIGH
 PH7,AF OD,none,4,,I2C3_SCL,FUN_08021a00,HIGH
 PH8,AF OD,none,4,,I2C3_SDA,FUN_08021a00,HIGH
-PH9,output PP,none,,0,power enable?,FUN_0802239c,HYPOTHESIS
+PH9,output PP,none,,0,power hold? (high at boot; released by reset),FUN_0802239c,HYPOTHESIS
 PH10,output PP,none,,1,SPI1 chain B output-enable (also set in power-off),FUN_0804a2b8,VERIFIED
 PH11,output PP,pull-up,,0,TX/RX line (high in TX),FUN_08021830,VERIFIED
 PH12,output PP,none,,1,SPI1 chain B latch,FUN_0804a2d4,VERIFIED
