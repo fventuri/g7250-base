@@ -1,0 +1,13 @@
+item,value,confidence
+i2c_addr_try_order,0x68;0x6A,VERIFIED
+init_table_flash,0x0807F840 (0x70 B),VERIFIED
+ref_source,crystal,HIGH
+pfd,Fref/2,HIGH
+fb_div,222.0,HIGH
+fref_inferred_mhz,26,MEDIUM
+vco_mhz,2886,MEDIUM
+fod1_div,11.7431640625,HIGH
+fod2_4,disabled,HIGH
+out1,LVDS 3.3V enabled,HIGH
+out1_mhz,245.76 (or 122.88),MEDIUM
+out2_4,CMOS 3.3V buffer off,MEDIUM

@@ -66,7 +66,11 @@ Roadmap mirrors `REVERSE_ENGINEERING_GUIDE.md`, tracked per unit.
 - [ ] CH394: find the chip-select, reset and interrupt GPIOs, and the
       absolute SPI6 SCK rate (needs PCLK4, see the clock-config item).
 - [ ] EEPROM NVPARAM layout (header/checksum/ENDBit) + ATU network format.
-- [ ] AXP223 rail map (which rail powers what) + VersaClock output plan.
+- [x] AXP223 rail map + VersaClock output plan (peripherals.md). Rail
+      *use* is HYPOTHESIS.
+- [ ] Confirm the VC6 crystal (26 MHz?), whether OUT1 is 245.76 or
+      122.88 MHz, and where OUT1 goes (FPGA/ADC): needs a board photo or
+      a probe.
 - [ ] GPIO pin maps (I2C/SPI/UART AF pins) — compare X6100 assignments.
 - [ ] Identify the ~26 (main) / ~28 (control) init functions from `main()`.
 - [ ] Main Unit TRX-state struct at `0x24013C0C` — recover layout.

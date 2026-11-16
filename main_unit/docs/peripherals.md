@@ -224,10 +224,67 @@ addrSize, buf, len, timeout)`, write `FUN_0802B940(...)`. `devAddr` is the
 | ---: | ---: | --- | --- | --- |
 | `0x50` | `0xA0` | 24Cxx **EEPROM** | NVPARAM (settings 424 B + header/checksum), calibration, ATU data; backup-SRAM (`0x38800000`) cached; strings `EEPROM NVPARAM Saved`, `Read EEPROM error` | VERIFIED |
 | `0x34` | `0x68` | **AXP223 PMIC** | strings `axp223 (0x68) write reg`, `Set ALDO1/DCDC1/2/3/5/DLDO1 Vout`, `Init PSU`; driver `FUN_0804a8e8` | VERIFIED |
-| `0x6A`* | `0xD4`* | **VersaClock 6** clock generator | strings `vc6clkgen(%02X): write init table ok`; driver `FUN_0804abbc` bus-scans then writes a 112-B (`0x70`) register init table | VERIFIED (addr auto-scanned; 0x6A default) |
+| `0x68`/`0x6A`* | `0xD0`/`0xD4`* | **VersaClock 6** clock generator | driver `FUN_0804abbc` logs a successful init-table write; it tries both addresses, then writes a 112-B (`0x70`) register init table | VERIFIED |
 
-\* VersaClock address is auto-detected by a bus scan; `0x6A` is the
-5P49V6xxx default.
+\* The VersaClock driver tries 0x68 first, then 0x6A (see the
+VersaClock 6 output plan below).
+
+### AXP223 rail plan — VERIFIED (use: HYPOTHESIS)
+
+`FUN_0804a8e8` is called from `main` and only ever addresses the 7-bit
+address 0x34. It first forces a safe state with only DCDC1 on, then
+programs the voltages, waits 10 ms and enables everything in one
+write. Each code matches the voltage the driver logs just before it
+writes. There is no sequencing between rails. `FUN_0804a854` restores
+the safe state; it is called from the shutdown routine `FUN_08021edc`
+and before the jump to the bootloader in `FUN_0802200c`.
+
+| Rail | Register / code | Voltage | Enabled | Likely use |
+| --- | --- | ---: | :---: | --- |
+| DCDC1 | 0x21 / 0x11 | 3.3 V | yes (also in safe state) | MCU 3.3 V (MEDIUM) |
+| DCDC2 | 0x22 / 0x1E | 1.2 V | yes | FPGA core (HYPOTHESIS) |
+| DCDC3 | 0x23 / 0x3C | 1.8 V | yes | FPGA/converter 1.8 V (HYPOTHESIS) |
+| DCDC5 | 0x25 / 0x1E | 2.5 V | yes | FPGA aux / LVDS bank (HYPOTHESIS) |
+| ALDO1 | 0x28 / 0x1A | 3.3 V | yes | analog/clock 3.3 V (HYPOTHESIS) |
+| DLDO1 | 0x15 / 0x0B | 1.8 V | yes | analog 1.8 V (HYPOTHESIS) |
+| DCDC4, DC5LDO, ALDO2/3, ELDO1–3, DLDO2–4, DC1SW | — | — | off | unused |
+
+The enables are reg 0x10 = 0x6E and reg 0x12 = 0x08, decoded with the
+public AXP22x bit layout (HIGH CONFIDENCE). Reg 0x13 bit 0 is set; its
+meaning is a HYPOTHESIS. Per-rail values are in
+`analysis/peripherals/axp223_rails.csv`.
+
+### VersaClock 6 output plan — HIGH (frequency MEDIUM)
+
+`FUN_0804abbc` (called from `FUN_0804ae68`) writes registers 0x00–0x6F
+in one burst from a 112-byte table in flash at `0x0807F840`. It tries
+the 7-bit address **0x68 first**, then 0x6A, so the earlier "0x6A" is
+only the fallback. No code reprograms the chip later.
+
+- **Reference:** crystal input; CLKIN and the doubler are off; the
+  divide-by-2 pre-divider is selected. The PLL feedback is integer 222
+  with no fraction, so VCO = 111 × Fref. (HIGH CONFIDENCE.)
+- **Dividers:** FOD1 is a fractional divider of 11.7431640625, without
+  spread spectrum. FOD2–4 are disabled. (HIGH CONFIDENCE.)
+- **Outputs:** OUT1 is LVDS at 3.3 V and enabled. OUT2–4 are set up as
+  3.3 V CMOS, but their buffers are off. (OUT1 HIGH CONFIDENCE,
+  OUT2–4 MEDIUM CONFIDENCE.)
+- **Frequency:** a 26 MHz crystal gives VCO = 2886 MHz and
+  **OUT1 = 245.76 MHz**, exactly 5120 × 48 kHz. Other common crystals
+  give no round value. (MEDIUM CONFIDENCE.) If the output stage halves
+  the divider output, OUT1 is 122.88 MHz instead (HYPOTHESIS).
+- **Role:** the chip has a single output, and it is **not** the MCU's
+  HSE: it is far above the HSE limit, and the chip is programmed after
+  the MCU clocks are up. It is the sample clock for the FPGA or the
+  data converters (MEDIUM CONFIDENCE). The I²S3 kernel clock on
+  I2S_CKIN is then most likely derived from it by the FPGA
+  (HYPOTHESIS). Decoded values are in
+  `analysis/peripherals/vc6_clock_plan.csv`.
+
+**Why this needed the firmware:** both chips are programmed over I2C
+or from OTP. Their datasheets give register maps only. The voltages,
+enables, divider plan and output types exist only in the init code and
+table.
 
 ### vs. X6100
 
