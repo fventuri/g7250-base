@@ -1,0 +1,15 @@
+start,end,library,module,confidence,evidence
+08020000,08020d48,toolchain runtime,crt + libgcc + newlib asm (.text input sections),HIGH,byte-identical to Main 0x08020330-0x08020de0
+08020d48,080236d0,CubeMX generated (Core/Src),MX_*_Init / MSP / main.c / it.c / syscalls / sysmem,HIGH,CubeMX file order crc dma2d fmc gpio i2c i2s ltdc main rtc sdmmc spi tim usart; verified SystemClock_Config/main here
+080236d0,08024b68,CMSIS-DSP,ComplexMath / FastMath / Filtering / Statistics / Transform (f32),HIGH,13 functions byte-identical to the Main CMSIS-DSP block
+08024b68,08031bc4,ST HAL,stm32h7xx_hal_*.c + stm32h7xx_ll_{fmc;sdmmc;usb}.c,HIGH,verified HAL_RCC_*/HAL_GPIO_Init/HAL_TIM_Base_Start_IT; 40+ functions byte-identical to Main HAL; LL SDMMC command family and USB OTG core-id constant at the end
+08031bc4,080375e4,application,drivers + services (codec / BT / SLIP / GT911 / PCA9557 / fatfs.c / user_diskio / W25Qxx),HIGH,application log strings and RAM
+080375e4,08037d68,minIni (third party),minIni.c,HIGH,assert strings name minIni.c and its internal functions
+08037d68,08039b9c,ST USB device library,usbd_msc* / usbd_core / usbd_ctlreq / usbd_ioreq,MEDIUM,MSC bulk-only CSW signature; ioreq-style one-call wrappers into the USBD_LL layer; Ghidra function recovery incomplete here
+08039b9c,08039fbc,CubeMX generated (STemWin glue),GUIConf / LCDConf / GUI_X,MEDIUM,memory-pool assignment at SDRAM 0xC0800000; GUI_X tick/delay stubs; DMA2D register use and calls into the emWin block; sits between Middlewares/ST/STM32_USB_Device_Library and Middlewares/Third_Party in name order
+08039fbc,0803d904,FatFS,ff.c / diskio.c / ff_gen_drv.c / unicode,HIGH,FSInfo signatures; default boot-sector volume labels for FAT12/16 and FAT32 (f_mkfs); LFN invalid-character set; disk_* dispatch wrappers
+0803d904,0803df14,CubeMX generated (USB_DEVICE), usbd_storage_if.c,HIGH,MX_USB_DEVICE_Init; descriptor string getters; PCD MSP init with OTG_FS base; USBD_LL_* wrappers
+0803df14,0807ac6c,application,G7250 Control firmware (UI / settings / radio state),HIGH,application strings (menus / band stack / memories)
+0807ac6c,08084ed0,SEGGER emWin,STemWin precompiled library,HIGH,GUI context pointer 0x24000038 used throughout; version-string getter; linked as an archive after all application objects
+08084ed0,0808a0ec,newlib/libc,newlib-nano + libm (GNU Tools for STM32 12.3),HIGH,newlib assert strings and toolchain build path; byte-identical to the Main libc block
+0808a0ec,0808a114,toolchain runtime,crti/crtn (_init/_fini),MEDIUM,last tiny functions of the image

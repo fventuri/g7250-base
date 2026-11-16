@@ -1,0 +1,9 @@
+library,functions,bytes,named,byte_identical_in_peer
+application,305,111400,48,13
+ST HAL,139,32204,30,63
+newlib/libc,96,17506,18,67
+CubeMX generated (Core/Src),81,13358,10,9
+newlib/libm,43,12860,0,0
+CMSIS-DSP,35,12132,23,12
+toolchain runtime,16,1796,3,10
+TOTAL,715,201256,132,174

@@ -1,0 +1,1722 @@
+address,end,bytes,library,module,proposed_name,confidence,basis
+080202c4,080202d4,16,toolchain runtime,crt + libgcc + newlib asm (.text input sections),,HIGH,region; byte-identical to Main 0x080202f4
+080202e0,080202f4,20,toolchain runtime,crt + libgcc + newlib asm (.text input sections),,HIGH,region; byte-identical to Main 0x08020310
+08020300,0802039e,158,toolchain runtime,crt + libgcc + newlib asm (.text input sections),memchr,HIGH,region; byte-identical to Main 0x08020330; name from peer
+080203a0,080203b0,16,toolchain runtime,crt + libgcc + newlib asm (.text input sections),strlen,HIGH,region; byte-identical to Main 0x080203d0; name from peer
+080206bc,080206cc,274,toolchain runtime,crt + libgcc + newlib asm (.text input sections),,HIGH,region; byte-identical to Main 0x080206ec
+080206cc,08020726,90,toolchain runtime,crt + libgcc + newlib asm (.text input sections),,HIGH,region; byte-identical to Main 0x080206fc
+080208b8,080208c6,14,toolchain runtime,crt + libgcc + newlib asm (.text input sections),,HIGH,region
+080208c8,08020944,124,toolchain runtime,crt + libgcc + newlib asm (.text input sections),,HIGH,region
+08020944,080209e4,160,toolchain runtime,crt + libgcc + newlib asm (.text input sections),,HIGH,region; byte-identical to Main 0x08020974
+080209e4,08020d46,50,toolchain runtime,crt + libgcc + newlib asm (.text input sections),,HIGH,region
+08020a14,08020a44,48,toolchain runtime,crt + libgcc + newlib asm (.text input sections),,HIGH,region; byte-identical to Main 0x08020a6c
+08020a48,08020a72,42,toolchain runtime,crt + libgcc + newlib asm (.text input sections),,HIGH,region; byte-identical to Main 0x08020ae0
+08020a88,08020d42,698,toolchain runtime,crt + libgcc + newlib asm (.text input sections),__udivmoddi4,MEDIUM,region; byte-identical to Main 0x08020b20; name from peer
+08020d48,08020d6c,36,CubeMX generated (Core/Src),MX_*_Init / MSP / main.c / it.c / syscalls / sysmem,,HIGH,region; byte-identical to Main 0x08021204
+08020d74,08020da0,44,CubeMX generated (Core/Src),MX_*_Init / MSP / main.c / it.c / syscalls / sysmem,,HIGH,region; byte-identical to Main 0x08021230
+08020da4,08020dbe,26,CubeMX generated (Core/Src),MX_*_Init / MSP / main.c / it.c / syscalls / sysmem,,HIGH,region; byte-identical to Main 0x08021260
+08020dc8,08020e1c,84,CubeMX generated (Core/Src),MX_*_Init / MSP / main.c / it.c / syscalls / sysmem,,HIGH,region
+08020e20,08020e6a,74,CubeMX generated (Core/Src),MX_*_Init / MSP / main.c / it.c / syscalls / sysmem,,HIGH,region
+08020e74,08020e9e,42,CubeMX generated (Core/Src),MX_*_Init / MSP / main.c / it.c / syscalls / sysmem,,HIGH,region
+08020ea8,08020ec2,26,CubeMX generated (Core/Src),MX_*_Init / MSP / main.c / it.c / syscalls / sysmem,,HIGH,region
+08020ecc,08020f30,100,CubeMX generated (Core/Src),MX_*_Init / MSP / main.c / it.c / syscalls / sysmem,,HIGH,region
+08020f38,0802103e,262,CubeMX generated (Core/Src),MX_*_Init / MSP / main.c / it.c / syscalls / sysmem,,HIGH,region
+08021060,080210b8,88,CubeMX generated (Core/Src),MX_*_Init / MSP / main.c / it.c / syscalls / sysmem,,HIGH,region
+080210d8,080213ea,786,CubeMX generated (Core/Src),MX_*_Init / MSP / main.c / it.c / syscalls / sysmem,,HIGH,region
+08021414,08021472,94,CubeMX generated (Core/Src),MX_*_Init / MSP / main.c / it.c / syscalls / sysmem,,HIGH,region
+08021480,080214de,94,CubeMX generated (Core/Src),MX_*_Init / MSP / main.c / it.c / syscalls / sysmem,,HIGH,region
+080214f0,080215ee,254,CubeMX generated (Core/Src),MX_*_Init / MSP / main.c / it.c / syscalls / sysmem,,HIGH,region
+08021614,0802166a,86,CubeMX generated (Core/Src),MX_*_Init / MSP / main.c / it.c / syscalls / sysmem,,HIGH,region
+08021680,080216ba,58,CubeMX generated (Core/Src),MX_*_Init / MSP / main.c / it.c / syscalls / sysmem,,HIGH,region
+080216c4,080217de,282,CubeMX generated (Core/Src),MX_*_Init / MSP / main.c / it.c / syscalls / sysmem,,HIGH,region
+080217fc,08021832,54,CubeMX generated (Core/Src),MX_*_Init / MSP / main.c / it.c / syscalls / sysmem,,HIGH,region
+08021840,08021870,48,application,,console_log,HIGH,region; named
+08021878,0802191e,166,CubeMX generated (Core/Src),MX_*_Init / MSP / main.c / it.c / syscalls / sysmem,,HIGH,region
+08021928,08021b2e,518,CubeMX generated (Core/Src),MX_*_Init / MSP / main.c / it.c / syscalls / sysmem,,HIGH,region
+08021b54,08021bba,102,CubeMX generated (Core/Src),MX_*_Init / MSP / main.c / it.c / syscalls / sysmem,,HIGH,region
+08021be0,08021bf2,18,CubeMX generated (Core/Src),MX_*_Init / MSP / main.c / it.c / syscalls / sysmem,,HIGH,region
+08021bf8,08021c14,28,CubeMX generated (Core/Src),MX_*_Init / MSP / main.c / it.c / syscalls / sysmem,,HIGH,region
+08021c20,08021d42,290,application,,,HIGH,region; override
+08021d98,08021e60,200,CubeMX generated (Core/Src),MX_*_Init / MSP / main.c / it.c / syscalls / sysmem,SystemClock_Config,HIGH,region
+08021e74,080221b2,830,application,,main,HIGH,region; named
+0802221c,08022220,4,CubeMX generated (Core/Src),MX_*_Init / MSP / main.c / it.c / syscalls / sysmem,Error_Handler,HIGH,region; named
+08022220,080222b0,144,CubeMX generated (Core/Src),MX_*_Init / MSP / main.c / it.c / syscalls / sysmem,,HIGH,region
+080222c0,08022306,70,CubeMX generated (Core/Src),MX_*_Init / MSP / main.c / it.c / syscalls / sysmem,,HIGH,region
+08022318,08022338,32,CubeMX generated (Core/Src),MX_*_Init / MSP / main.c / it.c / syscalls / sysmem,,HIGH,region
+08022340,08022412,210,CubeMX generated (Core/Src),MX_*_Init / MSP / main.c / it.c / syscalls / sysmem,,HIGH,region
+08022424,0802245a,54,CubeMX generated (Core/Src),MX_*_Init / MSP / main.c / it.c / syscalls / sysmem,,HIGH,region
+0802246c,08022588,284,CubeMX generated (Core/Src),MX_*_Init / MSP / main.c / it.c / syscalls / sysmem,,HIGH,region
+080225cc,080225d0,4,CubeMX generated (Core/Src),MX_*_Init / MSP / main.c / it.c / syscalls / sysmem,,HIGH,region
+080225d4,08022624,80,CubeMX generated (Core/Src),MX_*_Init / MSP / main.c / it.c / syscalls / sysmem,,HIGH,region
+08022630,080226c0,144,CubeMX generated (Core/Src),MX_*_Init / MSP / main.c / it.c / syscalls / sysmem,,HIGH,region
+080226dc,080226fc,32,CubeMX generated (Core/Src),MX_*_Init / MSP / main.c / it.c / syscalls / sysmem,,HIGH,region
+08022708,08022728,32,CubeMX generated (Core/Src),MX_*_Init / MSP / main.c / it.c / syscalls / sysmem,,HIGH,region; byte-identical to Main 0x080233e0
+0802272c,0802272e,2,CubeMX generated (Core/Src),MX_*_Init / MSP / main.c / it.c / syscalls / sysmem,,HIGH,region
+08022730,0802273c,12,CubeMX generated (Core/Src),MX_*_Init / MSP / main.c / it.c / syscalls / sysmem,,HIGH,region
+08022740,08022742,2,CubeMX generated (Core/Src),MX_*_Init / MSP / main.c / it.c / syscalls / sysmem,,HIGH,region
+08022744,08022746,2,CubeMX generated (Core/Src),MX_*_Init / MSP / main.c / it.c / syscalls / sysmem,,HIGH,region
+08022748,0802274a,2,CubeMX generated (Core/Src),MX_*_Init / MSP / main.c / it.c / syscalls / sysmem,,HIGH,region
+0802274c,0802274e,2,CubeMX generated (Core/Src),MX_*_Init / MSP / main.c / it.c / syscalls / sysmem,,HIGH,region
+08022750,08022752,2,CubeMX generated (Core/Src),MX_*_Init / MSP / main.c / it.c / syscalls / sysmem,,HIGH,region
+08022754,08022756,2,CubeMX generated (Core/Src),MX_*_Init / MSP / main.c / it.c / syscalls / sysmem,,HIGH,region
+08022758,0802275c,4,CubeMX generated (Core/Src),MX_*_Init / MSP / main.c / it.c / syscalls / sysmem,,HIGH,region
+0802275c,08022762,6,CubeMX generated (Core/Src),MX_*_Init / MSP / main.c / it.c / syscalls / sysmem,,HIGH,region
+08022768,0802276e,6,CubeMX generated (Core/Src),MX_*_Init / MSP / main.c / it.c / syscalls / sysmem,,HIGH,region
+08022774,08026c24,1652,CubeMX generated (Core/Src),MX_*_Init / MSP / main.c / it.c / syscalls / sysmem,,HIGH,region
+08022780,08035cca,1298,CubeMX generated (Core/Src),MX_*_Init / MSP / main.c / it.c / syscalls / sysmem,,HIGH,region
+08022790,080227a0,16,CubeMX generated (Core/Src),MX_*_Init / MSP / main.c / it.c / syscalls / sysmem,,HIGH,region
+080227a4,080300f6,914,CubeMX generated (Core/Src),MX_*_Init / MSP / main.c / it.c / syscalls / sysmem,,HIGH,region
+080227b0,080227c2,18,CubeMX generated (Core/Src),MX_*_Init / MSP / main.c / it.c / syscalls / sysmem,,HIGH,region
+080227cc,0802282a,94,CubeMX generated (Core/Src),MX_*_Init / MSP / main.c / it.c / syscalls / sysmem,,HIGH,region
+08022840,08022872,50,CubeMX generated (Core/Src),MX_*_Init / MSP / main.c / it.c / syscalls / sysmem,,HIGH,region
+08022880,08022886,6,CubeMX generated (Core/Src),MX_*_Init / MSP / main.c / it.c / syscalls / sysmem,,HIGH,region
+0802288c,0802289c,16,CubeMX generated (Core/Src),MX_*_Init / MSP / main.c / it.c / syscalls / sysmem,,HIGH,region
+080228a0,080228b0,16,CubeMX generated (Core/Src),MX_*_Init / MSP / main.c / it.c / syscalls / sysmem,,HIGH,region
+080228b4,080228ba,6,CubeMX generated (Core/Src),MX_*_Init / MSP / main.c / it.c / syscalls / sysmem,,HIGH,region
+080228c0,080228c6,6,CubeMX generated (Core/Src),MX_*_Init / MSP / main.c / it.c / syscalls / sysmem,,HIGH,region
+080228cc,08034972,114,CubeMX generated (Core/Src),MX_*_Init / MSP / main.c / it.c / syscalls / sysmem,tim13_slip_client,HIGH,region
+080228e8,080228ec,4,CubeMX generated (Core/Src),MX_*_Init / MSP / main.c / it.c / syscalls / sysmem,,HIGH,region
+080228ec,080228fe,18,CubeMX generated (Core/Src),MX_*_Init / MSP / main.c / it.c / syscalls / sysmem,,HIGH,region; byte-identical to Main 0x08023b4c
+08022900,0802290c,12,CubeMX generated (Core/Src),MX_*_Init / MSP / main.c / it.c / syscalls / sysmem,,HIGH,region; byte-identical to Main 0x08023b60
+0802290c,08022926,26,CubeMX generated (Core/Src),MX_*_Init / MSP / main.c / it.c / syscalls / sysmem,,HIGH,region
+08022928,0802292e,6,CubeMX generated (Core/Src),MX_*_Init / MSP / main.c / it.c / syscalls / sysmem,,HIGH,region
+08022930,0802293a,10,CubeMX generated (Core/Src),MX_*_Init / MSP / main.c / it.c / syscalls / sysmem,,HIGH,region; byte-identical to Main 0x08023b74
+0802293c,08022940,4,CubeMX generated (Core/Src),MX_*_Init / MSP / main.c / it.c / syscalls / sysmem,,HIGH,region
+08022940,08022944,4,CubeMX generated (Core/Src),MX_*_Init / MSP / main.c / it.c / syscalls / sysmem,,HIGH,region
+08022944,0802297a,54,CubeMX generated (Core/Src),MX_*_Init / MSP / main.c / it.c / syscalls / sysmem,_sbrk,HIGH,region; named; byte-identical to Main 0x08023b88
+0802298c,08022a54,200,CubeMX generated (Core/Src),MX_*_Init / MSP / main.c / it.c / syscalls / sysmem,,HIGH,region
+08022a84,08022a96,18,CubeMX generated (Core/Src),MX_*_Init / MSP / main.c / it.c / syscalls / sysmem,,HIGH,region
+08022aa0,08022b0e,110,CubeMX generated (Core/Src),MX_*_Init / MSP / main.c / it.c / syscalls / sysmem,,HIGH,region
+08022b1c,08022b84,104,CubeMX generated (Core/Src),MX_*_Init / MSP / main.c / it.c / syscalls / sysmem,,HIGH,region
+08022b90,08022c5c,204,CubeMX generated (Core/Src),MX_*_Init / MSP / main.c / it.c / syscalls / sysmem,,HIGH,region
+08022c78,08022ce0,104,CubeMX generated (Core/Src),MX_*_Init / MSP / main.c / it.c / syscalls / sysmem,,HIGH,region
+08022ce8,08022d32,74,CubeMX generated (Core/Src),MX_*_Init / MSP / main.c / it.c / syscalls / sysmem,,HIGH,region
+08022d40,08022e2a,234,CubeMX generated (Core/Src),MX_*_Init / MSP / main.c / it.c / syscalls / sysmem,,HIGH,region
+08022e48,08022e6e,38,CubeMX generated (Core/Src),MX_*_Init / MSP / main.c / it.c / syscalls / sysmem,,HIGH,region
+08022e78,08022e9e,38,CubeMX generated (Core/Src),MX_*_Init / MSP / main.c / it.c / syscalls / sysmem,,HIGH,region
+08022ea8,08022f06,94,CubeMX generated (Core/Src),MX_*_Init / MSP / main.c / it.c / syscalls / sysmem,,HIGH,region
+08022f18,080230b2,410,CubeMX generated (Core/Src),MX_*_Init / MSP / main.c / it.c / syscalls / sysmem,,HIGH,region
+080230e0,0802310a,42,CubeMX generated (Core/Src),MX_*_Init / MSP / main.c / it.c / syscalls / sysmem,,HIGH,region
+08023114,08023134,32,CubeMX generated (Core/Src),MX_*_Init / MSP / main.c / it.c / syscalls / sysmem,,HIGH,region
+0802313c,080231ee,178,CubeMX generated (Core/Src),MX_*_Init / MSP / main.c / it.c / syscalls / sysmem,,HIGH,region
+08023210,0802322a,26,CubeMX generated (Core/Src),MX_*_Init / MSP / main.c / it.c / syscalls / sysmem,,HIGH,region
+08023234,080232b2,126,CubeMX generated (Core/Src),MX_*_Init / MSP / main.c / it.c / syscalls / sysmem,,HIGH,region
+080232bc,0802333a,126,CubeMX generated (Core/Src),MX_*_Init / MSP / main.c / it.c / syscalls / sysmem,,HIGH,region; byte-identical to Main 0x08024190
+08023344,08023504,448,CubeMX generated (Core/Src),MX_*_Init / MSP / main.c / it.c / syscalls / sysmem,,HIGH,region
+08023530,08024d28,134,CubeMX generated (Core/Src),MX_*_Init / MSP / main.c / it.c / syscalls / sysmem,,HIGH,region
+080235ac,080235e8,60,CubeMX generated (Core/Src),MX_*_Init / MSP / main.c / it.c / syscalls / sysmem,,HIGH,region
+08023600,08023602,2,CubeMX generated (Core/Src),MX_*_Init / MSP / main.c / it.c / syscalls / sysmem,,HIGH,region
+08023604,080236ce,202,CubeMX generated (Core/Src),MX_*_Init / MSP / main.c / it.c / syscalls / sysmem,,HIGH,region
+080236d0,080237ac,220,CMSIS-DSP,ComplexMath / FastMath / Filtering / Statistics / Transform (f32),arm_cmplx_mag_f32,MEDIUM,region; byte-identical to Main 0x080248c8; name from peer
+080237ac,08023838,140,CMSIS-DSP,ComplexMath / FastMath / Filtering / Statistics / Transform (f32),arm_cos_f32,MEDIUM,region; byte-identical to Main 0x08024dac; name from peer
+0802384c,08023bbe,882,CMSIS-DSP,ComplexMath / FastMath / Filtering / Statistics / Transform (f32),arm_fir_decimate_f32,MEDIUM,region; byte-identical to Main 0x08024fc8; name from peer
+08023bc4,08023bfa,54,CMSIS-DSP,ComplexMath / FastMath / Filtering / Statistics / Transform (f32),arm_fir_decimate_init_f32,MEDIUM,region; byte-identical to Main 0x08025340; name from peer
+08023bfc,08023cd4,216,CMSIS-DSP,ComplexMath / FastMath / Filtering / Statistics / Transform (f32),arm_max_f32,MEDIUM,region; byte-identical to Main 0x0802607c; name from peer
+08023cd4,08023d54,128,CMSIS-DSP,ComplexMath / FastMath / Filtering / Statistics / Transform (f32),arm_mean_f32,MEDIUM,region; byte-identical to Main 0x08026170; name from peer
+08023d58,08023daa,82,CMSIS-DSP,ComplexMath / FastMath / Filtering / Statistics / Transform (f32),arm_bitreversal_32,MEDIUM,region; byte-identical to Main 0x080265e4; name from peer
+08023dac,08023f3e,402,CMSIS-DSP,ComplexMath / FastMath / Filtering / Statistics / Transform (f32),arm_cfft_radix8by2_f32,MEDIUM,region; byte-identical to Main 0x08026638; name from peer
+08023f40,080243d4,1172,CMSIS-DSP,ComplexMath / FastMath / Filtering / Statistics / Transform (f32),arm_cfft_radix8by4_f32,MEDIUM,region; byte-identical to Main 0x080267cc; name from peer
+080243d4,08024518,324,CMSIS-DSP,ComplexMath / FastMath / Filtering / Statistics / Transform (f32),arm_cfft_f32,MEDIUM,region; byte-identical to Main 0x08026c60; name from peer
+08024518,080245d2,186,CMSIS-DSP,ComplexMath / FastMath / Filtering / Statistics / Transform (f32),arm_cfft_init_f32,MEDIUM,region; byte-identical to Main 0x08026da4; name from peer
+080245f8,08024b66,1386,CMSIS-DSP,ComplexMath / FastMath / Filtering / Statistics / Transform (f32),arm_radix8_butterfly_f32,MEDIUM,region; byte-identical to Main 0x08026e84; name from peer
+08024b68,08024b72,10,ST HAL,stm32h7xx_hal_*.c + stm32h7xx_ll_{fmc;sdmmc;usb}.c,,HIGH,region; byte-identical to Main 0x08027728
+08024b72,08024ba8,54,ST HAL,stm32h7xx_hal_*.c + stm32h7xx_ll_{fmc;sdmmc;usb}.c,,HIGH,region; byte-identical to Main 0x08027732
+08024bb4,08024c02,78,ST HAL,stm32h7xx_hal_*.c + stm32h7xx_ll_{fmc;sdmmc;usb}.c,HAL_Init,HIGH,region; named
+08024c14,08024c1a,6,ST HAL,stm32h7xx_hal_*.c + stm32h7xx_ll_{fmc;sdmmc;usb}.c,,HIGH,region
+08024c20,08024c40,32,ST HAL,stm32h7xx_hal_*.c + stm32h7xx_ll_{fmc;sdmmc;usb}.c,HAL_Delay,HIGH,region; named; byte-identical to Main 0x080277f8
+08024c44,08024c4c,8,ST HAL,stm32h7xx_hal_*.c + stm32h7xx_ll_{fmc;sdmmc;usb}.c,,HIGH,region
+08024c50,08024c6c,28,ST HAL,stm32h7xx_hal_*.c + stm32h7xx_ll_{fmc;sdmmc;usb}.c,HAL_NVIC_SetPriorityGrouping,MEDIUM,region; byte-identical to Main 0x080289a4; name from peer
+08024c74,08024cde,106,ST HAL,stm32h7xx_hal_*.c + stm32h7xx_ll_{fmc;sdmmc;usb}.c,HAL_NVIC_SetPriority,HIGH,region; byte-identical to Main 0x080289c8; name from peer
+08024cec,08024d02,22,ST HAL,stm32h7xx_hal_*.c + stm32h7xx_ll_{fmc;sdmmc;usb}.c,HAL_NVIC_EnableIRQ,HIGH,region; byte-identical to Main 0x08028a40; name from peer
+08024d2c,08024d46,26,ST HAL,stm32h7xx_hal_*.c + stm32h7xx_ll_{fmc;sdmmc;usb}.c,,HIGH,region
+08024d50,08024d76,38,ST HAL,stm32h7xx_hal_*.c + stm32h7xx_ll_{fmc;sdmmc;usb}.c,,HIGH,region; byte-identical to Main 0x08028a80
+08024d7c,08024d92,22,ST HAL,stm32h7xx_hal_*.c + stm32h7xx_ll_{fmc;sdmmc;usb}.c,,HIGH,region; byte-identical to Main 0x08028aac
+08024d98,08024db4,28,ST HAL,stm32h7xx_hal_*.c + stm32h7xx_ll_{fmc;sdmmc;usb}.c,HAL_MPU_Enable,HIGH,region; named; byte-identical to Main 0x08028ac8
+08024db8,08024e12,90,ST HAL,stm32h7xx_hal_*.c + stm32h7xx_ll_{fmc;sdmmc;usb}.c,HAL_MPU_ConfigRegion,HIGH,region; named; byte-identical to Main 0x08028ae8
+08024e18,08024e8e,118,ST HAL,stm32h7xx_hal_*.c + stm32h7xx_ll_{fmc;sdmmc;usb}.c,,HIGH,region; byte-identical to Main 0x08028b48
+08024e94,08024f02,84,ST HAL,stm32h7xx_hal_*.c + stm32h7xx_ll_{fmc;sdmmc;usb}.c,,HIGH,region; byte-identical to Main 0x08028bc4
+08024f04,08024fe0,220,ST HAL,stm32h7xx_hal_*.c + stm32h7xx_ll_{fmc;sdmmc;usb}.c,,HIGH,region; byte-identical to Main 0x08028ecc
+08025004,080250a4,160,ST HAL,stm32h7xx_hal_*.c + stm32h7xx_ll_{fmc;sdmmc;usb}.c,,HIGH,region; byte-identical to Main 0x08028fcc
+080250d4,0802559e,1168,ST HAL,stm32h7xx_hal_*.c + stm32h7xx_ll_{fmc;sdmmc;usb}.c,,HIGH,region
+080255e0,08025878,664,ST HAL,stm32h7xx_hal_*.c + stm32h7xx_ll_{fmc;sdmmc;usb}.c,,HIGH,region; byte-identical to Main 0x08029588
+080258bc,080260cc,1982,ST HAL,stm32h7xx_hal_*.c + stm32h7xx_ll_{fmc;sdmmc;usb}.c,,HIGH,region; byte-identical to Main 0x08029864
+080260d0,0802642c,836,ST HAL,stm32h7xx_hal_*.c + stm32h7xx_ll_{fmc;sdmmc;usb}.c,,HIGH,region; byte-identical to Main 0x0802a078
+08026434,0802656a,310,ST HAL,stm32h7xx_hal_*.c + stm32h7xx_ll_{fmc;sdmmc;usb}.c,,HIGH,region; byte-identical to Main 0x0802a3dc
+08026c2c,08026ca0,116,ST HAL,stm32h7xx_hal_*.c + stm32h7xx_ll_{fmc;sdmmc;usb}.c,,HIGH,region
+08026cac,08026d78,204,ST HAL,stm32h7xx_hal_*.c + stm32h7xx_ll_{fmc;sdmmc;usb}.c,,HIGH,region
+08026d80,08026fda,602,ST HAL,stm32h7xx_hal_*.c + stm32h7xx_ll_{fmc;sdmmc;usb}.c,HAL_GPIO_Init,VERIFIED,region; named
+08027004,0802716e,362,ST HAL,stm32h7xx_hal_*.c + stm32h7xx_ll_{fmc;sdmmc;usb}.c,,HIGH,region
+08027198,080271a4,12,ST HAL,stm32h7xx_hal_*.c + stm32h7xx_ll_{fmc;sdmmc;usb}.c,HAL_GPIO_ReadPin,MEDIUM,region; byte-identical to Main 0x0802afbc; name from peer
+080271a4,080271ac,8,ST HAL,stm32h7xx_hal_*.c + stm32h7xx_ll_{fmc;sdmmc;usb}.c,HAL_GPIO_WritePin,MEDIUM,region; byte-identical to Main 0x0802afc8; name from peer
+080271ac,080272e6,314,ST HAL,stm32h7xx_hal_*.c + stm32h7xx_ll_{fmc;sdmmc;usb}.c,,HIGH,region; byte-identical to Main 0x0802b000
+080272ec,08027454,360,ST HAL,stm32h7xx_hal_*.c + stm32h7xx_ll_{fmc;sdmmc;usb}.c,,HIGH,region; byte-identical to Main 0x0802b140
+08027458,080275e0,392,ST HAL,stm32h7xx_hal_*.c + stm32h7xx_ll_{fmc;sdmmc;usb}.c,,HIGH,region; byte-identical to Main 0x0802b2ac
+080275e4,08027746,354,ST HAL,stm32h7xx_hal_*.c + stm32h7xx_ll_{fmc;sdmmc;usb}.c,,HIGH,region; byte-identical to Main 0x0802b438
+0802774c,080277fc,176,ST HAL,stm32h7xx_hal_*.c + stm32h7xx_ll_{fmc;sdmmc;usb}.c,,HIGH,region; byte-identical to Main 0x0802b5a0
+08027800,08027ad6,726,ST HAL,stm32h7xx_hal_*.c + stm32h7xx_ll_{fmc;sdmmc;usb}.c,HAL_I2C_Master_Transmit,MEDIUM,region; byte-identical to Main 0x0802b654; name from peer
+08027aec,08027cd4,488,ST HAL,stm32h7xx_hal_*.c + stm32h7xx_ll_{fmc;sdmmc;usb}.c,HAL_I2C_Mem_Write,HIGH,region; byte-identical to Main 0x0802b940; name from peer
+08027ce8,08027d3c,84,ST HAL,stm32h7xx_hal_*.c + stm32h7xx_ll_{fmc;sdmmc;usb}.c,HAL_I2CEx_ConfigAnalogFilter,MEDIUM,region; byte-identical to Main 0x0802bd3c; name from peer
+08027d3c,08027d94,88,ST HAL,stm32h7xx_hal_*.c + stm32h7xx_ll_{fmc;sdmmc;usb}.c,HAL_I2CEx_ConfigDigitalFilter,MEDIUM,region; byte-identical to Main 0x0802bd90; name from peer
+08027d94,08027efc,360,ST HAL,stm32h7xx_hal_*.c + stm32h7xx_ll_{fmc;sdmmc;usb}.c,,HIGH,region
+08027f08,08027f5e,86,ST HAL,stm32h7xx_hal_*.c + stm32h7xx_ll_{fmc;sdmmc;usb}.c,,HIGH,region
+08027f6c,08027f72,6,ST HAL,stm32h7xx_hal_*.c + stm32h7xx_ll_{fmc;sdmmc;usb}.c,,HIGH,region
+08027f74,08028022,174,ST HAL,stm32h7xx_hal_*.c + stm32h7xx_ll_{fmc;sdmmc;usb}.c,,HIGH,region
+08028024,08028026,2,ST HAL,stm32h7xx_hal_*.c + stm32h7xx_ll_{fmc;sdmmc;usb}.c,,HIGH,region
+08028028,0802802a,2,ST HAL,stm32h7xx_hal_*.c + stm32h7xx_ll_{fmc;sdmmc;usb}.c,,HIGH,region
+0802802c,0802802e,2,ST HAL,stm32h7xx_hal_*.c + stm32h7xx_ll_{fmc;sdmmc;usb}.c,,HIGH,region
+08028030,080280f4,196,ST HAL,stm32h7xx_hal_*.c + stm32h7xx_ll_{fmc;sdmmc;usb}.c,,HIGH,region
+080280f4,0802827c,392,ST HAL,stm32h7xx_hal_*.c + stm32h7xx_ll_{fmc;sdmmc;usb}.c,,HIGH,region
+08028284,080282c6,66,ST HAL,stm32h7xx_hal_*.c + stm32h7xx_ll_{fmc;sdmmc;usb}.c,,HIGH,region
+080282c8,08028344,124,ST HAL,stm32h7xx_hal_*.c + stm32h7xx_ll_{fmc;sdmmc;usb}.c,,HIGH,region
+08028344,0802837e,58,ST HAL,stm32h7xx_hal_*.c + stm32h7xx_ll_{fmc;sdmmc;usb}.c,,HIGH,region
+08028380,080283ba,58,ST HAL,stm32h7xx_hal_*.c + stm32h7xx_ll_{fmc;sdmmc;usb}.c,,HIGH,region
+080283bc,080283f6,58,ST HAL,stm32h7xx_hal_*.c + stm32h7xx_ll_{fmc;sdmmc;usb}.c,,HIGH,region
+080283f8,0802852a,306,ST HAL,stm32h7xx_hal_*.c + stm32h7xx_ll_{fmc;sdmmc;usb}.c,,HIGH,region
+08028534,08028674,320,ST HAL,stm32h7xx_hal_*.c + stm32h7xx_ll_{fmc;sdmmc;usb}.c,,HIGH,region
+0802867c,080287c2,326,ST HAL,stm32h7xx_hal_*.c + stm32h7xx_ll_{fmc;sdmmc;usb}.c,,HIGH,region
+080287cc,08028bdc,1040,ST HAL,stm32h7xx_hal_*.c + stm32h7xx_ll_{fmc;sdmmc;usb}.c,,HIGH,region
+08028bdc,08028c1e,66,ST HAL,stm32h7xx_hal_*.c + stm32h7xx_ll_{fmc;sdmmc;usb}.c,,HIGH,region
+08028c20,0802975a,2866,ST HAL,stm32h7xx_hal_*.c + stm32h7xx_ll_{fmc;sdmmc;usb}.c,,HIGH,region
+08029760,08029788,40,ST HAL,stm32h7xx_hal_*.c + stm32h7xx_ll_{fmc;sdmmc;usb}.c,,HIGH,region
+08029788,08029808,128,ST HAL,stm32h7xx_hal_*.c + stm32h7xx_ll_{fmc;sdmmc;usb}.c,,HIGH,region
+08029808,08029876,110,ST HAL,stm32h7xx_hal_*.c + stm32h7xx_ll_{fmc;sdmmc;usb}.c,,HIGH,region
+08029878,080298bc,68,ST HAL,stm32h7xx_hal_*.c + stm32h7xx_ll_{fmc;sdmmc;usb}.c,,HIGH,region
+080298d0,08029914,68,ST HAL,stm32h7xx_hal_*.c + stm32h7xx_ll_{fmc;sdmmc;usb}.c,,HIGH,region
+08029914,0802999a,134,ST HAL,stm32h7xx_hal_*.c + stm32h7xx_ll_{fmc;sdmmc;usb}.c,,HIGH,region
+0802999c,08029a12,118,ST HAL,stm32h7xx_hal_*.c + stm32h7xx_ll_{fmc;sdmmc;usb}.c,,HIGH,region
+08029a14,08029a50,60,ST HAL,stm32h7xx_hal_*.c + stm32h7xx_ll_{fmc;sdmmc;usb}.c,,HIGH,region
+08029a50,08029b54,260,ST HAL,stm32h7xx_hal_*.c + stm32h7xx_ll_{fmc;sdmmc;usb}.c,,HIGH,region
+08029b54,08029b5e,10,ST HAL,stm32h7xx_hal_*.c + stm32h7xx_ll_{fmc;sdmmc;usb}.c,,HIGH,region
+08029b60,08029b8c,44,ST HAL,stm32h7xx_hal_*.c + stm32h7xx_ll_{fmc;sdmmc;usb}.c,,HIGH,region
+08029b90,08029b92,2,ST HAL,stm32h7xx_hal_*.c + stm32h7xx_ll_{fmc;sdmmc;usb}.c,,HIGH,region
+08029b94,08029ba0,12,ST HAL,stm32h7xx_hal_*.c + stm32h7xx_ll_{fmc;sdmmc;usb}.c,,HIGH,region; byte-identical to Main 0x0802c1e8
+08029ba4,08029be8,68,ST HAL,stm32h7xx_hal_*.c + stm32h7xx_ll_{fmc;sdmmc;usb}.c,HAL_PWREx_ConfigSupply,HIGH,region
+08029bec,08029bf8,12,ST HAL,stm32h7xx_hal_*.c + stm32h7xx_ll_{fmc;sdmmc;usb}.c,,HIGH,region
+08029bfc,08029ccc,208,ST HAL,stm32h7xx_hal_*.c + stm32h7xx_ll_{fmc;sdmmc;usb}.c,,HIGH,region; byte-identical to Main 0x0802c2b4
+08029ce0,0802a2bc,1480,ST HAL,stm32h7xx_hal_*.c + stm32h7xx_ll_{fmc;sdmmc;usb}.c,HAL_RCC_OscConfig,HIGH,region
+0802a2c4,0802a3c2,254,ST HAL,stm32h7xx_hal_*.c + stm32h7xx_ll_{fmc;sdmmc;usb}.c,HAL_RCC_GetSysClockFreq,HIGH,region; byte-identical to Main 0x0802ca84
+0802a3e0,0802a61a,570,ST HAL,stm32h7xx_hal_*.c + stm32h7xx_ll_{fmc;sdmmc;usb}.c,HAL_RCC_ClockConfig,HIGH,region; byte-identical to Main 0x0802cba0
+0802a634,0802a698,100,ST HAL,stm32h7xx_hal_*.c + stm32h7xx_ll_{fmc;sdmmc;usb}.c,,HIGH,region; byte-identical to Main 0x0802cdf4
+0802a6b4,0802a726,114,ST HAL,stm32h7xx_hal_*.c + stm32h7xx_ll_{fmc;sdmmc;usb}.c,,HIGH,region; byte-identical to Main 0x0802ce74
+0802a744,0802a7b6,114,ST HAL,stm32h7xx_hal_*.c + stm32h7xx_ll_{fmc;sdmmc;usb}.c,,HIGH,region; byte-identical to Main 0x0802cf04
+0802a7d4,0802a8b0,220,ST HAL,stm32h7xx_hal_*.c + stm32h7xx_ll_{fmc;sdmmc;usb}.c,,HIGH,region; byte-identical to Main 0x0802cf94
+0802a8b8,0802a994,220,ST HAL,stm32h7xx_hal_*.c + stm32h7xx_ll_{fmc;sdmmc;usb}.c,,HIGH,region; byte-identical to Main 0x0802d078
+0802a99c,0802b848,3600,ST HAL,stm32h7xx_hal_*.c + stm32h7xx_ll_{fmc;sdmmc;usb}.c,,HIGH,region
+0802b850,0802b86a,26,ST HAL,stm32h7xx_hal_*.c + stm32h7xx_ll_{fmc;sdmmc;usb}.c,,HIGH,region; byte-identical to Main 0x0802df60
+0802b874,0802b994,288,ST HAL,stm32h7xx_hal_*.c + stm32h7xx_ll_{fmc;sdmmc;usb}.c,,HIGH,region; byte-identical to Main 0x0802df84
+0802b9a8,0802bac8,288,ST HAL,stm32h7xx_hal_*.c + stm32h7xx_ll_{fmc;sdmmc;usb}.c,,HIGH,region; byte-identical to Main 0x0802e0b8
+0802badc,0802bbfc,288,ST HAL,stm32h7xx_hal_*.c + stm32h7xx_ll_{fmc;sdmmc;usb}.c,,HIGH,region; byte-identical to Main 0x0802e1ec
+0802bc10,0802bf94,858,ST HAL,stm32h7xx_hal_*.c + stm32h7xx_ll_{fmc;sdmmc;usb}.c,,HIGH,region
+0802bfa0,0802c018,120,ST HAL,stm32h7xx_hal_*.c + stm32h7xx_ll_{fmc;sdmmc;usb}.c,,HIGH,region
+0802c018,0802c082,106,ST HAL,stm32h7xx_hal_*.c + stm32h7xx_ll_{fmc;sdmmc;usb}.c,,HIGH,region
+0802c084,0802c108,132,ST HAL,stm32h7xx_hal_*.c + stm32h7xx_ll_{fmc;sdmmc;usb}.c,,HIGH,region; byte-identical to Main 0x0802e67c
+0802c110,0802c1e8,216,ST HAL,stm32h7xx_hal_*.c + stm32h7xx_ll_{fmc;sdmmc;usb}.c,,HIGH,region; byte-identical to Main 0x0802e708
+0802c1ec,0802c32a,318,ST HAL,stm32h7xx_hal_*.c + stm32h7xx_ll_{fmc;sdmmc;usb}.c,,HIGH,region; byte-identical to Main 0x0802e7e4
+0802c330,0802c458,296,ST HAL,stm32h7xx_hal_*.c + stm32h7xx_ll_{fmc;sdmmc;usb}.c,,HIGH,region; byte-identical to Main 0x0802e928
+0802c45c,0802c466,10,ST HAL,stm32h7xx_hal_*.c + stm32h7xx_ll_{fmc;sdmmc;usb}.c,,HIGH,region
+0802c468,0802c472,10,ST HAL,stm32h7xx_hal_*.c + stm32h7xx_ll_{fmc;sdmmc;usb}.c,,HIGH,region
+0802c474,0802c552,222,ST HAL,stm32h7xx_hal_*.c + stm32h7xx_ll_{fmc;sdmmc;usb}.c,,HIGH,region
+0802c558,0802c580,40,ST HAL,stm32h7xx_hal_*.c + stm32h7xx_ll_{fmc;sdmmc;usb}.c,,HIGH,region
+0802c580,0802c646,198,ST HAL,stm32h7xx_hal_*.c + stm32h7xx_ll_{fmc;sdmmc;usb}.c,,HIGH,region
+0802c64c,0802c71c,208,ST HAL,stm32h7xx_hal_*.c + stm32h7xx_ll_{fmc;sdmmc;usb}.c,,HIGH,region
+0802c720,0802c722,2,ST HAL,stm32h7xx_hal_*.c + stm32h7xx_ll_{fmc;sdmmc;usb}.c,,HIGH,region
+0802c724,0802c898,372,ST HAL,stm32h7xx_hal_*.c + stm32h7xx_ll_{fmc;sdmmc;usb}.c,,HIGH,region
+0802c89c,0802cafc,608,ST HAL,stm32h7xx_hal_*.c + stm32h7xx_ll_{fmc;sdmmc;usb}.c,,HIGH,region
+0802cb10,0802ccae,414,ST HAL,stm32h7xx_hal_*.c + stm32h7xx_ll_{fmc;sdmmc;usb}.c,,HIGH,region
+0802ccb8,0802ccde,38,ST HAL,stm32h7xx_hal_*.c + stm32h7xx_ll_{fmc;sdmmc;usb}.c,,HIGH,region
+0802cce0,0802ce64,388,ST HAL,stm32h7xx_hal_*.c + stm32h7xx_ll_{fmc;sdmmc;usb}.c,,HIGH,region
+0802ce74,0802cf38,196,ST HAL,stm32h7xx_hal_*.c + stm32h7xx_ll_{fmc;sdmmc;usb}.c,,HIGH,region
+0802cf38,0802cf60,40,ST HAL,stm32h7xx_hal_*.c + stm32h7xx_ll_{fmc;sdmmc;usb}.c,,HIGH,region
+0802cf60,0802cf62,2,ST HAL,stm32h7xx_hal_*.c + stm32h7xx_ll_{fmc;sdmmc;usb}.c,,HIGH,region
+0802cf64,0802cf66,2,ST HAL,stm32h7xx_hal_*.c + stm32h7xx_ll_{fmc;sdmmc;usb}.c,,HIGH,region
+0802cf68,0802cf6a,2,ST HAL,stm32h7xx_hal_*.c + stm32h7xx_ll_{fmc;sdmmc;usb}.c,,HIGH,region
+0802cf6c,0802cf6e,2,ST HAL,stm32h7xx_hal_*.c + stm32h7xx_ll_{fmc;sdmmc;usb}.c,,HIGH,region
+0802cf70,0802d1e2,626,ST HAL,stm32h7xx_hal_*.c + stm32h7xx_ll_{fmc;sdmmc;usb}.c,,HIGH,region
+0802d1ec,0802d23a,78,ST HAL,stm32h7xx_hal_*.c + stm32h7xx_ll_{fmc;sdmmc;usb}.c,,HIGH,region
+0802d240,0802d27e,62,ST HAL,stm32h7xx_hal_*.c + stm32h7xx_ll_{fmc;sdmmc;usb}.c,,HIGH,region
+0802d2b0,0802d362,178,ST HAL,stm32h7xx_hal_*.c + stm32h7xx_ll_{fmc;sdmmc;usb}.c,,HIGH,region; byte-identical to Main 0x0802eaf8
+0802d368,0802d514,428,ST HAL,stm32h7xx_hal_*.c + stm32h7xx_ll_{fmc;sdmmc;usb}.c,,HIGH,region; byte-identical to Main 0x0802ebb0
+0802d518,0802d788,624,ST HAL,stm32h7xx_hal_*.c + stm32h7xx_ll_{fmc;sdmmc;usb}.c,HAL_SPI_Transmit,HIGH,region; byte-identical to Main 0x0802ed60; name from peer
+0802d78c,0802db66,972,ST HAL,stm32h7xx_hal_*.c + stm32h7xx_ll_{fmc;sdmmc;usb}.c,,HIGH,region
+0802db68,0802dbd8,112,ST HAL,stm32h7xx_hal_*.c + stm32h7xx_ll_{fmc;sdmmc;usb}.c,,HIGH,region; byte-identical to Main 0x0802f780
+0802dbe0,0802dc54,116,ST HAL,stm32h7xx_hal_*.c + stm32h7xx_ll_{fmc;sdmmc;usb}.c,,HIGH,region; byte-identical to Main 0x0802f7f8
+0802dc60,0802dd8a,298,ST HAL,stm32h7xx_hal_*.c + stm32h7xx_ll_{fmc;sdmmc;usb}.c,,HIGH,region
+0802dda4,0802de2c,136,ST HAL,stm32h7xx_hal_*.c + stm32h7xx_ll_{fmc;sdmmc;usb}.c,HAL_TIM_Base_Start_IT,VERIFIED,region; named
+0802de48,0802de7c,52,ST HAL,stm32h7xx_hal_*.c + stm32h7xx_ll_{fmc;sdmmc;usb}.c,,HIGH,region
+0802de7c,0802dfa6,298,ST HAL,stm32h7xx_hal_*.c + stm32h7xx_ll_{fmc;sdmmc;usb}.c,,HIGH,region
+0802dfc0,0802e0ec,268,ST HAL,stm32h7xx_hal_*.c + stm32h7xx_ll_{fmc;sdmmc;usb}.c,,HIGH,region
+0802e100,0802e1f2,228,ST HAL,stm32h7xx_hal_*.c + stm32h7xx_ll_{fmc;sdmmc;usb}.c,,HIGH,region
+0802e200,0802e202,2,ST HAL,stm32h7xx_hal_*.c + stm32h7xx_ll_{fmc;sdmmc;usb}.c,,HIGH,region
+0802e204,0802e32e,298,ST HAL,stm32h7xx_hal_*.c + stm32h7xx_ll_{fmc;sdmmc;usb}.c,,HIGH,region
+0802e348,0802e4e6,382,ST HAL,stm32h7xx_hal_*.c + stm32h7xx_ll_{fmc;sdmmc;usb}.c,,HIGH,region
+0802e500,0802e67a,378,ST HAL,stm32h7xx_hal_*.c + stm32h7xx_ll_{fmc;sdmmc;usb}.c,,HIGH,region
+0802e6a0,0802e764,196,ST HAL,stm32h7xx_hal_*.c + stm32h7xx_ll_{fmc;sdmmc;usb}.c,,HIGH,region
+0802e764,0802e838,212,ST HAL,stm32h7xx_hal_*.c + stm32h7xx_ll_{fmc;sdmmc;usb}.c,,HIGH,region
+0802e838,0802e9da,418,ST HAL,stm32h7xx_hal_*.c + stm32h7xx_ll_{fmc;sdmmc;usb}.c,,HIGH,region
+0802e9e0,0802eb5a,378,ST HAL,stm32h7xx_hal_*.c + stm32h7xx_ll_{fmc;sdmmc;usb}.c,,HIGH,region; byte-identical to Main 0x0802fbe0
+0802eb6c,0802ecc8,348,ST HAL,stm32h7xx_hal_*.c + stm32h7xx_ll_{fmc;sdmmc;usb}.c,,HIGH,region
+0802ece0,0802ece2,2,ST HAL,stm32h7xx_hal_*.c + stm32h7xx_ll_{fmc;sdmmc;usb}.c,,HIGH,region
+0802ece4,0802ece6,2,ST HAL,stm32h7xx_hal_*.c + stm32h7xx_ll_{fmc;sdmmc;usb}.c,,HIGH,region
+0802ece8,0802ecea,2,ST HAL,stm32h7xx_hal_*.c + stm32h7xx_ll_{fmc;sdmmc;usb}.c,,HIGH,region
+0802ecec,0802ecee,2,ST HAL,stm32h7xx_hal_*.c + stm32h7xx_ll_{fmc;sdmmc;usb}.c,,HIGH,region
+0802ecf0,0802f1b6,346,ST HAL,stm32h7xx_hal_*.c + stm32h7xx_ll_{fmc;sdmmc;usb}.c,,HIGH,region; byte-identical to Main 0x0802fd80
+0802ee48,0802eebe,118,ST HAL,stm32h7xx_hal_*.c + stm32h7xx_ll_{fmc;sdmmc;usb}.c,,HIGH,region; byte-identical to Main 0x0802fed8
+0802eecc,0802f0ea,500,ST HAL,stm32h7xx_hal_*.c + stm32h7xx_ll_{fmc;sdmmc;usb}.c,,HIGH,region; byte-identical to Main 0x0802ff5c
+0802f100,0802f1a4,164,ST HAL,stm32h7xx_hal_*.c + stm32h7xx_ll_{fmc;sdmmc;usb}.c,,HIGH,region
+0802f1b8,0802f1ba,2,ST HAL,stm32h7xx_hal_*.c + stm32h7xx_ll_{fmc;sdmmc;usb}.c,,HIGH,region
+0802f1bc,0802f1be,2,ST HAL,stm32h7xx_hal_*.c + stm32h7xx_ll_{fmc;sdmmc;usb}.c,,HIGH,region
+0802f1c0,0802f1fe,62,ST HAL,stm32h7xx_hal_*.c + stm32h7xx_ll_{fmc;sdmmc;usb}.c,,HIGH,region
+0802f200,0802f2f4,244,ST HAL,stm32h7xx_hal_*.c + stm32h7xx_ll_{fmc;sdmmc;usb}.c,,HIGH,region; byte-identical to Main 0x08030264
+0802f2f4,0802f372,126,ST HAL,stm32h7xx_hal_*.c + stm32h7xx_ll_{fmc;sdmmc;usb}.c,,HIGH,region; byte-identical to Main 0x08030358
+0802f3c4,0802f3c6,2,ST HAL,stm32h7xx_hal_*.c + stm32h7xx_ll_{fmc;sdmmc;usb}.c,,HIGH,region
+0802f3d4,0802f3d6,2,ST HAL,stm32h7xx_hal_*.c + stm32h7xx_ll_{fmc;sdmmc;usb}.c,,HIGH,region
+0802f3d8,0802f3da,2,ST HAL,stm32h7xx_hal_*.c + stm32h7xx_ll_{fmc;sdmmc;usb}.c,,HIGH,region
+0802f3dc,0802f3de,2,ST HAL,stm32h7xx_hal_*.c + stm32h7xx_ll_{fmc;sdmmc;usb}.c,,HIGH,region
+0802f4c4,0802f4c6,2,ST HAL,stm32h7xx_hal_*.c + stm32h7xx_ll_{fmc;sdmmc;usb}.c,,HIGH,region
+0802f91c,0802fc80,630,ST HAL,stm32h7xx_hal_*.c + stm32h7xx_ll_{fmc;sdmmc;usb}.c,,HIGH,region
+0802fc94,0802fd44,176,ST HAL,stm32h7xx_hal_*.c + stm32h7xx_ll_{fmc;sdmmc;usb}.c,,HIGH,region; byte-identical to Main 0x08030d0c
+0802ff9c,08030004,700,ST HAL,stm32h7xx_hal_*.c + stm32h7xx_ll_{fmc;sdmmc;usb}.c,,HIGH,region; byte-identical to Main 0x08031014
+08030004,08030096,146,ST HAL,stm32h7xx_hal_*.c + stm32h7xx_ll_{fmc;sdmmc;usb}.c,,HIGH,region; byte-identical to Main 0x0803107c
+080300a4,080300e6,66,ST HAL,stm32h7xx_hal_*.c + stm32h7xx_ll_{fmc;sdmmc;usb}.c,,HIGH,region
+080300f8,08030134,60,ST HAL,stm32h7xx_hal_*.c + stm32h7xx_ll_{fmc;sdmmc;usb}.c,,HIGH,region; byte-identical to Main 0x08031170
+08030134,080301b0,124,ST HAL,stm32h7xx_hal_*.c + stm32h7xx_ll_{fmc;sdmmc;usb}.c,,HIGH,region; byte-identical to Main 0x080311ac
+080301b8,08030234,124,ST HAL,stm32h7xx_hal_*.c + stm32h7xx_ll_{fmc;sdmmc;usb}.c,,HIGH,region; byte-identical to Main 0x08031230
+0803023c,080302a6,106,ST HAL,stm32h7xx_hal_*.c + stm32h7xx_ll_{fmc;sdmmc;usb}.c,,HIGH,region
+080302ac,08030322,118,ST HAL,stm32h7xx_hal_*.c + stm32h7xx_ll_{fmc;sdmmc;usb}.c,,HIGH,region
+08030328,08030352,42,ST HAL,stm32h7xx_hal_*.c + stm32h7xx_ll_{fmc;sdmmc;usb}.c,,HIGH,region
+08030358,08030370,24,ST HAL,stm32h7xx_hal_*.c + stm32h7xx_ll_{fmc;sdmmc;usb}.c,,HIGH,region
+08030374,08030438,196,ST HAL,stm32h7xx_hal_*.c + stm32h7xx_ll_{fmc;sdmmc;usb}.c,,HIGH,region
+0803043c,08030470,52,ST HAL,stm32h7xx_hal_*.c + stm32h7xx_ll_{fmc;sdmmc;usb}.c,,HIGH,region
+08030474,0803047a,6,ST HAL,stm32h7xx_hal_*.c + stm32h7xx_ll_{fmc;sdmmc;usb}.c,,HIGH,region
+0803047c,08030488,12,ST HAL,stm32h7xx_hal_*.c + stm32h7xx_ll_{fmc;sdmmc;usb}.c,,HIGH,region
+08030488,08030496,14,ST HAL,stm32h7xx_hal_*.c + stm32h7xx_ll_{fmc;sdmmc;usb}.c,,HIGH,region
+08030498,080304a6,14,ST HAL,stm32h7xx_hal_*.c + stm32h7xx_ll_{fmc;sdmmc;usb}.c,,HIGH,region
+080304a8,080304b0,8,ST HAL,stm32h7xx_hal_*.c + stm32h7xx_ll_{fmc;sdmmc;usb}.c,,HIGH,region
+080304b0,080304b6,6,ST HAL,stm32h7xx_hal_*.c + stm32h7xx_ll_{fmc;sdmmc;usb}.c,,HIGH,region
+080304b8,080304e2,42,ST HAL,stm32h7xx_hal_*.c + stm32h7xx_ll_{fmc;sdmmc;usb}.c,,HIGH,region
+080304e4,0803056a,134,ST HAL,stm32h7xx_hal_*.c + stm32h7xx_ll_{fmc;sdmmc;usb}.c,,HIGH,region
+08030580,08030606,134,ST HAL,stm32h7xx_hal_*.c + stm32h7xx_ll_{fmc;sdmmc;usb}.c,,HIGH,region
+0803061c,080306a2,134,ST HAL,stm32h7xx_hal_*.c + stm32h7xx_ll_{fmc;sdmmc;usb}.c,,HIGH,region
+080306b8,0803073e,134,ST HAL,stm32h7xx_hal_*.c + stm32h7xx_ll_{fmc;sdmmc;usb}.c,,HIGH,region
+08030754,080307da,134,ST HAL,stm32h7xx_hal_*.c + stm32h7xx_ll_{fmc;sdmmc;usb}.c,,HIGH,region
+080307f0,080308a4,180,ST HAL,stm32h7xx_hal_*.c + stm32h7xx_ll_{fmc;sdmmc;usb}.c,,HIGH,region
+080308bc,08030942,134,ST HAL,stm32h7xx_hal_*.c + stm32h7xx_ll_{fmc;sdmmc;usb}.c,,HIGH,region
+08030958,0803099e,70,ST HAL,stm32h7xx_hal_*.c + stm32h7xx_ll_{fmc;sdmmc;usb}.c,,HIGH,region
+080309b0,08030a24,116,ST HAL,stm32h7xx_hal_*.c + stm32h7xx_ll_{fmc;sdmmc;usb}.c,,HIGH,region
+08030a30,08030ab6,134,ST HAL,stm32h7xx_hal_*.c + stm32h7xx_ll_{fmc;sdmmc;usb}.c,,HIGH,region
+08030acc,08030b32,102,ST HAL,stm32h7xx_hal_*.c + stm32h7xx_ll_{fmc;sdmmc;usb}.c,,HIGH,region
+08030b44,08030bca,134,ST HAL,stm32h7xx_hal_*.c + stm32h7xx_ll_{fmc;sdmmc;usb}.c,,HIGH,region
+08030be0,08030c5e,126,ST HAL,stm32h7xx_hal_*.c + stm32h7xx_ll_{fmc;sdmmc;usb}.c,,HIGH,region
+08030c74,08030ce0,108,ST HAL,stm32h7xx_hal_*.c + stm32h7xx_ll_{fmc;sdmmc;usb}.c,,HIGH,region
+08030cf0,08030d60,112,ST HAL,stm32h7xx_hal_*.c + stm32h7xx_ll_{fmc;sdmmc;usb}.c,,HIGH,region
+08030d70,08030e1e,174,ST HAL,stm32h7xx_hal_*.c + stm32h7xx_ll_{fmc;sdmmc;usb}.c,,HIGH,region
+08030e30,08030eb6,134,ST HAL,stm32h7xx_hal_*.c + stm32h7xx_ll_{fmc;sdmmc;usb}.c,,HIGH,region
+08030ecc,08030f4a,126,ST HAL,stm32h7xx_hal_*.c + stm32h7xx_ll_{fmc;sdmmc;usb}.c,,HIGH,region
+08030f60,08031076,278,ST HAL,stm32h7xx_hal_*.c + stm32h7xx_ll_{fmc;sdmmc;usb}.c,,HIGH,region
+0803107c,08031126,170,ST HAL,stm32h7xx_hal_*.c + stm32h7xx_ll_{fmc;sdmmc;usb}.c,,HIGH,region
+08031170,0803117e,14,ST HAL,stm32h7xx_hal_*.c + stm32h7xx_ll_{fmc;sdmmc;usb}.c,,HIGH,region
+08031180,0803118e,14,ST HAL,stm32h7xx_hal_*.c + stm32h7xx_ll_{fmc;sdmmc;usb}.c,,HIGH,region
+08031190,080311fa,106,ST HAL,stm32h7xx_hal_*.c + stm32h7xx_ll_{fmc;sdmmc;usb}.c,,HIGH,region
+080311fc,08031460,612,ST HAL,stm32h7xx_hal_*.c + stm32h7xx_ll_{fmc;sdmmc;usb}.c,,HIGH,region
+08031468,080314b6,78,ST HAL,stm32h7xx_hal_*.c + stm32h7xx_ll_{fmc;sdmmc;usb}.c,,HIGH,region
+080314b8,08031502,74,ST HAL,stm32h7xx_hal_*.c + stm32h7xx_ll_{fmc;sdmmc;usb}.c,,HIGH,region
+08031504,0803151a,22,ST HAL,stm32h7xx_hal_*.c + stm32h7xx_ll_{fmc;sdmmc;usb}.c,,HIGH,region
+0803151c,080315a2,134,ST HAL,stm32h7xx_hal_*.c + stm32h7xx_ll_{fmc;sdmmc;usb}.c,,HIGH,region
+080315a8,0803165a,178,ST HAL,stm32h7xx_hal_*.c + stm32h7xx_ll_{fmc;sdmmc;usb}.c,,HIGH,region
+08031664,080318a4,576,ST HAL,stm32h7xx_hal_*.c + stm32h7xx_ll_{fmc;sdmmc;usb}.c,,HIGH,region
+080318b0,08031942,146,ST HAL,stm32h7xx_hal_*.c + stm32h7xx_ll_{fmc;sdmmc;usb}.c,,HIGH,region
+08031944,0803196e,42,ST HAL,stm32h7xx_hal_*.c + stm32h7xx_ll_{fmc;sdmmc;usb}.c,,HIGH,region
+08031970,080319b8,72,ST HAL,stm32h7xx_hal_*.c + stm32h7xx_ll_{fmc;sdmmc;usb}.c,,HIGH,region
+080319b8,08031a26,110,ST HAL,stm32h7xx_hal_*.c + stm32h7xx_ll_{fmc;sdmmc;usb}.c,,HIGH,region
+08031a28,08031a80,88,ST HAL,stm32h7xx_hal_*.c + stm32h7xx_ll_{fmc;sdmmc;usb}.c,,HIGH,region
+08031a80,08031aa2,34,ST HAL,stm32h7xx_hal_*.c + stm32h7xx_ll_{fmc;sdmmc;usb}.c,,HIGH,region
+08031aa4,08031ac4,32,ST HAL,stm32h7xx_hal_*.c + stm32h7xx_ll_{fmc;sdmmc;usb}.c,,HIGH,region
+08031ac4,08031ae4,32,ST HAL,stm32h7xx_hal_*.c + stm32h7xx_ll_{fmc;sdmmc;usb}.c,,HIGH,region
+08031ae4,08031aec,8,ST HAL,stm32h7xx_hal_*.c + stm32h7xx_ll_{fmc;sdmmc;usb}.c,,HIGH,region
+08031aec,08031afa,14,ST HAL,stm32h7xx_hal_*.c + stm32h7xx_ll_{fmc;sdmmc;usb}.c,,HIGH,region
+08031afc,08031b0a,14,ST HAL,stm32h7xx_hal_*.c + stm32h7xx_ll_{fmc;sdmmc;usb}.c,,HIGH,region
+08031b0c,08031b1e,18,ST HAL,stm32h7xx_hal_*.c + stm32h7xx_ll_{fmc;sdmmc;usb}.c,,HIGH,region
+08031b20,08031b40,32,ST HAL,stm32h7xx_hal_*.c + stm32h7xx_ll_{fmc;sdmmc;usb}.c,,HIGH,region
+08031b40,08031b48,8,ST HAL,stm32h7xx_hal_*.c + stm32h7xx_ll_{fmc;sdmmc;usb}.c,,HIGH,region
+08031b48,08031b6e,38,ST HAL,stm32h7xx_hal_*.c + stm32h7xx_ll_{fmc;sdmmc;usb}.c,,HIGH,region
+08031b74,08031bbe,74,ST HAL,stm32h7xx_hal_*.c + stm32h7xx_ll_{fmc;sdmmc;usb}.c,,HIGH,region
+08031bc4,08031e94,720,application,drivers + services (codec / BT / SLIP / GT911 / PCA9557 / fatfs.c / user_diskio / W25Qxx),,HIGH,region
+08031eb8,08031f92,218,application,drivers + services (codec / BT / SLIP / GT911 / PCA9557 / fatfs.c / user_diskio / W25Qxx),,HIGH,region; byte-identical to Main 0x08044034
+08031f98,08032052,186,application,drivers + services (codec / BT / SLIP / GT911 / PCA9557 / fatfs.c / user_diskio / W25Qxx),,HIGH,region
+08032058,08032112,186,application,drivers + services (codec / BT / SLIP / GT911 / PCA9557 / fatfs.c / user_diskio / W25Qxx),,HIGH,region; byte-identical to Main 0x080441d4
+08032118,08032198,128,application,drivers + services (codec / BT / SLIP / GT911 / PCA9557 / fatfs.c / user_diskio / W25Qxx),,HIGH,region; byte-identical to Main 0x08044294
+0803219c,0803221c,128,application,drivers + services (codec / BT / SLIP / GT911 / PCA9557 / fatfs.c / user_diskio / W25Qxx),,HIGH,region; byte-identical to Main 0x08044318
+08032220,080323b8,408,application,drivers + services (codec / BT / SLIP / GT911 / PCA9557 / fatfs.c / user_diskio / W25Qxx),,HIGH,region
+080323bc,08032422,102,application,drivers + services (codec / BT / SLIP / GT911 / PCA9557 / fatfs.c / user_diskio / W25Qxx),,HIGH,region; byte-identical to Main 0x0804439c
+08032428,08032482,90,application,drivers + services (codec / BT / SLIP / GT911 / PCA9557 / fatfs.c / user_diskio / W25Qxx),,HIGH,region; byte-identical to Main 0x08044408
+08032488,080324e0,88,application,drivers + services (codec / BT / SLIP / GT911 / PCA9557 / fatfs.c / user_diskio / W25Qxx),,HIGH,region; byte-identical to Main 0x08044468
+080324e4,080324f0,12,application,drivers + services (codec / BT / SLIP / GT911 / PCA9557 / fatfs.c / user_diskio / W25Qxx),,HIGH,region; byte-identical to Main 0x080444c4
+080324f4,08032524,48,application,drivers + services (codec / BT / SLIP / GT911 / PCA9557 / fatfs.c / user_diskio / W25Qxx),,HIGH,region; byte-identical to Main 0x080444d4
+08032524,08032cce,1962,application,drivers + services (codec / BT / SLIP / GT911 / PCA9557 / fatfs.c / user_diskio / W25Qxx),,HIGH,region
+08032cd4,08032d06,50,application,drivers + services (codec / BT / SLIP / GT911 / PCA9557 / fatfs.c / user_diskio / W25Qxx),,HIGH,region
+08032d0c,08032d42,54,application,drivers + services (codec / BT / SLIP / GT911 / PCA9557 / fatfs.c / user_diskio / W25Qxx),,HIGH,region
+08032d48,08032da2,90,application,drivers + services (codec / BT / SLIP / GT911 / PCA9557 / fatfs.c / user_diskio / W25Qxx),,HIGH,region
+08032db4,08032dea,54,application,drivers + services (codec / BT / SLIP / GT911 / PCA9557 / fatfs.c / user_diskio / W25Qxx),,HIGH,region
+08032dec,08032e58,108,application,drivers + services (codec / BT / SLIP / GT911 / PCA9557 / fatfs.c / user_diskio / W25Qxx),,HIGH,region
+080330c0,08033128,104,application,drivers + services (codec / BT / SLIP / GT911 / PCA9557 / fatfs.c / user_diskio / W25Qxx),,HIGH,region
+08033148,08033158,16,application,drivers + services (codec / BT / SLIP / GT911 / PCA9557 / fatfs.c / user_diskio / W25Qxx),,HIGH,region
+08033168,08033176,14,application,drivers + services (codec / BT / SLIP / GT911 / PCA9557 / fatfs.c / user_diskio / W25Qxx),,HIGH,region
+08033178,08033186,14,application,drivers + services (codec / BT / SLIP / GT911 / PCA9557 / fatfs.c / user_diskio / W25Qxx),,HIGH,region
+080331d0,080331fc,44,application,drivers + services (codec / BT / SLIP / GT911 / PCA9557 / fatfs.c / user_diskio / W25Qxx),,HIGH,region
+08033200,0803322c,44,application,drivers + services (codec / BT / SLIP / GT911 / PCA9557 / fatfs.c / user_diskio / W25Qxx),,HIGH,region
+08033230,08033246,46,application,drivers + services (codec / BT / SLIP / GT911 / PCA9557 / fatfs.c / user_diskio / W25Qxx),,HIGH,region
+0803327c,080332c0,68,application,drivers + services (codec / BT / SLIP / GT911 / PCA9557 / fatfs.c / user_diskio / W25Qxx),,HIGH,region
+080332c8,080332d8,606,application,drivers + services (codec / BT / SLIP / GT911 / PCA9557 / fatfs.c / user_diskio / W25Qxx),,HIGH,region
+080332dc,08036878,74,application,drivers + services (codec / BT / SLIP / GT911 / PCA9557 / fatfs.c / user_diskio / W25Qxx),,HIGH,region
+08033ca8,08033e62,442,application,drivers + services (codec / BT / SLIP / GT911 / PCA9557 / fatfs.c / user_diskio / W25Qxx),,HIGH,region
+080345e8,08034610,40,application,drivers + services (codec / BT / SLIP / GT911 / PCA9557 / fatfs.c / user_diskio / W25Qxx),,HIGH,region
+0803461c,0803467c,96,application,drivers + services (codec / BT / SLIP / GT911 / PCA9557 / fatfs.c / user_diskio / W25Qxx),,HIGH,region
+08034680,080348c0,572,application,drivers + services (codec / BT / SLIP / GT911 / PCA9557 / fatfs.c / user_diskio / W25Qxx),,HIGH,region
+080348dc,08034910,52,application,drivers + services (codec / BT / SLIP / GT911 / PCA9557 / fatfs.c / user_diskio / W25Qxx),,HIGH,region
+08034984,08034b90,524,application,drivers + services (codec / BT / SLIP / GT911 / PCA9557 / fatfs.c / user_diskio / W25Qxx),slip_rx_handler,HIGH,region
+08034bf0,08034c02,18,application,drivers + services (codec / BT / SLIP / GT911 / PCA9557 / fatfs.c / user_diskio / W25Qxx),,HIGH,region
+08034c0c,08034c8e,130,application,drivers + services (codec / BT / SLIP / GT911 / PCA9557 / fatfs.c / user_diskio / W25Qxx),,HIGH,region
+08034cb4,08034cce,26,application,drivers + services (codec / BT / SLIP / GT911 / PCA9557 / fatfs.c / user_diskio / W25Qxx),,HIGH,region
+08034ce0,08034d16,54,application,drivers + services (codec / BT / SLIP / GT911 / PCA9557 / fatfs.c / user_diskio / W25Qxx),,HIGH,region
+08034d1c,08034d4c,48,application,drivers + services (codec / BT / SLIP / GT911 / PCA9557 / fatfs.c / user_diskio / W25Qxx),,HIGH,region
+08034d54,08034da4,80,application,drivers + services (codec / BT / SLIP / GT911 / PCA9557 / fatfs.c / user_diskio / W25Qxx),,HIGH,region
+08034da8,08034dbe,22,application,drivers + services (codec / BT / SLIP / GT911 / PCA9557 / fatfs.c / user_diskio / W25Qxx),,HIGH,region
+08034dc4,08034e90,204,application,drivers + services (codec / BT / SLIP / GT911 / PCA9557 / fatfs.c / user_diskio / W25Qxx),,HIGH,region
+08034e98,08034eb2,26,application,drivers + services (codec / BT / SLIP / GT911 / PCA9557 / fatfs.c / user_diskio / W25Qxx),,HIGH,region
+08034ebc,08034ebe,2,application,drivers + services (codec / BT / SLIP / GT911 / PCA9557 / fatfs.c / user_diskio / W25Qxx),,HIGH,region
+08034ec0,08034ec2,2,application,drivers + services (codec / BT / SLIP / GT911 / PCA9557 / fatfs.c / user_diskio / W25Qxx),,HIGH,region
+08034ec4,0803501c,344,application,drivers + services (codec / BT / SLIP / GT911 / PCA9557 / fatfs.c / user_diskio / W25Qxx),,HIGH,region
+08035034,08035752,1738,application,drivers + services (codec / BT / SLIP / GT911 / PCA9557 / fatfs.c / user_diskio / W25Qxx),gt911_init,HIGH,region
+08035ce8,08035cfc,20,application,drivers + services (codec / BT / SLIP / GT911 / PCA9557 / fatfs.c / user_diskio / W25Qxx),,HIGH,region
+08035d00,08035d36,54,application,drivers + services (codec / BT / SLIP / GT911 / PCA9557 / fatfs.c / user_diskio / W25Qxx),,HIGH,region
+08035d3c,08035d7e,66,application,drivers + services (codec / BT / SLIP / GT911 / PCA9557 / fatfs.c / user_diskio / W25Qxx),,HIGH,region
+08035d84,08035dc6,66,application,drivers + services (codec / BT / SLIP / GT911 / PCA9557 / fatfs.c / user_diskio / W25Qxx),,HIGH,region
+08035dcc,08035e0e,66,application,drivers + services (codec / BT / SLIP / GT911 / PCA9557 / fatfs.c / user_diskio / W25Qxx),,HIGH,region
+08035e14,08035e2c,24,application,drivers + services (codec / BT / SLIP / GT911 / PCA9557 / fatfs.c / user_diskio / W25Qxx),,HIGH,region
+08035e2c,08035f64,312,application,drivers + services (codec / BT / SLIP / GT911 / PCA9557 / fatfs.c / user_diskio / W25Qxx),,HIGH,region
+08035f7c,08035f80,4,application,drivers + services (codec / BT / SLIP / GT911 / PCA9557 / fatfs.c / user_diskio / W25Qxx),,HIGH,region
+08035f80,080362ca,808,application,drivers + services (codec / BT / SLIP / GT911 / PCA9557 / fatfs.c / user_diskio / W25Qxx),,HIGH,region
+080362e8,080362f2,10,application,drivers + services (codec / BT / SLIP / GT911 / PCA9557 / fatfs.c / user_diskio / W25Qxx),,HIGH,region
+080362f8,08036302,10,application,drivers + services (codec / BT / SLIP / GT911 / PCA9557 / fatfs.c / user_diskio / W25Qxx),,HIGH,region
+08036308,08036312,10,application,drivers + services (codec / BT / SLIP / GT911 / PCA9557 / fatfs.c / user_diskio / W25Qxx),,HIGH,region
+08036318,08036322,10,application,drivers + services (codec / BT / SLIP / GT911 / PCA9557 / fatfs.c / user_diskio / W25Qxx),,HIGH,region
+08036328,080363d4,172,application,drivers + services (codec / BT / SLIP / GT911 / PCA9557 / fatfs.c / user_diskio / W25Qxx),,HIGH,region
+080364a8,080364ba,18,application,drivers + services (codec / BT / SLIP / GT911 / PCA9557 / fatfs.c / user_diskio / W25Qxx),,HIGH,region
+080364ec,08036566,122,application,drivers + services (codec / BT / SLIP / GT911 / PCA9557 / fatfs.c / user_diskio / W25Qxx),,HIGH,region
+08036578,0803659a,34,application,drivers + services (codec / BT / SLIP / GT911 / PCA9557 / fatfs.c / user_diskio / W25Qxx),,HIGH,region
+080365a0,080365d8,56,application,drivers + services (codec / BT / SLIP / GT911 / PCA9557 / fatfs.c / user_diskio / W25Qxx),,HIGH,region
+080365e4,0803666e,186,application,drivers + services (codec / BT / SLIP / GT911 / PCA9557 / fatfs.c / user_diskio / W25Qxx),,HIGH,region
+08036674,080366a2,46,application,drivers + services (codec / BT / SLIP / GT911 / PCA9557 / fatfs.c / user_diskio / W25Qxx),,HIGH,region
+080366b0,080367ae,246,application,drivers + services (codec / BT / SLIP / GT911 / PCA9557 / fatfs.c / user_diskio / W25Qxx),,HIGH,region
+080367c0,080367c6,6,application,drivers + services (codec / BT / SLIP / GT911 / PCA9557 / fatfs.c / user_diskio / W25Qxx),,HIGH,region
+080367cc,0803684c,128,application,drivers + services (codec / BT / SLIP / GT911 / PCA9557 / fatfs.c / user_diskio / W25Qxx),,HIGH,region
+08036880,08036926,166,application,drivers + services (codec / BT / SLIP / GT911 / PCA9557 / fatfs.c / user_diskio / W25Qxx),,HIGH,region
+0803693c,08036a0a,206,application,drivers + services (codec / BT / SLIP / GT911 / PCA9557 / fatfs.c / user_diskio / W25Qxx),,HIGH,region
+08036a0c,08036a98,140,application,drivers + services (codec / BT / SLIP / GT911 / PCA9557 / fatfs.c / user_diskio / W25Qxx),,HIGH,region
+08036a9c,08036bc4,296,application,drivers + services (codec / BT / SLIP / GT911 / PCA9557 / fatfs.c / user_diskio / W25Qxx),,HIGH,region
+08036bc4,08036c8e,202,application,drivers + services (codec / BT / SLIP / GT911 / PCA9557 / fatfs.c / user_diskio / W25Qxx),,HIGH,region
+08036c94,08036dbc,296,application,drivers + services (codec / BT / SLIP / GT911 / PCA9557 / fatfs.c / user_diskio / W25Qxx),,HIGH,region
+08036dc0,08036e68,162,application,drivers + services (codec / BT / SLIP / GT911 / PCA9557 / fatfs.c / user_diskio / W25Qxx),,HIGH,region
+08036e6c,08036e94,40,application,drivers + services (codec / BT / SLIP / GT911 / PCA9557 / fatfs.c / user_diskio / W25Qxx),,HIGH,region
+08036e94,08036ebc,40,application,drivers + services (codec / BT / SLIP / GT911 / PCA9557 / fatfs.c / user_diskio / W25Qxx),,HIGH,region
+08036ebc,08036ec0,4,application,drivers + services (codec / BT / SLIP / GT911 / PCA9557 / fatfs.c / user_diskio / W25Qxx),,HIGH,region
+08036ec0,08036ede,30,application,drivers + services (codec / BT / SLIP / GT911 / PCA9557 / fatfs.c / user_diskio / W25Qxx),,HIGH,region
+08036ef8,08036efc,4,application,drivers + services (codec / BT / SLIP / GT911 / PCA9557 / fatfs.c / user_diskio / W25Qxx),,HIGH,region
+08036efc,08036f14,24,application,drivers + services (codec / BT / SLIP / GT911 / PCA9557 / fatfs.c / user_diskio / W25Qxx),,HIGH,region
+08036f18,08036f30,24,application,drivers + services (codec / BT / SLIP / GT911 / PCA9557 / fatfs.c / user_diskio / W25Qxx),,HIGH,region
+08036f34,08036f44,16,application,drivers + services (codec / BT / SLIP / GT911 / PCA9557 / fatfs.c / user_diskio / W25Qxx),,HIGH,region
+08036f48,08036f50,8,application,drivers + services (codec / BT / SLIP / GT911 / PCA9557 / fatfs.c / user_diskio / W25Qxx),,HIGH,region
+08036f54,08036f5c,8,application,drivers + services (codec / BT / SLIP / GT911 / PCA9557 / fatfs.c / user_diskio / W25Qxx),,HIGH,region
+08036f5c,08036f64,8,application,drivers + services (codec / BT / SLIP / GT911 / PCA9557 / fatfs.c / user_diskio / W25Qxx),,HIGH,region
+08036f64,08036f82,30,application,drivers + services (codec / BT / SLIP / GT911 / PCA9557 / fatfs.c / user_diskio / W25Qxx),,HIGH,region
+08036f84,08036fae,42,application,drivers + services (codec / BT / SLIP / GT911 / PCA9557 / fatfs.c / user_diskio / W25Qxx),,HIGH,region
+08036fb4,08036fc8,20,application,drivers + services (codec / BT / SLIP / GT911 / PCA9557 / fatfs.c / user_diskio / W25Qxx),,HIGH,region
+080374b0,080374b8,8,application,drivers + services (codec / BT / SLIP / GT911 / PCA9557 / fatfs.c / user_diskio / W25Qxx),,HIGH,region
+080374bc,080374c4,8,application,drivers + services (codec / BT / SLIP / GT911 / PCA9557 / fatfs.c / user_diskio / W25Qxx),,HIGH,region
+080374dc,08037514,56,application,drivers + services (codec / BT / SLIP / GT911 / PCA9557 / fatfs.c / user_diskio / W25Qxx),,HIGH,region
+08037524,08037560,56,application,drivers + services (codec / BT / SLIP / GT911 / PCA9557 / fatfs.c / user_diskio / W25Qxx),,HIGH,region
+080375e4,08037754,368,minIni (third party),minIni.c,ini_strncpy,HIGH,region; named
+08037770,08037816,166,minIni (third party),minIni.c,,HIGH,region
+08037818,08037afa,738,minIni (third party),minIni.c,getkeystring,HIGH,region; named
+08037b10,08037b76,102,minIni (third party),minIni.c,,HIGH,region
+08037b7c,08037b9c,32,minIni (third party),minIni.c,,HIGH,region
+08037b9c,08037d4c,432,minIni (third party),minIni.c,,HIGH,region
+08037d68,08037dfc,148,ST USB device library,usbd_msc* / usbd_core / usbd_ctlreq / usbd_ioreq,,MEDIUM,region
+08038050,08038068,24,ST USB device library,usbd_msc* / usbd_core / usbd_ctlreq / usbd_ioreq,,MEDIUM,region
+080380c4,08038118,84,ST USB device library,usbd_msc* / usbd_core / usbd_ctlreq / usbd_ioreq,,MEDIUM,region
+080383bc,0803842a,110,ST USB device library,usbd_msc* / usbd_core / usbd_ctlreq / usbd_ioreq,,MEDIUM,region
+08038438,080384f4,188,ST USB device library,usbd_msc* / usbd_core / usbd_ctlreq / usbd_ioreq,,MEDIUM,region
+080391c0,0803ddf4,134,ST USB device library,usbd_msc* / usbd_core / usbd_ctlreq / usbd_ioreq,,MEDIUM,region
+080391e8,0803921e,54,ST USB device library,usbd_msc* / usbd_core / usbd_ctlreq / usbd_ioreq,,MEDIUM,region
+08039220,08039224,4,ST USB device library,usbd_msc* / usbd_core / usbd_ctlreq / usbd_ioreq,,MEDIUM,region
+08039224,08039232,14,ST USB device library,usbd_msc* / usbd_core / usbd_ctlreq / usbd_ioreq,,MEDIUM,region
+08039234,08039246,18,ST USB device library,usbd_msc* / usbd_core / usbd_ctlreq / usbd_ioreq,,MEDIUM,region
+08039438,08039440,8,ST USB device library,usbd_msc* / usbd_core / usbd_ctlreq / usbd_ioreq,,MEDIUM,region
+08039440,0803945e,30,ST USB device library,usbd_msc* / usbd_core / usbd_ctlreq / usbd_ioreq,,MEDIUM,region
+08039518,0803951c,4,ST USB device library,usbd_msc* / usbd_core / usbd_ctlreq / usbd_ioreq,,MEDIUM,region
+0803951c,08039520,4,ST USB device library,usbd_msc* / usbd_core / usbd_ctlreq / usbd_ioreq,,MEDIUM,region
+08039520,0803954c,44,ST USB device library,usbd_msc* / usbd_core / usbd_ctlreq / usbd_ioreq,,MEDIUM,region
+08039aa0,08039ab6,22,ST USB device library,usbd_msc* / usbd_core / usbd_ctlreq / usbd_ioreq,,MEDIUM,region
+08039ab8,08039ace,22,ST USB device library,usbd_msc* / usbd_core / usbd_ctlreq / usbd_ioreq,,MEDIUM,region
+08039ad0,08039b28,88,ST USB device library,usbd_msc* / usbd_core / usbd_ctlreq / usbd_ioreq,,MEDIUM,region
+08039b28,08039b42,26,ST USB device library,usbd_msc* / usbd_core / usbd_ctlreq / usbd_ioreq,,MEDIUM,region
+08039b44,08039b56,18,ST USB device library,usbd_msc* / usbd_core / usbd_ctlreq / usbd_ioreq,,MEDIUM,region
+08039b58,08039b6a,18,ST USB device library,usbd_msc* / usbd_core / usbd_ctlreq / usbd_ioreq,,MEDIUM,region
+08039b6c,08039b82,22,ST USB device library,usbd_msc* / usbd_core / usbd_ctlreq / usbd_ioreq,,MEDIUM,region
+08039b84,08039b9a,22,ST USB device library,usbd_msc* / usbd_core / usbd_ctlreq / usbd_ioreq,,MEDIUM,region
+08039b9c,0807bdd4,22,CubeMX generated (STemWin glue),GUIConf / LCDConf / GUI_X,GUI_X_Config,MEDIUM,region; named
+08039bac,08039bae,2,CubeMX generated (STemWin glue),GUIConf / LCDConf / GUI_X,,MEDIUM,region
+08039bb0,08039bb2,2,CubeMX generated (STemWin glue),GUIConf / LCDConf / GUI_X,,MEDIUM,region
+08039bb4,08039bca,22,CubeMX generated (STemWin glue),GUIConf / LCDConf / GUI_X,,MEDIUM,region
+08039bd0,08039be6,22,CubeMX generated (STemWin glue),GUIConf / LCDConf / GUI_X,,MEDIUM,region
+08039cd0,08039d6a,154,CubeMX generated (STemWin glue),GUIConf / LCDConf / GUI_X,,MEDIUM,region
+08039d80,08039e22,162,CubeMX generated (STemWin glue),GUIConf / LCDConf / GUI_X,,MEDIUM,region
+08039e40,08039faa,348,CubeMX generated (STemWin glue),GUIConf / LCDConf / GUI_X,,MEDIUM,region
+08039fbc,08039fbe,2,FatFS,ff.c / diskio.c / ff_gen_drv.c / unicode,,HIGH,region
+08039fc0,08039fd0,16,FatFS,ff.c / diskio.c / ff_gen_drv.c / unicode,,HIGH,region
+08039fd4,08039ffa,38,FatFS,ff.c / diskio.c / ff_gen_drv.c / unicode,,HIGH,region
+0803a000,0803a016,22,FatFS,ff.c / diskio.c / ff_gen_drv.c / unicode,,HIGH,region
+0803a01c,0803a032,22,FatFS,ff.c / diskio.c / ff_gen_drv.c / unicode,,HIGH,region
+0803a038,0803a04c,20,FatFS,ff.c / diskio.c / ff_gen_drv.c / unicode,,HIGH,region
+0803a050,0803a0f4,164,FatFS,ff.c / diskio.c / ff_gen_drv.c / unicode,,HIGH,region
+0803a0f8,0803a170,120,FatFS,ff.c / diskio.c / ff_gen_drv.c / unicode,,HIGH,region
+0803a17c,0803a232,182,FatFS,ff.c / diskio.c / ff_gen_drv.c / unicode,,HIGH,region
+0803a238,0803a2b4,124,FatFS,ff.c / diskio.c / ff_gen_drv.c / unicode,,HIGH,region
+0803a2b4,0803a584,720,FatFS,ff.c / diskio.c / ff_gen_drv.c / unicode,,HIGH,region
+0803a594,0803a694,256,FatFS,ff.c / diskio.c / ff_gen_drv.c / unicode,,HIGH,region
+0803a694,0803a73e,170,FatFS,ff.c / diskio.c / ff_gen_drv.c / unicode,,HIGH,region
+0803a740,0803ab68,1064,FatFS,ff.c / diskio.c / ff_gen_drv.c / unicode,,HIGH,region
+0803ab68,0803ad08,416,FatFS,ff.c / diskio.c / ff_gen_drv.c / unicode,,HIGH,region
+0803ad08,0803ae5c,340,FatFS,ff.c / diskio.c / ff_gen_drv.c / unicode,,HIGH,region
+0803ae5c,0803af88,300,FatFS,ff.c / diskio.c / ff_gen_drv.c / unicode,,HIGH,region
+0803af88,0803b2ca,834,FatFS,ff.c / diskio.c / ff_gen_drv.c / unicode,,HIGH,region
+0803b2d0,0803b5a4,724,FatFS,ff.c / diskio.c / ff_gen_drv.c / unicode,,HIGH,region
+0803b5b0,0803b7d4,548,FatFS,ff.c / diskio.c / ff_gen_drv.c / unicode,,HIGH,region
+0803b7d4,0803b992,446,FatFS,ff.c / diskio.c / ff_gen_drv.c / unicode,,HIGH,region
+0803b994,0803c2c2,2342,FatFS,ff.c / diskio.c / ff_gen_drv.c / unicode,,HIGH,region
+0803c2c4,0803c362,158,FatFS,ff.c / diskio.c / ff_gen_drv.c / unicode,,HIGH,region
+0803c36c,0803c68e,802,FatFS,ff.c / diskio.c / ff_gen_drv.c / unicode,,HIGH,region
+0803c694,0803c904,624,FatFS,ff.c / diskio.c / ff_gen_drv.c / unicode,,HIGH,region
+0803c904,0803cbc4,704,FatFS,ff.c / diskio.c / ff_gen_drv.c / unicode,,HIGH,region
+0803cbc4,0803cc70,172,FatFS,ff.c / diskio.c / ff_gen_drv.c / unicode,,HIGH,region
+0803cc70,0803cd6e,254,FatFS,ff.c / diskio.c / ff_gen_drv.c / unicode,,HIGH,region
+0803cd74,0803ce6a,246,FatFS,ff.c / diskio.c / ff_gen_drv.c / unicode,,HIGH,region
+0803ce70,0803d5a4,1800,FatFS,ff.c / diskio.c / ff_gen_drv.c / unicode,f_mkfs,HIGH,region; named
+0803d5bc,0803d714,344,FatFS,ff.c / diskio.c / ff_gen_drv.c / unicode,,HIGH,region
+0803d714,0803d7e0,204,FatFS,ff.c / diskio.c / ff_gen_drv.c / unicode,,HIGH,region
+0803d7e0,0803d834,84,FatFS,ff.c / diskio.c / ff_gen_drv.c / unicode,,HIGH,region
+0803d838,0803d868,48,FatFS,ff.c / diskio.c / ff_gen_drv.c / unicode,,HIGH,region
+0803d86c,0803d8fc,134,FatFS,ff.c / diskio.c / ff_gen_drv.c / unicode,,HIGH,region
+0803d904,0803d908,4,CubeMX generated (USB_DEVICE), usbd_storage_if.c,,HIGH,region
+0803d908,0803d90c,4,CubeMX generated (USB_DEVICE), usbd_storage_if.c,,HIGH,region
+0803d90c,0803d978,108,CubeMX generated (USB_DEVICE), usbd_storage_if.c,MX_USB_DEVICE_Init,HIGH,region; named
+0803d9a0,0803d9b2,18,CubeMX generated (USB_DEVICE), usbd_storage_if.c,USBD_FS_ManufacturerStrDescriptor,MEDIUM,region; named
+0803d9bc,0803d9ce,18,CubeMX generated (USB_DEVICE), usbd_storage_if.c,USBD_FS_ProductStrDescriptor,MEDIUM,region; named
+0803d9d8,0803d9ea,18,CubeMX generated (USB_DEVICE), usbd_storage_if.c,USBD_FS_ConfigStrDescriptor,MEDIUM,region; named
+0803d9f4,0803da06,18,CubeMX generated (USB_DEVICE), usbd_storage_if.c,USBD_FS_InterfaceStrDescriptor,MEDIUM,region; named
+0803db7c,0803dba0,36,CubeMX generated (USB_DEVICE), usbd_storage_if.c,,HIGH,region
+0803dc10,0803dcb8,168,CubeMX generated (USB_DEVICE), usbd_storage_if.c,HAL_PCD_MspInit,HIGH,region; named
+0803dcd4,0803dce0,1360,CubeMX generated (USB_DEVICE), usbd_storage_if.c,,HIGH,region
+0803dce0,0803dcf4,136,CubeMX generated (USB_DEVICE), usbd_storage_if.c,,HIGH,region
+0803dcf4,0803dd06,208,CubeMX generated (USB_DEVICE), usbd_storage_if.c,,HIGH,region
+0803dd08,0803dd10,38,CubeMX generated (USB_DEVICE), usbd_storage_if.c,,HIGH,region
+0803dd10,0803dd3a,132,CubeMX generated (USB_DEVICE), usbd_storage_if.c,,HIGH,region
+0803dd3c,0803dd66,42,CubeMX generated (USB_DEVICE), usbd_storage_if.c,,HIGH,region
+0803dd6c,0803dd74,30,CubeMX generated (USB_DEVICE), usbd_storage_if.c,,HIGH,region
+0803dd74,0803dd7c,50,CubeMX generated (USB_DEVICE), usbd_storage_if.c,,HIGH,region
+0803dd7c,0803dd84,50,CubeMX generated (USB_DEVICE), usbd_storage_if.c,,HIGH,region
+0803dd84,0803dd8c,12,CubeMX generated (USB_DEVICE), usbd_storage_if.c,,HIGH,region
+0803dd8c,0803dd94,42,CubeMX generated (USB_DEVICE), usbd_storage_if.c,,HIGH,region
+0803ddfc,0803de12,22,CubeMX generated (USB_DEVICE), usbd_storage_if.c,,HIGH,region
+0803de14,0803de30,28,CubeMX generated (USB_DEVICE), usbd_storage_if.c,,HIGH,region
+0803de30,0803de46,22,CubeMX generated (USB_DEVICE), usbd_storage_if.c,,HIGH,region
+0803de48,0803de5e,22,CubeMX generated (USB_DEVICE), usbd_storage_if.c,,HIGH,region
+0803de60,0803de76,22,CubeMX generated (USB_DEVICE), usbd_storage_if.c,,HIGH,region
+0803de78,0803de8e,22,CubeMX generated (USB_DEVICE), usbd_storage_if.c,,HIGH,region
+0803de90,0803deb6,38,CubeMX generated (USB_DEVICE), usbd_storage_if.c,,HIGH,region
+0803deb8,0803dece,22,CubeMX generated (USB_DEVICE), usbd_storage_if.c,,HIGH,region
+0803ded0,0803dee6,22,CubeMX generated (USB_DEVICE), usbd_storage_if.c,,HIGH,region
+0803dee8,0803defe,22,CubeMX generated (USB_DEVICE), usbd_storage_if.c,,HIGH,region
+0803df08,0803df0c,4,CubeMX generated (USB_DEVICE), usbd_storage_if.c,USBD_static_malloc,MEDIUM,region; named
+0803df14,0803e17e,618,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+0803e730,0803e736,1184,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+0803e73c,0803e742,6,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+0803e748,0803e74e,6,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+0803e754,0803e758,4,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+0803e75c,0803e760,4,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+0803e764,0803e768,4,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+0803e76c,0803ea82,790,application,G7250 Control firmware (UI / settings / radio state),slip01_build_settings,HIGH,region
+0803ea94,0803eb06,114,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+0803eb14,0803eb28,20,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+0803eb2c,0803eb64,56,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+0803eb68,0803ebaa,66,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+0803ebb0,0803ec0e,94,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+0803ec18,0803ec54,60,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+0803ec58,0803ed06,174,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+0803ed10,0803ed1c,12,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+0803ed20,0803efc0,672,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+0803eff4,0803f016,34,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+0803f020,0803f03a,26,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+0803f044,0803f056,18,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+0803f058,0803f064,12,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+0803f068,0803f084,28,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+0803f088,0803f0ba,50,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+0803f0c4,0803f10e,68,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+0803f160,0803f184,36,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+0803f188,0803f1cc,62,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+0803f1d0,0803f216,60,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+0803f21c,0803f226,10,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+0803f22c,0803f236,10,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+0803f28c,0803f29e,18,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+0803f2a4,0803f2b6,18,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+0803f2cc,0803f2ea,30,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+0803f2f0,0803f31c,44,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+0803f324,0803f34c,40,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+0803f354,0803f380,44,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+0803f388,0803f3b0,40,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+0803f3b8,0803f3f6,62,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+0803f400,0803f43a,58,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+0803f444,0803f45c,24,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+0803f464,0803f480,28,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+0803f488,0803f49c,20,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+0803f4a0,0803f4b4,20,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+0803f4b8,0803f4e4,44,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+0803f4ec,0803f514,40,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+0803f51c,0803f542,38,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+0803f548,0803f56c,36,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+0803f574,0803f5a2,46,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+0803f5ac,0803f5d4,40,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+0803f5dc,0803f5fc,32,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+0803f604,0803f620,28,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+0803f628,0803f632,10,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+0803f638,0803f648,16,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+0803f92c,0803f976,70,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+0803f9ec,0803fc7c,636,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+0803fc7c,0803fcc8,76,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+0803fcd0,0803fdc2,242,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+0803fdd0,0803ff60,372,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+0803ff64,080400b2,312,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+080400b8,08040154,146,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08040158,080401b6,94,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+080401bc,0804029a,206,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+080402a0,080403e6,320,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+080403f0,0804068a,586,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08040694,0804086a,436,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08040874,0804097a,252,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08040984,08040b0e,378,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08041030,08041326,724,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08041988,08041b9a,2458,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+080423c8,080716a0,1670,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08042550,08057792,292,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08042680,0804272c,164,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08042750,080427c2,114,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+080427d0,08042b7c,874,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08042b80,08042c10,144,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08042c20,08044074,4720,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+080442c4,080444de,538,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+080447d8,0804480a,78,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08044abc,08044c64,358,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08044ed8,08044f42,1234,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08045128,08045266,296,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+0804533c,080453a6,730,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+080454bc,0804554c,134,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+080455e8,08045652,490,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08045658,08076384,2386,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+0804587c,08070c38,1272,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+080459b4,080499aa,856,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08045c54,08045cf8,164,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08045d00,08071264,142,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08045d8c,08045f6e,482,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08046394,080463f8,1056,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+080463fc,08046466,106,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+0804646c,08046510,164,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08046518,080465f4,220,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+0804660c,080467ce,450,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+080467e4,08046882,866,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08046888,08046998,272,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+080469b0,08046a6c,188,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08046a88,08046cae,550,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08046cd8,0804709c,924,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+0804709c,080470dc,64,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+080470dc,0804710c,48,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08047110,08047114,4,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+080471b0,080471ca,26,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+080471d0,0804729e,206,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+080472a4,0804750e,584,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+0804751c,08047528,12,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+0804752c,0804761c,240,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08047624,08047716,242,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08047720,080477d4,180,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+080477dc,080478c6,234,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+080478d0,0804824e,1850,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08048258,080483bc,356,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08048520,0804853c,28,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08048544,08048592,78,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+080485a0,080486ec,320,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+080486fc,08048708,12,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+0804870c,0804871e,18,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08048728,080488a4,368,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+080488d8,0804895a,130,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08048964,08048ca2,816,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08048cac,08048cca,30,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08048cd4,08048d42,110,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08048d4c,08048e32,230,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08048e54,08048ec4,112,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08048ed0,08048ffc,288,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+0804915c,0804939e,578,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+080493d4,080494ca,246,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+080494f0,080495f4,260,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+0804961e,0804964e,48,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08049660,080496ce,110,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+080496d8,08049756,126,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08049764,08049768,4,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+0804983c,080498ea,174,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+080499b4,08049b8a,470,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08049bd4,08049f7e,894,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08049f8c,08049fee,88,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+0804a058,0804a598,1200,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+0804a5ec,0804a77e,398,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+0804a7d0,0804a804,52,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+0804a814,0804a970,348,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+0804a984,0804a98c,8,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+0804a990,0804a998,8,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+0804a99c,0804a9a4,8,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+0804a9a8,0804a9b0,8,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+0804a9b4,0804a9bc,8,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+0804aa24,0804aa2c,8,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+0804aa30,0804aa34,4,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+0804aa38,0804aa3e,6,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+0804aa44,080597ae,40,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+0804b284,0804b37e,250,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+0804b3d4,080538f6,714,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+0804b52c,0804b95e,906,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+0804b960,0804baa0,320,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+0804bad4,0804bcdc,516,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+0804bfd0,0804c01a,74,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+0804c034,0807ab92,308,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+0804c108,0804c124,28,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+0804c12c,0804c30a,478,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+0804c39c,0804d620,3686,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+0804d6c0,0804d810,336,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+0804d874,0804db30,700,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+0804dbdc,080508c6,144,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+0804dc5c,080556c4,566,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+0804de08,080724f4,1970,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+0804e4e8,0804e652,912,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+0804e670,0804e7d4,352,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+0804e820,0804e888,104,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+0804e8a8,0804ecfe,1042,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+0804ed10,0804ee4c,316,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+0804ee78,0804eefc,132,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+0804ef00,0804ef84,132,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+0804f0e4,0804f16c,136,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+0804f198,0804f210,120,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+0804f228,0804f292,106,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+0804f2a8,0804f32e,134,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+0804f34c,0804f38c,64,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+0804f3a4,0804f496,218,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+0804f4fc,0804f5ee,218,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+0804f654,0804f746,218,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+0804f7ac,0804f7fc,74,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+0804fc8c,0804fcdc,76,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08050440,080504b8,120,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+080504d0,0805053a,106,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08050550,080505d6,134,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+080505f4,08050644,76,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+080508d0,08075f48,5432,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+080509b0,08050a1e,110,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08050a20,08050a98,120,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08050a9c,08050aa0,4,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08050b3c,08050b56,26,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08050b5c,08050b72,22,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08050cb0,08050e8a,474,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08050eec,08050ef6,10,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08050f14,08050f34,32,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08051084,080510fe,122,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08051114,08051132,40,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08051140,08051174,52,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+0805117c,08051a48,1960,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08051b08,08051b98,144,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region; byte-identical to Main 0x08036f94
+08051bc8,08052178,1330,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+080521d0,0805231c,332,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+0805233c,08052344,8,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08052348,0805234e,6,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08052354,0805235e,10,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08052364,08052466,258,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08052478,0805247c,4,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+0805247c,080524d8,92,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+080524e0,08052528,72,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08052538,0805255e,48,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+0805256c,08052572,12,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08052578,08052582,10,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08052588,08052626,158,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+0805263c,0805264e,18,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08052654,0805265a,24,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08052660,08052730,208,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08052744,0805274a,12,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08052750,08052762,18,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08052768,08052772,10,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08052830,08052942,274,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08052964,08052a7c,280,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08052a9c,08052ab0,26,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08052ab0,08052ad6,38,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08052ae0,08052af6,22,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08052b00,08052b2e,46,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08052b38,08052b56,48,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08052b5c,08052b62,210,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08052b68,08052b74,40,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08052b78,08052b86,14,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08052b8c,08052be4,88,application,G7250 Control firmware (UI / settings / radio state),slip_encode,HIGH,region; byte-identical to Main 0x0804a200
+08052be4,08052c44,96,application,G7250 Control firmware (UI / settings / radio state),slip_decode,HIGH,region; byte-identical to Main 0x0804a258
+08052c44,08052c68,36,application,G7250 Control firmware (UI / settings / radio state),crc16_arc,HIGH,region; byte-identical to Main 0x0804ae3c
+08052c6c,08052da0,308,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08052da0,08052dca,42,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08052dd4,08052e28,84,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08052e3c,08052fb2,374,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08052fd0,08053126,342,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+080532d0,08053546,630,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08053738,0805373a,2,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+0805373c,0805374c,16,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+080538f8,08053a46,334,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08053a50,08053acc,124,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08053af4,08053b98,164,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08053b98,08053dd2,570,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08053e1c,08053fa8,396,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08053fb4,08053ff8,68,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08053ff8,08054210,536,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08054218,080543ba,418,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+080543d0,080543de,14,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+080543e0,080543ee,14,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+080543f0,080543fe,14,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08054400,080544cc,204,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+080544cc,080544d8,12,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+080544d8,080544f2,26,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+080544f4,080545fa,262,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08054600,0805460a,10,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+0805460a,0805473a,304,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+0805473c,080547b6,122,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+080547b8,08054b02,842,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08054b54,08054c3e,234,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08054d60,08054eb4,340,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08054eec,08054eee,2,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08054ef0,08054efe,14,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08054f3c,08054fae,114,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08054ff8,08055068,112,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08055068,0805506e,6,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+0805506e,08055148,218,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08055148,0805528c,324,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08055290,0805530c,124,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08055328,0805534c,36,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08055350,08055364,20,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08055364,080553ea,134,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+080553ec,0805547a,142,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08055480,080554b8,56,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+080554cc,080554ce,2,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+080554d0,080554e0,16,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+080554e0,080555c4,228,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+080555d4,080555e4,16,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+080555e8,080555f8,16,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+080555fc,08055604,8,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+080556c4,08055744,128,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08055744,080558a0,348,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+080558bc,08055aba,510,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08056038,0805630c,724,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08056344,08056566,546,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08056588,080566f0,360,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+080566f4,08056a24,816,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08056a64,08056dae,842,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08057368,080573e2,122,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+080573e4,08057512,302,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+0805754c,080575b4,104,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+0805771c,08057728,12,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+0805772c,08057732,6,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08057738,0805773e,6,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08057744,08057754,16,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08057758,08057760,8,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08057764,08057780,28,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08057798,080577ec,84,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+080577fc,08057d70,1336,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08057d94,08057dec,88,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08057dfc,08057ede,226,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08057ef4,08057efa,6,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08057efc,08057f08,12,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08057f08,08057f12,10,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08057f14,08057f74,96,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08057f74,08057fc0,76,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08057fd4,08058010,60,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08058060,08058226,454,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08058238,080583e0,424,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+080583fc,08058414,24,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08058418,080585a4,396,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+080585cc,080585f4,40,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+080585f4,08058600,12,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08058600,08058696,150,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08058698,0805872e,150,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08058730,08058766,54,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08058768,08058770,8,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08058770,0805877e,14,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08058780,080587a2,34,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+080587a4,080587da,54,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+080587dc,08058934,344,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08058938,08058a32,250,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08058a38,08058a3e,6,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08058a3e,08058ab4,118,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08058ab4,08058d9c,744,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08058db8,08059008,592,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+0805902c,080592a8,636,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+080592f0,080594ca,474,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+080594d8,08059724,588,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08059748,0805978c,68,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+080597b4,080597c2,14,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+080597c4,080597d2,14,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+080597d4,080597e2,14,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+080597e8,080598b8,208,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+080598c8,08059a2e,358,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08059a30,08059a3c,12,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08059a3c,08059a86,74,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08059a8c,08059b92,262,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08059b98,08059ba2,10,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08059ba2,08059d36,404,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08059d40,08059d68,40,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08059d7c,0805a39c,1522,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+0805a3d8,0805a992,1438,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+0805a994,0805a9b8,36,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+0805a9c0,0805aa6c,172,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+0805aa6c,0805ab1e,178,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+0805ab20,0805ab6a,74,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+0805ab7c,0805ab7e,2,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+0805ab80,0805ab90,16,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+0805abe0,0805ace2,258,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+0805ad00,0805ad14,20,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+0805ad18,0805ad3e,38,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+0805ad48,0805ad74,44,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+0805ad78,0805ad84,12,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+0805ad84,0805ad98,20,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+0805ad98,0805ae6e,214,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+0805ae74,0805aed6,98,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+0805aed8,0805b00e,310,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+0805b010,0805b0d6,198,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+0805b0d8,0805b27c,420,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+0805b2a4,0805b4da,566,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+0805c04c,0805c102,182,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+0805c104,0805cad4,2368,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+0805cad4,0805d364,2160,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+0805d36c,0805da8a,1804,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+0805e0b0,0805e166,182,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+0805e168,0805eb2a,2370,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+0805eb2c,0805f3bc,2160,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+0805f3c4,0805fae2,1804,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08060108,080601be,182,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+080601c0,08060ad4,2256,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08060ad4,08061364,2160,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+0806136c,08061a8a,1804,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08061ee4,08061fa2,190,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08061fa4,080628b8,2272,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+080628b8,08063148,2160,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08063150,08063226,214,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08063554,08063588,52,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08063598,08063646,174,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08063680,08063788,264,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+0806378c,08063876,234,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08063880,08063ad0,592,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08063af4,08063b02,14,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08063b04,08063b12,14,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08063b14,08063b22,14,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08063b24,08063bea,198,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08063bf0,08063c1c,44,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08063c1c,08063cc4,168,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08063cc4,08063cd0,12,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08063cd0,08063cf8,40,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08063cf8,08063d24,44,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08063d24,08063d2e,10,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08063d2e,08063e30,258,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08063e30,08063e7a,74,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08063e8c,08063f20,148,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08063f20,08064710,2028,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+0806474c,08064f8c,2084,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08064fa8,080651ca,546,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+080653b0,080654e0,304,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08065500,080659e8,1232,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+080659f0,08065a38,72,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08065a48,08065a4a,2,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08065a4c,08065a5c,16,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08065a5c,08065c32,470,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08065c5c,08065c6c,16,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08065c70,08065c80,16,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08065c84,08065c96,18,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08065c9c,08065cae,18,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08065cb4,08065cc8,20,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08065cc8,08065cdc,20,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08065cdc,08065df0,276,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08065df0,08065e68,120,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08065e6c,08065f90,292,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08065f94,080660b0,284,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+080660d8,080660fc,36,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+080660fc,08066126,42,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08066128,08066136,14,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08066138,08066146,14,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08066148,08066330,488,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08066334,08066340,12,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08066340,080665dc,668,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+080665dc,080667b4,472,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+080667b4,08066878,196,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08066894,080668a0,12,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+080668a0,080668aa,10,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+080668ac,0806696a,190,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08066970,08066aa8,312,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08066abc,08066b72,182,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08066b74,08067498,2256,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08067498,08067d28,2160,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08067d30,0806844e,1804,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+080688a8,080689e4,316,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+080689f8,08068bf4,508,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08068c18,08068c88,112,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08068c88,08068f52,714,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08068f60,080691da,634,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+080698d8,08069908,48,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08069914,0806a31a,2566,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+0806a31c,0806aba8,2188,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+0806aba8,0806b5ae,2566,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+0806b5b0,0806bfb6,2566,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+0806bfb8,0806c9be,2566,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+0806c9c0,0806d3c6,2566,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+0806d3c8,080707f4,13218,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+080707f8,0807870a,82,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08070808,08070810,8,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08070814,0807081c,8,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08070820,0807082c,12,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08070834,0807083c,8,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+0807084c,08070858,764,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+0807085c,08070868,798,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+0807086c,08070884,24,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+0807088c,080708b2,38,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+080708c0,080708d8,24,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+080708e0,08070906,38,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08070914,0807091c,8,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08070938,08070940,8,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08070944,0807094c,8,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08070950,08070958,8,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+0807095c,08070964,8,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08070968,08070970,8,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08070974,0807097c,8,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08070980,08070988,8,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+0807098c,08070994,8,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08070998,080709a0,8,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+080709a4,080709ac,8,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+080709bc,080709c8,764,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+080709cc,080709d8,798,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+080709dc,08070a02,38,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08070a10,08070a28,24,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08070a30,08070a56,38,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08070a64,08070a6c,8,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08070a88,08070a90,8,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08070a94,08070a9c,8,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08070aa0,08070aa8,8,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08070aac,08070ab4,8,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08070ab8,08070ac0,8,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08070ac4,08070acc,8,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08070ad0,08070ad8,8,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08070adc,08070ae4,8,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08070ae8,08070af0,8,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08070af4,08070afc,8,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08070b0c,08070b18,558,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08070b1c,08070b28,546,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08070b2c,08070b44,24,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08070b4c,08070b72,38,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08070b8c,08070b94,8,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08070b98,08070ba0,8,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08070ba4,08070bac,8,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08070bb0,08070bb8,8,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08070bbc,08070bc4,8,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08070bc8,08070bd0,8,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08070bd4,08070bdc,8,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08070be0,08070be8,8,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08070bec,08070bf4,8,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08070c14,08070c20,342,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08070c24,08070c2c,8,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08070c3c,08070c44,8,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08070c48,08070c50,8,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08070c54,08070c5c,8,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08070c60,08070c68,8,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08070c88,08076414,148,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08070c98,08070ca0,8,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08070ca4,08070cac,8,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08070cb0,08070cb8,8,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08070cbc,08070cc4,8,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08070cc8,08070cf8,48,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08070cfc,08070d00,4,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08070d10,08070d18,8,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08070d1c,08070d24,8,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08070d28,08070d30,8,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08070d40,08070d6c,44,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08070d80,0807585e,90,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08070d9c,08070da4,8,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08070da8,08070db0,8,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08070db4,08070dbc,8,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08070dc0,08070dc8,8,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08070ddc,080729e8,144,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08070dec,08070df8,12,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08070e00,08070e2a,42,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08070e40,08070e48,8,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08070e4c,08070e54,8,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08070e58,08070e60,8,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08070e64,08070e6c,8,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08070e70,08070e78,8,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08070e7c,08070e84,8,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08070e88,08070e90,8,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08070e94,08070e9c,8,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08070eb0,08070ebc,126,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08070ecc,08070ed4,8,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08070ed8,08070ee0,8,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08070ee4,08070eec,8,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08070ef0,08070ef8,8,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08070f0c,08070f18,126,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08070f28,08070f30,8,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08070f34,08070f3c,8,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08070f40,08070f48,8,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08070f4c,08070f54,8,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08070f58,08070f60,8,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08070f64,08070f6c,8,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08070f7c,08070f84,8,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08070f88,08070f90,8,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08070f94,08070f9c,8,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08070fa0,08070fee,78,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08070ff4,08070ff8,4,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+0807100c,08071018,148,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08071028,0807103a,18,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08071044,0807104c,8,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08071050,08071058,8,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+0807105c,08071064,8,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08071068,08071070,8,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08071074,0807107c,8,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08071080,08071088,8,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+0807108c,08071094,8,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08071098,080710a0,8,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+080710a4,080710ac,8,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+080710b0,080710b8,8,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+080710bc,080710c4,8,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+080710c8,080710d0,8,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+080710d4,080710dc,8,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+080710e0,080710e8,8,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+080710ec,080710f4,8,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+080710f8,08071104,816,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08071108,08071114,710,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08071118,08073c56,1724,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08071124,08073f0c,704,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08071134,08074450,1314,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08071144,0807114c,8,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08071150,08071158,8,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+0807115c,08071164,8,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08071168,08071170,8,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08071174,0807117c,8,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08071180,08071196,22,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+080711a4,080711ac,8,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+080711b0,080711b4,4,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+080711b8,080711c0,8,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+080711c4,080711cc,8,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+080711dc,080711e4,8,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+080711e8,080711f0,8,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08071200,08071208,8,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+0807120c,08071214,8,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08071218,08071220,8,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08071224,08071230,12,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08071234,08071240,478,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08071250,08071258,8,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08071268,08071270,8,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08071274,0807127c,8,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08071280,08071324,164,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08071330,080713d6,166,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+080713e4,080713f0,12,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+080713f4,08071462,110,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08071468,080714de,118,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+080714e8,080714f0,8,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+080714f4,080714fc,8,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08071500,08071508,8,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+0807150c,080752f2,238,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+0807151c,080753be,206,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+0807152c,080780fc,14,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08071538,08071540,8,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08071544,0807154c,8,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08071550,08071558,8,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+0807155c,08071564,8,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08071568,0807841a,230,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08071578,08078624,528,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08071588,0807158e,586,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08071594,0807159c,8,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+080715a0,080715a8,8,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+080715ac,080715b8,614,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+080715bc,080715c8,508,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+080715cc,080715d6,10,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+080715dc,080715e2,548,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+080715e8,080715f0,8,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+080715f4,080715fc,8,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08071600,08071608,8,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+0807160c,08071614,8,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08071618,08071624,238,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08071628,08071634,574,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08071644,08071650,558,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08071654,08071660,546,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08071664,0807168a,38,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+080716a4,080716ac,8,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+080716b0,080716b8,8,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+080716bc,080716c4,8,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+080716c8,080716d0,8,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+080716d4,080716dc,8,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+080716e0,080716e8,8,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+080716ec,080716f4,8,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+080716f8,08071700,8,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08071704,0807170c,8,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08071710,08071716,708,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+0807171c,08071728,286,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+0807172c,08071738,286,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+0807173c,08071748,114,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+0807174c,08071754,8,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08071758,08071760,8,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08071764,0807176c,8,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08071770,08071778,8,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+0807177c,08071784,8,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08071788,08071790,8,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08071794,0807179c,8,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+080717a0,080717a8,8,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+080717ac,080717b4,8,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+080717b8,080717c0,8,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+080717c4,080717cc,8,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+080717d0,080717d8,8,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+080717dc,080717e8,12,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+080717f0,080717f8,8,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+080717fc,08071810,20,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08071814,08077948,650,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08071820,08077aa0,332,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08071830,08077c04,348,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08071840,08077c76,114,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08071850,08071858,8,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+0807185c,08071864,8,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08071868,08071870,8,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08071874,0807187c,8,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08071880,08071888,8,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+0807188c,08071894,8,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08071898,080718a0,8,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+080718a4,080718ce,42,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+080718dc,080718e4,8,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+080718e8,080718f0,8,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+080718f4,080718fc,8,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08071900,08071908,8,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+0807190c,08071914,8,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08071918,08071920,8,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08071924,0807192c,8,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08071930,08071944,20,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08072168,0807216a,2,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+0807216c,0807217c,16,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+0807217c,080722cc,336,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+080722e4,08072328,68,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08072334,08072378,68,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+080724f8,0807254e,86,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08072560,080725da,122,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+080725dc,080727a8,460,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+080727e8,08072868,128,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+080729ec,08072afa,270,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08072b08,0807330c,2046,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08073310,08073560,592,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08074460,0807448c,44,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+080744a0,080745e2,322,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08074608,08074708,256,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08074720,0807488c,364,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+080748b8,08074a62,426,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08074a94,08074b5a,198,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08074b5c,08074f1c,960,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08074f28,08075128,512,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08075170,08075204,148,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+080753c4,0807543e,122,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08075440,080756ac,620,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+080756ec,080757a4,184,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08075860,0807588c,44,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+0807589c,08075910,116,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08075910,08075c40,816,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08075c6c,08075f1c,688,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08075f48,0807608c,324,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08076414,08076416,2,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08076418,08076426,14,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08076428,08076450,40,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08076458,0807655e,258,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08076560,0807b9f2,438,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+080765a0,080765a2,2,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+080765a4,080765b2,14,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+080765b4,0807661e,106,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+0807664c,0807677c,304,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08076780,08076936,438,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08076944,080769f6,178,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+080769f8,080769fa,2,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+080769fc,08076a0c,16,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08076a60,08076bd4,372,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08076c0c,08076c6c,96,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08076c78,08076c8c,20,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08076c8c,08076d64,216,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08076d68,08076dca,98,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08076dcc,08076e3a,110,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08076e3c,08076fa4,360,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08076fa8,080772f4,844,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08077330,08077698,872,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08077c7c,08077cfc,128,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08077cfc,08077e26,298,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08077e38,080780c6,654,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+080780fc,08078326,554,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+0807862c,0807869c,112,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08078710,080789e0,720,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08078a2c,08078a56,42,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08078a5c,08078c2a,462,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08078c68,08078ecc,612,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08078ef8,08078f62,106,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08078f78,08078fb8,64,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08078fd4,08079014,64,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+0807902c,080790b8,140,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+080790c8,08079134,108,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08079134,08079234,256,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08079234,08079960,1832,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08079960,080799d2,114,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08079e88,08079f9e,278,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+08079fa4,0807a1c2,542,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+0807a1e4,0807a214,48,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+0807a220,0807a276,86,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+0807a2a0,0807a3ee,334,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+0807a3f8,0807a640,584,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+0807a660,0807a690,48,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+0807a6a4,0807a7b6,274,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+0807a7e4,0807a912,302,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+0807a924,0807a95c,56,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+0807a968,0807a992,42,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+0807a9a0,0807a9a2,2,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+0807a9a4,0807a9b2,14,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+0807a9b4,0807a9e2,46,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+0807a9ec,0807aaf6,266,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+0807aba0,0807aba8,8,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+0807aba8,0807ac68,192,application,G7250 Control firmware (UI / settings / radio state),,HIGH,region
+0807ac6c,0807ad12,166,SEGGER emWin,STemWin precompiled library,,HIGH,region
+0807ad1c,0807ad8a,110,SEGGER emWin,STemWin precompiled library,,HIGH,region
+0807ad8c,0807ae48,188,SEGGER emWin,STemWin precompiled library,,HIGH,region
+0807ae60,0807aef6,150,SEGGER emWin,STemWin precompiled library,,HIGH,region
+0807af48,0807b2a2,854,SEGGER emWin,STemWin precompiled library,,HIGH,region
+0807b2a4,0807b2c2,30,SEGGER emWin,STemWin precompiled library,,HIGH,region
+0807b2c4,0807b514,592,SEGGER emWin,STemWin precompiled library,,HIGH,region
+0807b518,0807b536,30,SEGGER emWin,STemWin precompiled library,,HIGH,region
+0807b538,0807b55c,36,SEGGER emWin,STemWin precompiled library,,HIGH,region
+0807b568,0807b5a0,56,SEGGER emWin,STemWin precompiled library,,HIGH,region
+0807b5a8,0807b65a,178,SEGGER emWin,STemWin precompiled library,,HIGH,region
+0807b668,0807b678,16,SEGGER emWin,STemWin precompiled library,,HIGH,region
+0807b67c,0807b76e,242,SEGGER emWin,STemWin precompiled library,,HIGH,region
+0807b778,0807b810,152,SEGGER emWin,STemWin precompiled library,,HIGH,region
+0807b82c,0807b840,20,SEGGER emWin,STemWin precompiled library,,HIGH,region
+0807b844,0807b856,18,SEGGER emWin,STemWin precompiled library,,HIGH,region
+0807b85c,0807b874,24,SEGGER emWin,STemWin precompiled library,,HIGH,region
+0807bb1c,0807bb9c,128,SEGGER emWin,STemWin precompiled library,,HIGH,region
+0807bba0,0807bbb4,20,SEGGER emWin,STemWin precompiled library,,HIGH,region
+0807bbb4,0807bbd2,30,SEGGER emWin,STemWin precompiled library,,HIGH,region
+0807bbd8,0807bc14,60,SEGGER emWin,STemWin precompiled library,,HIGH,region
+0807bc18,0807bcb6,158,SEGGER emWin,STemWin precompiled library,,HIGH,region
+0807bcbc,0807bd4e,146,SEGGER emWin,STemWin precompiled library,,HIGH,region
+0807bd54,0807bd64,16,SEGGER emWin,STemWin precompiled library,,HIGH,region
+0807bd68,0807bd76,14,SEGGER emWin,STemWin precompiled library,,HIGH,region
+0807bd7c,0807bd94,24,SEGGER emWin,STemWin precompiled library,,HIGH,region
+0807bd98,0807bdc2,42,SEGGER emWin,STemWin precompiled library,,HIGH,region
+0807bdd8,0807bdfa,34,SEGGER emWin,STemWin precompiled library,,HIGH,region
+0807be00,0807be90,144,SEGGER emWin,STemWin precompiled library,,HIGH,region
+0807be9c,0807befa,94,SEGGER emWin,STemWin precompiled library,,HIGH,region
+0807bf04,0807bfa4,160,SEGGER emWin,STemWin precompiled library,,HIGH,region
+0807bfa8,0807bfe0,56,SEGGER emWin,STemWin precompiled library,,HIGH,region
+0807bfe4,0807c0ce,234,SEGGER emWin,STemWin precompiled library,,HIGH,region
+0807c0d4,0807c0dc,8,SEGGER emWin,STemWin precompiled library,,HIGH,region
+0807c0dc,0807c108,44,SEGGER emWin,STemWin precompiled library,,HIGH,region
+0807c10c,0807c120,20,SEGGER emWin,STemWin precompiled library,,HIGH,region
+0807c120,0807c206,230,SEGGER emWin,STemWin precompiled library,,HIGH,region
+0807c25e,0807c272,20,SEGGER emWin,STemWin precompiled library,,HIGH,region
+0807c2fc,0807c30a,14,SEGGER emWin,STemWin precompiled library,,HIGH,region
+0807c310,0807c35e,78,SEGGER emWin,STemWin precompiled library,,HIGH,region
+0807c35e,080834c6,26,SEGGER emWin,STemWin precompiled library,,HIGH,region
+0807c366,0807c374,14,SEGGER emWin,STemWin precompiled library,,HIGH,region
+0807c374,0807c382,14,SEGGER emWin,STemWin precompiled library,,HIGH,region
+0807c384,0807c38c,8,SEGGER emWin,STemWin precompiled library,,HIGH,region
+0807c390,0807c394,4,SEGGER emWin,STemWin precompiled library,,HIGH,region
+0807c394,0807c3a6,18,SEGGER emWin,STemWin precompiled library,,HIGH,region
+0807c3ac,0807c402,86,SEGGER emWin,STemWin precompiled library,,HIGH,region
+0807c422,0807c4aa,136,SEGGER emWin,STemWin precompiled library,,HIGH,region
+0807c4aa,0807c4c2,24,SEGGER emWin,STemWin precompiled library,,HIGH,region
+0807c4c4,0807c4d0,12,SEGGER emWin,STemWin precompiled library,,HIGH,region
+0807c4d4,0807c4dc,8,SEGGER emWin,STemWin precompiled library,,HIGH,region
+0807c4e0,0807c4ec,12,SEGGER emWin,STemWin precompiled library,,HIGH,region
+0807c4f0,0807c52a,58,SEGGER emWin,STemWin precompiled library,,HIGH,region
+0807c52a,0807c53c,18,SEGGER emWin,STemWin precompiled library,,HIGH,region
+0807c53c,0807c540,4,SEGGER emWin,STemWin precompiled library,,HIGH,region
+0807c540,0807c544,4,SEGGER emWin,STemWin precompiled library,,HIGH,region
+0807c544,0807c548,4,SEGGER emWin,STemWin precompiled library,,HIGH,region
+0807c548,0807c556,14,SEGGER emWin,STemWin precompiled library,,HIGH,region
+0807c55c,0807c568,12,SEGGER emWin,STemWin precompiled library,,HIGH,region
+0807c56c,0807c594,40,SEGGER emWin,STemWin precompiled library,,HIGH,region
+0807c5a4,0807c5b2,14,SEGGER emWin,STemWin precompiled library,,HIGH,region
+0807c5b8,0807c624,108,SEGGER emWin,STemWin precompiled library,,HIGH,region
+0807c6e8,0807c704,122,SEGGER emWin,STemWin precompiled library,,HIGH,region
+0807c708,0807c78a,130,SEGGER emWin,STemWin precompiled library,GUI_GetVersionString,HIGH,region; named
+0807c7a0,0807c8f2,338,SEGGER emWin,STemWin precompiled library,,HIGH,region
+0807c928,0807c94a,34,SEGGER emWin,STemWin precompiled library,,HIGH,region
+0807c950,0807c96e,30,SEGGER emWin,STemWin precompiled library,,HIGH,region
+0807c974,0807c990,28,SEGGER emWin,STemWin precompiled library,,HIGH,region
+0807c994,0807c998,4,SEGGER emWin,STemWin precompiled library,,HIGH,region
+0807c998,0807c9de,70,SEGGER emWin,STemWin precompiled library,,HIGH,region
+0807c9e4,0807ca10,44,SEGGER emWin,STemWin precompiled library,,HIGH,region
+0807ca14,0807ca8e,122,SEGGER emWin,STemWin precompiled library,,HIGH,region
+0807ca98,0807cabc,36,SEGGER emWin,STemWin precompiled library,,HIGH,region
+0807cbd8,0807cbe4,286,SEGGER emWin,STemWin precompiled library,,HIGH,region
+0807cbe8,0807cd30,328,SEGGER emWin,STemWin precompiled library,,HIGH,region
+0807cd7a,0807cd82,78,SEGGER emWin,STemWin precompiled library,,HIGH,region
+0807cd82,0807cd96,20,SEGGER emWin,STemWin precompiled library,,HIGH,region
+0807cd98,0807ce36,158,SEGGER emWin,STemWin precompiled library,,HIGH,region
+0807ce40,0807ce88,72,SEGGER emWin,STemWin precompiled library,,HIGH,region
+0807ce8c,0807d1cc,826,SEGGER emWin,STemWin precompiled library,,HIGH,region
+0807d1cc,0807d1ec,32,SEGGER emWin,STemWin precompiled library,,HIGH,region
+0807d1f0,0807d210,32,SEGGER emWin,STemWin precompiled library,,HIGH,region
+0807d214,0807d234,32,SEGGER emWin,STemWin precompiled library,,HIGH,region
+0807d238,0807d258,32,SEGGER emWin,STemWin precompiled library,,HIGH,region
+0807d25c,0807d278,28,SEGGER emWin,STemWin precompiled library,,HIGH,region
+0807d27c,0807d2bc,64,SEGGER emWin,STemWin precompiled library,,HIGH,region
+0807d2c0,0807d2d4,20,SEGGER emWin,STemWin precompiled library,,HIGH,region
+0807d2d4,0807d358,128,SEGGER emWin,STemWin precompiled library,,HIGH,region
+0807d364,0807d3ba,86,SEGGER emWin,STemWin precompiled library,,HIGH,region
+0807d3c0,0807d3c8,8,SEGGER emWin,STemWin precompiled library,,HIGH,region
+0807d3c8,0807d570,424,SEGGER emWin,STemWin precompiled library,,HIGH,region
+0807d574,0807d71a,422,SEGGER emWin,STemWin precompiled library,,HIGH,region
+0807d724,0807d73a,22,SEGGER emWin,STemWin precompiled library,,HIGH,region
+0807d73c,0807d77a,62,SEGGER emWin,STemWin precompiled library,,HIGH,region
+0807d780,0807d8f8,376,SEGGER emWin,STemWin precompiled library,,HIGH,region
+0807d8fc,0807da62,358,SEGGER emWin,STemWin precompiled library,,HIGH,region
+0807da98,0807daaa,18,SEGGER emWin,STemWin precompiled library,,HIGH,region
+0807dab0,0807dabe,14,SEGGER emWin,STemWin precompiled library,,HIGH,region
+0807db80,0807dbd2,82,SEGGER emWin,STemWin precompiled library,,HIGH,region
+0807dc7c,0807dda6,298,SEGGER emWin,STemWin precompiled library,,HIGH,region
+0807ddcc,0807de62,150,SEGGER emWin,STemWin precompiled library,,HIGH,region
+0807de68,0807def6,142,SEGGER emWin,STemWin precompiled library,,HIGH,region
+0807defc,0807df7c,128,SEGGER emWin,STemWin precompiled library,,HIGH,region
+0807dfe4,0807e0ca,230,SEGGER emWin,STemWin precompiled library,,HIGH,region
+0807e0d8,0807e112,58,SEGGER emWin,STemWin precompiled library,,HIGH,region
+0807e118,0807e2d8,448,SEGGER emWin,STemWin precompiled library,,HIGH,region
+0807e2e8,0807e354,108,SEGGER emWin,STemWin precompiled library,,HIGH,region
+0807e35c,0807e428,204,SEGGER emWin,STemWin precompiled library,,HIGH,region
+0807e43c,0807e44a,14,SEGGER emWin,STemWin precompiled library,,HIGH,region
+0807e450,0807e464,20,SEGGER emWin,STemWin precompiled library,,HIGH,region
+0807e464,0807e488,36,SEGGER emWin,STemWin precompiled library,,HIGH,region
+0807e4e8,0807e4f0,8,SEGGER emWin,STemWin precompiled library,,HIGH,region
+0807e544,0807e632,238,SEGGER emWin,STemWin precompiled library,,HIGH,region
+0807e680,0807e716,150,SEGGER emWin,STemWin precompiled library,,HIGH,region
+0807e720,0807e7dc,188,SEGGER emWin,STemWin precompiled library,,HIGH,region
+0807e7e4,0807e89c,184,SEGGER emWin,STemWin precompiled library,,HIGH,region
+0807e8a4,0807e8fa,86,SEGGER emWin,STemWin precompiled library,,HIGH,region
+0807e910,0807e954,68,SEGGER emWin,STemWin precompiled library,,HIGH,region
+0807e954,0807e97e,42,SEGGER emWin,STemWin precompiled library,,HIGH,region
+0807e9d0,0807ea76,166,SEGGER emWin,STemWin precompiled library,,HIGH,region
+0807ea80,0807ead4,84,SEGGER emWin,STemWin precompiled library,,HIGH,region
+0807eadc,0807eb4a,110,SEGGER emWin,STemWin precompiled library,,HIGH,region
+0807f11c,0807f1bc,160,SEGGER emWin,STemWin precompiled library,,HIGH,region
+0807f1c4,0807f1e2,30,SEGGER emWin,STemWin precompiled library,,HIGH,region
+0807f1e8,0807f1ee,6,SEGGER emWin,STemWin precompiled library,,HIGH,region
+0807f1f4,0807f216,34,SEGGER emWin,STemWin precompiled library,,HIGH,region
+0807f21c,0807f23c,32,SEGGER emWin,STemWin precompiled library,,HIGH,region
+0807f240,0807f25c,28,SEGGER emWin,STemWin precompiled library,,HIGH,region
+0807f270,0807f27a,10,SEGGER emWin,STemWin precompiled library,,HIGH,region
+0807f280,0807f304,132,SEGGER emWin,STemWin precompiled library,,HIGH,region
+0807f38c,0807f436,170,SEGGER emWin,STemWin precompiled library,,HIGH,region
+0807f444,0807f5b2,366,SEGGER emWin,STemWin precompiled library,,HIGH,region
+0807f5b2,0807f69e,228,SEGGER emWin,STemWin precompiled library,,HIGH,region
+0807f69e,0807f6c4,38,SEGGER emWin,STemWin precompiled library,,HIGH,region
+0807f6c4,0807f6fe,58,SEGGER emWin,STemWin precompiled library,,HIGH,region
+0807f6fe,0807f754,86,SEGGER emWin,STemWin precompiled library,,HIGH,region
+0807f754,0807f7b2,94,SEGGER emWin,STemWin precompiled library,,HIGH,region
+0807f7b2,0807f814,98,SEGGER emWin,STemWin precompiled library,,HIGH,region
+0807f814,0807f87a,102,SEGGER emWin,STemWin precompiled library,,HIGH,region
+0807f888,0807f8ac,36,SEGGER emWin,STemWin precompiled library,,HIGH,region
+0807f8d4,0807f8dc,8,SEGGER emWin,STemWin precompiled library,,HIGH,region
+0807f8e0,0807f938,88,SEGGER emWin,STemWin precompiled library,,HIGH,region
+0807f940,0807f988,72,SEGGER emWin,STemWin precompiled library,,HIGH,region
+0807f990,0807f9da,74,SEGGER emWin,STemWin precompiled library,,HIGH,region
+0807f9e4,0807fa32,78,SEGGER emWin,STemWin precompiled library,,HIGH,region
+0807fa3c,0807fc06,458,SEGGER emWin,STemWin precompiled library,,HIGH,region
+0807fc14,0807fe2a,534,SEGGER emWin,STemWin precompiled library,,HIGH,region
+0807fe38,0807fe4c,20,SEGGER emWin,STemWin precompiled library,,HIGH,region
+0807fe54,0807fef4,160,SEGGER emWin,STemWin precompiled library,,HIGH,region
+0807fef8,0807ff0a,18,SEGGER emWin,STemWin precompiled library,,HIGH,region
+0807ff14,0807ff26,18,SEGGER emWin,STemWin precompiled library,,HIGH,region
+0807ff30,0807ff42,18,SEGGER emWin,STemWin precompiled library,,HIGH,region
+0807ffa0,0807ffa8,8,SEGGER emWin,STemWin precompiled library,,HIGH,region
+0807ffac,0807ffb4,8,SEGGER emWin,STemWin precompiled library,,HIGH,region
+0807ffb8,0807fff6,62,SEGGER emWin,STemWin precompiled library,,HIGH,region
+08080000,08080094,148,SEGGER emWin,STemWin precompiled library,,HIGH,region
+080800a0,080800b4,20,SEGGER emWin,STemWin precompiled library,,HIGH,region
+080800bc,080800e6,42,SEGGER emWin,STemWin precompiled library,,HIGH,region
+080800f8,08080158,96,SEGGER emWin,STemWin precompiled library,,HIGH,region
+08080168,080801e2,122,SEGGER emWin,STemWin precompiled library,,HIGH,region
+080801f0,080801fa,10,SEGGER emWin,STemWin precompiled library,,HIGH,region
+08080200,0808020a,10,SEGGER emWin,STemWin precompiled library,,HIGH,region
+08080210,0808022e,30,SEGGER emWin,STemWin precompiled library,,HIGH,region
+08080250,08080256,6,SEGGER emWin,STemWin precompiled library,,HIGH,region
+08080256,0808025c,6,SEGGER emWin,STemWin precompiled library,,HIGH,region
+0808025c,08080262,6,SEGGER emWin,STemWin precompiled library,,HIGH,region
+08080262,08080268,6,SEGGER emWin,STemWin precompiled library,,HIGH,region
+08080268,0808026e,6,SEGGER emWin,STemWin precompiled library,,HIGH,region
+0808026e,08080274,6,SEGGER emWin,STemWin precompiled library,,HIGH,region
+08080274,0808027a,6,SEGGER emWin,STemWin precompiled library,,HIGH,region
+0808027c,08080286,10,SEGGER emWin,STemWin precompiled library,,HIGH,region
+0808028c,0808029a,14,SEGGER emWin,STemWin precompiled library,,HIGH,region
+080802b8,080802c2,32,SEGGER emWin,STemWin precompiled library,,HIGH,region
+080802c8,080802d4,12,SEGGER emWin,STemWin precompiled library,,HIGH,region
+080802d8,080802e4,12,SEGGER emWin,STemWin precompiled library,,HIGH,region
+080802e8,080802ee,6,SEGGER emWin,STemWin precompiled library,,HIGH,region
+080802ee,080802f4,6,SEGGER emWin,STemWin precompiled library,,HIGH,region
+080802f4,080802fa,40,SEGGER emWin,STemWin precompiled library,,HIGH,region
+080802fc,08080304,8,SEGGER emWin,STemWin precompiled library,,HIGH,region
+08080308,0808030e,6,SEGGER emWin,STemWin precompiled library,,HIGH,region
+08080314,0808031a,6,SEGGER emWin,STemWin precompiled library,,HIGH,region
+08080320,0808039e,126,SEGGER emWin,STemWin precompiled library,,HIGH,region
+0808039e,080803ca,44,SEGGER emWin,STemWin precompiled library,,HIGH,region
+080803ca,080803e8,30,SEGGER emWin,STemWin precompiled library,,HIGH,region
+080803e8,0808043c,84,SEGGER emWin,STemWin precompiled library,,HIGH,region
+08080444,08080448,4,SEGGER emWin,STemWin precompiled library,,HIGH,region
+08080448,08080456,14,SEGGER emWin,STemWin precompiled library,,HIGH,region
+08080458,08080490,56,SEGGER emWin,STemWin precompiled library,,HIGH,region
+08080498,080804ca,50,SEGGER emWin,STemWin precompiled library,,HIGH,region
+080804ca,080804fa,48,SEGGER emWin,STemWin precompiled library,,HIGH,region
+080804fa,0808052a,48,SEGGER emWin,STemWin precompiled library,,HIGH,region
+0808052a,0808055a,48,SEGGER emWin,STemWin precompiled library,,HIGH,region
+0808055a,0808058a,48,SEGGER emWin,STemWin precompiled library,,HIGH,region
+0808058a,080805b6,44,SEGGER emWin,STemWin precompiled library,,HIGH,region
+080805b6,080805e6,48,SEGGER emWin,STemWin precompiled library,,HIGH,region
+080805e8,08080608,50,SEGGER emWin,STemWin precompiled library,,HIGH,region
+08080622,08080634,18,SEGGER emWin,STemWin precompiled library,,HIGH,region
+08080634,08080644,16,SEGGER emWin,STemWin precompiled library,,HIGH,region
+08080644,0808066c,40,SEGGER emWin,STemWin precompiled library,,HIGH,region
+080806b8,0808070a,82,SEGGER emWin,STemWin precompiled library,,HIGH,region
+0808084a,080808de,140,SEGGER emWin,STemWin precompiled library,,HIGH,region
+080808e0,08080aa2,450,SEGGER emWin,STemWin precompiled library,,HIGH,region
+080810e0,08081102,34,SEGGER emWin,STemWin precompiled library,,HIGH,region
+08081102,0808114e,76,SEGGER emWin,STemWin precompiled library,,HIGH,region
+08081150,080811b0,96,SEGGER emWin,STemWin precompiled library,,HIGH,region
+080811b4,080811d0,28,SEGGER emWin,STemWin precompiled library,,HIGH,region
+080811d0,080811e8,24,SEGGER emWin,STemWin precompiled library,,HIGH,region
+080811e8,0808120e,38,SEGGER emWin,STemWin precompiled library,,HIGH,region
+0808120e,08081228,26,SEGGER emWin,STemWin precompiled library,,HIGH,region
+08081228,08081250,40,SEGGER emWin,STemWin precompiled library,,HIGH,region
+08081250,08081278,40,SEGGER emWin,STemWin precompiled library,,HIGH,region
+08081278,080812a2,42,SEGGER emWin,STemWin precompiled library,,HIGH,region
+080812a2,0808139c,250,SEGGER emWin,STemWin precompiled library,,HIGH,region
+0808139c,080813de,66,SEGGER emWin,STemWin precompiled library,,HIGH,region
+080813de,08081404,38,SEGGER emWin,STemWin precompiled library,,HIGH,region
+08081404,0808142e,42,SEGGER emWin,STemWin precompiled library,,HIGH,region
+08081430,08081470,64,SEGGER emWin,STemWin precompiled library,,HIGH,region
+08081474,080814bc,72,SEGGER emWin,STemWin precompiled library,,HIGH,region
+080814ec,08081522,54,SEGGER emWin,STemWin precompiled library,,HIGH,region
+08081524,0808155e,58,SEGGER emWin,STemWin precompiled library,,HIGH,region
+08081618,080816d0,184,SEGGER emWin,STemWin precompiled library,,HIGH,region
+080816d4,08081782,174,SEGGER emWin,STemWin precompiled library,,HIGH,region
+08081f04,08081f0a,6,SEGGER emWin,STemWin precompiled library,,HIGH,region
+08081f10,08081f30,32,SEGGER emWin,STemWin precompiled library,,HIGH,region
+08081f30,08081f5a,42,SEGGER emWin,STemWin precompiled library,,HIGH,region
+08081f60,08081f8a,42,SEGGER emWin,STemWin precompiled library,,HIGH,region
+08081f90,08081fba,42,SEGGER emWin,STemWin precompiled library,,HIGH,region
+08081fc0,08081fe8,40,SEGGER emWin,STemWin precompiled library,,HIGH,region
+08081fe8,0808200e,38,SEGGER emWin,STemWin precompiled library,,HIGH,region
+0808200e,0808204c,62,SEGGER emWin,STemWin precompiled library,,HIGH,region
+0808204c,0808208e,66,SEGGER emWin,STemWin precompiled library,,HIGH,region
+08082880,08082926,166,SEGGER emWin,STemWin precompiled library,,HIGH,region
+08082926,080829ac,134,SEGGER emWin,STemWin precompiled library,,HIGH,region
+080829ac,08082a1e,114,SEGGER emWin,STemWin precompiled library,,HIGH,region
+08082a20,08082a74,84,SEGGER emWin,STemWin precompiled library,,HIGH,region
+08082a78,08082b24,172,SEGGER emWin,STemWin precompiled library,,HIGH,region
+08082b24,08082b34,48,SEGGER emWin,STemWin precompiled library,,HIGH,region
+08082b34,08082b7a,70,SEGGER emWin,STemWin precompiled library,,HIGH,region
+08082b84,08082bc0,60,SEGGER emWin,STemWin precompiled library,,HIGH,region
+08082bcc,08082be8,28,SEGGER emWin,STemWin precompiled library,,HIGH,region
+08082bec,08082c38,76,SEGGER emWin,STemWin precompiled library,,HIGH,region
+08082c3c,08082c5e,34,SEGGER emWin,STemWin precompiled library,,HIGH,region
+08082c5e,08082c74,22,SEGGER emWin,STemWin precompiled library,,HIGH,region
+08082c74,08082c8c,24,SEGGER emWin,STemWin precompiled library,,HIGH,region
+08082c8c,08082cb0,36,SEGGER emWin,STemWin precompiled library,,HIGH,region
+08082cb4,08082d4c,152,SEGGER emWin,STemWin precompiled library,,HIGH,region
+08082d54,08082d5a,6,SEGGER emWin,STemWin precompiled library,,HIGH,region
+08082d5a,08082dbe,100,SEGGER emWin,STemWin precompiled library,,HIGH,region
+08082dbe,08082e34,118,SEGGER emWin,STemWin precompiled library,,HIGH,region
+08082e34,08082e3a,6,SEGGER emWin,STemWin precompiled library,,HIGH,region
+08082eb2,08082eb8,6,SEGGER emWin,STemWin precompiled library,,HIGH,region
+08082eb8,08082ecc,20,SEGGER emWin,STemWin precompiled library,,HIGH,region
+08082ecc,08082f02,54,SEGGER emWin,STemWin precompiled library,,HIGH,region
+08082f0c,0808304e,322,SEGGER emWin,STemWin precompiled library,,HIGH,region
+0808306c,080831e6,378,SEGGER emWin,STemWin precompiled library,,HIGH,region
+080831f0,080832da,234,SEGGER emWin,STemWin precompiled library,,HIGH,region
+080832f0,080832fc,12,SEGGER emWin,STemWin precompiled library,,HIGH,region
+08083300,0808330e,14,SEGGER emWin,STemWin precompiled library,,HIGH,region
+080833c4,08083472,174,SEGGER emWin,STemWin precompiled library,,HIGH,region
+080834d0,080834de,14,SEGGER emWin,STemWin precompiled library,,HIGH,region
+080834e8,080834f6,14,SEGGER emWin,STemWin precompiled library,,HIGH,region
+080834fc,0808350c,16,SEGGER emWin,STemWin precompiled library,,HIGH,region
+0808350c,0808351c,16,SEGGER emWin,STemWin precompiled library,,HIGH,region
+0808351c,080835a2,134,SEGGER emWin,STemWin precompiled library,,HIGH,region
+080835a2,080835a6,4,SEGGER emWin,STemWin precompiled library,,HIGH,region
+080835a6,080835c2,28,SEGGER emWin,STemWin precompiled library,,HIGH,region
+080835c4,080835d6,18,SEGGER emWin,STemWin precompiled library,,HIGH,region
+080835dc,0808362c,80,SEGGER emWin,STemWin precompiled library,,HIGH,region
+0808363c,0808367e,66,SEGGER emWin,STemWin precompiled library,,HIGH,region
+0808367e,080836b8,58,SEGGER emWin,STemWin precompiled library,,HIGH,region
+080836b8,08083a2c,856,SEGGER emWin,STemWin precompiled library,,HIGH,region
+08083a30,08083a42,18,SEGGER emWin,STemWin precompiled library,,HIGH,region
+08083a44,08083a58,20,SEGGER emWin,STemWin precompiled library,,HIGH,region
+08083a5c,08083a70,20,SEGGER emWin,STemWin precompiled library,,HIGH,region
+08083a74,08083a9a,38,SEGGER emWin,STemWin precompiled library,,HIGH,region
+08083a9a,08083abc,34,SEGGER emWin,STemWin precompiled library,,HIGH,region
+08083abc,08083ace,18,SEGGER emWin,STemWin precompiled library,,HIGH,region
+08083ad0,08083b06,174,SEGGER emWin,STemWin precompiled library,,HIGH,region
+08083b0c,08083b26,26,SEGGER emWin,STemWin precompiled library,,HIGH,region
+08083b28,08083b32,10,SEGGER emWin,STemWin precompiled library,,HIGH,region
+08083b38,08083b5e,38,SEGGER emWin,STemWin precompiled library,,HIGH,region
+08083b64,08083b86,34,SEGGER emWin,STemWin precompiled library,,HIGH,region
+08083b88,08083cdc,340,SEGGER emWin,STemWin precompiled library,,HIGH,region
+08083d60,08083db2,82,SEGGER emWin,STemWin precompiled library,,HIGH,region
+08083e24,08083e4e,42,SEGGER emWin,STemWin precompiled library,,HIGH,region
+08083e54,08083e5e,10,SEGGER emWin,STemWin precompiled library,,HIGH,region
+08083e64,08083e70,12,SEGGER emWin,STemWin precompiled library,,HIGH,region
+08083e74,08083e7e,10,SEGGER emWin,STemWin precompiled library,,HIGH,region
+08083e88,08083f12,138,SEGGER emWin,STemWin precompiled library,,HIGH,region
+08083f24,08083f58,52,SEGGER emWin,STemWin precompiled library,,HIGH,region
+08083f5c,08083f78,28,SEGGER emWin,STemWin precompiled library,,HIGH,region
+08083f78,08083fce,86,SEGGER emWin,STemWin precompiled library,,HIGH,region
+08083fd8,08084076,158,SEGGER emWin,STemWin precompiled library,,HIGH,region
+08084210,080842ca,186,SEGGER emWin,STemWin precompiled library,,HIGH,region
+080842d0,0808432e,98,SEGGER emWin,STemWin precompiled library,,HIGH,region
+0808434c,08084392,70,SEGGER emWin,STemWin precompiled library,,HIGH,region
+0808439c,0808443c,160,SEGGER emWin,STemWin precompiled library,,HIGH,region
+08084454,08084460,12,SEGGER emWin,STemWin precompiled library,,HIGH,region
+08084464,08084508,164,SEGGER emWin,STemWin precompiled library,,HIGH,region
+08084508,08084578,112,SEGGER emWin,STemWin precompiled library,,HIGH,region
+08084578,080845f2,122,SEGGER emWin,STemWin precompiled library,,HIGH,region
+080845f4,0808462a,54,SEGGER emWin,STemWin precompiled library,,HIGH,region
+08084630,080846aa,122,SEGGER emWin,STemWin precompiled library,,HIGH,region
+080846aa,080846ee,68,SEGGER emWin,STemWin precompiled library,,HIGH,region
+080846ee,0808470c,30,SEGGER emWin,STemWin precompiled library,,HIGH,region
+0808470c,08084bba,1190,SEGGER emWin,STemWin precompiled library,,HIGH,region
+08084bc4,08084c0e,74,SEGGER emWin,STemWin precompiled library,,HIGH,region
+08084c14,08084c7e,106,SEGGER emWin,STemWin precompiled library,,HIGH,region
+08084c84,08084cb4,48,SEGGER emWin,STemWin precompiled library,,HIGH,region
+08084d94,08084da0,226,SEGGER emWin,STemWin precompiled library,,HIGH,region
+08084da4,08084dcc,40,SEGGER emWin,STemWin precompiled library,,HIGH,region
+08084dd4,08084de4,16,SEGGER emWin,STemWin precompiled library,,HIGH,region
+08084de8,08084e1e,54,SEGGER emWin,STemWin precompiled library,,HIGH,region
+08084e1e,08084e7e,96,SEGGER emWin,STemWin precompiled library,,HIGH,region
+08084e80,08084e9c,28,SEGGER emWin,STemWin precompiled library,,HIGH,region
+08084ea0,08084ec8,40,SEGGER emWin,STemWin precompiled library,,HIGH,region
+08084ed0,08084ed4,4,newlib/libc,newlib-nano + libm (GNU Tools for STM32 12.3),,HIGH,region
+08084ed4,08084ed8,4,newlib/libc,newlib-nano + libm (GNU Tools for STM32 12.3),,HIGH,region
+08084ed8,08084edc,4,newlib/libc,newlib-nano + libm (GNU Tools for STM32 12.3),,HIGH,region
+08084edc,08084f94,184,newlib/libc,newlib-nano + libm (GNU Tools for STM32 12.3),,HIGH,region
+08084fe8,08085152,430,newlib/libc,newlib-nano + libm (GNU Tools for STM32 12.3),,HIGH,region
+08085154,0808517e,42,newlib/libc,newlib-nano + libm (GNU Tools for STM32 12.3),__assert_func,HIGH,region; named; byte-identical to Main 0x08056cf8
+08085190,08085f92,262,newlib/libc,newlib-nano + libm (GNU Tools for STM32 12.3),,HIGH,region
+08085198,080851a2,10,newlib/libc,newlib-nano + libm (GNU Tools for STM32 12.3),,HIGH,region
+080851a8,080851b2,10,newlib/libc,newlib-nano + libm (GNU Tools for STM32 12.3),,HIGH,region
+080851b8,080851f6,62,newlib/libc,newlib-nano + libm (GNU Tools for STM32 12.3),,HIGH,region; byte-identical to Main 0x08054da8
+080851fc,080852f6,250,newlib/libc,newlib-nano + libm (GNU Tools for STM32 12.3),,HIGH,region; byte-identical to Main 0x08054dec
+080852fc,08085302,6,newlib/libc,newlib-nano + libm (GNU Tools for STM32 12.3),,HIGH,region
+08085308,0808530e,6,newlib/libc,newlib-nano + libm (GNU Tools for STM32 12.3),,HIGH,region
+08085314,08085348,52,newlib/libc,newlib-nano + libm (GNU Tools for STM32 12.3),,HIGH,region; byte-identical to Main 0x08055862
+08085e74,08085e82,2732,newlib/libc,newlib-nano + libm (GNU Tools for STM32 12.3),,HIGH,region
+08085f80,08085f84,4,newlib/libc,newlib-nano + libm (GNU Tools for STM32 12.3),,HIGH,region
+080860b4,080860c2,294,newlib/libc,newlib-nano + libm (GNU Tools for STM32 12.3),,HIGH,region
+080861f4,08086202,308,newlib/libc,newlib-nano + libm (GNU Tools for STM32 12.3),,HIGH,region
+08086208,080862b0,168,newlib/libc,newlib-nano + libm (GNU Tools for STM32 12.3),,HIGH,region; byte-identical to Main 0x08052c44
+080862b0,08086324,116,newlib/libc,newlib-nano + libm (GNU Tools for STM32 12.3),,HIGH,region; byte-identical to Main 0x08052cec
+08086328,0808675c,1046,newlib/libc,newlib-nano + libm (GNU Tools for STM32 12.3),,HIGH,region
+0808675c,08086836,218,newlib/libc,newlib-nano + libm (GNU Tools for STM32 12.3),,HIGH,region; byte-identical to Main 0x08053194
+08086838,08086a6e,478,newlib/libc,newlib-nano + libm (GNU Tools for STM32 12.3),,HIGH,region
+08086a78,08086b7c,260,newlib/libc,newlib-nano + libm (GNU Tools for STM32 12.3),,HIGH,region; byte-identical to Main 0x080569fc
+08086b80,08086bd0,80,newlib/libc,newlib-nano + libm (GNU Tools for STM32 12.3),,HIGH,region; byte-identical to Main 0x08056b04
+08086bd0,08086da0,82,newlib/libc,newlib-nano + libm (GNU Tools for STM32 12.3),,HIGH,region
+08086bf8,080874f6,88,newlib/libc,newlib-nano + libm (GNU Tools for STM32 12.3),,HIGH,region; byte-identical to Main 0x080538c8
+08086cbc,08086cec,48,newlib/libc,newlib-nano + libm (GNU Tools for STM32 12.3),,HIGH,region; byte-identical to Main 0x0805398c
+08086cf8,08086cfe,6,newlib/libc,newlib-nano + libm (GNU Tools for STM32 12.3),,HIGH,region
+08086d10,08086d36,44,newlib/libc,newlib-nano + libm (GNU Tools for STM32 12.3),,HIGH,region; byte-identical to Main 0x080539e0
+08086d40,08086d60,32,newlib/libc,newlib-nano + libm (GNU Tools for STM32 12.3),,HIGH,region; byte-identical to Main 0x08057468
+08086da0,08086dc0,32,newlib/libc,newlib-nano + libm (GNU Tools for STM32 12.3),printf,HIGH,region; byte-identical to Main 0x08053a4c; name from peer
+08086e70,08086e7a,180,newlib/libc,newlib-nano + libm (GNU Tools for STM32 12.3),,HIGH,region
+08086e80,08086fe4,356,newlib/libc,newlib-nano + libm (GNU Tools for STM32 12.3),setvbuf,HIGH,region; byte-identical to Main 0x08053b3c; name from peer
+08086fe8,0808704a,98,newlib/libc,newlib-nano + libm (GNU Tools for STM32 12.3),,HIGH,region; byte-identical to Main 0x08053ca4
+08087050,0808709c,76,newlib/libc,newlib-nano + libm (GNU Tools for STM32 12.3),,HIGH,region
+080870a4,080870c6,34,newlib/libc,newlib-nano + libm (GNU Tools for STM32 12.3),,HIGH,region; byte-identical to Main 0x08053d4c
+080870ca,0808749c,88,newlib/libc,newlib-nano + libm (GNU Tools for STM32 12.3),,HIGH,region; byte-identical to Main 0x08053d6e
+08087102,08087126,36,newlib/libc,newlib-nano + libm (GNU Tools for STM32 12.3),,HIGH,region; byte-identical to Main 0x08053da6
+08087130,0808713e,14,newlib/libc,newlib-nano + libm (GNU Tools for STM32 12.3),,HIGH,region; byte-identical to Main 0x08053dd4
+08087144,080871c0,124,newlib/libc,newlib-nano + libm (GNU Tools for STM32 12.3),,HIGH,region; byte-identical to Main 0x08053de8
+080871c0,08087268,168,newlib/libc,newlib-nano + libm (GNU Tools for STM32 12.3),,HIGH,region; byte-identical to Main 0x08053e64
+0808726c,0808728c,32,newlib/libc,newlib-nano + libm (GNU Tools for STM32 12.3),memcmp,HIGH,region; byte-identical to Main 0x08053f10; name from peer
+0808728c,080872c0,52,newlib/libc,newlib-nano + libm (GNU Tools for STM32 12.3),memmove,HIGH,region; byte-identical to Main 0x08053f30; name from peer
+080872c0,080872d0,16,newlib/libc,newlib-nano + libm (GNU Tools for STM32 12.3),memset,HIGH,region; byte-identical to Main 0x08053f64; name from peer
+080872d0,080872ee,30,newlib/libc,newlib-nano + libm (GNU Tools for STM32 12.3),strcat,HIGH,region; byte-identical to Main 0x08053f74; name from peer
+080872ee,08087308,26,newlib/libc,newlib-nano + libm (GNU Tools for STM32 12.3),,HIGH,region
+08087308,08087342,58,newlib/libc,newlib-nano + libm (GNU Tools for STM32 12.3),,HIGH,region
+08087348,0808736c,36,newlib/libc,newlib-nano + libm (GNU Tools for STM32 12.3),strncmp,HIGH,region; byte-identical to Main 0x08053f92; name from peer
+0808736c,08087392,38,newlib/libc,newlib-nano + libm (GNU Tools for STM32 12.3),strncpy,HIGH,region; byte-identical to Main 0x08053fb6; name from peer
+08087392,080873be,44,newlib/libc,newlib-nano + libm (GNU Tools for STM32 12.3),,HIGH,region
+080873be,080873ea,44,newlib/libc,newlib-nano + libm (GNU Tools for STM32 12.3),,HIGH,region
+080873ec,080873f0,4,newlib/libc,newlib-nano + libm (GNU Tools for STM32 12.3),,HIGH,region
+08087414,08087434,32,newlib/libc,newlib-nano + libm (GNU Tools for STM32 12.3),,HIGH,region
+08087438,08087458,32,newlib/libc,newlib-nano + libm (GNU Tools for STM32 12.3),,HIGH,region
+0808745c,08087478,28,newlib/libc,newlib-nano + libm (GNU Tools for STM32 12.3),,HIGH,region
+080874a0,080874a6,6,newlib/libc,newlib-nano + libm (GNU Tools for STM32 12.3),,HIGH,region
+080874ac,080874e4,56,newlib/libc,newlib-nano + libm (GNU Tools for STM32 12.3),,HIGH,region; byte-identical to Main 0x0805407c
+080874f6,080874f8,2,newlib/libc,newlib-nano + libm (GNU Tools for STM32 12.3),,HIGH,region
+080874f8,080874fa,2,newlib/libc,newlib-nano + libm (GNU Tools for STM32 12.3),,HIGH,region
+080874fa,0808750a,16,newlib/libc,newlib-nano + libm (GNU Tools for STM32 12.3),,HIGH,region
+0808750a,08087526,28,newlib/libc,newlib-nano + libm (GNU Tools for STM32 12.3),memcpy,HIGH,region; byte-identical to Main 0x080540ca; name from peer
+08087528,0808752e,6,newlib/libc,newlib-nano + libm (GNU Tools for STM32 12.3),,HIGH,region
+08087538,08087546,14,newlib/libc,newlib-nano + libm (GNU Tools for STM32 12.3),,HIGH,region; byte-identical to Main 0x0805748c
+08087546,08087656,272,newlib/libc,newlib-nano + libm (GNU Tools for STM32 12.3),,HIGH,region; byte-identical to Main 0x08054148
+08087658,080880fc,2654,newlib/libc,newlib-nano + libm (GNU Tools for STM32 12.3),,HIGH,region
+08088104,08088192,142,newlib/libc,newlib-nano + libm (GNU Tools for STM32 12.3),,HIGH,region; byte-identical to Main 0x08054d04
+08088198,0808823c,164,newlib/libc,newlib-nano + libm (GNU Tools for STM32 12.3),,HIGH,region; byte-identical to Main 0x08056d5c
+0808823c,08088266,42,newlib/libc,newlib-nano + libm (GNU Tools for STM32 12.3),,HIGH,region; byte-identical to Main 0x08056e00
+08088268,08088684,1040,newlib/libc,newlib-nano + libm (GNU Tools for STM32 12.3),,HIGH,region
+08088688,080886ac,36,newlib/libc,newlib-nano + libm (GNU Tools for STM32 12.3),,HIGH,region; byte-identical to Main 0x0805724c
+080886ac,080886d4,40,newlib/libc,newlib-nano + libm (GNU Tools for STM32 12.3),,HIGH,region; byte-identical to Main 0x08057270
+080886d4,0808880a,310,newlib/libc,newlib-nano + libm (GNU Tools for STM32 12.3),,HIGH,region; byte-identical to Main 0x08057298
+08088830,080888a6,118,newlib/libc,newlib-nano + libm (GNU Tools for STM32 12.3),,HIGH,region; byte-identical to Main 0x08054f04
+080888b0,080888ec,60,newlib/libc,newlib-nano + libm (GNU Tools for STM32 12.3),,HIGH,region; byte-identical to Main 0x08054f84
+080888f4,08088978,132,newlib/libc,newlib-nano + libm (GNU Tools for STM32 12.3),,HIGH,region; byte-identical to Main 0x08054fc8
+08088980,08088a0a,138,newlib/libc,newlib-nano + libm (GNU Tools for STM32 12.3),,HIGH,region; byte-identical to Main 0x08055054
+08088a14,08088a52,62,newlib/libc,newlib-nano + libm (GNU Tools for STM32 12.3),,HIGH,region; byte-identical to Main 0x080550e8
+08088a52,08088aac,90,newlib/libc,newlib-nano + libm (GNU Tools for STM32 12.3),,HIGH,region; byte-identical to Main 0x08055126
+08088aac,08088ace,34,newlib/libc,newlib-nano + libm (GNU Tools for STM32 12.3),,HIGH,region; byte-identical to Main 0x08055180
+08088ad8,08088c24,332,newlib/libc,newlib-nano + libm (GNU Tools for STM32 12.3),,HIGH,region; byte-identical to Main 0x080551ac
+08088c2c,08088cd2,166,newlib/libc,newlib-nano + libm (GNU Tools for STM32 12.3),,HIGH,region; byte-identical to Main 0x08055300
+08088ce0,08088dae,206,newlib/libc,newlib-nano + libm (GNU Tools for STM32 12.3),,HIGH,region; byte-identical to Main 0x080553b4
+08088db8,08088dee,54,newlib/libc,newlib-nano + libm (GNU Tools for STM32 12.3),,HIGH,region; byte-identical to Main 0x0805548c
+08088df0,08088f0e,286,newlib/libc,newlib-nano + libm (GNU Tools for STM32 12.3),,HIGH,region; byte-identical to Main 0x080554c4
+08088f18,08088f60,72,newlib/libc,newlib-nano + libm (GNU Tools for STM32 12.3),,HIGH,region; byte-identical to Main 0x080555ec
+08088f64,08088ff4,144,newlib/libc,newlib-nano + libm (GNU Tools for STM32 12.3),,HIGH,region; byte-identical to Main 0x08055638
+08088ff8,080890a0,168,newlib/libc,newlib-nano + libm (GNU Tools for STM32 12.3),,HIGH,region; byte-identical to Main 0x080556cc
+080890a8,08089106,94,newlib/libc,newlib-nano + libm (GNU Tools for STM32 12.3),,HIGH,region; byte-identical to Main 0x0805577c
+08089106,0808914c,70,newlib/libc,newlib-nano + libm (GNU Tools for STM32 12.3),,HIGH,region; byte-identical to Main 0x080557da
+0808914c,0808918e,66,newlib/libc,newlib-nano + libm (GNU Tools for STM32 12.3),,HIGH,region; byte-identical to Main 0x08055820
+080891a8,0808925e,182,newlib/libc,newlib-nano + libm (GNU Tools for STM32 12.3),,HIGH,region; byte-identical to Main 0x080564c8
+08089260,08089444,484,newlib/libc,newlib-nano + libm (GNU Tools for STM32 12.3),,HIGH,region; byte-identical to Main 0x08056580
+080894ce,08089508,58,newlib/libc,newlib-nano + libm (GNU Tools for STM32 12.3),,HIGH,region
+08089508,080897ea,586,newlib/libc,newlib-nano + libm (GNU Tools for STM32 12.3),,HIGH,region
+080897f0,0808981e,46,newlib/libc,newlib-nano + libm (GNU Tools for STM32 12.3),,HIGH,region; byte-identical to Main 0x08056778
+0808981e,08089842,36,newlib/libc,newlib-nano + libm (GNU Tools for STM32 12.3),,HIGH,region; byte-identical to Main 0x080567a6
+08089844,08089a60,540,newlib/libc,newlib-nano + libm (GNU Tools for STM32 12.3),_vfprintf_r,MEDIUM,region; byte-identical to Main 0x080567cc; name from peer
+08089a74,08089b22,174,newlib/libc,newlib-nano + libm (GNU Tools for STM32 12.3),,HIGH,region
+08089b28,08089cfe,470,newlib/libc,newlib-nano + libm (GNU Tools for STM32 12.3),,HIGH,region
+08089d10,08089d5c,76,newlib/libc,newlib-nano + libm (GNU Tools for STM32 12.3),,HIGH,region; byte-identical to Main 0x08056b54
+08089d5c,08089dd4,120,newlib/libc,newlib-nano + libm (GNU Tools for STM32 12.3),,HIGH,region; byte-identical to Main 0x08056ba0
+08089dd4,08089e46,114,newlib/libc,newlib-nano + libm (GNU Tools for STM32 12.3),,HIGH,region
+08089e46,08089eba,116,newlib/libc,newlib-nano + libm (GNU Tools for STM32 12.3),,HIGH,region
+08089f0c,08089f7e,120,newlib/libc,newlib-nano + libm (GNU Tools for STM32 12.3),,HIGH,region
+08089f1c,08089f3a,30,newlib/libc,newlib-nano + libm (GNU Tools for STM32 12.3),,HIGH,region; byte-identical to Main 0x08056c80
+08089f40,08089f5c,28,newlib/libc,newlib-nano + libm (GNU Tools for STM32 12.3),,HIGH,region
+08089f84,08089f88,4,newlib/libc,newlib-nano + libm (GNU Tools for STM32 12.3),,HIGH,region
+08089f88,08089fb0,40,newlib/libc,newlib-nano + libm (GNU Tools for STM32 12.3),,HIGH,region; byte-identical to Main 0x08056d34
+08089fb0,0808a00c,92,newlib/libc,newlib-nano + libm (GNU Tools for STM32 12.3),,HIGH,region; byte-identical to Main 0x080573f2
+0808a00c,0808a0e4,216,newlib/libc,newlib-nano + libm (GNU Tools for STM32 12.3),,HIGH,region
+0808a0ec,0808a0fc,16,toolchain runtime,crti/crtn (_init/_fini),,MEDIUM,region; byte-identical to Main 0x0805749a
+0808a0fc,0808a108,12,toolchain runtime,crti/crtn (_init/_fini),,MEDIUM,region
+0808a108,0808a114,12,toolchain runtime,crti/crtn (_init/_fini),,MEDIUM,region

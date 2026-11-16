@@ -179,7 +179,7 @@ Roadmap mirrors `REVERSE_ENGINEERING_GUIDE.md`, tracked per unit.
 - [ ] N23 CW · [ ] N24 ATU algorithm · [ ] N35 H-22 mic protocol · [ ] N37 voice recorder · [ ] N41 SWR scanner
 - [ ] N25 SLIP 0x03/0x08 completeness · [ ] N26 SLIP link state machine · [ ] N27 Control storage
 - [ ] N42 CI-V command set · [ ] N43 GUI layer
-- [x] N15 X6100 tooling leftovers · [ ] N38 library identification · [ ] N39 RAM object map
+- [x] N15 X6100 tooling leftovers · [x] N38 library identification · [ ] N39 RAM object map
 - [x] N40 reproducible export run + doc checker
 - [ ] N44 X6100/G90 comparison — BLOCKED: no X6100/G90 material in this repo
 - [ ] Identify the SPI2 DAC chip; circuit roles of DAC channels 5 and 6.
@@ -190,3 +190,4 @@ Roadmap mirrors `REVERSE_ENGINEERING_GUIDE.md`, tracked per unit.
 - [ ] Main firmware update path (bootloader only; transport from Control unknown).
 - [ ] Control bootloader: update file name and checks (needs a sector-0 dump).
 - [ ] IWDG timeout and the IWDG_SW option byte (needs an SWD read).
+- [ ] Exact library matching with the GNU Tools for STM32 12.3 and STemWin archives (identify_lib_functions.py).

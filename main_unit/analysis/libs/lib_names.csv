@@ -1,0 +1,77 @@
+address,library,name,confidence,evidence
+08020330,toolchain runtime,memchr,HIGH,word-aligned search with byte-mask fast path (newlib ARM assembly)
+080203d0,toolchain runtime,strlen,HIGH,byte loop returning end minus start minus one
+08020b20,toolchain runtime,__udivmoddi4,MEDIUM,64-bit divide shape (clz + udiv + umull); called by the two 64-bit division wrappers
+08021eb0,application,,,
+08021edc,application,power_off_sequence,MEDIUM,logs power-off; saves calibration and ATU when dirty (memory_map.md)
+0802200c,application,jump_to_bootloader,VERIFIED,verified_renames.csv
+0802239c,application,main,HIGH,flow.md
+08023404,application,,,references USART1 and a hex-digit table
+080239c8,application,TIM5_IRQ_dsp_scheduler,VERIFIED,verified_renames.csv
+08023ab4,application,,,logs CW key changes
+08022dc4,CubeMX generated (Core/Src),Error_Handler,HIGH,4-byte disable-IRQ loop; 27 callers all in init code
+08023b88,CubeMX generated (Core/Src),_sbrk,HIGH,uses end of .bss / stack top / stack reserve and sets errno (sysmem.c)
+08024dac,CMSIS-DSP,arm_cos_f32,MEDIUM,512-entry table index; cos precedes sin in name order and is 8 bytes longer (quarter-turn offset)
+08024e4c,CMSIS-DSP,arm_sin_f32,MEDIUM,512-entry table index
+080248c8,CMSIS-DSP,arm_cmplx_mag_f32,MEDIUM,unrolled complex magnitude with vsqrt
+08024fc8,CMSIS-DSP,arm_fir_decimate_f32,MEDIUM,dsp_functions.csv FIR decimator; file order
+08025340,CMSIS-DSP,arm_fir_decimate_init_f32,MEDIUM,modulo check + state clear; file order
+08025378,CMSIS-DSP,arm_fir_f32,MEDIUM,dsp_functions.csv FIR f32; file order
+08025780,CMSIS-DSP,arm_fir_init_f32,MEDIUM,state clear only; file order
+080257a4,CMSIS-DSP,arm_fir_interpolate_f32,MEDIUM,dsp_functions.csv FIR interpolator; file order
+08025e04,CMSIS-DSP,arm_fir_interpolate_init_f32,MEDIUM,modulo check + state clear; file order
+08025e38,CMSIS-DSP,arm_lms_norm_f32,MEDIUM,energy-normalised LMS with one division per sample; file order
+08026044,CMSIS-DSP,arm_lms_norm_init_f32,MEDIUM,state clear; file order
+0802607c,CMSIS-DSP,arm_max_f32,MEDIUM,Statistics file order
+08026170,CMSIS-DSP,arm_mean_f32,MEDIUM,sum then divide by converted block size
+080261f4,CMSIS-DSP,arm_min_f32,MEDIUM,Statistics file order
+080262d0,CMSIS-DSP,arm_rms_f32,MEDIUM,sum of squares / divide / sqrt
+080265e4,CMSIS-DSP,arm_bitreversal_32,MEDIUM,integer-only table swap; Transform file order
+08026638,CMSIS-DSP,arm_cfft_radix8by2_f32,MEDIUM,static helper of arm_cfft_f32
+080267cc,CMSIS-DSP,arm_cfft_radix8by4_f32,MEDIUM,static helper of arm_cfft_f32
+08026c60,CMSIS-DSP,arm_cfft_f32,MEDIUM,calls the radix helpers and bit reversal; 1/N scaling division
+08026da4,CMSIS-DSP,arm_cfft_init_f32,MEDIUM,length switch without FP
+08026e84,CMSIS-DSP,arm_radix8_butterfly_f32,MEDIUM,largest FP butterfly
+0802754c,CMSIS-DSP,arm_rfft_fast_f32,MEDIUM,calls the CFFT plus one split stage
+080276b4,CMSIS-DSP,arm_rfft_fast_init_f32,MEDIUM,length switch without FP; last CMSIS function
+08027774,ST HAL,HAL_Init,HIGH,flow.md
+080277ec,ST HAL,HAL_GetTick,HIGH,flow.md
+080277f8,ST HAL,HAL_Delay,HIGH,flow.md
+080289a4,ST HAL,HAL_NVIC_SetPriorityGrouping,MEDIUM,writes SCB AIRCR with key; called once from HAL_Init
+080289c8,ST HAL,HAL_NVIC_SetPriority,HIGH,peripherals.md
+08028a40,ST HAL,HAL_NVIC_EnableIRQ,HIGH,peripherals.md
+08028ae8,ST HAL,HAL_MPU_ConfigRegion,MEDIUM,writes MPU RNR/RBAR/RASR
+0802909c,ST HAL,HAL_DMA_Init,HIGH,peripherals.md
+0802abd8,ST HAL,HAL_GPIO_Init,HIGH,peripherals.md
+0802ae40,ST HAL,HAL_GPIO_DeInit,MEDIUM,follows GPIO_Init; touches the same EXTI/SYSCFG registers
+0802afbc,ST HAL,HAL_GPIO_ReadPin,MEDIUM,12-byte IDR test; gpio file order
+0802afc8,ST HAL,HAL_GPIO_WritePin,MEDIUM,8-byte BSRR write; 13 callers
+0802afd0,ST HAL,HAL_GPIO_TogglePin,MEDIUM,gpio file order
+0802afe4,ST HAL,HAL_GPIO_EXTI_IRQHandler,MEDIUM,reads/clears EXTI pending register then calls the callback
+0802b654,ST HAL,HAL_I2C_Master_Transmit,MEDIUM,i2c file order; 11 callers
+0802b940,ST HAL,HAL_I2C_Mem_Write,HIGH,peripherals.md I2C write helper
+0802bb3c,ST HAL,HAL_I2C_Mem_Read,HIGH,peripherals.md I2C read helper
+0802bd3c,ST HAL,HAL_I2CEx_ConfigAnalogFilter,MEDIUM,3 callers = the three MX_I2Cx_Init
+0802bd90,ST HAL,HAL_I2CEx_ConfigDigitalFilter,MEDIUM,3 callers = the three MX_I2Cx_Init
+0802ed60,ST HAL,HAL_SPI_Transmit,VERIFIED,peripherals.md
+0802f9cc,ST HAL,HAL_TIM_Base_Start_IT,HIGH,flow.md
+08053a4c,newlib/libc,printf,HIGH,varargs wrapper on _impure_ptr calling the nano vfprintf core (36 callers; flow.md called it a console logf)
+08053b2c,newlib/libc,puts,MEDIUM,stdio lock + write string + newline (flow.md called it a console log)
+08053b3c,newlib/libc,setvbuf,HIGH,flow.md stdout unbuffered call
+08053d0c,newlib/libc,sprintf,HIGH,on-stack string FILE with INT_MAX size
+08053f10,newlib/libc,memcmp,HIGH,byte compare loop
+08053f30,newlib/libc,memmove,HIGH,overlap test then forward or backward byte copy
+08053f64,newlib/libc,memset,HIGH,byte store loop; 50 callers
+08053f74,newlib/libc,strcat,HIGH,find terminator then copy
+08053f92,newlib/libc,strncmp,HIGH,bounded byte compare stopping at NUL
+08053fb6,newlib/libc,strncpy,HIGH,bounded copy then zero fill
+08054070,newlib/libc,__errno,HIGH,returns the errno slot of _impure_ptr
+080540c6,newlib/libc,__retarget_lock_acquire_recursive,MEDIUM,empty stub
+080540c8,newlib/libc,__retarget_lock_release_recursive,MEDIUM,empty stub
+080540ca,newlib/libc,memcpy,HIGH,forward byte copy; 23 callers
+08054258,newlib/libc,_dtoa_r,MEDIUM,references the Balloc/REENT assert texts and decimal scaling constants
+08056cf8,newlib/libc,__assert_func,HIGH,formats file/line/function/expression; 12 callers
+08055898,newlib/libc,_strtod_l,MEDIUM,parses inf/infinity/nan; largest libc function
+080567cc,newlib/libc,_vfprintf_r,MEDIUM,flag-character table; called by printf
+080239e0,application,TIM6_IRQ_housekeeping,HIGH,dsp_functions.csv; separate function once vector targets are created
+08023bd0,CubeMX generated (Core/Src),SystemInit,VERIFIED,startup.md (reset handler callee)

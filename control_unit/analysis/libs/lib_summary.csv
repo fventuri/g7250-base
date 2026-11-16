@@ -1,0 +1,14 @@
+library,functions,bytes,named,byte_identical_in_peer
+application,850,238072,8,13
+ST HAL,221,47262,20,63
+SEGGER emWin,316,29180,1,0
+newlib/libc,111,19662,11,66
+FatFS,35,14444,1,0
+CubeMX generated (Core/Src),92,12002,4,9
+CMSIS-DSP,12,5192,12,12
+CubeMX generated (USB_DEVICE),31,2738,7,0
+minIni (third party),6,1838,2,0
+toolchain runtime,16,1750,3,11
+ST USB device library,23,1106,0,0
+CubeMX generated (STemWin glue),8,734,1,0
+TOTAL,1721,373980,70,174

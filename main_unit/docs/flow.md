@@ -162,7 +162,7 @@ constants it was built with. Values are in
 | --- | --- | --- |
 | `FUN_080277EC` | `HAL_GetTick` | ms counter, compared for cadences |
 | `FUN_080277F8` | `HAL_Delay` | `(1000)`, `(100)`, `(10)` delays |
-| `FUN_08053B2C` / `FUN_08053A4C` | console `log`/`logf` | printf-style with `[OK]/[ERR]` strings |
+| `FUN_08053B2C` / `FUN_08053A4C` | newlib `puts` / `printf` | output to USART1 via `_write` (see docs/libraries.md) |
 | `FUN_08045088` | `pa_set_bias(ch,val)` | PA Idd cal, 10/12-bit DAC values |
 | `FUN_08041858` | `console_getchar` | returns 1 + char, CR/LF handling |
 

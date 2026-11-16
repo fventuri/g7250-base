@@ -1,0 +1,9 @@
+start,end,library,module,confidence,evidence
+08020000,08020de0,toolchain runtime,crt + libgcc + newlib asm (.text input sections),HIGH,plain .text placed before all -ffunction-sections objects; memchr/strlen and 64-bit division helper shapes; byte-identical to Control 0x080202c4-0x08020d48
+08020de0,080245a8,CubeMX generated (Core/Src),MX_*_Init / MSP / main.c / it.c / syscalls / sysmem,HIGH,verified MX_SPIx_Init/HAL_SPI_MspInit/MX_I2S3_Init sit here; CubeMX file order adc dac dma gpio i2c i2s main mdma rtc spi msp it syscalls sysmem tim usart
+080245a8,08027728,CMSIS-DSP,BasicMath..Transform (f32),HIGH,function shapes and source-file alphabetical order (fir_decimate fir fir_interpolate lms_norm max mean rms cfft rfft_fast); 13 functions byte-identical to Control
+08027728,080312b4,ST HAL,stm32h7xx_hal_*.c,HIGH,brackets verified HAL_RCC_*/HAL_SPI_Init/HAL_I2S_Init/HAL_PWREx_ConfigSupply; module order is alphabetical (hal cortex crc dac dma gpio i2c i2s pwr rcc rtc spi tim uart); 48 functions byte-identical to Control HAL
+080312b4,08052c44,application,G7250 Main firmware,HIGH,referenced log strings and RAM objects are application specific (DSP / FPGA / CH394 / SLIP / wfview)
+08052c44,08057534,newlib/libc,newlib-nano (GNU Tools for STM32 12.3),HIGH,newlib assert strings and build path; printf flag/digit tables; 60 functions byte-identical to the Control libc block
+08057534,0805aec0,newlib/libm,double-precision libm,MEDIUM,IEEE double constants (pi/2 low word 0x54442D18 and log/exp kernel constants); placed after libc; no application strings or RAM
+0805aec0,0805aed4,toolchain runtime,crti/crtn (_init/_fini),MEDIUM,last two tiny functions of the image

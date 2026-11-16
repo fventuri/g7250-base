@@ -1,0 +1,25 @@
+address,library,name,confidence,evidence
+08021e74,application,main,HIGH,flow.md
+0802221c,CubeMX generated (Core/Src),Error_Handler,HIGH,4-byte disable-IRQ loop; 31 callers in init code
+08024bb4,ST HAL,HAL_Init,HIGH,flow.md
+08024c20,ST HAL,HAL_Delay,HIGH,flow.md
+08024db8,ST HAL,HAL_MPU_ConfigRegion,HIGH,flow.md MPU setup; byte-identical to Main 0x08028ae8
+08024d98,ST HAL,HAL_MPU_Enable,HIGH,flow.md
+08026d80,ST HAL,HAL_GPIO_Init,VERIFIED,verified_renames.csv
+0802dda4,ST HAL,HAL_TIM_Base_Start_IT,VERIFIED,verified_renames.csv
+080375e4,minIni (third party),ini_strncpy,HIGH,its own assert names it
+08037818,minIni (third party),getkeystring,HIGH,its own assert names it
+0803ce70,FatFS,f_mkfs,HIGH,writes FSInfo and default boot-sector labels for both FAT types
+0803d90c,CubeMX generated (USB_DEVICE),MX_USB_DEVICE_Init,HIGH,flow.md
+0803d9a0,CubeMX generated (USB_DEVICE),USBD_FS_ManufacturerStrDescriptor,MEDIUM,returns the vendor string descriptor
+0803d9bc,CubeMX generated (USB_DEVICE),USBD_FS_ProductStrDescriptor,MEDIUM,returns the product string descriptor
+0803d9d8,CubeMX generated (USB_DEVICE),USBD_FS_ConfigStrDescriptor,MEDIUM,returns the configuration string descriptor
+0803d9f4,CubeMX generated (USB_DEVICE),USBD_FS_InterfaceStrDescriptor,MEDIUM,returns the interface string descriptor
+0803dc10,CubeMX generated (USB_DEVICE),HAL_PCD_MspInit,HIGH,OTG_FS clock/GPIO/NVIC (flow.md kernel-clock table)
+0807c708,SEGGER emWin,GUI_GetVersionString,HIGH,builds the version string
+08085154,newlib/libc,__assert_func,HIGH,byte-identical to Main 0x08056cf8
+08021840,application,console_log,HIGH,flow.md console logger (main.c user code)
+08021c20,application,,,shutdown and save-configuration logic in main.c
+08022944,CubeMX generated (Core/Src),_sbrk,HIGH,byte-identical to Main _sbrk; heap limit is stack top minus 0x4000
+0803df08,CubeMX generated (USB_DEVICE),USBD_static_malloc,MEDIUM,returns the address of one static class buffer (usbd_conf.c template)
+08039b9c,CubeMX generated (STemWin glue),GUI_X_Config,MEDIUM,assigns the emWin memory pool at SDRAM 0xC0800000
