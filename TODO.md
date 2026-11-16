@@ -71,7 +71,7 @@ Roadmap mirrors `REVERSE_ENGINEERING_GUIDE.md`, tracked per unit.
 - [x] CH394 control pins: CS# PG15, RST# PB5, INT# PC13/EXTI13 (falling);
       SPI6 SCK ≈17.19 MHz. See peripherals.md SPI6 section.
 - [ ] CH394: confirm the INT flag consumers read the chip's interrupt
-      register; socket register map.
+      register; meaning of the write to register 0x39 at init.
 - [x] EEPROM layout: settings / calibration / NVPARAM marker / 2× ATU
       tables, CRC-8 0x31, 64-B pages (main_unit/docs/memory_map.md).
 - [ ] Who writes the settings area (EEPROM 0x0000 / backup SRAM)? Nothing
@@ -123,8 +123,10 @@ Roadmap mirrors `REVERSE_ENGINEERING_GUIDE.md`, tracked per unit.
 - [ ] Who sends SLIP 0x02 in the field (factory tool?).
 - [x] Physical layer: USART2 PD5/PD6 AF7, 460 800 8N1, DMA (docs/protocol.md).
 - [ ] Roles of Main UART4 (PD1/PH14) and USART1, and Control USART1.
-- [ ] Main Unit networking: CH394 Ethernet, CI-V over LAN, "WFV" audio/
-      waterfall streaming — scope and document.
+- [~] Main Unit networking: CH394 driver, socket plan, HDSDR mode, wfview
+      session and self-heal documented (main_unit/docs/network.md).
+- [ ] Complete CI-V command map (jump tables 0x080505A0/0x08050B40/0x08050CC0);
+      wfview audio and scope packet layouts.
 
 ## Tooling
 

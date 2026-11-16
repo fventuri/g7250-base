@@ -1,0 +1,19 @@
+item,value,evidence
+socket_mode,UDP only (Sn_MR 0x02),FUN_08047610
+bufsize_hdsdr_kb,sn0=16,0x0805B68C
+bufsize_wfview_kb,sn1=2 sn2=6 sn3=8,0x0805B684
+hdsdr_port,50002,FUN_0804aed8
+hdsdr_default_dest_port,50001,FUN_08048e20
+hdsdr_magic,0xAA5555AA,FUN_0804af68
+hdsdr_cmds_rx,0x0101 0x0102 0x0103,FUN_0804af68
+hdsdr_cmds_tx,0x0201 0x0202,FUN_0804aed8
+hdsdr_iq_buffers,0x38001000 0x38001300,FUN_08033610
+hdsdr_lo_range_hz,500000-108000000,FUN_0804b184
+wfview_ports,P P+1 P+2 (P=settings 0x180),FUN_0804db5c
+wfview_sockets,1 2 3,FUN_0804db5c
+wfview_civ_addr,0xA0,0x080504E8
+settings_lan_mode,0x182,FUN_08048fb0
+settings_wfv_user,0x183,FUN_0804db5c
+settings_wfv_pass,0x193,FUN_0804db5c
+civ_callback_table,0x08081924,FUN_0804bc90
+link_monitor,1 s poll; cycle after >10 s down; hard reset on 3rd attempt,FUN_0804905c

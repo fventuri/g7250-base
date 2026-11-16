@@ -126,9 +126,25 @@ hardware was on hand for measurements.
 The link-monitor "edge detect" in the logs is a software detector of
 link-state changes, not a GPIO.
 
-**Still open:** the socket register map. A per-socket command register
-and 8 sockets sharing a 16 KB TX/RX pool would fit a WIZnet-style
-register model (HYPOTHESIS until traced).
+**Register model (HIGH CONFIDENCE).** Each access is one CS window with
+three phases:
+1. a 16-bit offset, high byte first;
+2. a control byte: block select in bits 7..3, the write flag in bit 2,
+   variable-length mode;
+3. the data bytes.
+
+Block selects: common registers; socket *n* registers `(n<<5)|0x08`;
+socket *n* TX buffer `(n<<5)|0x14`; socket *n* RX buffer `(n<<5)|0x18`.
+Every offset the driver uses matches the public WIZnet W5500 register
+map. That covers the common registers (gateway, mask, MAC, IP,
+socket-interrupt mask, PHY configuration, version) and the per-socket
+registers (mode, command, status, port, destination IP/port, buffer
+sizes, TX write pointer, RX received size, RX read pointer).
+
+**Transfers.** Register writes are byte-by-byte SPI transmits.
+Single-register reads switch SPI6 to receive-only and poll it. Bulk
+payload moves by DMA. The socket plan, the services and the self-heal
+logic are in `network.md`.
 
 ## SPI1 — RF filter/switch shift registers, HIGH CONFIDENCE
 
