@@ -1,0 +1,14 @@
+input,pins,method,rate,confidence
+matrix_A,PA2/PI8/PA7/PC4/PC5,read in phase 1 (bits0-4),1 kHz FSM,VERIFIED
+matrix_B,PB2/PH6/PH7/PC13/PH9,read in phase 2 (bits16-20),1 kHz FSM,VERIFIED
+button_direct,PA0,bit15,1 kHz FSM,VERIFIED
+enc0,PE5/PC1,GPIO x1,1 kHz,VERIFIED
+enc1,PA4/PH8,GPIO x1,1 kHz,VERIFIED
+enc2,PI11/PF6,GPIO x1,1 kHz,VERIFIED
+enc3,PF7/PF8,GPIO x1,1 kHz,VERIFIED
+enc4,PH12/PD4,GPIO x1,1 kHz,VERIFIED
+enc5,PH15/PI0,GPIO x1,1 kHz,VERIFIED
+enc6,PI1/PC2,GPIO x1,1 kHz,VERIFIED
+enc7,PD3/PD7,GPIO x1,1 kHz,VERIFIED
+main_dial,PA5/PA1,TIM2 x4,superloop,VERIFIED
+sd_detect,PA15,32x10ms debounce,100 Hz,VERIFIED

@@ -50,7 +50,7 @@ Roadmap mirrors `REVERSE_ENGINEERING_GUIDE.md`, tracked per unit.
       `docs/peripherals.md`). TIM services cross-check the H7 numbering.
 - [x] Bus/peripheral inventory from base refs + access counts.
 - [x] Inter-MCU SLIP link identified as **USART2** on both MCUs.
-- [x] Control I2C1: GT911 touch @ 0x5D VERIFIED.
+- [x] Control I2C1: GT911 touch, address 0x14 with fallback 0x5D (probe order VERIFIED).
 - [x] Main Unit SPI6 = **WCH CH394 Ethernet**, exclusive bus: master,
       mode 0, /8, PG12/13/14 AF5, BDMA ch0 RX (req 11) / ch1 TX (req 12),
       IRQ86; handle 0x24005420. See main_unit/docs/peripherals.md and
@@ -87,8 +87,7 @@ Roadmap mirrors `REVERSE_ENGINEERING_GUIDE.md`, tracked per unit.
 - [ ] Roles of unknown Main outputs (PH9/PH13/PH15, PE14/PE15, PA8/PC8,
       PA12, PB11/PB12/PB14, PF14) and inputs (PH5, PF13).
 - [x] Main Unit has no external SDRAM/FMC (VERIFIED).
-- [ ] Control Unit: roles of the pull-up inputs (keys/encoders); confirm
-      whether PC USB is the MCU's own OTG_FS port or a CH342.
+- [x] Control pull-up inputs = button matrix, 8 encoders, SD detect (peripherals.md).
 - [x] Init functions from `main()` identified on both units (*/docs/flow.md,
       */analysis/flow/init_sequence.csv).
 - [x] TIM4 PWM: Main PD12 configured but never started; Control PD12/PD13
@@ -174,7 +173,7 @@ Roadmap mirrors `REVERSE_ENGINEERING_GUIDE.md`, tracked per unit.
 - [ ] N07 stale doc claims · [x] N08 exception handlers · [x] N16 H72x Ghidra memory map
 - [x] N18 MPU/cache/RAM placement · [x] N19 timer map
 - [x] N10 UART roles · [x] N11 Main SDRAM? · [x] N12 Control I2C · [x] N13 Control SPI5/SPI flash
-- [ ] N14 GT911 · [ ] N28 Control inputs · [ ] N29 Control USB descriptors · [ ] N30 display bring-up
+- [x] N14 GT911 · [x] N28 Control inputs · [ ] N29 Control USB descriptors · [ ] N30 display bring-up
 - [ ] N32 unknown GPIOs
 - [x] N23 CW · [x] N24 ATU algorithm · [x] N35 H-22 mic protocol · [x] N37 voice recorder · [x] N41 SWR scanner
 - [x] N25 SLIP 0x03/0x08 completeness · [x] N26 SLIP link state machine · [x] N27 Control storage
@@ -199,3 +198,4 @@ Roadmap mirrors `REVERSE_ENGINEERING_GUIDE.md`, tracked per unit.
 - [ ] GUI: confirm the screen-id to page mapping; key-code and encoder-to-function tables.
 - [ ] PCA9557 bits 0/1/3/5 and 6/7: electrical function (board trace).
 - [ ] Which W25Qxx part is fitted (board photo).
+- [ ] Control: button-code and encoder-index to function tables (from FUN_08042c20).

@@ -32,7 +32,7 @@ the H7 IRQ numbering.
 
 | Peripheral | Evidence | Role | Conf |
 | --- | --- | --- | --- |
-| **I2C1** | 217 direct accesses, IRQ-less (polled) | **GT911 capacitive touch @ 0x5D** (VERIFIED) + possibly others | HIGH |
+| **I2C1** | 217 direct accesses, IRQ-less (polled) | **GT911 capacitive touch** only (address 0x14, fallback 0x5D; see GT911 driver) | VERIFIED |
 | I2C2 | base refs | auxiliary I2C | MED |
 | **LTDC** | base refs + IRQ88 | TFT panel controller | HIGH |
 | **FMC @ 0xC0000000** | ×41 refs + MPU region | external SDRAM framebuffer | HIGH |
@@ -52,7 +52,7 @@ the H7 IRQ numbering.
 
 | Bus | Addr (7-bit) | Device | Evidence | Conf |
 | --- | --- | --- | --- | --- |
-| I2C1 | **0x5D** | GT911 capacitive touch controller | `I2C_CR2` SADD in `FUN_08035034` (gt911_init): `CR2=0x020020BA` → `0xBA>>1=0x5D`; GT911 default | VERIFIED |
+| I2C1 | **0x14** (fallback **0x5D**) | GT911 capacitive touch controller | `gt911_init` (`FUN_08035034`) holds INT high during reset, which selects 0x14, probes 0x14 first and falls back to 0x5D; which one the fitted panel answers cannot be told from code | VERIFIED (probe order) |
 
 GT911 driver: init `FUN_08035034`, transfer `FUN_08034ec4`, GPIO/clock
 `FUN_08021414`. Other I2C1/I2C2 devices (if any) not yet enumerated.
@@ -340,3 +340,80 @@ number follows the link order: the SD card becomes `0:`, this flash
 
 **Why this needed the firmware:** the CS pin, clock, command set and
 accepted parts are not visible from the board.
+
+## GT911 driver — VERIFIED unless noted
+
+All transfers are polled register accesses on I2C1, with 20 ms
+cycle-counter timeouts per phase.
+
+**Reset and address.** `gt911_init` (`FUN_08035034`) drives INT (PE2)
+high, pulses RST (PG14) low for 20 ms, waits 120 ms and returns PE2 to
+an input without pull. INT high at reset selects address **0x14**. The
+driver probes 0x14 three times and falls back to 0x5D. The address
+found is stored at `0x240001E4`.
+
+**Module info and configuration.**
+- It reads the product ID, firmware version and resolution (logged
+  only).
+- It reads the 186-byte configuration block and checks its checksum:
+  the two's complement of the byte sum must match. A mismatch makes the
+  init report failure.
+- **No configuration is ever written.**
+
+**INT mode.** The firmware reads a trigger-mode field from the
+configuration and only logs a warning when it is not "high level". The
+bits it tests may not be the documented ones (HYPOTHESIS; harmless,
+since it only logs). EXTI2 is always rising edge.
+
+**Calibration.** Commands 3 (baseline update) and 4 (calibrate) are
+written, each followed by 100 ms. There is no user calibration.
+
+**Reports** (EXTI2 handler `0x08022780`).
+- Each interrupt reads the 42-byte status/point block.
+- If the ready bit is set, the handler clears it, takes the touch count
+  and stores the points; a change flag is set only when something
+  differs.
+- Zero points after a touch raise a release event.
+- When I2C reads fail ten times in a row, the touch interrupt is
+  switched off.
+
+**Long press.** TIM3 (100 Hz) counts a hold timer and queues one
+long-press event after about 0.5 s (MEDIUM). Coordinates are passed
+unscaled (MEDIUM).
+
+## Front-panel inputs — VERIFIED unless noted
+
+**Button matrix.** 5 × 5 without diodes, plus one direct button,
+scanned by `FUN_08035f80` from the TIM14 1 kHz tick.
+- Group A = PA2, PI8, PA7, PC4, PC5; group B = PB2, PH6, PH7, PC13, PH9.
+  All are open-drain with pull-up.
+- Phase 1 drives B low and reads A (bits 0–4). Phase 2 drives A low and
+  reads B (bits 16–20).
+- A button at A[i] × B[j] gives the code (1 << (16 + j)) | (1 << i).
+- PA0 is a direct button (bit 15).
+
+**Timing (MEDIUM).**
+- One scan takes about 5 ms, and a code change needs four equal scans
+  (about 20–25 ms debounce).
+- Hold fires after about 0.24 s. Repeat starts after about 0.84 s and
+  then fires every 0.12 s, but the consumer (`FUN_08042c20`) ignores the
+  repeat events.
+- A release without a hold counts as a short press.
+
+**Encoders.**
+- **Eight GPIO quadrature encoders**, sampled at 1 kHz
+  (`FUN_08034dc4`). One count per A rising edge, direction from B, two
+  stable samples needed. After 20 quick steps a "fast" flag is set and
+  held while steps keep coming within 1 s.
+  - Pin pairs (A/B): PE5/PC1, PA4/PH8, PI11/PF6, PF7/PF8, PH12/PD4,
+    PH15/PI0, PI1/PC2, PD3/PD7.
+  - Probably four dual-concentric knobs (HYPOTHESIS).
+- **Main dial:** the TIM2 hardware encoder (×4 decoding), read once per
+  superloop pass.
+
+**SD card detect.** PA15, active low. It is sampled every 10 ms, and
+the card counts as present after 32 consecutive lows (320 ms). Every SD
+wait loop aborts when PA15 goes high.
+
+Pins are in `analysis/peripherals/inputs.csv`. The button-code and
+encoder-to-function tables are open.
