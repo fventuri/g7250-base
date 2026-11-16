@@ -48,7 +48,7 @@ From base-address references and register-access counts:
 | **USART2** | IRQ38; PD5/PD6 AF7; 460 800 8N1; DMA1 S4 TX / S2 RX circular | inter-MCU SLIP link (↔ Control USART2) | VERIFIED |
 | USART1 | init `FUN_08024108`; PB6/PB7 AF7; 115 200 8N1; RX DMA1 S3 circular; no IRQ | debug console / CAT (role open) | HIGH |
 | UART4 | init `FUN_08024080`; PD1 TX / PH14 RX AF8; 115 200 8N1; no DMA, no IRQ | role open | HIGH |
-| **ADC1/2 + ADC3** | IRQ18 + 27/41 accesses | RF metering: fwd/ref power, SWR, Vext, temp, S-meter | HIGH |
+| **ADC1** | IRQ18 + DMA1 Stream7 | RF metering: Vext, forward/reflected power, Idd, PA temperature, EALC, ALC (see ADC1 metering); ADC2/ADC3 unused | VERIFIED |
 | TIM5/6/7 | active IRQs | time bases / DAC & audio triggers | HIGH |
 | USB OTG | none (earlier "×32 refs" were false positives) | **not used at runtime** (see USB section) | HIGH |
 | FMC @ 0xC0000000 | ×65 refs (earlier count); **no FMC pins (AF12) configured and no FMC kernel clock set** | external SDRAM doubtful — re-check (see GPIO pin map) | LOW |
@@ -488,6 +488,56 @@ refers to them. The bootloader probably arms the timer (HYPOTHESIS).
 **Why this needed the firmware:** the manual only says there is no USB
 connector. Only the absence of init code, vectors and base constants
 settles that there is no internal USB link either.
+
+## ADC1 metering and DAC1 — VERIFIED
+
+**Setup.** Only ADC1 is used; the ADC3 references are generic HAL
+instance checks.
+- `FUN_08020de0`: 12-bit, 7-rank scan, continuous, software trigger,
+  sampling 32.5 cycles, async clock /32 from PLL2P.
+- Circular DMA1 Stream7 into `0x30003740`.
+- Offset and linearity calibration at boot; `FUN_08021148` starts the
+  DMA.
+
+The conversions run inside the DMA1 Stream7 interrupt (`FUN_080235e8`),
+not in a HAL callback. Results land in the meter struct `0x24004D5C`
+(`analysis/memory/meter_fields.csv`).
+
+| Rank | Input | Pin | Quantity | Conversion |
+| --- | --- | --- | --- | --- |
+| 1 | INP1 | PA1_C (analog switch opened) | Vext | IIR, steady state 0.004835 V/LSB (divider HYPOTHESIS) |
+| 2 | INP2 | PF11 | forward detector | x = 2·raw; P = 0.003405·x + 5.557e-6·x² W |
+| 3 | INP3 | PA6 | reflected detector | same law |
+| 4 | INP4 | PC4 | Idd | IIR, 0.008059 A/LSB |
+| 5 | INP5 | PB1 | PA temperature | double IIR, then a 4096-entry °C table (NTC, B ≈ 3950, raw 2047 = 25 °C) |
+| 6 | INP8 | PC5 | EALC % | IIR of raw·100/4095 |
+| 7 | INP14 | PA2 | ALC level % | filtered from the EALC value rather than its own previous value (a quirk) |
+
+**SWR.**
+- **Calculation.** Every 15 samples, from the summed forward (F) and
+  reflected (R) values: Γ = min(0.999·F, max(R·REVGAIN − F·LEAK, 0))/F
+  and SWR = (1+Γ)/(1−Γ), or 999.9 if F ≤ 0.
+- **Reporting.** The reported SWR is updated only after 20 consecutive
+  blocks with enough signal; otherwise it is 1.0.
+- **Directivity correction.** `FUN_0803ec3c` sets REVGAIN (0.68–0.725)
+  and LEAK (0.001–0.09) piecewise-linearly from the frequency on every
+  frequency change. These are firmware constants, not calibration
+  fields (HIGH CONFIDENCE).
+- **Forward power** is shown as a peak hold.
+
+**EALC/ALC.** They are measured and displayed only; no firmware loop
+uses them.
+
+**DAC1.**
+- OUT1 (PA4) is the **RF-gain control voltage**: 0x447 + 30·gain,
+  maximum 0xFFF, and 0xFFF at boot.
+- OUT2 (PA5) is configured but never written.
+- No trigger is used: TIM6 is a 100 Hz housekeeping tick, not a DAC
+  trigger.
+
+**Why this needed the firmware:** the pin-to-quantity assignment,
+scaling constants, detector law, directivity correction and gating
+exist only in code.
 
 ## Timer map — VERIFIED (timer clock 275 MHz)
 

@@ -1,0 +1,28 @@
+offset,type,field,source,confidence
+0x00,f32,Vext V,ADC rank1 PA1_C,VERIFIED
+0x04,f32,EALC %,ADC rank6 PC5,VERIFIED
+0x08,f32,ALC level %,ADC rank7 PA2,VERIFIED
+0x0c,f32,PA temp C,table[rank5 PB1],VERIFIED
+0x10,f32,fwd power displayed W (peak hold),rank2,VERIFIED
+0x14,f32,fwd power instant W,rank2,VERIFIED
+0x18,f32,rev power instant W,rank3,VERIFIED
+0x1c,f32,SWR smoothed,block,VERIFIED
+0x20,f32,SWR raw block,block,VERIFIED
+0x24,f32,Idd A,ADC rank4 PC4,VERIFIED
+0x28,f32,SWR reported (gated),block,VERIFIED
+0x2c,f32,gamma smoothed,block,VERIFIED
+0x30,f32,gamma raw,block,VERIFIED
+0x38,u8,new data flag,-,HIGH
+0x39,u8,block done flag (ATU),-,HIGH
+0x3a,u8,TX active,T/R routines,VERIFIED
+0x3c,i32,block counter mod 15,-,VERIFIED
+0x40,i32,SWR valid counter 0..20,-,VERIFIED
+0x54,f32,fwd raw x2,-,VERIFIED
+0x58,f32,rev raw x2,-,VERIFIED
+0x5c,f32,fwd smoothed,-,VERIFIED
+0x60,f32,rev smoothed,-,VERIFIED
+0x64,f32,temp raw smoothed,-,VERIFIED
+0x68,f32,REV GAIN (per freq),FUN_0803ec3c,HIGH
+0x6c,f32,LEAK factor (per freq),FUN_0803ec3c,HIGH
+0x70,f32,last valid SWR,-,HIGH
+0x74,u8,block reset flag,-,MEDIUM

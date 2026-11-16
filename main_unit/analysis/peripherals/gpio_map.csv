@@ -1,14 +1,14 @@
 pin,mode,pull,af,init,role,source,confidence
-PA2,analog,none,,,ADC1 input,FUN_08020f44,HIGH
-PA4,analog,none,,,DAC1_OUT1,FUN_08021300,HIGH
-PA5,analog,none,,,DAC1_OUT2,FUN_08021300,HIGH
-PA6,analog,none,,,ADC1 input,FUN_08020f44,HIGH
+PA2,analog,none,,,ADC1 INP14 ALC level,FUN_08020f44,HIGH
+PA4,analog,none,,,DAC1_OUT1 RF-gain voltage,FUN_08021300,HIGH
+PA5,analog,none,,,DAC1_OUT2 (unused),FUN_08021300,HIGH
+PA6,analog,none,,,ADC1 INP3 reflected power,FUN_08020f44,HIGH
 PA8,output OD,pull-up,,1,unknown,FUN_08021830,VERIFIED
 PA10,output PP,none,,1,SPI1 chain A output-enable (also set in power-off),FUN_08049568,VERIFIED
 PA11,output PP,none,,1,SPI1 chain A latch (no USB AF),FUN_08049584,VERIFIED
 PA12,output PP,none,,1,unknown (set in power-off; no USB AF),FUN_08021470,VERIFIED
 PA15,AF PP,pull-up,6,,I2S3_WS,FUN_08021ccc,HIGH
-PB1,analog,none,,,ADC1 input,FUN_08020f44,HIGH
+PB1,analog,none,,,ADC1 INP5 PA temperature,FUN_08020f44,HIGH
 PB5,output PP,none,,0,CH394 RST#,FUN_08048d28,VERIFIED
 PB6,AF PP,none,7,,USART1_TX,FUN_08024218,HIGH
 PB7,AF PP,none,7,,USART1_RX,FUN_08024218,HIGH
@@ -20,8 +20,8 @@ PB12,output PP,none,,0,SPI2 DAC load strobe,FUN_08045050,VERIFIED
 PB13,AF PP,none,5,,SPI2_SCK,FUN_0802317c,HIGH
 PB14,output PP,none,,0,SPI2 DAC reset/enable,FUN_08045034,HIGH
 PB15,AF PP,none,5,,SPI2_MOSI,FUN_0802317c,HIGH
-PC4,analog,none,,,ADC1 input,FUN_08020f44,HIGH
-PC5,analog,none,,,ADC1 input,FUN_08020f44,HIGH
+PC4,analog,none,,,ADC1 INP4 Idd,FUN_08020f44,HIGH
+PC5,analog,none,,,ADC1 INP8 EALC,FUN_08020f44,HIGH
 PC7,output PP,none,,0,TX/RX line (high in TX),FUN_0803e338,VERIFIED
 PC8,output OD,pull-up,,1,unknown,FUN_08021830,VERIFIED
 PC9,AF PP,none,5,,I2S_CKIN external clock,FUN_08021470,HIGH
@@ -45,7 +45,7 @@ PF0,AF OD,none,4,,I2C2_SDA,FUN_08021a00,HIGH
 PF1,AF OD,none,4,,I2C2_SCL,FUN_08021a00,HIGH
 PF4,output PP,none,,0,TX/RX line (high in RX),FUN_0803d03c,VERIFIED
 PF6,output PP,none,,0,TX/RX line (high in TX),FUN_0803e338,VERIFIED
-PF11,analog,none,,,ADC1 input,FUN_08020f44,HIGH
+PF11,analog,none,,,ADC1 INP2 forward power,FUN_08020f44,HIGH
 PF13,input,pull-up,,,unknown,FUN_08021470,VERIFIED
 PF14,output PP,pull-up,,0,unknown,FUN_08021470,VERIFIED
 PG2,output PP,none,,1,SPI1 ATU bank latch CS,.data 0x24004858,VERIFIED
