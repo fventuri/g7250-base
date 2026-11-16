@@ -37,7 +37,7 @@ the H7 IRQ numbering.
 | **LTDC** | base refs + IRQ88 | TFT panel controller | HIGH |
 | **FMC @ 0xC0000000** | ×41 refs + MPU region | external SDRAM framebuffer | HIGH |
 | **DMA2D** | 65 accesses | Chrom-ART 2D graphics accelerator (UI) | HIGH |
-| **SDMMC1** | base refs + IRQ49 | SD card (config.ini on `1:/`) | HIGH |
+| **SDMMC1** | base refs + IRQ49 | SD card, FatFS volume `0:` (voice memories); the configuration lives on the SPI flash `1:` (see storage.md) | HIGH |
 | SPI2 = I²S2 | init `FUN_08021680`; PB12–PB15 AF5; DMA1 S0 RX / S1 TX circular | audio link to the Control AIC3204 (slave side) | VERIFIED |
 | SPI1, SPI5 | SPI1 on PB3–PB5; SPI5 base refs | SPI1 = SPI flash for FatFS (HYPOTHESIS); SPI5 TBD | MED |
 | **USART2** | IRQ38; PD5/PD6 AF7; 460 800 8N1; DMA1 S2 TX / S3 RX circular | inter-MCU SLIP link (↔ Main USART2) | VERIFIED |

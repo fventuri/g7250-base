@@ -1,0 +1,82 @@
+cmd01_offset,width,ui_offset,ini_section,ini_key,conversion,confidence
+0x008,4,0xBA8,WorkParam,flags_1,raw u32,VERIFIED
+0x024,8,0x008,VFOA,freq,u64 Hz,VERIFIED
+0x03c,1,0x010,VFOA,mode,raw,VERIFIED
+0x03e,2,0x234,VFOA,notchPosition,low 16 bits,VERIFIED
+0x040,1,0x238,VFOA,nrSwitch,raw (DNR type),VERIFIED
+0x041,1,0x240,VFOA,fmSql,f32 to u8,VERIFIED
+0x042,1,0x244,VFOA,ManualNotchFilter,raw,VERIFIED
+0x043,1,0x245,VFOA,AutoNotchFilter,raw,VERIFIED
+0x047,1,0x011,VFOA,agc,raw (VFO rec +0x23),VERIFIED
+0x048,1,0x23C,VFOA,sql,f32 to u8 (VFO rec +0x24),VERIFIED
+0x049,1,0x013,VFOA,att,raw,VERIFIED
+0x04a,1,0x012,VFOA,pre,raw,VERIFIED
+0x04c,8,0x250,VFOB,freq,u64 Hz,VERIFIED
+0x064,1,0x258,VFOB,mode,raw,VERIFIED
+0x066,2,0x47C,VFOB,notchPosition,low 16 bits,VERIFIED
+0x068,1,0x480,VFOB,nrSwitch,raw,VERIFIED
+0x069,1,0x488,VFOB,fmSql,f32 to u8,VERIFIED
+0x06a,2,0x48C,VFOB,Manual/AutoNotch,raw pair,VERIFIED
+0x06f,1,0x259,VFOB,agc,raw,VERIFIED
+0x070,1,0x484,VFOB,sql,f32 to u8,VERIFIED
+0x071,1,0x25B,VFOB,att,raw,VERIFIED
+0x072,1,0x25A,VFOB,pre,raw,VERIFIED
+0x074,2,0x96A,WorkParam,ritValue,i16 Hz,VERIFIED
+0x076,2,0x96C,WorkParam,xitValue,i16 Hz,VERIFIED
+0x07b,1,0x988,WorkParam,rfg,f32 to u8,VERIFIED
+0x088,4,0x9B0,WorkParam,sampleRate,u8 widened,VERIFIED
+0x08c,4,0x9B1,-,(no INI key),u8 widened,VERIFIED
+0x098,1,0x923,WorkParam,selectVfo,raw,VERIFIED
+0x09f,1,0xB9B,WorkParam,antSelect,nonzero to 1,VERIFIED
+0x0a2,1,0x96E,WorkParam,ritSwitch,raw,VERIFIED
+0x0a3,1,0x96F,WorkParam,xitSwitch,raw,VERIFIED
+0x0a4,1,0x991,WorkParam,splt,raw,VERIFIED
+0x0ac,1,0x992,WorkParam,atu,raw,VERIFIED
+0x0c4,2,0x97C,WorkParam,micGain,f32 to u16,VERIFIED
+0x0c8,2,0xA10,WorkParam,lineInGain,raw u16,VERIFIED
+0x0d4,2,0x9D2,WorkParam,CW_LPF_RX_Filter,raw u16,VERIFIED
+0x0d6,2,0x9D0,WorkParam,DIGI_LPF_Filter,raw u16,VERIFIED
+0x0d8,2,0x9CC,WorkParam,SSB_LPF_RX_Filter,raw u16,VERIFIED
+0x0da,2,0xBBE,WorkParam,SSB_LPF_TX_Filter,raw u16,VERIFIED
+0x0dc,2,0x9CE,WorkParam,SSB_HPF_RX_Filter,raw u16,VERIFIED
+0x0de,2,0xBC0,WorkParam,SSB_HPF_TX_Filter,raw u16,VERIFIED
+0x0e0,2,0x9D4,WorkParam,AM_LPF_RX_Filter,raw u16,VERIFIED
+0x0e2,2,0xBC2,WorkParam,AM_LPF_TX_Filter,raw u16,VERIFIED
+0x0e4,2,0x9D6,WorkParam,FM_LPF_RX_Filter,raw u16,VERIFIED
+0x0e6,2,0xBC4,WorkParam,FM_LPF_TX_Filter,raw u16,VERIFIED
+0x0e8,2,0x9D8,WorkParam,FM_HPF_RX_Filter,raw u16,VERIFIED
+0x0ea,2,0x9F0,WorkParam,voxTimeOut,raw u16,VERIFIED
+0x0f2,1,0x972,WorkParam,nrLevel,raw,VERIFIED
+0x0f7,1,0x974,WorkParam,nbLevel,raw,VERIFIED
+0x0ff,1,0xA14,WorkParam,monitorLevel,low byte,VERIFIED
+0x100,1,0xA12,WorkParam,lineOutGain,low byte,VERIFIED
+0x102,5,0xA2A/0xA2F,WorkParam,EQ_RX_*/EQ_AMFM_*,RX set if mode<6 and EQ_RX on; AMFM set if mode 6-8 and EQ_AMFM on; else zero,VERIFIED
+0x117,1,0x9F2,WorkParam,voxThreshold,raw i8,VERIFIED
+0x11b,1,0x973,WorkParam,nbSwitch,raw,VERIFIED
+0x11f,1,0x9ED,WorkParam,vox,raw,VERIFIED
+0x124,4,0x9A0,WorkParam,cwDiDaRatio,raw f32,VERIFIED
+0x128,2,0x998,WorkParam,cwTone,raw u16 Hz,VERIFIED
+0x12a,2,0x99C,WorkParam,cwQskTime,raw u16,VERIFIED
+0x12e,2,0x980,WorkParam,keySpeed,f32 to u16 WPM,VERIFIED
+0x134,1,0x997,WorkParam,cwKeyer,raw,VERIFIED
+0x137,1,0x996,WorkParam,cwIambic,raw,VERIFIED
+0x138,1,0x995,WorkParam,cwIambicType,raw,VERIFIED
+0x139,1,0x9A8,-,(no INI key),raw,VERIFIED
+0x13b,1,0x9B2,WorkParam,fftZoomCw,raw,VERIFIED
+0x140,1,0x9A6,WorkParam,cwCwdThresh,low byte,VERIFIED
+0x141,1,0x9A5,WorkParam,cwDecoder,raw,VERIFIED
+0x154,4,0x978,WorkParam,rfPowerValue,raw f32 W,VERIFIED
+0x158,1,0xBCD,-,(0x08 ack; not persisted),raw,VERIFIED
+0x159,1,0x9A4,WorkParam,cwTrainer,raw,VERIFIED
+0x15a,2,0x99A,WorkParam,cwToneLevel,raw u16,VERIFIED
+0x15e,1,0x9C0,WorkParam,pttSignals,raw,VERIFIED
+0x15f,1,0x9C1,WorkParam,keySignals,raw,VERIFIED
+0x170,1,0x9EE,WorkParam,comp,raw,VERIFIED
+0x171,1,0x9EF,WorkParam,compRatio,raw,VERIFIED
+0x174,4,0xB48,NetWork,ipv4,raw u32,VERIFIED
+0x178,4,0xB4C,NetWork,gateway,raw u32,VERIFIED
+0x17c,4,0xB50,NetWork,netmask,raw u32,VERIFIED
+0x180,2,0xB54,NetWork,port,raw u16,VERIFIED
+0x182,1,0xB56,NetWork,networkMode,raw,VERIFIED
+0x183,16,0xB57,NetWork,wfvUsername,string,VERIFIED
+0x193,16,0xB67,NetWork,wfvPassword,string,VERIFIED

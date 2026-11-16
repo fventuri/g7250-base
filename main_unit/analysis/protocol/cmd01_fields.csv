@@ -13,33 +13,33 @@ offset,width,type,field,control_source,main_consumer,confidence
 0x09f,1,u8,antenna select (bit0 = ANT index; selects the ATU table block),ui+0xB9B,FUN_08044ea4/FUN_08041358,HIGH
 0x0a2,1,u8,RIT switch,ui+0x96E,FUN_08041ef4,VERIFIED
 0x0a3,1,u8,XIT switch,ui+0x96F,FUN_08041ef4,VERIFIED
-0x0a4,1,u8,split switch (split TX/RX logic),ui+0x991,FUN_0803e338/FUN_0803d658,HYPOTHESIS
+0x0a4,1,u8,split switch,ui+0x991,FUN_0803e338/FUN_0803d658,VERIFIED
 0x0ac,1,u8,ATU switch,ui+0x992,FUN_08041ef4/FUN_080412bc,VERIFIED
 0x0c4,2,i16,mic gain,ui+0x97C (float),FUN_08041ef4,VERIFIED
 0x0c8,2,u16,LINE IN gain (Main ignores),ui+0xA10,-,HIGH
-0x0d4,2,u16,RX audio filter (CW?),ui+0x9D2,FUN_08032020/FUN_0803e128,MEDIUM
-0x0d6,2,u16,RX audio filter (CW?),ui+0x9D0,FUN_08032020/FUN_0803e128,MEDIUM
-0x0d8,2,u16,RX audio filter (SSB LPF RX?),ui+0x9CC,FUN_08032020/FUN_0803d454,MEDIUM
+0x0d4,2,u16,CW LPF RX filter,ui+0x9D2,FUN_08032020/FUN_0803e128,VERIFIED
+0x0d6,2,u16,DIGI LPF filter,ui+0x9D0,FUN_08032020/FUN_0803e128,VERIFIED
+0x0d8,2,u16,SSB LPF RX filter,ui+0x9CC,FUN_08032020/FUN_0803d454,VERIFIED
 0x0da,2,u16,SSB LPF TX filter,ui+0xBBE,FUN_08041ef4,VERIFIED
-0x0dc,2,u16,RX audio filter (SSB HPF RX?),ui+0x9CE,FUN_08032020/FUN_0803d454,MEDIUM
+0x0dc,2,u16,SSB HPF RX filter,ui+0x9CE,FUN_08032020/FUN_0803d454,VERIFIED
 0x0de,2,u16,SSB HPF TX filter,ui+0xBC0,FUN_08041ef4,VERIFIED
-0x0e0,2,u16,RX audio filter (AM LPF RX?),ui+0x9D4,FUN_08032020/FUN_0803d454,MEDIUM
+0x0e0,2,u16,AM LPF RX filter,ui+0x9D4,FUN_08032020/FUN_0803d454,VERIFIED
 0x0e2,2,u16,AM LPF TX filter,ui+0xBC2,FUN_08041ef4,VERIFIED
-0x0e4,2,u16,RX audio filter (FM LPF RX?),ui+0x9D6,FUN_08032020/FUN_0803d454,MEDIUM
+0x0e4,2,u16,FM LPF RX filter,ui+0x9D6,FUN_08032020/FUN_0803d454,VERIFIED
 0x0e6,2,u16,FM LPF TX filter,ui+0xBC4,FUN_08041ef4,VERIFIED
-0x0e8,2,u16,RX audio filter (7th),ui+0x9D8,FUN_08032020,MEDIUM
+0x0e8,2,u16,FM HPF RX filter,ui+0x9D8,FUN_08032020,VERIFIED
 0x0ea,2,i16,VOX timeout,ui+0x9F0,FUN_08041ef4/FUN_08035b50,VERIFIED
 0x0f2,1,u8,DNR1 threshold,ui+0x972,FUN_08041ef4/FUN_0803b4c4,VERIFIED
 0x0f3,1,u8,DNR2 threshold,-,FUN_08041ef4,VERIFIED
 0x0f6,1,u8,Main-derived from active VFO byte +0x24,-,FUN_08041ef4,MEDIUM
-0x0f7,1,u8,audio parameter (noise-blanker threshold?),ui+0x974,FUN_0803b100,LOW
+0x0f7,1,u8,NB level,ui+0x974,FUN_0803b100,VERIFIED
 0x0ff,1,u8,monitor level,ui+0xA14,FUN_08041ef4,VERIFIED
 0x100,1,u8,LINE OUT gain low byte (Main ignores),ui+0xA12,-,HIGH
 0x102,5,i8[5],RX EQ bands 1-5 (active mode group),ui+0xA2A/0xA2F,FUN_08041ef4,VERIFIED
 0x107,5,i8[5],RX EQ bands 1-5 WFM set (never written by Control),-,FUN_08041ef4,VERIFIED
 0x10c,10,i8[10],further EQ bands (TX EQ?) (never written by Control),-,FUN_08041ef4/FUN_08034b88,HYPOTHESIS
 0x117,1,i8,VOX threshold,ui+0x9F2,FUN_08041ef4/FUN_08035b50,VERIFIED
-0x11b,1,u8,audio-path boolean (echoed in 0x08),ui+0x973,FUN_08033610,MEDIUM
+0x11b,1,u8,NB switch,ui+0x973,FUN_08033610,VERIFIED
 0x11f,1,u8,VOX switch,ui+0x9ED,FUN_08041ef4/FUN_08035b50,VERIFIED
 0x124,4,f32,CW DI/DA ratio (dash = dot x ratio),ui+0x9A0,FUN_080362c0,HIGH
 0x128,2,u16,CW tone / sidetone pitch Hz,ui+0x998,FUN_08032b44/FUN_08033610,HIGH
@@ -61,8 +61,8 @@ offset,width,type,field,control_source,main_consumer,confidence
 0x15d,1,u8,global SQL threshold (never written by Control),-,FUN_08041ef4,VERIFIED
 0x15e,1,u8,PTT sources: b0 built-in PTT b1 CW key serial b5 need-tune b6 SWR/tune PTT b7 CI-V PTT (Control V1.0.1 sets only bits 5 6 7),ui+0x9C0,FUN_08041ef4,VERIFIED
 0x15f,1,u8,keySignals (never written by Control; Main ignores),ui+0x9C1,-,HIGH
-0x170,1,u8,boolean (CI-V sync; echoed in 0x08),ui+0x9EE,FUN_0804f1ec,MEDIUM
-0x171,1,u8,boolean (CI-V sync),ui+0x9EF,FUN_0804f1ec,MEDIUM
+0x170,1,u8,speech compressor switch,ui+0x9EE,FUN_0804f1ec,VERIFIED
+0x171,1,u8,compressor ratio,ui+0x9EF,FUN_0804f1ec,VERIFIED
 0x174,4,u32,IPv4 address (MSB first),ui+0xB48,FUN_08041ef4/FUN_08048e20,VERIFIED
 0x178,4,u32,IPv4 gateway,ui+0xB4C,FUN_08041ef4,VERIFIED
 0x17c,4,u32,IPv4 netmask,ui+0xB50,FUN_08041ef4,VERIFIED

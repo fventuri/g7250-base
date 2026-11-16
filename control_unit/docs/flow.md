@@ -63,9 +63,9 @@ mapping HIGH CONFIDENCE):
 | TIM3 | GT911 CTP Service | Goodix GT911 capacitive touch panel |
 | TIM2 | Encoder Service | rotary encoders |
 
-Also: **SPI FatFS** (`[INF] SPI fatfs init`) with `config.ini` on volume
-`1:/` (SD card / SPI flash). GT911 has an error path
-`gt911_init(), TIM3 is not started`.
+Also: **SPI FatFS**. The boot log reports its init; the configuration
+file is on volume `1:`, the SPI flash (see `storage.md`). If the GT911
+init fails, the boot log says so and the touch-poll timer TIM3 stays off.
 
 ## Superloop
 
