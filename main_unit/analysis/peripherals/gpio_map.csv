@@ -15,10 +15,10 @@ PB7,AF PP,none,7,,USART1_RX,FUN_08024218,HIGH
 PB8,AF OD,none,4,,I2C1_SCL,FUN_08021a00,HIGH
 PB9,AF OD,none,4,,I2C1_SDA,FUN_08021a00,HIGH
 PB10,output PP,none,,0,audio codec reset,FUN_0804a65c,HIGH
-PB11,output PP,none,,1,unknown,FUN_08021470,VERIFIED
-PB12,output PP,none,,0,unknown,FUN_08021470,VERIFIED
+PB11,output PP,none,,1,heartbeat toggle ~1 s,FUN_08038010,HIGH
+PB12,output PP,none,,0,SPI2 DAC load strobe,FUN_08045050,VERIFIED
 PB13,AF PP,none,5,,SPI2_SCK,FUN_0802317c,HIGH
-PB14,output PP,none,,0,unknown,FUN_08021470,VERIFIED
+PB14,output PP,none,,0,SPI2 DAC reset/enable,FUN_08045034,HIGH
 PB15,AF PP,none,5,,SPI2_MOSI,FUN_0802317c,HIGH
 PC4,analog,none,,,ADC1 input,FUN_08020f44,HIGH
 PC5,analog,none,,,ADC1 input,FUN_08020f44,HIGH

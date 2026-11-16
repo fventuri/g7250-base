@@ -56,8 +56,9 @@ VERIFIED (the function never returns; ends in `do { … } while(true)`).
 7. **PA bias (Idd) auto-calibration** — strings `Prepare to adjust drive
    Idd`, `… final 1 Idd`, `… final 2 Idd`; checks external supply `Vext`
    is within 11–15 V first (`[ERR] Vext = %f is to low` / high). Sets
-   bias via `FUN_08045088(channel, value)` with channel 2 = driver,
-   8 = final 1, 7 = final 2, iterating until measured Idd converges.
+   bias via `FUN_08045088(channel, value)` (SPI2 10-bit DAC, clamped to
+   1023) with channel 2 = driver, 8 = final 1, 7 = final 2; targets
+   static Idd + 0.5 A / + 0.9 A, ±0.1 A (see peripherals.md, SPI2).
    HIGH CONFIDENCE.
 8. `Init Radio Server`, TIM5 start (`[OK] Start TIM5`), audio processor
    init (`FUN_08033334`), etc.

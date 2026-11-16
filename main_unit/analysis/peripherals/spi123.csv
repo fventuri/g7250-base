@@ -17,7 +17,7 @@ chainB_mode_bits,,bit16 modes 4/8/9; bit17 modes 6/7,FUN_0804a3b0 / FUN_0804a3f0
 chainB_sel3,,bits 18-20 one-of-3,FUN_0804a370,TRX setting; off on TX
 chainB_sel2,,bits 21-22 two-way,FUN_0804a608,TRX setting; off on TX
 chainB_init,,bits 17/20/22 set,FUN_0804a2f0,
-spi2_instance,0x40003800,SPI2,FUN_080230c0,handle 0x240054a8; no users outside init
+spi2_instance,0x40003800,SPI2,FUN_080230c0,handle 0x240054a8; drives the 8-ch DAC (spi2_dac.csv)
 spi2_pins,,PB13 SCK / PB15 MOSI AF5,FUN_0802317c,
 i2s3_instance,0x40003c00,SPI3 in I2S mode,FUN_08021c78,handle 0x24004f90
 i2s3_format,,master full-duplex Philips 32-bit 48 kHz MCLK off,FUN_08021c78,

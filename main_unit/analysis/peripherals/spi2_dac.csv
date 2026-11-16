@@ -1,0 +1,15 @@
+item,value,source,confidence
+handle,0x240054a8 SPI2,FUN_08045018,VERIFIED
+device,0x240177cc,FUN_0804506c,VERIFIED
+shadow,0x240177bc (8 x u16),FUN_08045088,VERIFIED
+load strobe,PB12 high pulse after frame,FUN_08045050,VERIFIED
+reset/enable,PB14 low then high at init,FUN_08045034,VERIFIED
+frame,byte0=(addr<<2)|v[9:8]; byte1=v[7:0],FUN_08045088,VERIFIED
+addr table,0x0807e9c4 (bit-reversed ch),FUN_08045088,VERIFIED
+ch1,drive code 300..1000,FUN_0803acb0,VERIFIED
+ch2,driver bias,FUN_0803e338,VERIFIED
+ch3,fan 10*T-50,FUN_08048d88,VERIFIED
+ch5,0x3FF at boot,FUN_0802239c,VERIFIED
+ch6,75*sqrt(P),FUN_0803d3b0,VERIFIED
+ch7,final 2 bias,FUN_0803e338,VERIFIED
+ch8,final 1 bias,FUN_0803e338,VERIFIED

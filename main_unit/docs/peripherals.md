@@ -43,7 +43,7 @@ From base-address references and register-access counts:
 | I2C2, I2C3 | init only | initialized but unused by any driver (idle/reserved) | HIGH |
 | **SPI6** | init `FUN_08023120`, MSP in `FUN_0802317c`, IRQ86, BDMA ch0/ch1 | **WCH CH394 SPI-Ethernet**, exclusive bus (see SPI6 section) | VERIFIED |
 | **SPI1** | init `FUN_08023060`, TX-only | five serial-in latches: TX low-pass bank + T/R, RX BPF/front-end, and three built-in ATU latches (see SPI1 section) | HIGH |
-| SPI2 | init `FUN_080230c0`, TX-only | initialised, PB13/PB15 configured, **no users** (idle/reserved) | HIGH |
+| **SPI2** | init `FUN_080230c0`, TX-only | **8-channel 10-bit DAC**: PA bias, drive, fan (see SPI2 section) | VERIFIED |
 | **SPI3 = I²S3** | init `FUN_08021c78`, DMA1 Str5/Str0 (IRQ16/11) | full-duplex 48 kHz audio/IQ sample stream (see I²S3 section) | VERIFIED |
 | **USART2** | IRQ38; PD5/PD6 AF7; 460 800 8N1; DMA1 S4 TX / S2 RX circular | inter-MCU SLIP link (↔ Control USART2) | VERIFIED |
 | USART1 | init `FUN_08024108`; PB6/PB7 AF7; 115 200 8N1; RX DMA1 S3 circular; no IRQ | debug console / CAT (role open) | HIGH |
@@ -222,12 +222,61 @@ which is C is open.
 SPI1 therefore drives five serial-in latches in total: chain A, chain
 B and these three ATU latches.
 
-## SPI2 — idle, HIGH CONFIDENCE
+## SPI2 — PA bias / drive DAC, VERIFIED
 
-`FUN_080230c0` initialises SPI2 with the same transmit-only settings
-as SPI1, and the MSP init puts PB13 (SCK) and PB15 (MOSI) in AF5. No
-code outside init refers to its handle (`0x240054a8`). It is unused
-in V1.0.1, possibly reserved for a hardware variant.
+> Correction: an earlier version of this file called SPI2 idle. Its
+> transmit routine is reached only through a function pointer, so the
+> first handle scan missed it.
+
+**Bus.** SPI2 is transmit-only (PB13 SCK, PB15 MOSI; init
+`FUN_080230c0`). It drives an **8-channel 10-bit serial DAC** (chip
+type HYPOTHESIS) through a small device layer at `0x240177cc`.
+
+**Frame.** `FUN_08045088(ch, value)` clamps the value to 0x3FF and keeps
+a shadow copy at `0x240177bc`. It sends two bytes:
+1. the 4-bit address (the bit-reversed channel number, from a table at
+   `0x0807e9c4`), shifted left by 2, with value bits 9..8;
+2. value bits 7..0.
+
+The transmit callback `FUN_08045018` (HAL SPI transmit on the SPI2
+handle) is followed by a high pulse on **PB12** (load strobe). At init
+`FUN_0804506c`, **PB14** is pulsed low and then high (reset/enable).
+
+| Ch | Use |
+| ---: | --- |
+| 1 | drive code (`FUN_0803acb0`, clamped to 300–1000) |
+| 2 | driver-stage bias |
+| 3 | fan level (10·T − 50 above 35 °C, off at ≤ 30 °C) |
+| 4 | unused |
+| 5 | 0x3FF at boot, 0 at power-off (role open) |
+| 6 | power reference 75·√P (P = TX power, ×0.25 in AM/SAM) |
+| 7 | final-stage 2 bias |
+| 8 | final-stage 1 bias |
+
+**Bias trim at boot** (in `main`). The static Idd is measured with all
+bias at 0. Then each stage is trimmed on its own:
+- **targets:** static Idd + 0.5 A for the driver, + 0.9 A for each
+  final;
+- **loop:** 100 ms settle per step, 30 counts per amp, converged within
+  ±0.1 A, no iteration cap;
+- **valid ranges:** driver code 1–750, finals 1–1200. The finals' upper
+  bound is above the 10-bit clamp (a quirk). A code outside its range
+  fails the trim: the stage goes to 0 and the stored value is kept.
+
+A changed value is saved at shutdown. TX entry writes the calibrated
+biases to channels 2/8/7; RX entry and power-off write 0.
+
+**TX power → DAC** (HIGH CONFIDENCE for the power function). The channel 1
+drive code is:
+- below 50 MHz: 828.3 − 1295·P^(−0.6732);
+- above: 2·(375.5 + 2.231·P^1.164).
+
+Both are clamped to 300–1000. Channel 6 = 75·√P. The ATU sets channel 6
+directly for its 10 W carrier and restores it afterwards.
+
+**Why this needed the firmware:** the DAC bus, channel map, trim targets
+and power curves cannot be seen on a schematic. Values are in
+`analysis/peripherals/spi2_dac.csv`.
 
 ## SPI3 = I²S3 — audio codec link, VERIFIED
 
