@@ -145,3 +145,27 @@ Values are in `analysis/clocks/clock_config.csv`.
 | 55 | CW text-keyer step `FUN_08052364`, then HAL TIM |
 | 88 | HAL LTDC |
 | 101 | HAL PCD (USB) |
+
+## SWR scanner (APP menu) — VERIFIED
+
+The scanner runs entirely on the Control Unit (`FUN_08045d8c`).
+
+**Start.**
+1. Save frequency, mode, TX power and AF gain.
+2. Mute the audio.
+3. Force NFM (a steady carrier) and 5 W.
+4. Key the Main Unit through `0x01` byte `0x15E` bit 6. Main maps this
+   to its SWR-scan PTT, which also bypasses the band table.
+
+**Sweep.**
+- 51 points around the start frequency: centre ± 25 steps, with a step
+  of 1, 2 or 5 kHz selected by a button.
+- 500 ms dwell on the first point and 100 ms on the others.
+- The SWR from the `0x03` meter tail is recorded at each point into a
+  chart widget.
+- The sweep loops until stopped.
+
+**Stop.** Bit 6 is cleared and the saved settings are restored.
+
+**Why this needed the firmware:** sweep geometry, timing and the backup
+set are UI-firmware choices.

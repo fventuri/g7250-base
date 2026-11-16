@@ -1,0 +1,22 @@
+offset,type,field,confidence
+0x994,u8,CW key type (0 straight 1 paddle 2 reversed),VERIFIED
+0x995,u8,CW iambic type,VERIFIED
+0x997,u8,CW keyer on,VERIFIED
+0x998,u16,CW tone Hz,VERIFIED
+0x99A,u16,CW tone level,VERIFIED
+0x99C,u16,CW QSK time (0.1 dot),VERIFIED
+0x9A0,f32,CW DI/DA ratio,VERIFIED
+0x9A4,u8,CW trainer,VERIFIED
+0x9A5,u8,CW decoder enable,VERIFIED
+0x9A6,u8,CW decoder threshold,VERIFIED
+0x9C0,u8,PTT signals,VERIFIED
+0xB7A,bool,SWR scan enable,VERIFIED
+0xB80,u64,SWR scan frequency backup,VERIFIED
+0xB88,u8,SWR scan mode backup,VERIFIED
+0xB8C,f32,SWR scan power backup,VERIFIED
+0xB90,f32,SWR scan AF backup,HIGH
+0xB94,u16,SWR scan step Hz,VERIFIED
+0xB96,u16,SWR scan index,VERIFIED
+0xBA5,u8,CW message UI state,VERIFIED
+0xBA6,u8,voice UI state,VERIFIED
+0xBA7,u8,voice-call monitor,VERIFIED
