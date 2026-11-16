@@ -1,0 +1,8 @@
+item,address,value,confidence
+version_store,0x2400E9E8,3 bytes read with cmd 0x08 (log only),VERIFIED
+fpga_ok_flag,0x240007AC,set 1 / cleared on mismatch; no reader,VERIFIED
+bus_test_busy_flag,0x240007AD,1 during bus test,VERIFIED
+fpga_underrun_flag,0x240101F8,set by rx/tx iq; cleared by check,VERIFIED
+codec_underrun_flag,0x2400BBC6,logged+cleared by check,HIGH
+health_check_fn,0x08037E68,every 10th TIM6 tick,VERIFIED
+stuck_threshold,0x08037E68,>5 consecutive checks,HIGH

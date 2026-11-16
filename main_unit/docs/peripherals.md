@@ -380,12 +380,30 @@ bit-banged bus on GPIOE. No FMC bank is used.
 | 0x05/0x06, 0x09/0x0A | two on/off toggles (init sends 0x06 and 0x0A); roles unknown |
 | 0x08 | 3-byte FPGA firmware version read |
 
-**Bitstream.** The MCU does not load a bitstream in V1.0.1. The strings
-about a missing FPGA or a failed FPGA-flash verification are not
-referenced by any code that Ghidra discovered, so the FPGA presumably
-boots from its own flash (MEDIUM CONFIDENCE). The absolute I/Q sample
-rate depends on the PE10 interrupt rate, which is not derivable from
-the firmware (48 kHz × 1/2/4/8 is a HYPOTHESIS).
+**Bitstream and version.**
+- **Loading (HIGH CONFIDENCE).** The MCU never loads or reprograms the
+  FPGA. The strings about a missing FPGA and FPGA-flash verification
+  are unreferenced, and the command set has no flash command, so the
+  FPGA boots from its own configuration flash.
+- **Version.** The 3-byte version read at boot (command 0x08) is only
+  logged. The version reported to the Control Unit in the slave-info
+  block is the compiled-in "1.0.0" string.
+- **Sample rate.** The absolute I/Q rate depends on the PE10 interrupt
+  rate, which the firmware does not reveal (48 kHz × 1/2/4/8 is a
+  HYPOTHESIS).
+
+**Error handling — log only (VERIFIED).**
+- **Boot.** The bus test writes and reads back 0–255 twice. A mismatch
+  is logged and clears an "FPGA OK" flag that nothing reads; there is
+  no retry or reset.
+- **Runtime.** The TIM6 interrupt runs a health check (`FUN_08037e68`)
+  about ten times a second:
+  - It logs an FPGA bus error when the first RX sample stays unchanged
+    for more than five checks (outside WFM, and not during the bus
+    test).
+  - It logs and clears the FPGA and codec buffer-underrun flags.
+
+None of these errors leads to an FPGA re-init or a TRX reset.
 
 **Why this needed the firmware:** no schematic or FPGA documentation is
 public. The bus, its command set, the 24-bit I/Q format and the codec
