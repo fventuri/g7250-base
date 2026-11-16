@@ -1,0 +1,60 @@
+address,current_name,new_name,confidence,evidence
+08023120,FUN_08023120,MX_SPI6_Init,VERIFIED,writes Instance=SPI6 into handle 0x24005420 then calls HAL SPI init
+0802317c,FUN_0802317c,HAL_SPI_MspInit,VERIFIED,called from HAL SPI init; per-instance RCC/GPIO/DMA/NVIC for SPI1/SPI2/SPI6
+08023060,FUN_08023060,MX_SPI1_Init,VERIFIED,writes Instance=SPI1 into handle 0x24005530
+080230c0,FUN_080230c0,MX_SPI2_Init,VERIFIED,writes Instance=SPI2 into handle 0x240054a8
+0802ebb0,FUN_0802ebb0,HAL_SPI_Init,VERIFIED,called by all three SPI init functions; calls HAL_SPI_MspInit
+08021c78,FUN_08021c78,MX_I2S3_Init,VERIFIED,writes Instance=SPI3 into I2S handle 0x24004f90 and calls HAL I2S init
+0802bde8,FUN_0802bde8,HAL_I2S_Init,VERIFIED,programs I2SCFGR and calls HAL_I2S_MspInit
+08021ccc,FUN_08021ccc,HAL_I2S_MspInit,VERIFIED,SPI3 RCC/GPIO AF6/DMA1 Str5+Str0/NVIC
+08044010,FUN_08044010,shiftreg_bind,VERIFIED,stores SPI handle and two GPIO callbacks in a device struct
+08043fe0,FUN_08043fe0,shiftreg_write,VERIFIED,latch low; SPI transmit; latch high
+080495a0,FUN_080495a0,lpf_chain_init,VERIFIED,binds chain A to SPI1 and writes initial byte
+080495d8,FUN_080495d8,lpf_chain_set_band,VERIFIED,one-hot bits 0-6 of chain A
+0804960c,FUN_0804960c,lpf_chain_set_tr,VERIFIED,bit 7 of chain A; set on TX path and cleared on RX path
+0804a2f0,FUN_0804a2f0,rxfe_chain_init,VERIFIED,binds chain B to SPI1 and writes initial 24-bit word
+0804a430,FUN_0804a430,rxfe_chain_set_bpf,VERIFIED,frequency-segment bits of chain B
+0803ebb0,FUN_0803ebb0,lpf_select_for_freq,VERIFIED,maps frequency to chain A band index
+08035fac,FUN_08035fac,i2s3_stream_start,VERIFIED,clears two buffers and starts full-duplex circular DMA on I2S3
+080222f0,FUN_080222f0,SystemClock_Config,VERIFIED,called from main; supply/VOS/OscConfig/ClockConfig sequence
+0802c208,FUN_0802c208,HAL_PWREx_ConfigSupply,VERIFIED,supply value 0x2E; SMPS ready wait
+0802c538,FUN_0802c538,HAL_RCC_OscConfig,VERIFIED,OscInit struct consumer; PLL1 programming
+0802cba0,FUN_0802cba0,HAL_RCC_ClockConfig,VERIFIED,ClkInit struct + flash latency
+0802ca84,FUN_0802ca84,HAL_RCC_GetSysClockFreq,VERIFIED,HSE/HSI/CSI constants and PLL maths
+0802d15c,FUN_0802d15c,HAL_RCCEx_PeriphCLKConfig,VERIFIED,writes D2CCIP1R/D3CCIPR fields from struct
+0802e320,FUN_0802e320,HAL_RCCEx_GetPeriphCLKFreq,VERIFIED,returns I2S_CKIN constant for SPI123 source 3
+0804a8e8,FUN_0804a8e8,axp223_init,VERIFIED,register writes to I2C 0x34 rails and enables
+0804a854,FUN_0804a854,axp223_safe_state,VERIFIED,called on shutdown and bootloader jump
+0804abbc,FUN_0804abbc,vc6_init,VERIFIED,burst-writes 0x70 register table to VersaClock
+0804ad24,FUN_0804ad24,crc8_build_table,VERIFIED,builds poly 0x31 table
+0804ae14,FUN_0804ae14,crc8,VERIFIED,table-driven CRC-8 init 0
+0803c08c,FUN_0803c08c,settings_load,VERIFIED,backup SRAM then EEPROM 0x0000; 424 B
+0803c5e4,FUN_0803c5e4,calib_load,VERIFIED,EEPROM 0x0800; 358 B with CRC-8
+0803c534,FUN_0803c534,calib_save,VERIFIED,EEPROM 0x0800 writer
+0803c448,FUN_0803c448,nvparam_marker_check,VERIFIED,EEPROM 0x1000 3-byte record
+080411d8,FUN_080411d8,atu_table_load,VERIFIED,EEPROM 0x1800 two antenna blocks
+08041228,FUN_08041228,atu_table_save,VERIFIED,EEPROM 0x1800 writer
+08039078,FUN_08039078,fpga_sample_isr,VERIFIED,EXTI10 callback path; reads/writes FPGA I/Q per strobe
+08039a6c,FUN_08039a6c,fpga_rx_iq_read,VERIFIED,issues bus command 0x04 and converts 24-bit I/Q
+08039d90,FUN_08039d90,fpga_tx_iq_write,VERIFIED,issues bus command 0x03 with 24-bit I/Q
+08039238,FUN_08039238,fpga_send_config,VERIFIED,issues bus command 0x01 with 24-byte frame
+0803a3a0,FUN_0803a3a0,fpga_init_bus_test,VERIFIED,loopback test 0..255 and version read
+08048d28,FUN_08048d28,ch394_hw_reset,VERIFIED,PB5 low 10 ms then high and re-init
+08048674,FUN_08048674,ch394_set_socket_buffers,VERIFIED,writes per-socket buffer sizes from table
+08047440,FUN_08047440,ch394_send_dma,VERIFIED,DMA datagram into socket TX buffer
+080455dc,FUN_080455dc,ch394_send_complete,VERIFIED,sets TX pointer and issues SEND
+0804905c,FUN_0804905c,lan_link_monitor,VERIFIED,1 s PHY poll and self-heal ladder
+08048e20,FUN_08048e20,lan_ip_setup,VERIFIED,copies IP/GW/mask/port from settings
+0804aed8,FUN_0804aed8,hdsdr_init,VERIFIED,opens UDP 50002
+0804af68,FUN_0804af68,hdsdr_service,VERIFIED,magic + command dispatch
+0804db5c,FUN_0804db5c,wfview_init,VERIFIED,opens three UDP sockets
+08049658,FUN_08049658,slip_rx_handler,VERIFIED,SLIP decode + CRC + type dispatch
+0804995c,FUN_0804995c,slip_tx_status_frames,VERIFIED,builds SLIP 0x03 and 0x08
+0804a200,FUN_0804a200,slip_encode,VERIFIED,RFC1055 encoder
+0804a258,FUN_0804a258,slip_decode,VERIFIED,RFC1055 decoder
+0804ae3c,FUN_0804ae3c,crc16_arc,VERIFIED,table-driven CRC-16/ARC
+08041ef4,FUN_08041ef4,settings_apply,VERIFIED,consumes SLIP 0x01 image field by field
+080239c8,FUN_080239c8,TIM5_IRQ_dsp_scheduler,VERIFIED,runs TX or RX baseband block
+0802200c,FUN_0802200c,jump_to_bootloader,VERIFIED,de-init and jump via 0x08000004
+08035ed4,FUN_08035ed4,i2s3_half_cb,VERIFIED,ping-pong flag for I2S3 DMA
+08035f40,FUN_08035f40,i2s3_cplt_cb,VERIFIED,ping-pong flag for I2S3 DMA

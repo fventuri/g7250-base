@@ -1,0 +1,15 @@
+address,current_name,new_name,confidence,evidence
+08021d98,FUN_08021d98,SystemClock_Config,VERIFIED,called from main; LDO + overdrive + OscConfig/ClockConfig
+08029ba4,FUN_08029ba4,HAL_PWREx_ConfigSupply,VERIFIED,LDO supply value 2
+08029ce0,FUN_08029ce0,HAL_RCC_OscConfig,VERIFIED,PLL1 M5 N192 programming
+0802a3e0,FUN_0802a3e0,HAL_RCC_ClockConfig,VERIFIED,ClkInit + flash latency 4
+0802a2c4,FUN_0802a2c4,HAL_RCC_GetSysClockFreq,VERIFIED,HSE 25 MHz constant
+08034984,FUN_08034984,slip_rx_handler,VERIFIED,SLIP decode + CRC + type dispatch
+08052b8c,FUN_08052b8c,slip_encode,VERIFIED,RFC1055 encoder
+08052be4,FUN_08052be4,slip_decode,VERIFIED,RFC1055 decoder
+08052c44,FUN_08052c44,crc16_arc,VERIFIED,table-driven CRC-16/ARC
+080228cc,FUN_080228cc,tim13_slip_client,VERIFIED,TIM13 period callback; RX drain + 0x01 send
+0803e76c,FUN_0803e76c,slip01_build_settings,VERIFIED,fills 0x01 payload from UI state
+0802dda4,FUN_0802dda4,HAL_TIM_Base_Start_IT,VERIFIED,argument is a TIM handle
+08035034,FUN_08035034,gt911_init,VERIFIED,EXTI2 PE2 setup and reset PG14
+08026d80,FUN_08026d80,HAL_GPIO_Init,VERIFIED,programs MODER/AFR and EXTI

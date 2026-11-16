@@ -40,9 +40,10 @@ Roadmap mirrors `REVERSE_ENGINEERING_GUIDE.md`, tracked per unit.
       FMC, PLL3 = LTDC). See */docs/flow.md.
 - [x] Control Unit 8-byte `.data`/`.bss` gap = linker alignment padding
       before a ≥16/32-byte aligned `.bss` (control_unit/docs/memory_map.md).
-- [ ] Rename the VERIFIED startup functions in Ghidra via
-      `RenameVerifiedFromCsv.java` (SystemInit, __libc_init_array, PWR init,
-      and the HIGH-CONFIDENCE helpers in `*/docs/flow.md`).
+- [x] VERIFIED renames as CSV (*/analysis/renames/verified_renames.csv: Main
+      59, Control 14), applied with tools/run_headless_verified_renames.sh.
+      Note: on a fresh import `0x080487d4` (CH394 init) may sit inside a larger
+      Ghidra function; it is left out of the CSV.
 
 ## Phase 2/3 — Peripherals & interrupts
 
