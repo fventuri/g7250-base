@@ -123,7 +123,7 @@ Roadmap mirrors `REVERSE_ENGINEERING_GUIDE.md`, tracked per unit.
       and the 0x08 sequence/ack scheme.
 - [ ] Who sends SLIP 0x02 in the field (factory tool?).
 - [x] Physical layer: USART2 PD5/PD6 AF7, 460 800 8N1, DMA (docs/protocol.md).
-- [ ] Roles of Main UART4 (PD1/PH14) and USART1, and Control USART1.
+- [x] UART roles: Main USART1 = console + service menu, Main UART4 unused, Control USART1 = Bluetooth (+ CI-V).
 - [~] Main Unit networking: CH394 driver, socket plan, HDSDR mode, wfview
       session and self-heal documented (main_unit/docs/network.md).
 - [x] CI-V command map for both parsers (docs/civ.md).
@@ -174,7 +174,7 @@ Roadmap mirrors `REVERSE_ENGINEERING_GUIDE.md`, tracked per unit.
 - [x] N21 PA bias / power control (SPI2 is the bias DAC, not idle) · [x] N22 PTT arbitration + T/R sequencing · [x] N31 power on/off
 - [ ] N07 stale doc claims · [x] N08 exception handlers · [x] N16 H72x Ghidra memory map
 - [x] N18 MPU/cache/RAM placement · [x] N19 timer map
-- [ ] N10 UART roles · [ ] N11 Main SDRAM? · [ ] N12 Control I2C · [ ] N13 Control SPI5/SPI flash
+- [x] N10 UART roles · [ ] N11 Main SDRAM? · [ ] N12 Control I2C · [ ] N13 Control SPI5/SPI flash
 - [ ] N14 GT911 · [ ] N28 Control inputs · [ ] N29 Control USB descriptors · [ ] N30 display bring-up
 - [ ] N32 unknown GPIOs
 - [x] N23 CW · [x] N24 ATU algorithm · [x] N35 H-22 mic protocol · [x] N37 voice recorder · [x] N41 SWR scanner

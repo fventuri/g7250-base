@@ -46,8 +46,8 @@ From base-address references and register-access counts:
 | **SPI2** | init `FUN_080230c0`, TX-only | **8-channel 10-bit DAC**: PA bias, drive, fan (see SPI2 section) | VERIFIED |
 | **SPI3 = I²S3** | init `FUN_08021c78`, DMA1 Str5/Str0 (IRQ16/11) | full-duplex 48 kHz audio/IQ sample stream (see I²S3 section) | VERIFIED |
 | **USART2** | IRQ38; PD5/PD6 AF7; 460 800 8N1; DMA1 S4 TX / S2 RX circular | inter-MCU SLIP link (↔ Control USART2) | VERIFIED |
-| USART1 | init `FUN_08024108`; PB6/PB7 AF7; 115 200 8N1; RX DMA1 S3 circular; no IRQ | debug console / CAT (role open) | HIGH |
-| UART4 | init `FUN_08024080`; PD1 TX / PH14 RX AF8; 115 200 8N1; no DMA, no IRQ | role open | HIGH |
+| USART1 | init `FUN_08024108`; PB6/PB7 AF7; 115 200 8N1; RX DMA1 S3 circular; no IRQ | **debug console (stdout) and service menu**; no CAT (see USART1 section) | VERIFIED |
+| UART4 | init `FUN_08024080`; PD1 TX / PH14 RX AF8; 115 200 8N1; no DMA, no IRQ | **initialised but unused** in V1.0.1 | HIGH |
 | **ADC1** | IRQ18 + DMA1 Stream7 | RF metering: Vext, forward/reflected power, Idd, PA temperature, EALC, ALC (see ADC1 metering); ADC2/ADC3 unused | VERIFIED |
 | TIM5/6/7 | active IRQs | time bases / DAC & audio triggers | HIGH |
 | USB OTG | none (earlier "×32 refs" were false positives) | **not used at runtime** (see USB section) | HIGH |
@@ -575,6 +575,31 @@ uses them.
 **Why this needed the firmware:** the pin-to-quantity assignment,
 scaling constants, detector law, directivity correction and gating
 exist only in code.
+
+## USART1 — debug console and service menu, VERIFIED
+
+**Console.** stdout (all log output) goes out blocking on USART1 with a
+100 ms timeout (`_write` → `FUN_080417a0`). Reception uses circular DMA
+into a 1 KiB ring at `0x30004F60` (set up by `FUN_08041c10`).
+
+**Service menu.** Pressing Enter on the console switches the superloop
+into a VT100 service menu (`FUN_08041a94`):
+- the cursor keys select an item and change the step size;
+- `+` and `-` change the value;
+- the screen refreshes once per second.
+
+The five items are:
+1. the reverse-power gain;
+2. the leakage-compensation factor (the SWR directivity terms of the
+   meter block);
+3. the drive-DAC level (SPI2 DAC channel 1);
+4. the "opt filter" toggle (settings byte 0x008 bit 0);
+5. SPI2 DAC channel 6.
+
+A telemetry block follows the items: CPU load, S-meter, ADC peak, AGC
+gain, PA temperature, ALC, Vext/Idd, forward and reverse power.
+
+There is no CAT protocol on this port. It is a factory/service console.
 
 ## Timer map — VERIFIED (timer clock 275 MHz)
 
