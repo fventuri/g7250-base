@@ -42,8 +42,9 @@ From base-address references and register-access counts:
 | **SPI1** | init `FUN_08023060`, TX-only | five serial-in latches: TX low-pass bank + T/R, RX BPF/front-end, and three built-in ATU latches (see SPI1 section) | HIGH |
 | SPI2 | init `FUN_080230c0`, TX-only | initialised, PB13/PB15 configured, **no users** (idle/reserved) | HIGH |
 | **SPI3 = I²S3** | init `FUN_08021c78`, DMA1 Str5/Str0 (IRQ16/11) | full-duplex 48 kHz audio/IQ sample stream (see I²S3 section) | VERIFIED |
-| **USART2** | IRQ38 + DMA | inter-MCU SLIP link (↔ Control USART2) | HIGH |
-| USART1 | base refs (×6) | debug console / CAT | MED |
+| **USART2** | IRQ38; PD5/PD6 AF7; 460 800 8N1; DMA1 S4 TX / S2 RX circular | inter-MCU SLIP link (↔ Control USART2) | VERIFIED |
+| USART1 | init `FUN_08024108`; PB6/PB7 AF7; 115 200 8N1; RX DMA1 S3 circular; no IRQ | debug console / CAT (role open) | HIGH |
+| UART4 | init `FUN_08024080`; PD1 TX / PH14 RX AF8; 115 200 8N1; no DMA, no IRQ | role open | HIGH |
 | **ADC1/2 + ADC3** | IRQ18 + 27/41 accesses | RF metering: fwd/ref power, SWR, Vext, temp, S-meter | HIGH |
 | TIM5/6/7 | active IRQs | time bases / DAC & audio triggers | HIGH |
 | **USB_OTG_FS** | base ref ×32 | USB device — role unclear: the **Main Unit has no external USB connector** (manual), so this is **not** the PC CAT/audio port (that is on the Controller, CH342). Vestigial / internal / FW-update? | LOW |

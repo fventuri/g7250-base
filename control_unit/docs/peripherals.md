@@ -38,7 +38,8 @@ the H7 IRQ numbering.
 | **DMA2D** | 65 accesses | Chrom-ART 2D graphics accelerator (UI) | HIGH |
 | **SDMMC1** | base refs + IRQ49 | SD card (config.ini on `1:/`) | HIGH |
 | SPI1/2, SPI5 | base refs; SPI2/I2S2 ×6 | SPI2/I2S2 likely audio I²S; others TBD | MED |
-| **USART2** | IRQ38 + DMA | inter-MCU SLIP link (↔ Main USART2) | HIGH |
+| **USART2** | IRQ38; PD5/PD6 AF7; 460 800 8N1; DMA1 S2 TX / S3 RX circular | inter-MCU SLIP link (↔ Main USART2) | VERIFIED |
+| USART1 | init `FUN_08023234`; PA9/PA10 AF7; 115 200; RX DMA1 S4 circular | console (role open) | HIGH |
 | **USB_OTG_FS** | base ref ×52 | **PC USB** (manual): CAT/control + **audio sound card** (digital-mode line-in) + firmware update; PC driver **CH342**. N1MM CW keying | HIGH |
 | TIM2/3/5/7/8/13/14 | active IRQs + strings | service timers (touch, encoders, audio, SLIP, input) | HIGH |
 | GPIOA/B/C/E/H/I | heavy GPIO access | panel discretes, display/touch control | HIGH |

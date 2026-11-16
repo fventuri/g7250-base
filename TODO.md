@@ -105,7 +105,8 @@ Roadmap mirrors `REVERSE_ENGINEERING_GUIDE.md`, tracked per unit.
 - [ ] Decode 0x02 calibration (358B @0x24013AA4) and 0x06 slave-info
       (104B @0x24018F30) layouts; relate 0x02 to TRX struct 0x24013C0C.
 - [ ] Complete the command-ID map (watch for more types beyond 01/02/03/06/08).
-- [ ] Which USART instance / baud / pins (Phase 3 hardware init).
+- [x] Physical layer: USART2 PD5/PD6 AF7, 460 800 8N1, DMA (docs/protocol.md).
+- [ ] Roles of Main UART4 (PD1/PH14) and USART1, and Control USART1.
 - [ ] Main Unit networking: CH394 Ethernet, CI-V over LAN, "WFV" audio/
       waterfall streaming — scope and document.
 

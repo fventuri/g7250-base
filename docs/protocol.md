@@ -8,6 +8,24 @@ Status: framing, CRC, and primitives **VERIFIED** (decompiled +
 disassembled). Command semantics **HIGH CONFIDENCE** (payload sizes
 verified; meanings inferred). Header middle bytes **HYPOTHESIS**.
 
+## Physical layer — VERIFIED
+
+Both units use **USART2 on PD5 (TX) / PD6 (RX), alternate function 7**:
+**460 800 baud, 8N1** (8 data bits, no parity, 1 stop bit). There is no
+hardware flow control; oversampling is 16× and the hardware FIFO is
+disabled after init. The kernel clock is PCLK1: 137.5 MHz on the Main
+Unit and 120 MHz on the Control Unit.
+
+| | Main Unit | Control Unit |
+| --- | --- | --- |
+| Handle init / MSP | `FUN_08024190` / `FUN_08024218` | `FUN_080232bc` / `FUN_08023344` |
+| TX DMA | DMA1 Stream4, request 44, normal mode, high priority | DMA1 Stream2, request 44, normal mode, high priority |
+| RX DMA | DMA1 Stream2, request 43, **circular**, low priority | DMA1 Stream3, request 43, **circular**, high priority |
+| USART2 IRQ38 priority | 10 | 1 |
+
+**Why this needed the firmware:** the CTRL cable is unlabelled. The
+baud rate, pins and DMA assignment exist only in the init code.
+
 ## Transport
 
 - USART with a **DMA circular RX buffer**: 1024 B (`0x400`) on the Main
@@ -166,5 +184,4 @@ Evidence: `*/analysis/protocol/`.
 - The 2 header bytes after `type` (seq? address? length? sub-id?).
 - Full command-ID map and payload field layouts (424/512/358/104-B
   blocks — these are the radio's shared state; decode next).
-- Which USART instance / baud rate / GPIO pins (Phase 3 hardware init).
 - Direction/role handshake and the CH394-Ethernet relationship.
