@@ -30,8 +30,11 @@ Roadmap mirrors `REVERSE_ENGINEERING_GUIDE.md`, tracked per unit.
 
 ## Phase 1 — Startup / memory (remaining)
 
-- [ ] Confirm exact STM32H7 part number (no hardware on hand; infer from
-      flash size / RCC PLL config / peripheral IRQ usage instead).
+- [x] STM32H7 part number inferred: Main = H725xG/H735xG (MEDIUM),
+      Control = H743xI rev V (HIGH). See docs/mcu_identification.md.
+- [ ] Verify both part numbers against chip markings.
+- [ ] Main Unit Ghidra memory map: switch to the H72x layout (AXI 320 KiB,
+      D2 32 KiB).
 - [x] Running clock config: Main `FUN_080222f0` (550/275/137.5 MHz, HSE
       25 MHz, PLL2 = ADC), Control `FUN_08021d98` (480/240/120 MHz, PLL2 =
       FMC, PLL3 = LTDC). See */docs/flow.md.

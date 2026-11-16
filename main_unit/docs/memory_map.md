@@ -25,8 +25,8 @@ in this image), same convention as the X6100.
 
 - Initial MSP (stack top): `0x24050000` — VERIFIED (vector[0] and reset
   `ldr sp`).
-- AXI SRAM used: `0x24000000`–`0x24050000` = 320 KiB of the ≥512 KiB AXI
-  SRAM. Region above `0x24050000` (incl. the 192 KiB up to the 512 KiB
+- AXI SRAM used: `0x24000000`–`0x24050000` = the full 320 KiB AXI
+  SRAM of an H72x/H73x (default TCM/AXI split; see docs/mcu_identification.md). Region above `0x24050000` (incl. the 192 KiB up to the 512 KiB
   boundary) is not statically allocated; likely DMA/runtime use.
 
 ## I2C EEPROM (24Cxx @ 0x50) layout — VERIFIED

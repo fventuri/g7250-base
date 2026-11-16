@@ -45,13 +45,38 @@ Reset vectors (first two words of each image), VERIFIED:
    SystemInit, copy `.data`, clear `.bss`, `__libc_init_array`, main),
    consistent with STM32 HAL/CMSIS firmware.
 
+## Part number (inferred from firmware; no hardware marking seen)
+
+The two MCUs belong to **different STM32H7 sub-families**.
+
+| Unit | Most likely part | Confidence | Key evidence |
+| --- | --- | --- | --- |
+| Main | **STM32H725xG** (or H735xG) | MEDIUM | HAL built for a device with TIM23/TIM24 and UART9/USART10, which only H72x/H73x have; SMPS-capable supply code using the SMPS 2.5 V setting; 550 MHz at Scale 0 with VOS = 00 and no overdrive (H72x/H73x encoding); stack top `0x24050000` = 320 KiB AXI SRAM (H72x default); image up to `0x0808EA20` needs the 1 MiB variant |
+| Control | **STM32H743xI, revision V** | HIGH | LDO-only supply; Scale 0 via SYSCFG overdrive (H743 rev V method); 480 MHz requires rev V; image runs contiguously to `0x080DEC10`, which needs 2 MiB (bank 1 ≥ 1 MiB); USB OTG_FS at `0x40080000`; LTDC, DMA2D and FMC in use; the GUI library checks for DEV_ID 0x450 |
+
+**Ruled out:**
+- H750 and H730: 128 KiB of flash cannot hold the images.
+- H7A3/B3: 280 MHz maximum.
+- H743 for the Main Unit: 550 MHz and TIM23/24 are impossible on it.
+- H723/H733 for the Main Unit: no SMPS (LOW-confidence exclusion).
+
+**Not distinguishable from the firmware:** H725 vs H735, and H743 vs
+H753, because crypto is unused. Neither image reads the flash-size
+register.
+
+The Main Unit H72x evidence is literal-pool constants for TIM23/24 and
+UART9/USART10, which appear only in the Main image. VERIFIED.
+
+**Why this needed the firmware:** no PCB photo or chip marking was
+available. Only the binary shows the device header it was built for,
+the supply-mode variant, the VOS encoding and the flash/RAM extents.
+
 ## Open
 
-- Exact part number (H743 vs H750 vs H753 vs H7A3/H7B3) not yet confirmed
-  from hardware. This affects flash size, RAM sizes beyond AXI SRAM, and
-  peripheral availability. Confirm from PCB markings.
-- The Ghidra RAM map (`ghidra_scripts/MapSTM32H7Memory.java`) currently
-  assumes an H743/H750/H753-class layout.
+- Verify both part numbers against the chip markings.
+- `ghidra_scripts/MapSTM32H7Memory.java` assumes an H743-class RAM
+  layout. For the Main Unit an H72x layout (AXI 320 KiB, D2 32 KiB)
+  would be more accurate.
 
 ## Impact vs. the X6100 project
 
