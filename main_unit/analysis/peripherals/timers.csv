@@ -1,0 +1,6 @@
+timer,init_func,handle,psc_reg,arr_reg,ker_clk_hz,rate_hz,mode,irq,nvic_prio,started,role,confidence
+TIM4,0x08023c88,0x240056FC,54,250,275000000,19920.3,PWM1 CH1 PD12 pulse 0,,,no,unused PWM (output idle),VERIFIED
+TIM5,0x08023d90,0x240056B0,109,124,275000000,20000,base TRGO=update,50,5,yes,DSP scheduler,VERIFIED
+TIM6,0x08023e00,0x24005660,13749,199,275000000,100,base TRGO=update,54,8,yes,housekeeping,VERIFIED
+TIM7,0x08023e54,0x24005610,1374,199,275000000,1000,base TRGO=update,55,9,yes,1 kHz service + SLIP status,VERIFIED
+TIM17,0x08023ea8,0x240055C0,109,124,275000000,20000,base,118,4,yes,sample-side service,VERIFIED

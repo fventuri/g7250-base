@@ -27,8 +27,8 @@ VERIFIED (the function never returns; ends in `do { … } while(true)`).
    channels 0–4 `FUN_08022dc8` (polled) → BDMA NVIC (IRQ 129/130)
    `FUN_080211bc` → I²S3 → USART1 → ADC1 → USART2 → I2C3 → CRC → DAC1
    → I2C1 → UART4 → I2C2 → TIM5 → TIM6 → TIM7 → TIM17 → RTC (time and
-   date only) → SPI2 → SPI6 → SPI1 → TIM4 PWM CH1 on PD12 (prescaler
-   54, period 250) → extra GPIOs `FUN_08021830` (PH11, PA8, PC8).
+   date only) → SPI2 → SPI6 → SPI1 → TIM4 PWM CH1 on PD12 (PSC 54, ARR
+   250, 19.92 kHz, pulse 0, never started) → extra GPIOs `FUN_08021830` (PH11, PA8, PC8).
 5b. **Application bring-up.** The boot log prints each "[OK] …" header
    *before* the step it names, whatever the result; only the ADC
    calibration line reports the outcome. The order is:

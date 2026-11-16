@@ -176,3 +176,18 @@ SLIP: 460 800 baud is too slow for 48 kHz audio, and no message type
 carries it. Mic and speaker audio presumably cross the CTRL cable as
 analog signals (HYPOTHESIS).
 
+## Timer map — VERIFIED (timer clock 240 MHz)
+
+The table is in `analysis/peripherals/timers.csv`.
+
+| Timer | Setting / rate | Role |
+| --- | --- | --- |
+| TIM2 | 32-bit encoder mode, one count per 4 edges | main-dial encoder |
+| TIM3 | 100 Hz | GT911 poll (started only if the touch init succeeds) |
+| TIM4 | 3.66 kHz PWM: CH1 PD12 held near 100 %, CH2 PD13 with an inverted duty set by `FUN_08036578` | backlight enable + dimming (MEDIUM CONFIDENCE) |
+| TIM5 | 20 kHz | audio service |
+| TIM7 | period reprogrammed to one tenth of a CW dot from the WPM setting (`FUN_080521d0`) | **CW text keyer** element clock; its ISR keys PE3/PE4 (mechanism HIGH CONFIDENCE; that these lines key the Main Unit is a HYPOTHESIS) |
+| TIM8 | 30 MHz PWM-input capture on PI5 (period and high time) | H-22 mic-line decoder |
+| TIM13 | 50 Hz (20 ms) | SLIP client (this makes the SLIP `0x01` period VERIFIED) |
+| TIM14 | 1 kHz | input service |
+

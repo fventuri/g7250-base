@@ -440,6 +440,21 @@ refers to them. The bootloader probably arms the timer (HYPOTHESIS).
 connector. Only the absence of init code, vectors and base constants
 settles that there is no internal USB link either.
 
+## Timer map — VERIFIED (timer clock 275 MHz)
+
+Rate = timer clock / (PSC+1) / (ARR+1). The table is in
+`analysis/peripherals/timers.csv`.
+
+| Timer | Rate | IRQ (prio) | Role |
+| --- | --- | --- | --- |
+| TIM5 | 20 kHz | 50 (5) | DSP scheduler |
+| TIM17 | 20 kHz | 118 (4) | sample-side service: wide-span decimation and wfview TX audio |
+| TIM7 | 1 kHz | 55 (9) | 1 kHz service and SLIP status frames |
+| TIM6 | 100 Hz | 54 (8) | housekeeping: the PTT/T-R state machine every tick, error reports at 10 Hz, CPU-load statistics about once per second |
+| TIM4 | 19.92 kHz PWM on PD12, pulse 0 | — | **never started**, so PD12 stays low in V1.0.1 |
+
+No other timer is initialised.
+
 ## GPIO pin map — register values VERIFIED, roles as noted
 
 **Method.** Built from every HAL_GPIO_Init call (`FUN_0802abd8`, 49

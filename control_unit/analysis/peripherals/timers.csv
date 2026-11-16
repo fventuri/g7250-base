@@ -1,0 +1,9 @@
+timer,init_func,handle,psc_reg,arr_reg,ker_clk_hz,rate_hz,mode,irq,nvic_prio,started,role,confidence
+TIM2,0x08022aa0,0x2400233C,3,0xFFFFFFFF,240000000,,encoder TI12,,,yes,main dial encoder,VERIFIED
+TIM3,0x08022b1c,0x240022F0,239,9999,240000000,100,base,29,10,if GT911 ok,GT911 poll,VERIFIED
+TIM4,0x08022b90,0x240022A4,0,65535,240000000,3662.1,PWM1 CH1 PD12 + CH2 PD13,,,yes,display backlight (HYPOTHESIS),VERIFIED
+TIM5,0x08022c78,0x24002258,23,499,240000000,20000,base,50,4,yes,audio service,VERIFIED
+TIM7,0x08022ce8,0x24002208,959,65535,240000000,3.81,base (ARR reprogrammed),55,0,on demand,CW text keyer element clock,HIGH
+TIM8,0x08022d40,0x240021B8,7,65535,240000000,457.8,PWM input CH1 PI5,44/45/46,1/11/10,yes,mic serial line capture,VERIFIED
+TIM13,0x08022e48,0x24002168,239,19999,240000000,50,base,44,1,yes,SLIP client,VERIFIED
+TIM14,0x08022e78,0x24002118,239,999,240000000,1000,base,45,11,yes,input service,VERIFIED

@@ -93,7 +93,8 @@ Roadmap mirrors `REVERSE_ENGINEERING_GUIDE.md`, tracked per unit.
       whether PC USB is the MCU's own OTG_FS port or a CH342.
 - [x] Init functions from `main()` identified on both units (*/docs/flow.md,
       */analysis/flow/init_sequence.csv).
-- [ ] Purpose of TIM4 PWM (Main PD12; Control PD12/PD13 backlight?).
+- [x] TIM4 PWM: Main PD12 configured but never started; Control PD12/PD13
+      backlight enable + dimming (MEDIUM). See */docs/peripherals.md timer maps.
 - [~] TRX-state struct `0x24013C0C`: first 0x1A8 B = 0x01 layout; runtime
       tail partial (main_unit/analysis/memory/trx_runtime_fields.csv).
 - [x] Main Unit USB: not used at runtime (false-positive references); see
@@ -169,7 +170,7 @@ Roadmap mirrors `REVERSE_ENGINEERING_GUIDE.md`, tracked per unit.
 - [ ] N04 protection thresholds · [ ] N05 BandMap/TX band enforcement · [ ] N20 ADC/DAC map
 - [ ] N21 PA bias / power control · [ ] N22 PTT arbitration + T/R sequencing · [ ] N31 power on/off
 - [ ] N07 stale doc claims · [x] N08 exception handlers · [ ] N16 H72x Ghidra memory map
-- [x] N18 MPU/cache/RAM placement · [ ] N19 timer map
+- [x] N18 MPU/cache/RAM placement · [x] N19 timer map
 - [ ] N10 UART roles · [ ] N11 Main SDRAM? · [ ] N12 Control I2C · [ ] N13 Control SPI5/SPI flash
 - [ ] N14 GT911 · [ ] N28 Control inputs · [ ] N29 Control USB descriptors · [ ] N30 display bring-up
 - [ ] N32 unknown GPIOs
