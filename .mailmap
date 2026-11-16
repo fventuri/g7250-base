@@ -1,0 +1,7 @@
+# Contributor identity mapping.
+#
+# Display the contributor by amateur call sign only, matching CONTRIBUTORS.md
+# and the README. This is a non-destructive display remap honored by git
+# (log, shortlog, blame) and by some hosting UIs; it does NOT rewrite history,
+# so existing clones are unaffected. Requested by the contributor.
+ON8ST <stan@on8st.be>
