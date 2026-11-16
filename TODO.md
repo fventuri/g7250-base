@@ -67,8 +67,10 @@ Roadmap mirrors `REVERSE_ENGINEERING_GUIDE.md`, tracked per unit.
       Manual lead: the digital-mode line-in is the **Controller's USB
       "sound card"** (DIG-ON), audio relayed to Main over SLIP — look on
       the Control Unit USB-audio / I2S path (docs/hardware.md §6).
-- [ ] CH394: find the chip-select, reset and interrupt GPIOs (SPI6 SCK
-      is ≈17.19 MHz: PCLK4 137.5 MHz / 8).
+- [x] CH394 control pins: CS# PG15, RST# PB5, INT# PC13/EXTI13 (falling);
+      SPI6 SCK ≈17.19 MHz. See peripherals.md SPI6 section.
+- [ ] CH394: confirm the INT flag consumers read the chip's interrupt
+      register; socket register map.
 - [x] EEPROM layout: settings / calibration / NVPARAM marker / 2× ATU
       tables, CRC-8 0x31, 64-B pages (main_unit/docs/memory_map.md).
 - [ ] Who writes the settings area (EEPROM 0x0000 / backup SRAM)? Nothing

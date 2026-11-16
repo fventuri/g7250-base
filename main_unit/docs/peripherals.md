@@ -111,12 +111,20 @@ hardware was on hand for measurements.
 | Prescaler | `/8` from PCLK4 (137.5 MHz), so **SCK ≈ 17.19 MHz** (HIGH CONFIDENCE; assumes the 25 MHz HSE the firmware is built for) |
 | Transfer | DMA (BDMA ch0 RX, ch1 TX) + SPI IRQ86 |
 
-**Still open:** which GPIO serves as CS, plus the CH394 reset and
-interrupt pins. The log messages mention a hardware reset and edge
-detection on the LAN link, so expect a RST GPIO and possibly an EXTI
-line. The socket register map is not documented yet. A per-socket
-command register and 8 sockets sharing a 16 KB TX/RX pool would fit a
-WIZnet-style register model (HYPOTHESIS until traced).
+**Control pins (VERIFIED unless noted):**
+
+| Signal | Pin | Configuration | Evidence |
+| --- | --- | --- | --- |
+| CS# | **PG15** | push-pull output, very high speed, idles high | every CH394 register routine asserts it through GPIOG_BSRR bit 31 before its SPI bytes and releases it with bit 15 afterwards; no HAL write-pin calls in the cluster |
+| RST# | **PB5** | push-pull output, low at boot, so the chip is held in reset until its init runs | the hardware-reset routine `FUN_08048d28` (called from the hard re-init path `FUN_08048fb0`) stops the SPI6 DMA and releases CS, holds PB5 low for 10 ms, raises it, waits 100 ms and reruns chip init `FUN_080487d4`. That init raises PB5 and then soft-resets the chip (0x80 into register 0x0039). Power-off clears PB5 again |
+| INT# | **PC13** (EXTI13) | interrupt input, falling edge, pull-up; EXTI15_10 (IRQ40) at priority 2 | the EXTI callback `FUN_08023ab4` turns PC13 events into "interrupt pending" flags. Depending on the network mode, the wfview server or the other network server reads them (HIGH CONFIDENCE; the read of a CH394 interrupt register after the flag is not yet traced) |
+
+The link-monitor "edge detect" in the logs is a software detector of
+link-state changes, not a GPIO.
+
+**Still open:** the socket register map. A per-socket command register
+and 8 sockets sharing a 16 KB TX/RX pool would fit a WIZnet-style
+register model (HYPOTHESIS until traced).
 
 ## SPI1 — RF filter/switch shift registers, HIGH CONFIDENCE
 
