@@ -1,0 +1,26 @@
+code,action,confidence
+0x04,tune down by frequency step,MEDIUM
+0x84,tune up by frequency step,MEDIUM
+0x11,band / memory channel down,MEDIUM
+0x12,band / memory channel up,MEDIUM
+0x13,user function F3,MEDIUM
+0x44,user function F2,MEDIUM
+0x48,user function F1,MEDIUM
+0x14,volume up,MEDIUM
+0x15,volume down,MEDIUM
+0x16,VFO A/B swap,MEDIUM
+0x24,home channel,MEDIUM
+0x81,V/M toggle,MEDIUM
+0x28,direct frequency entry,MEDIUM
+0xE8,mode cycle,MEDIUM
+0x17,digit 0,MEDIUM
+0xE1,digit 1,MEDIUM
+0xE2,digit 2,MEDIUM
+0x18,digit 3,MEDIUM
+0x19,digit 4,MEDIUM
+0x1A,digit 5,MEDIUM
+0x1B,digit 6,MEDIUM
+0x1C,digit 7,MEDIUM
+0x1D,digit 8,MEDIUM
+0x1E,digit 9,MEDIUM
+0x1F,unknown (same handler pattern as digits),LOW

@@ -225,3 +225,52 @@ stays powered.
 **Use.** `FUN_08049bd4` reads the time and date into a seconds count,
 and the UI date/time handler (`FUN_0804587c`) sets them. No other
 backup register is used, so there is no bootloader flag word.
+
+## H-22 microphone keypad (TIM8, PI5)
+
+**Capture (HIGH CONFIDENCE).** TIM8 (`FUN_08022d40`) runs at 30 MHz
+(prescaler 8). Its counter resets on every rising edge at PI5: CH1
+captures the period and CH2 the high time. The IRQ46 handler passes
+both to the symbol decoder `FUN_08035e2c`.
+
+**Symbols (VERIFIED).** Symbols are ratio-coded, so absolute timing
+does not matter. With r = low time / high time:
+- r 0.65–1.35 → bit 0;
+- r 1.65–2.35 → bit 1;
+- r 3.65–4.35 → sync;
+- anything else resets the frame.
+
+**Frame (VERIFIED).**
+1. At least 7 zero-symbols as preamble.
+2. One sync symbol.
+3. 39 data bits, LSB first: bits 0–19 form word A, bits 20–38 word B.
+
+The frame is accepted only if bits 12–19 of A equal bits 12–19 of B.
+Key code = ((A >> 15) & 0x0F) | ((A >> 6) & 0xF0).
+
+**Key map** (`FUN_080478d0`). The codes are VERIFIED; the legends are
+inferred from the actions (MEDIUM). Every new code first plays a
+100 ms key beep. The full table is in
+`analysis/peripherals/h22_keycodes.csv`.
+
+| Code | Action |
+| --- | --- |
+| 0x04 / 0x84 | tune down / up by the frequency step |
+| 0x11 / 0x12 | band or memory channel down / up |
+| 0x48 / 0x44 / 0x13 | user functions F1 / F2 / F3 |
+| 0x14 / 0x15 | volume + / − |
+| 0x16 | VFO A/B swap |
+| 0x24 | home channel |
+| 0x81 | V/M toggle |
+| 0x28 | enter or leave direct-frequency entry |
+| 0xE8 | mode cycle (LSB → USB → CW → AM → SAM → NFM → WFM) |
+| 0x17, 0xE1, 0xE2, 0x18–0x1E | digits 0–9 (band select outside direct entry) |
+
+**User functions.** F1/F2/F3 each select one of: AGC, ATT, PRE, band
+stack, antenna, filter group, NB, RIT, XIT, SPLIT, VOX, or one of two
+per-VFO toggles.
+
+Mic keys are ignored while the SWR scanner or a popup is active.
+
+**Why this needed the firmware:** the H-22 serial format is not
+published; only the decoder defines it.

@@ -176,7 +176,7 @@ Roadmap mirrors `REVERSE_ENGINEERING_GUIDE.md`, tracked per unit.
 - [ ] N10 UART roles · [ ] N11 Main SDRAM? · [ ] N12 Control I2C · [ ] N13 Control SPI5/SPI flash
 - [ ] N14 GT911 · [ ] N28 Control inputs · [ ] N29 Control USB descriptors · [ ] N30 display bring-up
 - [ ] N32 unknown GPIOs
-- [x] N23 CW · [x] N24 ATU algorithm · [ ] N35 H-22 mic protocol · [ ] N37 voice recorder · [ ] N41 SWR scanner
+- [x] N23 CW · [x] N24 ATU algorithm · [x] N35 H-22 mic protocol · [ ] N37 voice recorder · [ ] N41 SWR scanner
 - [ ] N25 SLIP 0x03/0x08 completeness · [ ] N26 SLIP link state machine · [ ] N27 Control storage
 - [ ] N42 CI-V command set · [ ] N43 GUI layer
 - [x] N15 X6100 tooling leftovers · [x] N38 library identification · [x] N39 RAM object map
@@ -194,3 +194,4 @@ Roadmap mirrors `REVERSE_ENGINEERING_GUIDE.md`, tracked per unit.
 - [ ] Pin exact sizes of the ≤ RAM objects; identify the Control UI blocks.
 - [ ] CI-V CW handlers (pitch/WPM/break-in) in undisassembled code near 0x08052400; confirm KEY jack wiring to Main PH3/PH4.
 - [ ] ATU: producer of the merit value (meter block +0x20); TUNER TRG/RET connector hardware-only?
+- [ ] H-22: measure the absolute bit period and confirm which mic line feeds PI5.
