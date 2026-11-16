@@ -667,3 +667,10 @@ or driver actually used.
 - **Power:** no battery (mains/PSU) → AXP223 PMIC replaces the X6100
   MAX17205 fuel gauge. Only I2C1 is actively used (I2C2/I2C3 idle).
 - Retains the X6100's VersaClock-family clock generator.
+
+## RTC — VERIFIED
+
+The RTC is clocked from LSI, giving about 1 Hz (untrimmed). Time and
+date are reset to 00:00:00, 1 January 2000 on every boot, and nothing
+reads them back. No alarm, wake-up timer or backup register is used.
+The RTC only serves the dead bootloader-jump vector.

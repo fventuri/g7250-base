@@ -212,3 +212,16 @@ Its only software reset is the factory-reset path in the UI handler.
 A firmware update is therefore done by the bootloader in sector 0
 after a reset, presumably from a file the PC copied to this disk
 (HYPOTHESIS: file names and checks are not in the application).
+
+## RTC — VERIFIED
+
+**Clock.** The RTC is clocked from LSE (32.768 kHz), giving 1 Hz.
+
+**Backup marker.** Backup register 0 holds the marker 0xA5A5. When the
+marker is missing, the clock is set to 00:00:00, 1 January 2000 and the
+marker is written, so the time survives resets while the backup domain
+stays powered.
+
+**Use.** `FUN_08049bd4` reads the time and date into a seconds count,
+and the UI date/time handler (`FUN_0804587c`) sets them. No other
+backup register is used, so there is no bootloader flag word.
