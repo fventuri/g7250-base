@@ -1,10 +1,13 @@
 pin,mode,pull,af,init,role,source,confidence
+PA0,input,pull-up,,,direct button (bit15),FUN_08035f80,VERIFIED
 PA1,AF PP,none,1,,TIM2_CH2 encoder,FUN_08022ea8,HIGH
-PA2,output OD,pull-up,,1,key-matrix line,FUN_08035f80,MEDIUM
+PA2,output OD,pull-up,,1,button matrix line,FUN_08035f80,VERIFIED
 PA3,AF PP,none,14,,LTDC_B5,FUN_08021928,HIGH
+PA4,input,pull-up,,,encoder1 A,FUN_08034dc4,VERIFIED
 PA5,AF PP,none,1,,TIM2_CH1 encoder,FUN_08022ea8,HIGH
 PA6,AF PP,none,14,,LTDC_G2,FUN_08021928,HIGH
-PA7,output OD,pull-up,,1,key-matrix line,FUN_08035f80,MEDIUM
+PA7,output OD,pull-up,,1,button matrix line,FUN_08035f80,VERIFIED
+PA8,input,pull-up,,,unused (never read),FUN_080210d8,HIGH
 PA9,AF PP,none,7,,USART1_TX,FUN_08023344,HIGH
 PA10,AF PP,none,7,,USART1_RX,FUN_08023344,HIGH
 PA11,AF PP,none,10,,USB_OTG_FS DM,FUN_0803dc10,HIGH
@@ -12,7 +15,7 @@ PA12,AF PP,none,10,,USB_OTG_FS DP,FUN_0803dc10,HIGH
 PA15,input,pull-up,,,debounced input,FUN_08036674,VERIFIED
 PB0,AF PP,none,9,,LTDC_R3,FUN_08021928,HIGH
 PB1,AF PP,none,9,,LTDC_R6,FUN_08021928,HIGH
-PB2,output OD,pull-up,,1,key-matrix line,FUN_08035f80,MEDIUM
+PB2,output OD,pull-up,,1,button matrix line,FUN_08035f80,VERIFIED
 PB3,AF PP,none,5,,SPI1_SCK,FUN_08022630,HIGH
 PB4,AF PP,none,5,,SPI1_MISO,FUN_08022630,HIGH
 PB5,AF PP,none,5,,SPI1_MOSI,FUN_08022630,HIGH
@@ -27,44 +30,67 @@ PB13,AF PP,none,5,,I2S2_CK,FUN_080216c4,HIGH
 PB14,AF PP,none,5,,I2S2_SDI,FUN_080216c4,HIGH
 PB15,AF PP,none,5,,I2S2_SDO,FUN_080216c4,HIGH
 PC0,AF PP,none,12,,FMC_SDNWE,FUN_08020f38,HIGH
+PC1,input,pull-up,,,encoder0 B,FUN_08034dc4,VERIFIED
+PC2,input,pull-up,,,encoder6 B,FUN_08034dc4,VERIFIED
 PC3,AF PP,none,12,,FMC_SDCKE0,FUN_08020f38,HIGH
-PC4,output OD,pull-up,,1,key-matrix line,FUN_08035f80,MEDIUM
-PC5,output OD,pull-up,,1,key-matrix line,FUN_08035f80,MEDIUM
+PC4,output OD,pull-up,,1,button matrix line,FUN_08035f80,VERIFIED
+PC5,output OD,pull-up,,1,button matrix line,FUN_08035f80,VERIFIED
 PC7,AF PP,none,14,,LTDC_G6,FUN_08021928,HIGH
 PC8-PC11,AF PP,pull-up,12,,SDMMC1_D0-D3,FUN_08022340,HIGH
 PC12,AF PP,pull-up,12,,SDMMC1_CK,FUN_08022340,HIGH
-PC13,output OD,pull-up,,1,key-matrix line,FUN_08035f80,MEDIUM
+PC13,output OD,pull-up,,1,button matrix line,FUN_08035f80,VERIFIED
 PD2,AF PP,pull-up,12,,SDMMC1_CMD,FUN_08022340,HIGH
+PD3,input,pull-up,,,encoder7 A,FUN_08034dc4,VERIFIED
+PD4,input,pull-up,,,encoder4 B,FUN_08034dc4,VERIFIED
 PD5,AF PP,none,7,,USART2_TX SLIP,FUN_08023344,VERIFIED
 PD6,AF PP,none,7,,USART2_RX SLIP,FUN_08023344,VERIFIED
+PD7,input,pull-up,,,encoder7 B,FUN_08034dc4,VERIFIED
+PD11,input,pull-up,,,unused (never read),FUN_080210d8,HIGH
 PD12,AF PP,none,2,,TIM4_CH1 PWM,FUN_08022b90,HIGH
 PD13,AF PP,none,2,,TIM4_CH2 PWM,FUN_08022b90,HIGH
-PE2,IT rising,pull-up,,,GT911 INT,FUN_08035034,VERIFIED
+PE2,IT rising,none after gt911_init,,,GT911 INT,FUN_08035034,VERIFIED
 PE3,output PP,pull-up,,1,CW memory keying (low with PE4 = key down),FUN_08052364,VERIFIED
 PE4,output PP,pull-up,,1,CW memory keying (with PE3),FUN_08052364,VERIFIED
-PE6,output PP,none,,0,display power?,FUN_080364ec,HYPOTHESIS
-PF9,output PP,none,,0,LCD reset?,FUN_080364ec,HYPOTHESIS
+PE5,input,pull-up,,,encoder0 A,FUN_08034dc4,VERIFIED
+PE6,output PP,none,,0,panel power,FUN_080364ec,MEDIUM
+PF6,input,pull-up,,,encoder2 B,FUN_08034dc4,VERIFIED
+PF7,input,pull-up,,,encoder3 A,FUN_08034dc4,VERIFIED
+PF8,input,pull-up,,,encoder3 B,FUN_08034dc4,VERIFIED
+PF9,output PP,none,,0,panel reset,FUN_080364ec,MEDIUM
 PF10,AF PP,none,14,,LTDC_DE,FUN_08021928,HIGH
+PG3,output PP,none,,0,PCA9557 reset,FUN_08036328,VERIFIED
 PG6,AF PP,none,14,,LTDC_R7,FUN_08021928,HIGH
 PG7,AF PP,none,14,,LTDC_CLK,FUN_08021928,HIGH
 PG8,AF PP,none,12,,FMC_SDCLK,FUN_08020f38,HIGH
+PG9,output PP,pull-up,,1,static (never changed),FUN_080210d8,HIGH
+PG10,output PP,pull-up,,1,static (never changed),FUN_080210d8,HIGH
 PG11,AF PP,none,14,,LTDC_B3,FUN_08021928,HIGH
 PG12,AF PP,none,9,,LTDC_B4,FUN_08021928,HIGH
+PG13,output PP,none,,1,SPI1 flash CS,.data 0x24000238,VERIFIED
 PG14,output PP,none,,0,GT911 RST,FUN_08035034,VERIFIED
 PH2,output PP,none,,0,audio codec reset,FUN_08052964,HIGH
 PH3,AF PP,none,12,,FMC_SDNE0,FUN_08020f38,HIGH
 PH4,AF OD,none,4,,I2C2_SCL,FUN_080214f0,HIGH
 PH5,AF OD,none,4,,I2C2_SDA,FUN_080214f0,HIGH
-PH6,output OD,pull-up,,1,key-matrix line,FUN_08035f80,MEDIUM
-PH7,output OD,pull-up,,1,key-matrix line,FUN_08035f80,MEDIUM
-PH9,output OD,pull-up,,1,key-matrix line,FUN_08035f80,MEDIUM
+PH6,output OD,pull-up,,1,button matrix line,FUN_08035f80,VERIFIED
+PH7,output OD,pull-up,,1,button matrix line,FUN_08035f80,VERIFIED
+PH8,input,pull-up,,,encoder1 B,FUN_08034dc4,VERIFIED
+PH9,output OD,pull-up,,1,button matrix line,FUN_08035f80,VERIFIED
 PH10,AF PP,none,14,,LTDC_R4,FUN_08021928,HIGH
 PH11,AF PP,none,14,,LTDC_R5,FUN_08021928,HIGH
+PH12,input,pull-up,,,encoder4 A,FUN_08034dc4,VERIFIED
+PH13,output PP,none,,1,static (never changed),FUN_080210d8,HIGH
 PH14,AF PP,none,14,,LTDC_G3,FUN_08021928,HIGH
+PH15,input,pull-up,,,encoder5 A,FUN_08034dc4,VERIFIED
+PI0,input,pull-up,,,encoder5 B,FUN_08034dc4,VERIFIED
+PI1,input,pull-up,,,encoder6 A,FUN_08034dc4,VERIFIED
 PI2,AF PP,none,14,,LTDC_G7,FUN_08021928,HIGH
-PI3,output PP,none,,0,display enable?,FUN_080364ec,HYPOTHESIS
+PI3,output PP,none,,0,display enable,FUN_080364ec,MEDIUM
+PI4,output OD,pull-up,,1,static (never changed),FUN_080210d8,HIGH
 PI5,AF PP,none,3,,TIM8_CH1,FUN_08022f18,HIGH
 PI6,output OD,pull-up,,1,driven low during voice playback (PTT? HYPOTHESIS),FUN_08052b78,VERIFIED
-PI8,output OD,pull-up,,1,key-matrix line,FUN_08035f80,MEDIUM
+PI7,input,pull-up,,,unused (never read),FUN_080210d8,HIGH
+PI8,output OD,pull-up,,1,button matrix line,FUN_08035f80,VERIFIED
 PI9,AF PP,none,14,,LTDC_VSYNC,FUN_08021928,HIGH
 PI10,AF PP,none,14,,LTDC_HSYNC,FUN_08021928,HIGH
+PI11,input,pull-up,,,encoder2 A,FUN_08034dc4,VERIFIED

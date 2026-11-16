@@ -84,8 +84,10 @@ Roadmap mirrors `REVERSE_ENGINEERING_GUIDE.md`, tracked per unit.
 - [x] GPIO pin maps for both units (*/analysis/peripherals/gpio_map.csv,
       */docs/peripherals.md). X6100 comparison skipped: its pin map is not
       in this repo.
-- [ ] Roles of unknown Main outputs (PH9/PH13/PH15, PE14/PE15, PA8/PC8,
-      PA12, PB11/PB12/PB14, PF14) and inputs (PH5, PF13).
+- [x] Main GPIO roles resolved where code allows (PH5 power button, PB11 heartbeat,
+      PB12/PB14 DAC, PF13 unused).
+- [ ] Main outputs without a code consumer (PH9/PH13/PH15, PE14/PE15, PA8/PC8, PA12):
+      board trace. Control static outputs PH13/PG9/PG10/PI4 and CTRL routing of PE3/PE4/PI6.
 - [x] Main Unit has no external SDRAM/FMC (VERIFIED).
 - [x] Control pull-up inputs = button matrix, 8 encoders, SD detect (peripherals.md).
 - [x] Init functions from `main()` identified on both units (*/docs/flow.md,
@@ -174,7 +176,7 @@ Roadmap mirrors `REVERSE_ENGINEERING_GUIDE.md`, tracked per unit.
 - [x] N18 MPU/cache/RAM placement · [x] N19 timer map
 - [x] N10 UART roles · [x] N11 Main SDRAM? · [x] N12 Control I2C · [x] N13 Control SPI5/SPI flash
 - [x] N14 GT911 · [x] N28 Control inputs · [x] N29 Control USB descriptors · [x] N30 display bring-up
-- [ ] N32 unknown GPIOs
+- [x] N32 unknown GPIOs
 - [x] N23 CW · [x] N24 ATU algorithm · [x] N35 H-22 mic protocol · [x] N37 voice recorder · [x] N41 SWR scanner
 - [x] N25 SLIP 0x03/0x08 completeness · [x] N26 SLIP link state machine · [x] N27 Control storage
 - [x] N42 CI-V command set · [x] N43 GUI layer

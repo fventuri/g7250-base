@@ -15,7 +15,7 @@ PB7,AF PP,none,7,,USART1_RX,FUN_08024218,HIGH
 PB8,AF OD,none,4,,I2C1_SCL,FUN_08021a00,HIGH
 PB9,AF OD,none,4,,I2C1_SDA,FUN_08021a00,HIGH
 PB10,output PP,none,,0,audio codec reset,FUN_0804a65c,HIGH
-PB11,output PP,none,,1,heartbeat toggle ~1 s,FUN_08038010,HIGH
+PB11,output PP,none,,1,0.5 Hz heartbeat toggle (LED or ext. watchdog?),FUN_08038010,HIGH
 PB12,output PP,none,,0,SPI2 DAC load strobe,FUN_08045050,VERIFIED
 PB13,AF PP,none,5,,SPI2_SCK,FUN_0802317c,HIGH
 PB14,output PP,none,,0,SPI2 DAC reset/enable,FUN_08045034,HIGH
@@ -46,7 +46,7 @@ PF1,AF OD,none,4,,I2C2_SCL,FUN_08021a00,HIGH
 PF4,output PP,none,,0,TX/RX line (high in RX),FUN_0803d03c,VERIFIED
 PF6,output PP,none,,0,TX/RX line (high in TX),FUN_0803e338,VERIFIED
 PF11,analog,none,,,ADC1 INP2 forward power,FUN_08020f44,HIGH
-PF13,input,pull-up,,,unknown,FUN_08021470,VERIFIED
+PF13,input,pull-up,,,unused (never read),FUN_08021470,HIGH
 PF14,output PP,pull-up,,0,unknown,FUN_08021470,VERIFIED
 PG2,output PP,none,,1,SPI1 ATU bank latch CS,.data 0x24004858,VERIFIED
 PG5,output PP,none,,1,SPI1 ATU bank latch CS,.data 0x24004864,VERIFIED
