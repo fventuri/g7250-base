@@ -162,7 +162,7 @@ Roadmap mirrors `REVERSE_ENGINEERING_GUIDE.md`, tracked per unit.
 
 ## Round 2 — follow-up items (N01–N44)
 
-- [ ] N01 Main option bytes · [ ] N06 Main image tail · [ ] N09 IWDG · [ ] N17 RTC/backup regs
+- [x] N01 Main option bytes · [ ] N06 Main image tail · [ ] N09 IWDG · [ ] N17 RTC/backup regs
 - [ ] N33 Main bootloader self-update · [ ] N34 FPGA flash update · [ ] N36 Control FW update over USB
 - [x] N02 full vector/IRQ CSVs (exporters fixed)
 - [x] N03 DMA/NVIC allocation (docs/dma.md)
@@ -183,3 +183,4 @@ Roadmap mirrors `REVERSE_ENGINEERING_GUIDE.md`, tracked per unit.
 - [ ] Confirm in hardware whether an analog SWR/ALC fold-back exists outside the MCU.
 - [ ] Confirm on the Control side what the 1920-byte BandMap type is.
 - [ ] What drives PH5 (front-panel key over the CTRL cable?); is PH9 a power latch; Control PCA9557 bit 5 role.
+- [ ] Read the option bytes (RDP, BOOT_ADD, CPUFREQ_BOOST, IWDG_SW) from a unit over SWD, if RDP allows.

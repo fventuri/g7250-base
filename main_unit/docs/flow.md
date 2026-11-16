@@ -134,10 +134,21 @@ init (`FUN_0804a65c`). The pin clock is 245.76 MHz / 20, so it plausibly
 comes from the VersaClock 6 output through the FPGA (HYPOTHESIS; see
 `peripherals.md`).
 
-Open: the 550 MHz clock needs the CPU-frequency-boost option byte on
-H72x/H73x. The firmware never programs option bytes, so the byte was
-either set in production or the part runs above the default 520 MHz
-limit.
+**Option bytes — none programmed (VERIFIED).**
+- **No unlock key.** The image contains no FLASH or option-byte unlock
+  key, in any literal or MOVW/MOVT form.
+- **FLASH block used for wait states only.** The FLASH register block is
+  only used to set wait states (SystemInit, the RCC de-init helper
+  `FUN_0802c398`, HAL_RCC_ClockConfig).
+- **Orphan strings.** The strings about read-protection level,
+  option-byte programming, the wake-up timer and a bootloader
+  self-update (`0x0805AF1C`–`0x0805B17C`) are referenced by no pointer
+  or base+offset access. They are leftovers of code dropped at link
+  time (HYPOTHESIS).
+- **Consequence.** The CPU-frequency-boost bit needed for 550 MHz, and
+  BOOT_ADD, RDP, WRP, BOR and IWDG_SW, are therefore set in production
+  or by the bootloader. The Control image has no flash or option-byte
+  code either.
 
 **Why this needed the firmware:** PLL dividers, prescalers, the supply
 mode and the kernel-clock muxes are runtime register values. The
