@@ -19,7 +19,11 @@ import ghidra.program.model.mem.Memory;
 public class ExportInterruptEvidence extends GhidraScript {
 	private static final long VECTOR_BASE = 0x08020000L;
 	private static final int CORE_VECTOR_COUNT = 16;
-	private static final int EXTERNAL_IRQ_COUNT = 91;
+	// Upper bound only. The real number of external IRQ slots is measured from the image
+	// (see measureIrqCount()); the old fixed STM32F427 value (91) silently dropped IRQ91+
+	// (e.g. OTG_FS 101, TIM17 118, BDMA 129/130 on the G7250 images).
+	private static final int MAX_EXTERNAL_IRQ_COUNT = 256;
+	private int externalIrqCount;
 
 	@Override
 	protected void run() throws Exception {
@@ -34,13 +38,14 @@ public class ExportInterruptEvidence extends GhidraScript {
 
 		Memory memory = currentProgram.getMemory();
 		Address vectorBase = toAddr(VECTOR_BASE);
+		externalIrqCount = measureIrqCount(memory, vectorBase);
 		long defaultValue = mostFrequentHandler(memory, vectorBase);
 		Set<Long> exportedAddresses = new HashSet<>();
 
 		try (BufferedWriter writer =
 			new BufferedWriter(new FileWriter(new File(outputDirectory, "active_irqs.csv")))) {
 			writer.write("irq,standard_name,vector_offset,value,code_address,current_name\n");
-			for (int irq = 0; irq < EXTERNAL_IRQ_COUNT; irq++) {
+			for (int irq = 0; irq < externalIrqCount; irq++) {
 				int vectorIndex = CORE_VECTOR_COUNT + irq;
 				long value = readUnsignedInt(memory, vectorBase.add(vectorIndex * 4L));
 				if (value == 0 || value == defaultValue) {
@@ -66,14 +71,14 @@ public class ExportInterruptEvidence extends GhidraScript {
 	private long mostFrequentHandler(Memory memory, Address vectorBase) throws Exception {
 		long bestValue = 0;
 		int bestCount = 0;
-		for (int candidateIrq = 0; candidateIrq < EXTERNAL_IRQ_COUNT; candidateIrq++) {
+		for (int candidateIrq = 0; candidateIrq < externalIrqCount; candidateIrq++) {
 			long candidate = readUnsignedInt(memory,
 				vectorBase.add((CORE_VECTOR_COUNT + candidateIrq) * 4L));
 			if (candidate == 0) {
 				continue;
 			}
 			int count = 0;
-			for (int irq = 0; irq < EXTERNAL_IRQ_COUNT; irq++) {
+			for (int irq = 0; irq < externalIrqCount; irq++) {
 				long value =
 					readUnsignedInt(memory, vectorBase.add((CORE_VECTOR_COUNT + irq) * 4L));
 				if (value == candidate) {
@@ -86,6 +91,28 @@ public class ExportInterruptEvidence extends GhidraScript {
 			}
 		}
 		return bestValue;
+	}
+
+	// Count external IRQ slots: entries are accepted while they are 0 (reserved) or a Thumb
+	// pointer into the image; the first other word ends the table.
+	private int measureIrqCount(Memory memory, Address vectorBase) throws Exception {
+		Address imageMin = currentProgram.getMinAddress();
+		Address imageMax = currentProgram.getMaxAddress();
+		int count = 0;
+		while (count < MAX_EXTERNAL_IRQ_COUNT) {
+			long value = readUnsignedInt(memory,
+				vectorBase.add((CORE_VECTOR_COUNT + count) * 4L));
+			if (value != 0) {
+				Address code = toAddr(value & ~1L);
+				boolean ok = (value & 1L) != 0 && code.compareTo(imageMin) >= 0 &&
+					code.compareTo(imageMax) <= 0;
+				if (!ok) {
+					break;
+				}
+			}
+			count++;
+		}
+		return count;
 	}
 
 	private long readUnsignedInt(Memory memory, Address address) throws Exception {

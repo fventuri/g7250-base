@@ -120,9 +120,11 @@ Roadmap mirrors `REVERSE_ENGINEERING_GUIDE.md`, tracked per unit.
 
 ## Tooling
 
-- [ ] Fix `ExportStartupEvidence.java` `.init_array` locator (X6100
-      heuristic yields garbage `runtime_arrays.txt` on these images) —
-      locate `__libc_init_array` arguments properly, or drop that output.
+- [x] `ExportStartupEvidence.java`: `.init_array` now located from the
+      `__libc_init_array` shape; vector-table length measured instead of the
+      STM32F427 cap. `ExportInterruptEvidence.java`: same cap removed.
+      `*/analysis/startup/vectors.csv` and `*/analysis/interrupts/active_irqs.csv`
+      regenerated (adds Main IRQ118/129/130, Control IRQ101).
 - [ ] Decide whether to add STM32H7 peripheral blocks to the memory map
       (currently RAM-only, matching the X6100 approach).
 

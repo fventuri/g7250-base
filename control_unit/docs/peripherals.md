@@ -22,6 +22,7 @@ the **STM32H7** NVIC table.
 | 50 | `FUN_0802288c` | **TIM5** | Audio service | HIGH |
 | 55 | `FUN_080228a0` | TIM7 | time base | HIGH |
 | 88 | `FUN_080228b4` | **LTDC** | TFT display controller | HIGH |
+| 101 | `FUN_080228c0` | OTG_FS | USB device (mass storage) | HIGH |
 
 The TIM assignments corroborate the boot-log services exactly (TIM13
 SLIP, TIM14 InputDev, TIM3 GT911, TIM5 audio) — strong cross-check on

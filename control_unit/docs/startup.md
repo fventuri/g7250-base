@@ -74,19 +74,17 @@ Extras vs. Main:
 `__libc_init_array` (`FUN_080874ac`) VERIFIED (same pattern as Main;
 `_init` = `FUN_0808a0fc`).
 
-## Known tooling limitation
+## Static initialisers (`.init_array`) — VERIFIED
 
-`control_unit/analysis/startup/runtime_arrays.txt` contains invalid
-values. `ExportStartupEvidence.java`'s `.init_array` locator is an
-X6100-specific heuristic that does not match this image; its
-preinit/init numbers here are random code bytes and must be ignored.
-Resolve the real `.init_array` from the `__libc_init_array` argument
-registers instead. (Tracked in TODO.md.)
+These were located from the literal pool of `__libc_init_array` by the
+corrected `ExportStartupEvidence.java`. `.preinit_array` is empty.
+`.init_array` = `0x080DD54C`–`0x080DD55C` and has 4 entries:
+frame_dummy (`0x080202c4`) and static initialisers at `0x0804aa50`,
+`0x08071948` and `0x080799d4`. The first fills UI/value tables (MEDIUM
+CONFIDENCE); the other two are not examined.
 
 ## Unknowns
 
-- Actual clock-up (PLL / SystemClock_Config) — SystemInit only resets the
-  tree; the running clock config is set later (in `main`/HAL), not yet
-  located.
+- (Resolved) The running clock config is `FUN_08021d98`; see `flow.md`.
 - The conditional RCC `0xD4`/`0x30D2` tweak's exact purpose.
 - Whether an RTOS is started inside `main`.

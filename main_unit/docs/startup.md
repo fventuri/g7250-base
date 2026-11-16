@@ -61,6 +61,12 @@ CMSIS `SystemInit()`. The FPU/VTOR/RCC base addresses are definitive H7.
 `.preinit_array` and `.init_array` pointer tables, calling `_init`
 (`FUN_0805aec0`) between them.
 
+`.preinit_array` is empty. `.init_array` = `0x08084860`–`0x08084868`
+and has 2 entries: frame_dummy (`0x080202f4`), and a constructor at
+`0x0803b414` that enables the DWT cycle counter (the noise-reduction
+code reads it for its cycle statistics). VERIFIED: located by the
+corrected `ExportStartupEvidence.java`.
+
 Unlike the Control Unit, the Main Unit reset does **not** make a
 separate PWR/VOSRDY call before SystemInit.
 
