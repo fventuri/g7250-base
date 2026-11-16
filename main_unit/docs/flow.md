@@ -53,9 +53,9 @@ VERIFIED (the function never returns; ends in `do { … } while(true)`).
 6. Initialize the large TRX-state struct at `0x24013C0C`
    (`DAT_08022750`, in `.bss`): many field writes (mode, band, filter,
    drive, etc.).
-7. **PA bias (Idd) auto-calibration** — strings `Prepare to adjust drive
-   Idd`, `… final 1 Idd`, `… final 2 Idd`; checks external supply `Vext`
-   is within 11–15 V first (`[ERR] Vext = %f is to low` / high). Sets
+7. **PA bias (Idd) auto-calibration**. It logs each stage (driver,
+   final 1, final 2) and first checks that the external supply Vext is
+   within 11–15 V, logging an error otherwise. Sets
    bias via `FUN_08045088(channel, value)` (SPI2 10-bit DAC, clamped to
    1023) with channel 2 = driver, 8 = final 1, 7 = final 2; targets
    static Idd + 0.5 A / + 0.9 A, ±0.1 A (see peripherals.md, SPI2).

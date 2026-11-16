@@ -82,7 +82,9 @@ Two physically separate boxes joined by a **dedicated CTRL cable**:
   attached BT module on the Control Unit). HYPOTHESIS.
 - **Storage**: TF/microSD, FAT32, ≤32 GB. Holds voice recordings
   (≤30 s each, 10 slots), and is required for the voice Auto-Call
-  feature. CW messages and `config.ini` also live on the card.
+  feature. Per the firmware, the CW messages and the configuration file
+  live on the internal SPI flash, not on the card (HIGH CONFIDENCE; see
+  `control_unit/docs/storage.md`).
 
 ------------------------------------------------------------------------
 

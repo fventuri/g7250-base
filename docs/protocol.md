@@ -74,9 +74,8 @@ has equivalents `…a200`→`FUN_08052c…`, `decode`→`FUN_08052be4`).
   `FUN_08052c44` (table `0x080C7360`). VERIFIED identical.
 - CRC covers the whole decoded packet except the trailing 2 CRC bytes.
 - Minimum decoded length: 5 B (Main) / 6 B (Control); shorter frames are
-  logged as `Invalid SLIP Packet, raw_len=…, dec_len=…`.
-- Mismatch logs `Wrong CRC, mine = %04X, thires = %04X` ("thires" is an
-  OEM typo for "theirs" = received CRC).
+  logged as invalid, with the raw and decoded lengths.
+- A CRC mismatch is logged with the computed and the received value.
 - The first decoded byte is the **message type**; dispatch is a switch on
   it.
 - **Frame layout.** Every frame is `[type][0x00][0x00]<payload><crc16>`.
@@ -98,12 +97,12 @@ Message identities (VERIFIED from the handlers' debug strings):
 - **`0x02` = calibration data.** 358-B block at `0x24013AA4`. It ends two
   bytes before the TRX-state struct (`0x24013C0C`), but it is a separate
   block, with its own loader, EEPROM location and checksum (VERIFIED).
-- **`0x06` = "slave info"** (`[DBG] Get slave info`). 104-B block at
+- **`0x06` = "slave info"** (the handler logs a debug line). 104-B block at
   `0x24018F30`.
 
 The Main Unit emulates an **Icom-style network radio for wfview** — the
-settings block carries `wfview Username`/`Password`, IPv4 config, and a
-"Remote controller off line" state.
+settings block carries the wfview username and password and the IPv4
+configuration, and Main logs when the remote controller goes offline.
 
 ### `0x01` settings block (424 B)
 

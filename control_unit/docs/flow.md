@@ -46,7 +46,8 @@ This MCU is the **touchscreen front panel / human interface**.
    11. settings/INI loads;
    12. version banner.
 4. Start the hardware-timer "services" and peripherals, with a VT100
-   console banner (`\x1b[2J`, `\x1b[H`, `[OK] System started.`).
+   console banner (VT100 clear-screen and home sequences, then a
+   start-up message).
 5. Enter the superloop.
 
 ## Hardware-timer "services" (bare-metal periodic tasks)

@@ -172,7 +172,7 @@ Roadmap mirrors `REVERSE_ENGINEERING_GUIDE.md`, tracked per unit.
 - [x] N03 DMA/NVIC allocation (docs/dma.md)
 - [x] N04 protection thresholds · [x] N05 BandMap/TX band enforcement · [x] N20 ADC/DAC map
 - [x] N21 PA bias / power control (SPI2 is the bias DAC, not idle) · [x] N22 PTT arbitration + T/R sequencing · [x] N31 power on/off
-- [ ] N07 stale doc claims · [x] N08 exception handlers · [x] N16 H72x Ghidra memory map
+- [x] N07 stale doc claims · [x] N08 exception handlers · [x] N16 H72x Ghidra memory map
 - [x] N18 MPU/cache/RAM placement · [x] N19 timer map
 - [x] N10 UART roles · [x] N11 Main SDRAM? · [x] N12 Control I2C · [x] N13 Control SPI5/SPI flash
 - [x] N14 GT911 · [x] N28 Control inputs · [x] N29 Control USB descriptors · [x] N30 display bring-up
@@ -182,7 +182,8 @@ Roadmap mirrors `REVERSE_ENGINEERING_GUIDE.md`, tracked per unit.
 - [x] N42 CI-V command set · [x] N43 GUI layer
 - [x] N15 X6100 tooling leftovers · [x] N38 library identification · [x] N39 RAM object map
 - [x] N40 reproducible export run + doc checker
-- [ ] N44 X6100/G90 comparison — BLOCKED: no X6100/G90 material in this repo
+- [x] N44 X6100/G90 comparison — BLOCKED (closed as not doable here): the repo holds no X6100/G90
+      firmware analysis to compare against; reopen when that material is added.
 - [ ] Identify the SPI2 DAC chip; circuit roles of DAC channels 5 and 6.
 - [ ] Confirm in hardware whether an analog SWR/ALC fold-back exists outside the MCU.
 - [ ] Confirm on the Control side what the 1920-byte BandMap type is.

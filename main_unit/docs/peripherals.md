@@ -330,7 +330,7 @@ addrSize, buf, len, timeout)`, write `FUN_0802B940(...)`. `devAddr` is the
 
 | 7-bit | 8-bit | Device | Evidence | Conf |
 | ---: | ---: | --- | --- | --- |
-| `0x50` | `0xA0` | 24Cxx **EEPROM** | NVPARAM (settings 424 B + header/checksum), calibration, ATU data; backup-SRAM (`0x38800000`) cached; strings `EEPROM NVPARAM Saved`, `Read EEPROM error` | VERIFIED |
+| `0x50` | `0xA0` | 24Cxx **EEPROM** | NVPARAM (settings 424 B + header/checksum), calibration, ATU data; backup-SRAM (`0x38800000`) cached; save and read-error log lines (see memory_map.md) | VERIFIED |
 | `0x18` | `0x30` | **TLV320AIC3204** audio codec | driver struct in `.data` (`0x2400487c`) holds the address and the I2C1 handle; all writes go through HAL I2C transmit; init `FUN_0804a65c`; reset PB10 (see Audio codec section) | VERIFIED |
 | `0x34` | `0x68` | **AXP223 PMIC** | strings `axp223 (0x68) write reg`, `Set ALDO1/DCDC1/2/3/5/DLDO1 Vout`, `Init PSU`; driver `FUN_0804a8e8` | VERIFIED |
 | `0x68`/`0x6A`* | `0xD0`/`0xD4`* | **VersaClock 6** clock generator | driver `FUN_0804abbc` logs a successful init-table write; it tries both addresses, then writes a 112-B (`0x70`) register init table | VERIFIED |

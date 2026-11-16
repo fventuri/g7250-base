@@ -11,10 +11,10 @@ shared diagnostic strings.
         |   (SLIP server side)  |   control side                 |  panel (SLIP client)   |
         +-----------+-----------+                                 +-----------+-----------+
                     |                                                          |
-        PA bias/ALC, TRX params, audio                          GT911 touch, FMC LCD (ext
-        processor, TIM5, CH394 Ethernet                         SDRAM @0xC0000000), rotary
-        (LAN) + CI-V + A/V streaming                            encoders, H-22 mic, SD/FatFS,
-                                                                PC USB (CH342: CAT+audio)
+        FPGA I/Q, DSP, PA bias DAC,                             GT911 touch, LTDC RGB565
+        RF switching, ATU, CH394                                panel (SDRAM framebuffers),
+        Ethernet (LAN) + CI-V + wfview                          encoders, H-22 mic, SD + SPI
+        / HDSDR streaming                                       flash, Bluetooth, USB drive
 ```
 
 ## Shared traits (both units) — VERIFIED
@@ -45,9 +45,9 @@ shared diagnostic strings.
 ## Inter-MCU link — HYPOTHESIS/HIGH CONFIDENCE
 
 - Transport is **SLIP** (RFC 1055 byte framing) over a USART, with a
-  **CRC16** per packet. Shared strings on both units:
-  `SLIP Rx Buffer Full`, `Wrong CRC, mine = %04X, thires = %04X`,
-  `Invalid SLIP Packet, raw_len = %ld, dec_len = %ld`, `USART Overrun`.
+  **CRC16** per packet. Both units log the same error messages for a
+  full RX buffer, a CRC mismatch, an invalid packet length and a USART
+  overrun.
 - The Control Unit hosts the "SLIP Client" (TIM13); the Main Unit is the
   counterpart. Command set decoded in `protocol.md`.
 - **The link is USART2 on both MCUs** (IRQ38 active on each, DMA-driven) —
@@ -64,7 +64,7 @@ Per-unit peripheral inventories (IRQ map, buses, I2C slaves) are in
 | `main()` | `0x0802239C` | `0x08021E74` |
 | Functions recovered | 683 | 1696 |
 | Role | RF/DSP baseband, PA, audio, networking | Human interface / front panel |
-| Notable HW | PA bias DACs, TIM5, **CH394 Ethernet (LAN)**, CI-V, A/V streaming | GT911 touch, FMC LCD + ext SDRAM, encoders, H-22 mic, SD/FatFS, PC USB (CH342) |
+| Notable HW | FPGA I/Q front end, SPI2 bias/drive DAC, shift-register RF switching, built-in ATU, **CH394 Ethernet (LAN)**, AIC3204 codec, CI-V over LAN; no external SDRAM | GT911 touch, LTDC RGB565 panel + FMC SDRAM framebuffers, encoders, H-22 mic, SD card + SPI flash (FatFS), AIC3204 codec, Bluetooth module, USB mass storage (the CH342/sound card are separate chips) |
 | Watchdog | IWDG1 kicked in loop, CH394 wait, shutdown; never configured | IWDG1 kicked in loop and SysTick; never configured |
 
 External connectors, accessories, specs, and the user-facing menu/
