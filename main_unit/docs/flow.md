@@ -183,3 +183,51 @@ Each vector stub calls the HAL handler and then the user code directly
 | 86 | HAL SPI (SPI6) |
 | 118 | HAL TIM, then wide-span decimation and the wfview TX-audio ring step |
 | 129 / 130 | HAL DMA on the BDMA channel handles (SPI6) |
+
+## Protections and limits (V1.0.1) — VERIFIED unless noted
+
+The firmware has almost no runtime RF protection.
+
+**At boot only.** Vext (11–15 V) and the static drain current (≤ 0.1 A
+with all bias off) are checked once. Failing either only skips the PA
+bias trim; TX is not inhibited.
+
+**Never.** No code inhibits TX on SWR, PA temperature, Vext or Idd. The
+only consumers of those measurements are:
+- the fan control;
+- the ATU;
+- the console;
+- the `0x03` frame.
+
+This was established by an exhaustive literal scan for the meter
+struct.
+
+**Fan (fan role HYPOTHESIS).** The PA temperature drives a fan level,
+SPI2 DAC channel 3 = 10·T − 50 above 35 °C, off at ≤ 30 °C, updated
+about once per second.
+
+**TX inhibits.** TX is inhibited only by:
+- the global TX enable;
+- the band table (see "TX band enforcement");
+- loss of the Control link (about 1000 main-loop passes, which drops
+  the built-in PTT);
+- the CW trainer mode (keys without RF).
+
+A frequency change into a denied range during TX, or switching the
+global TX enable off, forces RX. VFO select is refused while
+transmitting.
+
+**ATU limits.**
+- Tunes with a 10 W CW carrier and refuses f > 54 MHz.
+- Waits 100 ms before searching and 25 ms per step.
+- Aborts after an 8 s guard or when the match stays above g = 8.0.
+- Fails its self-test below 0.5 W forward.
+
+**Power fold-back (HIGH CONFIDENCE).** In AM/SAM the power reference
+(DAC channel 6) is computed from P/4. The drive code is clamped to
+300–1000, and every DAC value to 1023.
+
+Values are in `analysis/flow/protections.csv`.
+
+**Why this needed the firmware:** which conditions are checked, and
+which the firmware ignores, is software policy that no schematic shows.

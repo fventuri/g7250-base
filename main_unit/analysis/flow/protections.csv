@@ -1,0 +1,18 @@
+check,value,unit,function,reaction,confidence
+Vext low,11.0,V,FUN_0802239c,log; skip bias trim (boot only),VERIFIED
+Vext high,15.0,V,FUN_0802239c,log; skip bias trim (boot only),VERIFIED
+static Idd,0.1,A,FUN_0802239c,log; skip bias trim,VERIFIED
+bias trim tolerance,0.1,A,FUN_0802239c,converged,VERIFIED
+fan on,35,degC,FUN_08048d88,DAC ch3=10*T-50,VERIFIED
+fan off,30,degC,FUN_08048d88,DAC ch3=0,VERIFIED
+TX window,1.2-54.0,MHz,FUN_0803d198,TX denied outside,VERIFIED
+ATU max freq,54,MHz,FUN_08041358,tune refused,VERIFIED
+ATU tune power,10,W,FUN_08041358,CW carrier,VERIFIED
+ATU guard,8000,ms,FUN_08042d34,tune fail,VERIFIED
+ATU min fwd,0.5,W,FUN_08042d34,self-test fail,VERIFIED
+ATU no match,8.0,g,FUN_08042d34,abort,VERIFIED
+drive code clamp,300-1000,DAC,FUN_0803acb0,clamp,VERIFIED
+SPI2 DAC clamp,1023,DAC,FUN_08045088,clamp,VERIFIED
+AM/SAM power,0.25,xP,FUN_0803d3b0,ch6 reference only,VERIFIED
+SWR trip,none,-,-,-,VERIFIED
+over-temp TX inhibit,none,-,-,-,VERIFIED

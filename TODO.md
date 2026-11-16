@@ -166,7 +166,7 @@ Roadmap mirrors `REVERSE_ENGINEERING_GUIDE.md`, tracked per unit.
 - [ ] N33 Main bootloader self-update · [ ] N34 FPGA flash update · [ ] N36 Control FW update over USB
 - [x] N02 full vector/IRQ CSVs (exporters fixed)
 - [x] N03 DMA/NVIC allocation (docs/dma.md)
-- [ ] N04 protection thresholds · [ ] N05 BandMap/TX band enforcement · [x] N20 ADC/DAC map
+- [x] N04 protection thresholds · [ ] N05 BandMap/TX band enforcement · [x] N20 ADC/DAC map
 - [x] N21 PA bias / power control (SPI2 is the bias DAC, not idle) · [ ] N22 PTT arbitration + T/R sequencing · [ ] N31 power on/off
 - [ ] N07 stale doc claims · [x] N08 exception handlers · [x] N16 H72x Ghidra memory map
 - [x] N18 MPU/cache/RAM placement · [x] N19 timer map
@@ -180,3 +180,4 @@ Roadmap mirrors `REVERSE_ENGINEERING_GUIDE.md`, tracked per unit.
 - [ ] N40 reproducible export run + doc checker
 - [ ] N44 X6100/G90 comparison — BLOCKED: no X6100/G90 material in this repo
 - [ ] Identify the SPI2 DAC chip; circuit roles of DAC channels 5 and 6.
+- [ ] Confirm in hardware whether an analog SWR/ALC fold-back exists outside the MCU.
