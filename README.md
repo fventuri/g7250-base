@@ -51,8 +51,8 @@ The exact part numbers are inferred from the firmware, not yet confirmed
 from hardware: the Main Unit is most likely an **STM32H725xG/H735xG**
 (MEDIUM) and the Control Unit an **STM32H743xI rev V** (HIGH); see
 [docs/mcu_identification.md](docs/mcu_identification.md). The H7 RAM map
-in `ghidra_scripts/MapSTM32H7Memory.java` assumes an H743/H750/H753-class
-layout, which fits the Control Unit only.
+in `ghidra_scripts/MapSTM32H7Memory.java` is selected per unit (h72x for
+Main, h743 for Control).
 
 ### Firmware images
 

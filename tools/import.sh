@@ -4,7 +4,9 @@
 # Each image is a raw ARM Cortex-M7 (Thumb-2, little-endian) binary whose
 # application load base is 0x08020000 (the vectors below that live in a
 # bootloader region not present in these images). The STM32H7 RAM blocks are
-# added before auto-analysis so address references resolve.
+# added before auto-analysis so address references resolve. The RAM layout
+# differs per unit (docs/mcu_identification.md): the Main Unit is an
+# H725/H735-class part (layout "h72x"), the Control Unit an H743 ("h743").
 #
 #   GHIDRA_INSTALL=/opt/ghidra JAVA_HOME=/usr/lib/jvm/java ./tools/import.sh [main|control|all]
 #
@@ -28,6 +30,16 @@ case "$which" in
 	*) echo "usage: $0 [main|control|all]" >&2; exit 2 ;;
 esac
 
+# RAM layout passed to MapSTM32H7Memory.java (h72x = STM32H723/725/730/733/735,
+# h743 = STM32H742/743/750/753).
+layout_for() {
+	case "$1" in
+		G7250_MainUnit_*)    echo h72x ;;
+		G7250_ControlUnit_*) echo h743 ;;
+		*)                   echo h743 ;;
+	esac
+}
+
 mkdir -p "$GHIDRA_CONFIG_DIR" "$PROJECT_DIR"
 
 for img in "${IMAGES[@]}"; do
@@ -40,7 +52,7 @@ for img in "${IMAGES[@]}"; do
 		-loader BinaryLoader \
 		-loader-baseAddr "$BASE_ADDR" \
 		-scriptPath "$(pwd)/ghidra_scripts" \
-		-preScript MapSTM32H7Memory.java \
+		-preScript MapSTM32H7Memory.java "$(layout_for "$img")" \
 		-overwrite
 done
 echo ">>> done. Programs are in project $PROJECT_NAME under $PROJECT_DIR"

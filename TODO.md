@@ -33,8 +33,7 @@ Roadmap mirrors `REVERSE_ENGINEERING_GUIDE.md`, tracked per unit.
 - [x] STM32H7 part number inferred: Main = H725xG/H735xG (MEDIUM),
       Control = H743xI rev V (HIGH). See docs/mcu_identification.md.
 - [ ] Verify both part numbers against chip markings.
-- [ ] Main Unit Ghidra memory map: switch to the H72x layout (AXI 320 KiB,
-      D2 32 KiB).
+- [x] Main Unit Ghidra memory map: H72x layout selected per program.
 - [x] Running clock config: Main `FUN_080222f0` (550/275/137.5 MHz, HSE
       25 MHz, PLL2 = ADC), Control `FUN_08021d98` (480/240/120 MHz, PLL2 =
       FMC, PLL3 = LTDC). See */docs/flow.md.
@@ -169,7 +168,7 @@ Roadmap mirrors `REVERSE_ENGINEERING_GUIDE.md`, tracked per unit.
 - [x] N03 DMA/NVIC allocation (docs/dma.md)
 - [ ] N04 protection thresholds · [ ] N05 BandMap/TX band enforcement · [ ] N20 ADC/DAC map
 - [ ] N21 PA bias / power control · [ ] N22 PTT arbitration + T/R sequencing · [ ] N31 power on/off
-- [ ] N07 stale doc claims · [x] N08 exception handlers · [ ] N16 H72x Ghidra memory map
+- [ ] N07 stale doc claims · [x] N08 exception handlers · [x] N16 H72x Ghidra memory map
 - [x] N18 MPU/cache/RAM placement · [x] N19 timer map
 - [ ] N10 UART roles · [ ] N11 Main SDRAM? · [ ] N12 Control I2C · [ ] N13 Control SPI5/SPI flash
 - [ ] N14 GT911 · [ ] N28 Control inputs · [ ] N29 Control USB descriptors · [ ] N30 display bring-up

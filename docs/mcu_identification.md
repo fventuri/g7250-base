@@ -74,9 +74,14 @@ the supply-mode variant, the VOS encoding and the flash/RAM extents.
 ## Open
 
 - Verify both part numbers against the chip markings.
-- `ghidra_scripts/MapSTM32H7Memory.java` assumes an H743-class RAM
-  layout. For the Main Unit an H72x layout (AXI 320 KiB, D2 32 KiB)
-  would be more accurate.
+- `ghidra_scripts/MapSTM32H7Memory.java` selects the RAM layout per
+  program: h72x for the Main Unit (AXI 320 KiB, D2 32 KiB, SRAM4 16 KiB),
+  h743 for the Control Unit. `tools/import.sh` passes the layout
+  explicitly. Projects imported before this change must be re-imported
+  to get the smaller Main blocks.
+- Further Main evidence: the firmware's own MPU regions are exactly
+  32 KiB at `0x30000000` and 16 KiB at `0x38000000` (the RM0468 D2 and
+  SRAM4 sizes), and its vector table is longer than the H743's.
 
 ## Impact vs. the X6100 project
 
