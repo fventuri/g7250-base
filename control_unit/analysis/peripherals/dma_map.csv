@@ -1,0 +1,6 @@
+controller,stream,request,owner,direction,p_width,m_width,mode,priority,fifo,irq,nvic_prio,handle,buffer,init_func,confidence
+DMA1,S0,39,I2S2_RX,P2M,32,32,circular,very_high,off,11,3,0x24001CC0,0x38003400,0x080216c4,VERIFIED
+DMA1,S1,40,I2S2_TX,M2P,32,32,circular,very_high,off,12,3,0x24001C48,0x38004400,0x080216c4,VERIFIED
+DMA1,S2,44,USART2_TX,M2P,8,8,normal,high,off,13,1,0x24002400,0x38001000,0x08023344,VERIFIED
+DMA1,S3,43,USART2_RX,P2M,8,8,circular,high,off,,,0x24002388,0x38000000,0x08023344,VERIFIED
+DMA1,S4,41,USART1_RX,P2M,8,8,circular,low,off,,,0x24002478,0x38003000,0x08023344,VERIFIED

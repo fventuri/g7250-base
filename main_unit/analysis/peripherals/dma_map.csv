@@ -1,0 +1,15 @@
+controller,stream,request,owner,direction,p_width,m_width,mode,priority,fifo,irq,nvic_prio,handle,buffer,init_func,confidence
+DMA1,S0,61,I2S3_RX,P2M,32,32,circular,very_high,off,11,1,0x24005068,0x30003760,0x08021ccc,VERIFIED
+DMA1,S2,43,USART2_RX,P2M,8,8,circular,low,off,,,0x24005748,0x30005B60,0x08024218,VERIFIED
+DMA1,S3,41,USART1_RX,P2M,8,8,circular,low,off,,,0x24005838,0x30004F60,0x08024218,VERIFIED
+DMA1,S4,44,USART2_TX,M2P,8,8,normal,high,off,15,10,0x240057C0,0x30005360,0x08024218,VERIFIED
+DMA1,S5,62,I2S3_TX,M2P,16,16,circular,very_high,off,16,1,0x24004FF0,0x30004360,0x08021ccc,VERIFIED
+DMA1,S7,9,ADC1,P2M,16,16,circular,medium,off,47,0,0x24004C74,0x30003740,0x08020f44,VERIFIED
+DMA2,S5,0,MEM2MEM_unused,M2M,16,16,normal,medium,on_full_inc8,68,7,0x24004E10,,0x080213ac,VERIFIED
+BDMA,CH0,11,SPI6_RX,P2M,8,8,normal,medium,,129,13,0x240053A8,0x38000800,0x0802317c,VERIFIED
+BDMA,CH1,12,SPI6_TX,M2P,8,8,normal,medium,,130,13,0x24005330,0x38000000,0x0802317c,VERIFIED
+MDMA,CH0,sw,copy_helper,M2M,32,32,full_transfer,medium,,,,0x240052A0,,0x08022dc8,VERIFIED
+MDMA,CH1,sw,dsp_copy,M2M,32,32,full_transfer,medium,,,,0x24005230,,0x08022dc8,VERIFIED
+MDMA,CH2,sw,dsp_copy,M2M,32,32,full_transfer,medium,,,,0x240051C0,,0x08022dc8,VERIFIED
+MDMA,CH3,sw,unused,M2M,8,8,full_transfer,low,,,,0x24005150,,0x08022dc8,VERIFIED
+MDMA,CH4,sw,fill_helper,M2M,32,32,full_transfer,medium,,,,0x240050E0,,0x08022dc8,VERIFIED

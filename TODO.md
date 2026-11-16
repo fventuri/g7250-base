@@ -158,3 +158,23 @@ Roadmap mirrors `REVERSE_ENGINEERING_GUIDE.md`, tracked per unit.
 - [ ] `tools/verify_tx_biquads.py` is an X6100 leftover (12.5 kHz, 31-float
       entries) — port or remove.
 - [ ] Compare with X6100 and G90 findings where behavior overlaps.
+
+## Round 2 — follow-up items (N01–N44)
+
+- [ ] N01 Main option bytes · [ ] N06 Main image tail · [ ] N09 IWDG · [ ] N17 RTC/backup regs
+- [ ] N33 Main bootloader self-update · [ ] N34 FPGA flash update · [ ] N36 Control FW update over USB
+- [x] N02 full vector/IRQ CSVs (exporters fixed)
+- [x] N03 DMA/NVIC allocation (docs/dma.md)
+- [ ] N04 protection thresholds · [ ] N05 BandMap/TX band enforcement · [ ] N20 ADC/DAC map
+- [ ] N21 PA bias / power control · [ ] N22 PTT arbitration + T/R sequencing · [ ] N31 power on/off
+- [ ] N07 stale doc claims · [ ] N08 exception handlers · [ ] N16 H72x Ghidra memory map
+- [ ] N18 MPU/cache/RAM placement · [ ] N19 timer map
+- [ ] N10 UART roles · [ ] N11 Main SDRAM? · [ ] N12 Control I2C · [ ] N13 Control SPI5/SPI flash
+- [ ] N14 GT911 · [ ] N28 Control inputs · [ ] N29 Control USB descriptors · [ ] N30 display bring-up
+- [ ] N32 unknown GPIOs
+- [ ] N23 CW · [ ] N24 ATU algorithm · [ ] N35 H-22 mic protocol · [ ] N37 voice recorder · [ ] N41 SWR scanner
+- [ ] N25 SLIP 0x03/0x08 completeness · [ ] N26 SLIP link state machine · [ ] N27 Control storage
+- [ ] N42 CI-V command set · [ ] N43 GUI layer
+- [ ] N15 X6100 tooling leftovers · [ ] N38 library identification · [ ] N39 RAM object map
+- [ ] N40 reproducible export run + doc checker
+- [ ] N44 X6100/G90 comparison — BLOCKED: no X6100/G90 material in this repo
