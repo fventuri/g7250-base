@@ -11,6 +11,13 @@ pool), reset disassembly. All ranges VERIFIED from the reset handler.
 | Application image | `0x08020000` | `0x0808EA20` | VERIFIED (base + file size) |
 | Vector table | `0x08020000` | — | VERIFIED (`SCB->VTOR = 0x08020000`) |
 | `.data` load image | `0x0808486C` | `0x080894C4` | VERIFIED |
+| Tail fill | `0x080894C4` | `0x0808EA20` | VERIFIED (content) |
+
+**Tail fill.** The 21 852 bytes after the `.data` load image are three
+0xFF words, 21 836 zero bytes and a final 0xFF word. Nothing in the
+image refers to this area, and it holds no code, table, bootloader or
+FPGA image. The 0xFF words may be unstamped placeholders, as in erased
+flash (HYPOTHESIS).
 
 Bytes for `0x08000000`–`0x0801FFFF` are absent (bootloader region, not
 in this image), same convention as the X6100.

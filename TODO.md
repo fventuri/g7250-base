@@ -162,7 +162,7 @@ Roadmap mirrors `REVERSE_ENGINEERING_GUIDE.md`, tracked per unit.
 
 ## Round 2 — follow-up items (N01–N44)
 
-- [x] N01 Main option bytes · [ ] N06 Main image tail · [ ] N09 IWDG · [ ] N17 RTC/backup regs
+- [x] N01 Main option bytes · [x] N06 Main image tail · [ ] N09 IWDG · [ ] N17 RTC/backup regs
 - [ ] N33 Main bootloader self-update · [ ] N34 FPGA flash update · [ ] N36 Control FW update over USB
 - [x] N02 full vector/IRQ CSVs (exporters fixed)
 - [x] N03 DMA/NVIC allocation (docs/dma.md)
