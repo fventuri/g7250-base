@@ -26,8 +26,8 @@ in this image), same convention as the X6100.
 - Initial MSP (stack top): `0x24050000` — VERIFIED (vector[0] and reset
   `ldr sp`).
 - AXI SRAM used: `0x24000000`–`0x24050000` = the full 320 KiB AXI
-  SRAM of an H72x/H73x (default TCM/AXI split; see docs/mcu_identification.md). Region above `0x24050000` (incl. the 192 KiB up to the 512 KiB
-  boundary) is not statically allocated; likely DMA/runtime use.
+  SRAM of an H72x/H73x (default TCM/AXI split; see docs/mcu_identification.md). On an H72x with the default TCM split, `0x24050000` is the top of
+  AXI SRAM; nothing above it exists or is referenced.
 
 ## I2C EEPROM (24Cxx @ 0x50) layout — VERIFIED
 
@@ -82,8 +82,45 @@ Ranges and functions are in `analysis/memory/eeprom_map.csv`.
 parameters and ATU slot scheme are software conventions. No datasheet
 or measurement can reveal them.
 
-## Unknowns
+## MPU, caches and RAM use — VERIFIED unless noted
 
-- Heap/stack split (no `_sbrk` analyzed yet).
-- Use of DTCM (`0x20000000`), D2/D3 SRAM, and the AXI SRAM above the
-  stack — none referenced by the startup copy; check DMA setup later.
+**MPU** (`FUN_0804a7c0`, enabled with PRIVDEFENA before the caches are
+switched on):
+
+| Region | Base | Size | Attributes | Purpose |
+| --- | --- | --- | --- | --- |
+| R0 | `0x60000000` | 1 MiB | strongly ordered, shareable | guard against speculative reads of FMC bank 1, which has nothing behind it (HIGH CONFIDENCE) |
+| R1 | `0x30000000` | 32 KiB | normal, non-cacheable | all of the H72x D2 SRAM |
+| R2 | `0x38800000` | 4 KiB | strongly ordered, shareable | backup SRAM |
+| R3 | `0x38000000` | 16 KiB | normal, non-cacheable | all of the H72x SRAM4 |
+
+AXI SRAM has no region, so it keeps the default write-back
+write-allocate attributes. The region sizes match the RM0468 D2 and
+SRAM4 sizes, which is further evidence for the H72x part.
+
+**Cache maintenance.** The MDMA copy helper `FUN_0803b01c` cleans the
+source and destination lines, runs MDMA channel 0 polled, then cleans
+and invalidates the destination. The fill helper `FUN_0803aee8` does
+the same on channel 4.
+
+**Heap and stack.** `_sbrk` is `FUN_08023b88`. The heap starts at the
+end of `.bss` (`0x24035C20`) and may grow to `0x24050000` − 0x400, so
+the stack always has at least 1 KiB and the heap at most 106 464 B.
+The firmware places nothing in ITCM or DTCM.
+
+**Buffer placement:**
+
+| Address | Region | Content | Why there |
+| --- | --- | --- | --- |
+| `0x30000000`–`0x30002F40` | D2 | wfview audio work buffers, TX-audio ring, packet / retransmit rings | non-cacheable shared buffers |
+| `0x30003740` | D2 | ADC1 DMA (7 half-words) | DMA1, non-cacheable |
+| `0x30003760` / `0x30004360` | D2 | I²S3 RX / TX DMA (3 KiB each) | DMA1, circular |
+| `0x30004960` | D2 | DSP buffer | |
+| `0x30004F60` | D2 | console USART1 RX ring | DMA1 |
+| `0x30005360` / `0x30005B60` | D2 | SLIP TX encoded / SLIP RX ring | DMA1 |
+| `0x38000000` / `0x38000800` | SRAM4 | CH394 TX / RX staging | the BDMA reaches only D3 memory |
+| `0x38001000` / `0x38001300` / `0x38001600` | SRAM4 | HDSDR IQ ping-pong and packet | sent through SPI6 / BDMA |
+| `0x38800000` | backup SRAM | settings mirror (read only) | strongly ordered |
+
+**Why this needed the firmware:** the MPU attributes, buffer placement,
+heap/stack reserve and cache strategy are linker and software choices.

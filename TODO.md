@@ -169,7 +169,7 @@ Roadmap mirrors `REVERSE_ENGINEERING_GUIDE.md`, tracked per unit.
 - [ ] N04 protection thresholds · [ ] N05 BandMap/TX band enforcement · [ ] N20 ADC/DAC map
 - [ ] N21 PA bias / power control · [ ] N22 PTT arbitration + T/R sequencing · [ ] N31 power on/off
 - [ ] N07 stale doc claims · [x] N08 exception handlers · [ ] N16 H72x Ghidra memory map
-- [ ] N18 MPU/cache/RAM placement · [ ] N19 timer map
+- [x] N18 MPU/cache/RAM placement · [ ] N19 timer map
 - [ ] N10 UART roles · [ ] N11 Main SDRAM? · [ ] N12 Control I2C · [ ] N13 Control SPI5/SPI flash
 - [ ] N14 GT911 · [ ] N28 Control inputs · [ ] N29 Control USB descriptors · [ ] N30 display bring-up
 - [ ] N32 unknown GPIOs

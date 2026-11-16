@@ -46,7 +46,36 @@ the file — the application occupies essentially the whole image.
   The 16 bytes after the `.data` load image in flash are zero padding as
   well.
 
-## Unknowns
+## MPU, caches and RAM use — VERIFIED unless noted
 
-- Heap/stack split.
-- Use of DTCM / D2 / D3 SRAM (not touched by startup copy).
+**MPU** (set up in `main` `FUN_08021e74`). All regions have full access
+and execute permission, no subregions, and PRIVDEFENA:
+
+| Region | Base | Size | Attributes |
+| --- | --- | --- | --- |
+| R0 | DTCM `0x20000000` | 128 KiB | write-back write-allocate (no effect on a TCM) |
+| R1 | AXI `0x24000000` | 512 KiB | write-back write-allocate |
+| R2 | D2 `0x30000000` | 512 KiB | write-back write-allocate (larger than the 288 KiB D2; D2 is unused) |
+| R3 | SRAM4 `0x38000000` | 64 KiB | normal, non-cacheable |
+| R4 | SDRAM `0xC0000000` | 32 MiB | normal, write-through, no write-allocate |
+
+**Cache maintenance.** No cache maintenance instructions were found
+(HIGH CONFIDENCE). That is safe here: every peripheral-DMA buffer sits
+in non-cacheable SRAM4, and the framebuffer is write-through.
+
+**Heap and stack.** `_sbrk` is `FUN_08022944`. The heap starts at
+`0x240614A8` and may grow to `0x24080000` − 0x4000, so the stack always
+has at least 16 KiB and the heap at most 109 400 B. Nothing is placed in
+ITCM, DTCM or D2 SRAM.
+
+**Buffer placement:**
+
+| Address | Region | Content |
+| --- | --- | --- |
+| `0x38000000` / `0x38001000` | SRAM4 | SLIP RX ring (4 KiB) / TX encoded |
+| `0x38003000` | SRAM4 | Bluetooth USART1 RX ring (1 KiB) |
+| `0x38003400` / `0x38004400` | SRAM4 | I²S2 RX / TX (4 KiB each) |
+| `0xC0000000` | SDRAM | framebuffer (write-through for LTDC/DMA2D) |
+
+Open: whether the SDMMC internal DMA writes into cacheable AXI buffers
+without cache maintenance, which would be a coherency risk.
