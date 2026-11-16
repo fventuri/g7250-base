@@ -1,0 +1,13 @@
+item,value,confidence
+ltdc_hsync_pol,active-low,VERIFIED
+ltdc_vsync_pol,active-low,VERIFIED
+ltdc_de_pol,active-low,VERIFIED
+ltdc_pclk_pol,inverted,VERIFIED
+ltdc_regs,19/159/1183/1343 x 2/22/622/634,VERIFIED
+fb0,0xC0000000,VERIFIED
+fb1,0xC012C000,VERIFIED
+tim4_pwm,PSC0 ARR0xFFFF CH1=PD12 CH2=PD13,VERIFIED
+sdram_sdcr1,0x5959,VERIFIED
+sdram_sdtr1,0x01115351,VERIFIED
+sdram_mode,0x220,VERIFIED
+sdram_refresh_count,918,VERIFIED

@@ -433,3 +433,54 @@ wait loop aborts when PA15 goes high.
 
 Pins are in `analysis/peripherals/inputs.csv`. The button-code and
 encoder-to-function tables are open.
+
+## Display subsystem — VERIFIED unless noted
+
+The display is a parallel RGB565 TFT driven by LTDC; the FMC is plain
+SDRAM for the framebuffers. There is no display controller behind the
+FMC.
+
+**LTDC** (`FUN_08021878`).
+- **Format.** 1024×600, HSYNC 20 / HBP 140 / HFP 160, VSYNC 3 /
+  VBP 20 / VFP 12, so 1344×635 in total.
+- **Polarities.** HSYNC, VSYNC and DE are active low; the pixel clock is
+  inverted.
+- **Refresh.** With the 40 MHz pixel clock this gives about 46.9 Hz
+  (derived).
+- **Layer.** One RGB565 layer, alpha 255, on a black background.
+
+**Double buffering.** The framebuffers are at `0xC0000000` and
+`0xC012C000`. `FUN_080365a0` waits for VSYNC, switches the layer
+address and swaps them. More SDRAM buffers hold the waterfall.
+
+**Panel power sequence** (`FUN_080364ec`; pin roles MEDIUM).
+1. PE6 high (panel power).
+2. After 10 ms, PI3 and PF9 low.
+3. After 10 ms, PF9 high (reset release).
+4. After 10 ms, PI3 high (display enable).
+
+**Backlight.** TIM4 at about 3.66 kHz.
+- CH1 (PD12) is held at 100 % and set to 0 at shutdown, so it behaves
+  as an enable.
+- CH2 (PD13) is the inverted dimming PWM, duty 1 − brightness.
+
+**FMC SDRAM** (`FUN_08020ecc`, commands in `FUN_080365e4`).
+- **Geometry.** Bank 1, 9 column and 13 row bits, 16-bit, 4 banks, CAS
+  2, so 32 MiB.
+- **Clock.** SDCLK = 240/2 = 120 MHz.
+- **Timings.** TMRD 2, TXSR 6, TRAS 4, TRC 6, TWR 2, TRP 2, TRCD 2.
+- **Init sequence.** Clock enable, 100 ms, precharge-all, 8
+  auto-refresh, mode register 0x220.
+- **Refresh count** 918.
+
+120 MHz is above the SDRAM clock limit given in the H743 datasheet
+(MEDIUM; from memory).
+
+**DMA2D.** It is polled and used for fills, copies, format-converting
+copies (waterfall scrolling) and constant-alpha blends.
+
+Register values are in `analysis/peripherals/display_config.csv`.
+
+**Why this needed the firmware:** polarities, porches, the power
+sequence, backlight polarity and SDRAM timing are register values with
+no public schematic.

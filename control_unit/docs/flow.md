@@ -126,7 +126,6 @@ Values are in `analysis/clocks/clock_config.csv`.
 ## Unknowns
 
 - Identify the ~28 init functions (step 3) and the UI dispatch functions.
-- Display controller behind the FMC region (`0xC0000000`).
 - SLIP client command set (shared with Main Unit; Phase 5).
 
 ## Interrupt paths — VERIFIED

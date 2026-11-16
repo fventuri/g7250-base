@@ -173,7 +173,7 @@ Roadmap mirrors `REVERSE_ENGINEERING_GUIDE.md`, tracked per unit.
 - [ ] N07 stale doc claims · [x] N08 exception handlers · [x] N16 H72x Ghidra memory map
 - [x] N18 MPU/cache/RAM placement · [x] N19 timer map
 - [x] N10 UART roles · [x] N11 Main SDRAM? · [x] N12 Control I2C · [x] N13 Control SPI5/SPI flash
-- [x] N14 GT911 · [x] N28 Control inputs · [x] N29 Control USB descriptors · [ ] N30 display bring-up
+- [x] N14 GT911 · [x] N28 Control inputs · [x] N29 Control USB descriptors · [x] N30 display bring-up
 - [ ] N32 unknown GPIOs
 - [x] N23 CW · [x] N24 ATU algorithm · [x] N35 H-22 mic protocol · [x] N37 voice recorder · [x] N41 SWR scanner
 - [x] N25 SLIP 0x03/0x08 completeness · [x] N26 SLIP link state machine · [x] N27 Control storage
@@ -200,3 +200,4 @@ Roadmap mirrors `REVERSE_ENGINEERING_GUIDE.md`, tracked per unit.
 - [ ] Which W25Qxx part is fitted (board photo).
 - [ ] Control: button-code and encoder-index to function tables (from FUN_08042c20).
 - [ ] Board trace: USB hub, CH342 and USB sound-card chips on the Controller and where their UART lines go.
+- [ ] Display: panel model and SDRAM part (board photo).
