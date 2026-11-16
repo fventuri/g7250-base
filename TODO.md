@@ -162,7 +162,7 @@ Roadmap mirrors `REVERSE_ENGINEERING_GUIDE.md`, tracked per unit.
 
 ## Round 2 — follow-up items (N01–N44)
 
-- [x] N01 Main option bytes · [x] N06 Main image tail · [ ] N09 IWDG · [x] N17 RTC/backup regs
+- [x] N01 Main option bytes · [x] N06 Main image tail · [x] N09 IWDG · [x] N17 RTC/backup regs
 - [x] N33 Main bootloader self-update · [x] N34 FPGA flash update · [x] N36 Control FW update over USB
 - [x] N02 full vector/IRQ CSVs (exporters fixed)
 - [x] N03 DMA/NVIC allocation (docs/dma.md)
@@ -186,3 +186,4 @@ Roadmap mirrors `REVERSE_ENGINEERING_GUIDE.md`, tracked per unit.
 - [ ] Read the option bytes (RDP, BOOT_ADD, CPUFREQ_BOOST, IWDG_SW) from a unit over SWD, if RDP allows.
 - [ ] Main firmware update path (bootloader only; transport from Control unknown).
 - [ ] Control bootloader: update file name and checks (needs a sector-0 dump).
+- [ ] IWDG timeout and the IWDG_SW option byte (needs an SWD read).

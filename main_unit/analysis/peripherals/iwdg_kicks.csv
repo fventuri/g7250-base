@@ -1,0 +1,6 @@
+unit,site,function,interval
+main,0x08022A80,FUN_0802239c,per superloop
+main,0x08021EEA,FUN_08021edc,once at shutdown
+main,0x0804852E,FUN_08049044,200 ms during CH394 reset
+control,0x080220DE,FUN_08021e74,per superloop
+control,0x08021C0C,FUN_08021bf8,every 256 ticks (SysTick)

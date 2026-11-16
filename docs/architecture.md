@@ -29,8 +29,18 @@ shared diagnostic strings.
   regions — relevant to the RX/TX pipelines.
 - **Bare-metal superloop**, no RTOS, no scheduler. Periodic work is driven
   by hardware timers and by `HAL_GetTick`-based time checks in the loop.
-- **Independent watchdog (IWDG1, `0x58004800`)** is refreshed once per
-  main-loop iteration by writing the key `0xAAAA` to `IWDG_KR`.
+- **Independent watchdog (IWDG1, `0x58004800`).**
+  - **Not configured (VERIFIED).** Neither application starts or
+    configures it: there is no start or unlock key, and the prescaler
+    and reload are never written. The timeout therefore comes from the
+    option bytes or the bootloader.
+  - **Main** kicks it once per superloop iteration, in the CH394 reset
+    wait (every 200 ms) and at shutdown. Main's boot runs more than 2 s
+    without a kick, so on Main the IWDG is either off or set to a timeout
+    of several seconds (MEDIUM CONFIDENCE).
+  - **Control** kicks it once per superloop iteration and from SysTick
+    every 256 ms. It therefore only catches a stall with interrupts
+    blocked, not a hung main loop.
 
 ## Inter-MCU link — HYPOTHESIS/HIGH CONFIDENCE
 
@@ -55,7 +65,7 @@ Per-unit peripheral inventories (IRQ map, buses, I2C slaves) are in
 | Functions recovered | 683 | 1696 |
 | Role | RF/DSP baseband, PA, audio, networking | Human interface / front panel |
 | Notable HW | PA bias DACs, TIM5, **CH394 Ethernet (LAN)**, CI-V, A/V streaming | GT911 touch, FMC LCD + ext SDRAM, encoders, H-22 mic, SD/FatFS, PC USB (CH342) |
-| Watchdog | IWDG1 kicked in loop | IWDG1 kicked in loop |
+| Watchdog | IWDG1 kicked in loop, CH394 wait, shutdown; never configured | IWDG1 kicked in loop and SysTick; never configured |
 
 External connectors, accessories, specs, and the user-facing menu/
 parameter set are documented from the OEM manual in
