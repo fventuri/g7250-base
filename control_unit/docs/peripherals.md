@@ -39,7 +39,8 @@ the H7 IRQ numbering.
 | **DMA2D** | 65 accesses | Chrom-ART 2D graphics accelerator (UI) | HIGH |
 | **SDMMC1** | base refs + IRQ49 | SD card, FatFS volume `0:` (voice memories); the configuration lives on the SPI flash `1:` (see storage.md) | HIGH |
 | SPI2 = I²S2 | init `FUN_08021680`; PB12–PB15 AF5; DMA1 S0 RX / S1 TX circular | audio link to the Control AIC3204 (slave side) | VERIFIED |
-| SPI1, SPI5 | SPI1 on PB3–PB5; SPI5 base refs | SPI1 = SPI flash for FatFS (HYPOTHESIS); SPI5 TBD | MED |
+| SPI1 | init `FUN_080225d4`; PB3–PB5 AF5; CS PG13 | **W25Qxx SPI NOR flash** (FatFS `1:` and the USB drive) | VERIFIED |
+| SPI5 | no literal, handle or MSP (earlier refs were coincidental bytes) | unused | VERIFIED |
 | **USART2** | IRQ38; PD5/PD6 AF7; 460 800 8N1; DMA1 S2 TX / S3 RX circular | inter-MCU SLIP link (↔ Main USART2) | VERIFIED |
 | USART1 | init `FUN_08023234`; PA9/PA10 AF7; 115 200 8N1; RX DMA1 S4 circular | **Bluetooth module (AT commands)** | VERIFIED |
 | **USB_OTG_FS** | base ref ×52; init `FUN_0803d90c`; IRQ101 | the MCU's own USB port, **mass-storage device** exposing the W25Qxx SPI flash (see USB section). The CAT/sound-card functions the manual names are not in this firmware; they must come from another USB chip (CH342 per the manual) | HIGH |
@@ -307,3 +308,35 @@ Bits 6/7 follow bit 1 (TX) of the Main status word received in `0x03`
 HYPOTHESIS. This corrects the earlier note that the audio path switch
 followed a menu setting. Values are in
 `analysis/peripherals/pca9557_bits.csv`.
+
+## SPI1 — W25Qxx SPI NOR flash, VERIFIED
+
+**Bus.** SPI1 (handle `0x24002080`) runs as master, full-duplex, 8-bit,
+mode 0, software NSS, prescaler /2 from PLL1Q, giving **48 MHz SCK**. It
+is polled, without DMA. Pins are PB3/PB4/PB5 (AF5), and the chip select
+is **PG13**, a GPIO. The device object at `0x24000234` holds the handle,
+the CS pin, the JEDEC ID, the size and a 4 KiB sector buffer.
+
+**Commands.**
+
+| Command | Use |
+| --- | --- |
+| 0x9F | JEDEC ID |
+| 0x03 | read (3-byte address, 256-byte chunks) |
+| 0x06 | write enable |
+| 0x02 | page program (split at 256-byte pages) |
+| 0x20 | 4 KiB sector erase |
+| 0x05 | status poll on WIP (5 s timeout) |
+
+**Writes.** A write first reads the 4 KiB sector and erases it only if
+a bit must go from 0 to 1; otherwise it programs in place.
+
+**Accepted IDs.** 0xEF4014/15/17/18 (1, 2, 8, 16 MiB). 0xEF4016 (W25Q32)
+falls into the error path, which is a firmware quirk.
+
+**FatFS glue.** 512-byte sectors and an 8-sector erase block. The drive
+number follows the link order: the SD card becomes `0:`, this flash
+`1:`.
+
+**Why this needed the firmware:** the CS pin, clock, command set and
+accepted parts are not visible from the board.

@@ -173,7 +173,7 @@ Roadmap mirrors `REVERSE_ENGINEERING_GUIDE.md`, tracked per unit.
 - [x] N21 PA bias / power control (SPI2 is the bias DAC, not idle) · [x] N22 PTT arbitration + T/R sequencing · [x] N31 power on/off
 - [ ] N07 stale doc claims · [x] N08 exception handlers · [x] N16 H72x Ghidra memory map
 - [x] N18 MPU/cache/RAM placement · [x] N19 timer map
-- [x] N10 UART roles · [x] N11 Main SDRAM? · [x] N12 Control I2C · [ ] N13 Control SPI5/SPI flash
+- [x] N10 UART roles · [x] N11 Main SDRAM? · [x] N12 Control I2C · [x] N13 Control SPI5/SPI flash
 - [ ] N14 GT911 · [ ] N28 Control inputs · [ ] N29 Control USB descriptors · [ ] N30 display bring-up
 - [ ] N32 unknown GPIOs
 - [x] N23 CW · [x] N24 ATU algorithm · [x] N35 H-22 mic protocol · [x] N37 voice recorder · [x] N41 SWR scanner
@@ -198,3 +198,4 @@ Roadmap mirrors `REVERSE_ENGINEERING_GUIDE.md`, tracked per unit.
 - [ ] Control codec slot routing (mic, speaker, Main TX) and what PI6, PE3 and PE4 connect to.
 - [ ] GUI: confirm the screen-id to page mapping; key-code and encoder-to-function tables.
 - [ ] PCA9557 bits 0/1/3/5 and 6/7: electrical function (board trace).
+- [ ] Which W25Qxx part is fitted (board photo).
