@@ -38,7 +38,8 @@ Roadmap mirrors `REVERSE_ENGINEERING_GUIDE.md`, tracked per unit.
 - [x] Running clock config: Main `FUN_080222f0` (550/275/137.5 MHz, HSE
       25 MHz, PLL2 = ADC), Control `FUN_08021d98` (480/240/120 MHz, PLL2 =
       FMC, PLL3 = LTDC). See */docs/flow.md.
-- [ ] Resolve the 8-byte `.data`/`.bss` gap on the Control Unit.
+- [x] Control Unit 8-byte `.data`/`.bss` gap = linker alignment padding
+      before a ≥16/32-byte aligned `.bss` (control_unit/docs/memory_map.md).
 - [ ] Rename the VERIFIED startup functions in Ghidra via
       `RenameVerifiedFromCsv.java` (SystemInit, __libc_init_array, PWR init,
       and the HIGH-CONFIDENCE helpers in `*/docs/flow.md`).
