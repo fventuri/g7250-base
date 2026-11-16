@@ -126,8 +126,9 @@ Roadmap mirrors `REVERSE_ENGINEERING_GUIDE.md`, tracked per unit.
 - [ ] Roles of Main UART4 (PD1/PH14) and USART1, and Control USART1.
 - [~] Main Unit networking: CH394 driver, socket plan, HDSDR mode, wfview
       session and self-heal documented (main_unit/docs/network.md).
-- [ ] Complete CI-V command map (jump tables 0x080505A0/0x08050B40/0x08050CC0);
-      wfview audio and scope packet layouts.
+- [x] CI-V command map for both parsers (docs/civ.md).
+- [ ] wfview audio and scope packet layouts.
+- [ ] Control USART1 CI-V: physical endpoint (BT SPP vs PC serial bridge).
 
 ## Tooling
 
@@ -178,7 +179,7 @@ Roadmap mirrors `REVERSE_ENGINEERING_GUIDE.md`, tracked per unit.
 - [ ] N32 unknown GPIOs
 - [x] N23 CW · [x] N24 ATU algorithm · [x] N35 H-22 mic protocol · [x] N37 voice recorder · [x] N41 SWR scanner
 - [x] N25 SLIP 0x03/0x08 completeness · [x] N26 SLIP link state machine · [x] N27 Control storage
-- [ ] N42 CI-V command set · [ ] N43 GUI layer
+- [x] N42 CI-V command set · [ ] N43 GUI layer
 - [x] N15 X6100 tooling leftovers · [x] N38 library identification · [x] N39 RAM object map
 - [x] N40 reproducible export run + doc checker
 - [ ] N44 X6100/G90 comparison — BLOCKED: no X6100/G90 material in this repo
