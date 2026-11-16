@@ -1,0 +1,24 @@
+code,a_bit,b_bit,a_pin,b_pin,short_action,hold_action,ui_fields,confidence
+0x00010001,0,0,PA2,PB2,memory page toggle 0<->8 (closes name keyboard first),none,selectUi;isSoftKeyBoard,VERIFIED
+0x00020001,0,1,PA2,PH6,VFO A/B swap,copy VFO B record into VFO A,selectVfo;VFOA.*,VERIFIED
+0x00040001,0,2,PA2,PH7,V/M toggle (FUN_0803fcd0),none,isMemo;REALVFOA;REALVFOB;realVfo;channelNum,VERIFIED
+0x00080001,0,3,PA2,PC13,Menu 1 toggle 0<->4,none,selectUi,VERIFIED
+0x00100001,0,4,PA2,PH9,confirm: Menu 3 in CW / assign MFK / set quick fn / edit,restore item default or MFK=step,selectUi;mfkOuterSelect;quickSelect,VERIFIED
+0x00010002,1,0,PI8,PB2,RIT on/off or close RIT pop-up,open RIT pop-up (4),ritSwitch;popupMenus,VERIFIED
+0x00020002,1,1,PI8,PH6,XIT on/off or close XIT pop-up,open XIT pop-up (5),xitSwitch;popupMenus,VERIFIED
+0x00040002,1,2,PI8,PH7,ATU on/off,start tune (pttSignals bit5),atu;pttSignals,HIGH
+0x00080002,1,3,PI8,PC13,Menu 2 toggle 0<->5,none,selectUi,VERIFIED
+0x00100002,1,4,PI8,PH9,next filter group (mod 3),reset group edges to default,fgiSSB;fgiCW;fgiAM;fgiNFM;fgiWFM,VERIFIED
+0x00010004,2,0,PA7,PB2,notch on/off or close pop-up,open notch pop-up (1),notchSwitch;popupMenus,VERIFIED
+0x00020004,2,1,PA7,PH6,NR on/off or close pop-up,open NR pop-up (2),nrSwitch;popupMenus,VERIFIED
+0x00040004,2,2,PA7,PH7,NB on/off or close pop-up,open NB pop-up (3),nbSwitch;popupMenus,VERIFIED
+0x00080004,2,3,PA7,PC13,system page 0<->7 / back from sub-page,none,selectUi;ui+0x921,VERIFIED
+0x00100004,2,4,PA7,PH9,enc4 MIC/KEY SPEED switch,none,selectMicSpeed;progressSelect,VERIFIED
+0x00010008,3,0,PC4,PB2,keyer page 10 (CW/CWR) or voice page 11,none,selectUi;cwMsgUi;ssbVoiceUi,VERIFIED
+0x00020008,3,1,PC4,PH6,applications page 0<->9 / back to list,none,selectUi;appUi,VERIFIED
+0x00040008,3,2,PC4,PH7,run quick function (or close page 12),quick-setting page 0<->12,quickSelect;selectUi,VERIFIED
+0x00080008,3,3,PC4,PC13,backlight 10/30/50/70/90 %,dial lock toggle,lcdBackLight;lock,VERIFIED
+0x00100008,3,4,PC4,PH9,enc6 AF/RF switch,none,selectAfRf;progressSelect,VERIFIED
+0x00010010,4,0,PC5,PB2,band up / next memory channel,none,bandStackIdx;bandStack;antSelect;atu,HIGH
+0x00040010,4,2,PC5,PH7,band down / previous memory channel,none,bandStackIdx;bandStack;antSelect;atu,HIGH
+0x00008000,PA0,-,PA0,-,no action (never compared; masks other buttons),none,-,HIGH

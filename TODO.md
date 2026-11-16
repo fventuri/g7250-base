@@ -202,9 +202,11 @@ Roadmap mirrors `REVERSE_ENGINEERING_GUIDE.md`, tracked per unit.
 - [ ] ATU: producer of the merit value (meter block +0x20); TUNER TRG/RET connector hardware-only?
 - [ ] H-22: measure the absolute bit period and confirm which mic line feeds PI5.
 - [ ] Control codec slot routing (mic, speaker, Main TX) and what PI6, PE3 and PE4 connect to.
-- [ ] GUI: confirm the screen-id to page mapping; key-code and encoder-to-function tables.
+- [x] GUI screen-id mapping VERIFIED (ids 1-3 unused, 12 = quick setting).
+- [ ] GUI: identify appUi 1, system sub-pages 2/3/4/7 and windows 1/3.
 - [ ] PCA9557 bits 0/1/3/5 and 6/7: electrical function (board trace).
 - [ ] Which W25Qxx part is fitted (board photo).
-- [ ] Control: button-code and encoder-index to function tables (from FUN_08042c20).
+- [x] Control button-code and encoder-to-function tables (gui.md, button_map.csv, encoder_map.csv).
+- [ ] Panel legends for the 22 matrix buttons and the knob/push pairing (needs a photo).
 - [ ] Board trace: USB hub, CH342 and USB sound-card chips on the Controller and where their UART lines go.
 - [ ] Display: panel model and SDRAM part (board photo).

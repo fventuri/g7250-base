@@ -411,9 +411,10 @@ scanned by `FUN_08035f80` from the TIM14 1 kHz tick.
 **Timing (MEDIUM).**
 - One scan takes about 5 ms, and a code change needs four equal scans
   (about 20–25 ms debounce).
-- Hold fires after about 0.24 s. Repeat starts after about 0.84 s and
-  then fires every 0.12 s, but the consumer (`FUN_08042c20`) ignores the
-  repeat events.
+- Hold fires once after 140 stable scans (about 0.84 s; a stable scan is
+  6 ticks). Repeat first fires after about 60 scans (about 0.36 s), then
+  every 21 scans (about 0.12 s). The consumer (`FUN_08042c20`) discards
+  repeats (VERIFIED; corrects an earlier swap of hold and repeat).
 - A release without a hold counts as a short press.
 
 **Encoders.**
@@ -431,8 +432,9 @@ scanned by `FUN_08035f80` from the TIM14 1 kHz tick.
 the card counts as present after 32 consecutive lows (320 ms). Every SD
 wait loop aborts when PA15 goes high.
 
-Pins are in `analysis/peripherals/inputs.csv`. The button-code and
-encoder-to-function tables are open.
+Pins are in `analysis/peripherals/inputs.csv`; function tables are in
+`button_map.csv` / `encoder_map.csv` (see `gui.md`). The encoder fast
+flag has no reader.
 
 ## Display subsystem — VERIFIED unless noted
 

@@ -1,0 +1,10 @@
+encoder,pins_a_b,main_screen,on_pages,ui_fields,step,limits,toggled_by,confidence
+enc0,PE5/PC1,pop-up value else coarse tune,item value / list scroll / app pick,freq;notchPosition;nrLevel;nbLevel;ritValue;xitValue,SsbStep/CwStep/AmStep/NFMStep,0.5-108 MHz; RIT/XIT +-1500,-,VERIFIED
+enc1,PA4/PH8,MFK (mfkOuterSelect param) or pop-up cursor,item cursor mod 15 / edit,mfkOuterSelect;isMdfAdj,1 per detent,per param,A0xB4 assigns,VERIFIED
+enc2,PI11/PF6,shift FIL2 edge pair,same,FIL2 edges,10 Hz,mode edgeLeft/edgeRight,-,VERIFIED
+enc3,PF7/PF8,shift FIL1 edge pair,same,FIL1 edges,10 Hz,mode edgeLeft/edgeRight,-,VERIFIED
+enc4,PH12/PD4,MIC gain or key speed,same,micGain;keySpeed,1,0-30 / 5-50,A2xB4,VERIFIED
+enc5,PH15/PI0,RF power,same,rfPowerValue,1 W,5-100,-,VERIFIED
+enc6,PI1/PC2,AF gain or RF gain,same,af;rfg,1 (AF 2 at >=50),0-100,A3xB4,VERIFIED
+enc7,PD3/PD7,squelch,same,sql;fmSql,1,0-100,-,VERIFIED
+main_dial,PA5/PA1 (TIM2),frequency,same,freq,freqStep 1 Hz-100 kHz (x4 counts),0.5-108 MHz; 1k grid >=1k,lock blocks,VERIFIED
