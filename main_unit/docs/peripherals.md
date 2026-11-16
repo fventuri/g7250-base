@@ -213,7 +213,7 @@ as SPI1, and the MSP init puts PB13 (SCK) and PB15 (MOSI) in AF5. No
 code outside init refers to its handle (`0x240054a8`). It is unused
 in V1.0.1, possibly reserved for a hardware variant.
 
-## SPI3 = I²S3 — sample stream, VERIFIED (peer device: see audio item)
+## SPI3 = I²S3 — audio codec link, VERIFIED
 
 SPI3 runs in **I²S mode**: init `FUN_08021c78` (HAL I²S init
 `FUN_0802bde8`), MSP init `FUN_08021ccc`.
@@ -235,7 +235,17 @@ clears two 3 KiB buffers and starts a full-duplex DMA transfer over
 both. Half-transfer and transfer-complete callbacks
 (`FUN_08035ed4`, `FUN_08035f40`) set ping-pong flags for the audio/DSP
 code. This explains the active IRQs 11 and 16 and accounts for
-DMA1 Streams 0 and 5.
+DMA1 Streams 0 and 5. When the DSP has not consumed the previous half,
+the callbacks raise the codec buffer-underrun flag (`0x2400BBC6`). The
+buffers are in D2 SRAM: `0x30004360` (TX) and `0x30003760` (RX).
+
+**Role (HIGH CONFIDENCE).** I²S3 carries **audio**, not RF I/Q. Its
+peer is the AIC3204 codec, which runs as I²S slave.
+- **TX direction:** the RX DSP writes its final stereo audio, the CW
+  sidetone and the TX monitor into the transmit buffer, which feeds the
+  codec DAC.
+- **RX direction:** the TX DSP takes one channel of the receive stream
+  (the mic, on the codec's left ADC) as its modulating signal.
 
 **Why this needed the firmware:** no G7250 schematic is public. The
 STM32 datasheet only lists possible pin functions. The filter edges,
@@ -255,13 +265,67 @@ addrSize, buf, len, timeout)`, write `FUN_0802B940(...)`. `devAddr` is the
 | 7-bit | 8-bit | Device | Evidence | Conf |
 | ---: | ---: | --- | --- | --- |
 | `0x50` | `0xA0` | 24Cxx **EEPROM** | NVPARAM (settings 424 B + header/checksum), calibration, ATU data; backup-SRAM (`0x38800000`) cached; strings `EEPROM NVPARAM Saved`, `Read EEPROM error` | VERIFIED |
+| `0x18` | `0x30` | **TLV320AIC3204** audio codec | driver struct in `.data` (`0x2400487c`) holds the address and the I2C1 handle; all writes go through HAL I2C transmit; init `FUN_0804a65c`; reset PB10 (see Audio codec section) | VERIFIED |
 | `0x34` | `0x68` | **AXP223 PMIC** | strings `axp223 (0x68) write reg`, `Set ALDO1/DCDC1/2/3/5/DLDO1 Vout`, `Init PSU`; driver `FUN_0804a8e8` | VERIFIED |
 | `0x68`/`0x6A`* | `0xD0`/`0xD4`* | **VersaClock 6** clock generator | driver `FUN_0804abbc` logs a successful init-table write; it tries both addresses, then writes a 112-B (`0x70`) register init table | VERIFIED |
 
 \* The VersaClock driver tries 0x68 first, then 0x6A (see the
 VersaClock 6 output plan below).
 
-### AXP223 rail plan — VERIFIED (use: HYPOTHESIS)
+### Audio codec — TLV320AIC3204 on I2C1 0x18, VERIFIED
+
+**Init** (`FUN_0804a65c`, from `main`):
+1. Holds PB10 low for 100 ms as reset, then high.
+2. Records MCLK = 12.288 MHz and fs = 48 kHz, then soft-resets the codec.
+3. Programs a register table (`FUN_08044504`):
+   - clock: CODEC_CLKIN = MCLK, NDAC 1, MDAC 2, AOSR 128, so
+     fs = MCLK/256;
+   - interface: **I²S, 32-bit words, BCLK and WCLK as inputs**, so the
+     codec is a slave;
+   - ADC and DAC powered;
+   - DAC routed to the HPL/HPR and LOL/LOR outputs.
+4. Sets headphone gain +10 dB, unmutes and enables MICBIAS.
+5. Routes the mic input to the left MICPGA (routing MEDIUM CONFIDENCE).
+
+MICPGA gain starts at 15 dB. It is updated from the MIC gain field of
+the SLIP `0x01` settings block (`FUN_0804a790`). MCLK is the same
+12.288 MHz external clock as the MCU's I2S_CKIN (MCLK output of the MCU
+is off).
+
+## FPGA bus — bit-banged parallel GPIO, VERIFIED
+
+The FPGA is the **RF I/Q front end**. The MCU reaches it over an 8-bit
+bit-banged bus on GPIOE. No FMC bank is used.
+
+| Signal | Pin | Use |
+| --- | --- | --- |
+| D0–D7 | PE0–PE7 | bidirectional data; direction switched by rewriting GPIOE_MODER |
+| CMD | PE8 (with PE9) | both pulsed together latch a command byte (`FUN_08039f70`) |
+| STB | PE9 | per-byte strobe (`FUN_08039fbc` / `FUN_08039fcc`) |
+| DRDY | PE10 | rising-edge EXTI (EXTI15_10, IRQ40, priority 2); the callback runs the FPGA sample routine `FUN_08039078` |
+
+| Code | Function |
+| --- | --- |
+| 0x00 | loopback/test register; the boot bus check writes and reads back 0–255 (`FUN_0803a3a0`) |
+| 0x01 | 24-byte configuration frame (`FUN_08039238`): TX/RX status bits, three 32-bit words from the TRX struct (offsets 0x200–0x208; NCO tuning words? HYPOTHESIS), per-rate calibration bytes from the calibration block, and a sample-rate code |
+| 0x02 | status read (`FUN_08039950`): two flag bits plus three 16-bit values |
+| 0x03 | TX I/Q write (`FUN_08039d90`): two signed 24-bit values per sample. Zeros are sent for the first 200 interrupts after keying |
+| 0x04 | RX I/Q read (`FUN_08039a6c`): two signed 24-bit values per sample, scaled to float. 8/4/2/1 samples per interrupt for sample-rate settings 0–3, in 192-sample blocks. An unconsumed block sets the FPGA underrun flag |
+| 0x05/0x06, 0x09/0x0A | two on/off toggles (init sends 0x06 and 0x0A); roles unknown |
+| 0x08 | 3-byte FPGA firmware version read |
+
+**Bitstream.** The MCU does not load a bitstream in V1.0.1. The strings
+about a missing FPGA or a failed FPGA-flash verification are not
+referenced by any code that Ghidra discovered, so the FPGA presumably
+boots from its own flash (MEDIUM CONFIDENCE). The absolute I/Q sample
+rate depends on the PE10 interrupt rate, which is not derivable from
+the firmware (48 kHz × 1/2/4/8 is a HYPOTHESIS).
+
+**Why this needed the firmware:** no schematic or FPGA documentation is
+public. The bus, its command set, the 24-bit I/Q format and the codec
+address and mode exist only in the code.
+
+## AXP223 rail plan — VERIFIED (use: HYPOTHESIS)
 
 `FUN_0804a8e8` is called from `main` and only ever addresses the 7-bit
 address 0x34. It first forces a safe state with only DCDC1 on, then
@@ -419,9 +483,9 @@ or driver actually used.
   generates the rails. This is the main I2C topology difference.
 - The **VersaClock 6** clock generator carries over from the X6100
   (which used a 5P49V60 at 0x6A) — LO / sample-clock synthesis.
-- The X6100 audio/I-Q codecs (CS4272 0x10, TLV320AIC3204 0x18) are **not
-  on main I2C1**. The audio/I-Q path control is elsewhere (SPI/I2S, or the
-  Control Unit) — open.
+- Of the X6100 codecs, the **TLV320AIC3204 (0x18) is on Main I2C1**, and
+  the CS4272 is absent. RF I/Q does not go through a codec here; it comes
+  from the FPGA over a parallel GPIO bus (see the FPGA bus section).
 - NV storage via 24Cxx EEPROM + backup-SRAM cache (the X6100 kept
   calibration in flash).
 

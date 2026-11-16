@@ -62,11 +62,12 @@ Roadmap mirrors `REVERSE_ENGINEERING_GUIDE.md`, tracked per unit.
       calib/ATU), AXP223 PMIC @0x34, VersaClock 6 clock gen @~0x6A.
       I2C2/I2C3 idle. Read/write helpers FUN_0802BB3C / FUN_0802B940.
       (No battery → AXP223 replaces X6100 MAX17205.) See i2c_devices.csv.
-- [ ] Find the audio / I-Q codec control path (not on main I2C1 — SPI/I2S?
-      or Control Unit). X6100 used CS4272 0x10 + TLV320AIC3204 0x18.
-      Manual lead: the digital-mode line-in is the **Controller's USB
-      "sound card"** (DIG-ON), audio relayed to Main over SLIP — look on
-      the Control Unit USB-audio / I2S path (docs/hardware.md §6).
+- [x] Audio / I-Q path: AIC3204 on Main I2C1 0x18 (I²S3 slave) and on
+      Control I2C2 0x18 (I²S2 master); RF I/Q via the FPGA GPIOE parallel
+      bus (24-bit I/Q, command set). See */docs/peripherals.md.
+- [ ] FPGA: layout of the 0x01 config frame (NCO words?), status values,
+      toggles 0x05/06 and 0x09/0A, PE10 interrupt rate (absolute I/Q rate).
+- [ ] Analog audio routing across the CTRL cable; the PC USB sound-card chip.
 - [x] CH394 control pins: CS# PG15, RST# PB5, INT# PC13/EXTI13 (falling);
       SPI6 SCK ≈17.19 MHz. See peripherals.md SPI6 section.
 - [ ] CH394: confirm the INT flag consumers read the chip's interrupt

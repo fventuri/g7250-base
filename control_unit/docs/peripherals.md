@@ -38,7 +38,8 @@ the H7 IRQ numbering.
 | **FMC @ 0xC0000000** | ×41 refs + MPU region | external SDRAM framebuffer | HIGH |
 | **DMA2D** | 65 accesses | Chrom-ART 2D graphics accelerator (UI) | HIGH |
 | **SDMMC1** | base refs + IRQ49 | SD card (config.ini on `1:/`) | HIGH |
-| SPI1/2, SPI5 | base refs; SPI2/I2S2 ×6 | SPI2/I2S2 likely audio I²S; others TBD | MED |
+| SPI2 = I²S2 | init `FUN_08021680`; PB12–PB15 AF5; DMA1 S0 RX / S1 TX circular | audio link to the Control AIC3204 (slave side) | VERIFIED |
+| SPI1, SPI5 | SPI1 on PB3–PB5; SPI5 base refs | SPI1 = SPI flash for FatFS (HYPOTHESIS); SPI5 TBD | MED |
 | **USART2** | IRQ38; PD5/PD6 AF7; 460 800 8N1; DMA1 S2 TX / S3 RX circular | inter-MCU SLIP link (↔ Main USART2) | VERIFIED |
 | USART1 | init `FUN_08023234`; PA9/PA10 AF7; 115 200 8N1; RX DMA1 S4 circular | **Bluetooth module (AT commands)** | VERIFIED |
 | **USB_OTG_FS** | base ref ×52 | **PC USB** (manual): CAT/control + **audio sound card** (digital-mode line-in) + firmware update; PC driver **CH342**. N1MM CW keying | HIGH |
@@ -142,4 +143,36 @@ there is no SLIP message for it (HIGH CONFIDENCE).
 **Why this needed the firmware:** the manual names only the module. The
 UART, pins, DMA, AT dialect, timeouts and the power switch on the
 expander exist only in the code.
+
+## Audio codec and I²S2 — VERIFIED unless noted
+
+**Second codec.** A second **TLV320AIC3204** sits on **I2C2** at 7-bit
+0x18 (`0x40005800`, handle `0x24001B98`), with reset on **PH2**
+(`FUN_08052964`). Here the **codec is the I²S master**: its PLL runs
+from a 12.288 MHz MCLK, BCLK and WCLK are outputs, and a CLKOUT
+divider is enabled (HIGH CONFIDENCE).
+
+**I²S2 on the MCU side** (`FUN_08021680`, MSP in the SPI2 branch) is
+an **I²S slave, full-duplex, 32-bit, 48 kHz**, on PB12–PB15 (AF5).
+DMA1 Stream0 handles RX (request 39) and Stream1 TX (request 40), both
+circular and word-wide; this accounts for IRQs 11 and 12. The 4 KiB
+buffers are in SRAM4 (`0x38003400` / `0x38004400`), and the DMA is
+started by `FUN_08052830`.
+
+**TIM5 audio service.** `FUN_08050cb0` processes 256-frame blocks: it
+passes ADC to DAC with a gain table on the left channel, and offers one
+capture hook and two playback hooks (probably the voice
+recorder/player; hook use HYPOTHESIS). `FUN_0804e4e8` applies the codec
+settings: right-channel input select and gain, headphone gain, and
+PCA9557 bits 6/7 as an audio path switch (HYPOTHESIS).
+
+**USB.** USB_OTG_FS is a **USB mass-storage device**, not a sound card.
+The descriptor is VID 0x0483 / PID 0x572A with a bulk-only SCSI
+interface. The PC sound card must therefore be a separate USB audio
+chip that the firmware does not see (HYPOTHESIS).
+
+**Main↔Control audio (MEDIUM CONFIDENCE).** Audio does not travel over
+SLIP: 460 800 baud is too slow for 48 kHz audio, and no message type
+carries it. Mic and speaker audio presumably cross the CTRL cable as
+analog signals (HYPOTHESIS).
 

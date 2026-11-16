@@ -1,0 +1,13 @@
+kind,name,value,function
+pin,D0-D7,PE0-PE7 (bidirectional via MODER),FUN_0803a3a0
+pin,CMD,PE8 pulsed with PE9,FUN_08039f70
+pin,STB,PE9,FUN_08039fbc / FUN_08039fcc
+pin,DRDY,PE10 EXTI rising IRQ40,FUN_08039078
+cmd,test,0x00 loopback 0-255,FUN_0803a3a0
+cmd,config,0x01 24-byte frame,FUN_08039238
+cmd,status,0x02 flags + 3x16-bit,FUN_08039950
+cmd,tx_iq,0x03 2x24-bit write,FUN_08039d90
+cmd,rx_iq,0x04 2x24-bit read,FUN_08039a6c
+cmd,toggleA,0x05/0x06 on/off,
+cmd,version,0x08 3 bytes,
+cmd,toggleB,0x09/0x0A on/off,
