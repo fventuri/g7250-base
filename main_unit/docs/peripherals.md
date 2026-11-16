@@ -26,6 +26,9 @@ to peripheral base addresses. IRQ numbers use the **STM32H7** NVIC table
 | 55 | `FUN_08023a48` | TIM7 | time base | HIGH |
 | 68 | `FUN_08023a64` | DMA2_Stream5 | DMA | HIGH |
 | 86 | `FUN_08023a78` | **SPI6** | **CH394 Ethernet** (see SPI6 section) | VERIFIED |
+| 118 | `FUN_08023a84` | TIM17 | periodic service (started at boot) | HIGH |
+| 129 | `FUN_08023a9c` | BDMA_Channel0 | SPI6 RX DMA (CH394) | VERIFIED |
+| 130 | `FUN_08023aa8` | BDMA_Channel1 | SPI6 TX DMA (CH394) | VERIFIED |
 
 IRQ→peripheral mapping is HIGH CONFIDENCE (standard H7 NVIC table);
 roles are inferred.
@@ -47,7 +50,7 @@ From base-address references and register-access counts:
 | UART4 | init `FUN_08024080`; PD1 TX / PH14 RX AF8; 115 200 8N1; no DMA, no IRQ | role open | HIGH |
 | **ADC1/2 + ADC3** | IRQ18 + 27/41 accesses | RF metering: fwd/ref power, SWR, Vext, temp, S-meter | HIGH |
 | TIM5/6/7 | active IRQs | time bases / DAC & audio triggers | HIGH |
-| **USB_OTG_FS** | base ref ×32 | USB device — role unclear: the **Main Unit has no external USB connector** (manual), so this is **not** the PC CAT/audio port (that is on the Controller, CH342). Vestigial / internal / FW-update? | LOW |
+| USB OTG | none (earlier "×32 refs" were false positives) | **not used at runtime** (see USB section) | HIGH |
 | FMC @ 0xC0000000 | ×65 refs (earlier count); **no FMC pins (AF12) configured and no FMC kernel clock set** | external SDRAM doubtful — re-check (see GPIO pin map) | LOW |
 | DMA1 (str0/4/5/7), DMA2 (str5) | active IRQs | peripheral DMA | HIGH |
 | GPIOA/B/E/G/H | heavy GPIOE/G access | RF band switching, PA control, discretes | HIGH |
@@ -314,6 +317,48 @@ only the fallback. No code reprograms the chip later.
 or from OTP. Their datasheets give register maps only. The voltages,
 enables, divider plan and output types exist only in the init code and
 table.
+
+## USB — not used at runtime, HIGH CONFIDENCE
+
+The Main application never brings up USB:
+- No 4-byte word in the image equals an OTG register base (0x40080000
+  or 0x40040000).
+- The OTG interrupt vectors point at the default handler.
+- `main` calls no USB init, and the bootloader-jump teardown list has no
+  USB handle.
+
+The earlier "×32 references" were Thumb instruction encodings and
+floating-point constants that happen to fall in the 0x4008xxxx range.
+This matches the manual (no USB connector on the Main Unit). On the
+likely H725/H735 part there is in any case only an OTG_HS block at
+0x40040000.
+
+## Bootloader jump — `FUN_0802200c`, HIGH CONFIDENCE
+
+**Trigger.** It is reached only from the RTC wake-up vector stub
+(IRQ 3, `0x080222dc`), before the HAL wake-up handler.
+
+**Sequence:**
+1. Logs a notice.
+2. Masks the EXTI and USART interrupts.
+3. De-initialises TIM5/6/7/17, I²S3, ADC1, DAC1, USART1/2, UART4,
+   I2C1/2/3, an MDMA channel and CRC.
+4. Puts the PMIC in its safe state, gates the DMA clocks and disables
+   the caches and SysTick.
+5. Resets RCC and the peripheral blocks, and clears all NVIC
+   enable/pending bits.
+6. Sets VTOR = 0x08000000, loads the MSP from there and jumps through
+   0x08000004, into the bootloader in flash sector 0, which is not part
+   of this image.
+
+**What arms it.** Nothing in the application arms the RTC wake-up
+timer: the RTC init only sets the time and date. Strings about option
+bytes, read protection and a bootloader self-update exist, but no code
+refers to them. The bootloader probably arms the timer (HYPOTHESIS).
+
+**Why this needed the firmware:** the manual only says there is no USB
+connector. Only the absence of init code, vectors and base constants
+settles that there is no internal USB link either.
 
 ## GPIO pin map — register values VERIFIED, roles as noted
 

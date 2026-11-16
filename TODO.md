@@ -91,9 +91,9 @@ Roadmap mirrors `REVERSE_ENGINEERING_GUIDE.md`, tracked per unit.
       whether PC USB is the MCU's own OTG_FS port or a CH342.
 - [ ] Identify the ~26 (main) / ~28 (control) init functions from `main()`.
 - [ ] Main Unit TRX-state struct at `0x24013C0C` — recover layout.
-- [ ] Re-examine **Main Unit `USB_OTG_FS`** (base ref ×32): the Main Unit
-      has no external USB connector (manual), so it is NOT the PC CAT/audio
-      port — determine the real role (vestigial / internal / FW-update).
+- [x] Main Unit USB: not used at runtime (false-positive references); see
+      main_unit/docs/peripherals.md. Bootloader jump via RTC wake-up documented.
+- [ ] Who arms the Main RTC wake-up timer (bootloader?).
 - [ ] Map the **Bluetooth** module (XG-BT-G7250) on the Control Unit —
       two-way audio + control channel (candidate: UART-attached BT). New
       peripheral from the manual; not yet located in firmware.
