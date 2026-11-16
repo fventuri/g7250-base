@@ -33,11 +33,13 @@ baud rate, pins and DMA assignment exist only in the init code.
   ring using the DMA counter (`0x400/0x1000 − DMA_NDTR`), handling
   wraparound, and reassembles into a linear frame buffer (2048 B main /
   8192 B control).
-- RX handlers (polled from each superloop):
-  - Main Unit: `FUN_08049658`
-  - Control Unit: `FUN_08034984`
-- A ~1 s inactivity watchdog re-arms the DMA/UART if the read pointer
-  stops moving (handles `USART Overrun`).
+- RX handlers:
+  - Main Unit: `FUN_08049658`, polled from the superloop.
+  - Control Unit: `FUN_08034984`, called from the TIM13 period callback
+    `FUN_080228cc`, so it runs in interrupt context (HIGH CONFIDENCE).
+- **RX re-arm.** The receiver is re-armed only when it has made no
+  progress for 100 polls and the overrun flag is set. That is about
+  200 ms on Main and about 2 s on Control (HIGH CONFIDENCE).
 
 ## SLIP framing (RFC 1055) — VERIFIED
 
@@ -76,9 +78,15 @@ has equivalents `…a200`→`FUN_08052c…`, `decode`→`FUN_08052be4`).
 - Mismatch logs `Wrong CRC, mine = %04X, thires = %04X` ("thires" is an
   OEM typo for "theirs" = received CRC).
 - The first decoded byte is the **message type**; dispatch is a switch on
-  it. Observed response frames are built as
-  `[type][0][?]<payload><crc16>` (payload begins at offset 3), implying a
-  **3-byte header**; the two bytes after `type` are not yet identified.
+  it.
+- **Frame layout.** Every frame is `[type][0x00][0x00]<payload><crc16>`.
+  All six frame builders on both units write bytes 1–2 as zero, and
+  neither receiver ever reads them (VERIFIED), so treat them as
+  reserved. Sequencing, where it exists, lives inside the payload (type
+  `0x08`).
+- **Error handling.** Unknown types are silently ignored. Only the Main
+  `0x02` handler checks lengths; every other handler copies a fixed
+  size without checking.
 
 ## Payload layouts
 
@@ -148,23 +156,44 @@ settings image, with validity markers 0x64 at offsets 0x000, 0x1A3 and
 `0x02` (calibration) and `0x06` (slave info) field layouts are not yet
 decoded (mostly numeric tables, few strings).
 
-## Message types (observed)
+## Message types — complete map, VERIFIED
 
-Payload sizes are VERIFIED (memcpy lengths); directions are from which
-unit's RX handler decodes them; meanings are HIGH CONFIDENCE / inferred.
+These are all the frame types either firmware builds or dispatches
+(VERIFIED by every SLIP-encoder and CRC call site on both units).
+Sizes, directions and call sites are VERIFIED; timing has the
+confidence noted. Table form: `main_unit/analysis/protocol/msg_types.csv`.
 
-| Type | Decoded by | Payload | Notes |
-| ---: | --- | ---: | --- |
-| `0x01` | Main | 424 B (`0x1A8`) @ off 3 | large state/settings block pushed to Main (copied to a 424-B struct) |
-| `0x02` | Main | request (len 5) → reply 363 B; or set (len `0x16B`) | 5-B request ⇒ Main replies with a 358-B (`0x166`) block; full-length frame writes that block |
-| `0x03` | Control | 512 B (`0x200`) | block pushed to Control (plus an array re-pack) |
-| `0x06` | Main & Control | 104 B (`0x68`) | bidirectional 104-B block (Main can reply on request, len 5) |
-| `0x08` | Control | block (array) | pushed to Control |
+| Type | Direction | Payload | Purpose | Pairing / timing |
+| ---: | --- | --- | --- | --- |
+| `0x01` | Control→Main | 424 B | front-panel settings image (layout of the Main settings struct) | Sent from the Control TIM13 "SLIP client" callback every period while the TX lock is free (period ~20 ms, MEDIUM). Main counts main-loop passes since the last `0x01`; after ~1000 passes (~2–3 s) it logs the controller as offline and drops PTT/key/tune. Byte `0x158` carries the acknowledge for `0x08`. |
+| `0x02` | requester→Main (5-B request or full-length set); Main→requester (358-B reply) | 358 B | calibration block (`0x24013AA4`) | A 5-B request gets the block back. A full-length frame overwrites the RAM copy only; this handler does not write the EEPROM. Control V1.0.1 never sends `0x02` (VERIFIED), so it is probably meant for a factory/calibration tool (HYPOTHESIS). |
+| `0x03` | Main→Control | 552 B | 512-B spectrum plus 40-B meter/status tail | Built in the TIM7 interrupt path (`FUN_0804995c`). After sending, Main raises an "FFT wanted" flag, the FFT clears it, and the next frame is built, so the rate follows the FFT. A frame is skipped while the TX lock is busy, and Control drops new data until it has consumed the previous frame. |
+| `0x06` | Control→Main (5-B request); Main→Control (104-B reply) | 104 B | slave info (versions) | Control's state machine (`FUN_08034c0c`) sends the request on UI demand and retries every 100 ms until a reply arrives. Main answers any `0x06`. |
+| `0x08` | Main→Control | 46 B | TRX state changed by a network client (wfview/CI-V) | Active only while a network client controls the radio. Sent when the 42-B snapshot changes and resent at least every 300 ms until Control echoes its sequence number in `0x01` byte `0x158`, so delivery is reliable (HIGH CONFIDENCE). |
 
-Request/response uses a lock flag with a ~100 ms timeout; replies are
-assembled, CRC-appended, SLIP-encoded, then transmitted:
-- Main TX path: `FUN_08030358` (and `FUN_08021eb0` notifies the app).
-- Control TX path: `FUN_080300a4`.
+**Reliable state push (`0x08`).** The record is `[3][seq][0][0]`
+followed by 42 bytes of TRX fields:
+- byte 0 is the sub-type and must be 3;
+- `seq` runs 1–255, wraps and is never 0.
+
+Main keeps a "pending" copy and an "acked" copy, and compares each new
+snapshot with the pending copy (or with the acked copy if nothing is
+pending). When Control echoes the pending `seq`, the pending copy
+becomes the acked one. A change in network-control state fills the
+acked copy with 0xFF to force a full resend.
+
+**Buffers and locks.**
+- **Main:** decoded buffer `0x24018B30`, TX build buffer `0x24017F30`,
+  encoded buffer `0x30005360`, TX-busy lock `0x24017F28`. The lock is
+  cleared by the TX-complete callback `FUN_08049638`.
+- **Control:** ring `0x38000000`, decoded buffer `0x240033EC`, TX build
+  buffer `0x240063EC`, encoded buffer `0x38001000`, lock `0x240073F0`.
+  The lock is cleared by `FUN_08034BF0`.
+
+**Why this needed the firmware:** reserved header bytes, the ack scheme
+inside the payload, the timers behind each type, and the fact that
+`0x02` has no sender are software choices. A capture of the wire would
+show frames but not their purpose or what is unused.
 
 ## Primitives (reference)
 
@@ -172,16 +201,16 @@ assembled, CRC-appended, SLIP-encoded, then transmitted:
 | --- | --- | --- |
 | RX handler (superloop) | `FUN_08049658` | `FUN_08034984` |
 | SLIP decode | `FUN_0804a258` | `FUN_08052be4` |
-| SLIP encode | `FUN_0804a200` | (equivalent) |
+| SLIP encode | `FUN_0804a200` | `FUN_08052b8c` |
 | CRC-16/ARC | `FUN_0804ae3c` | `FUN_08052c44` |
-| TX frame | `FUN_08030358` | `FUN_080300a4` |
+| TX frame | `FUN_08030358` | `FUN_0802f2f4` (HAL UART DMA transmit) |
+| RX re-arm | — | `FUN_080300a4` (receive-to-idle DMA restart) |
+| debug log | `FUN_08021eb0` (printf-style) | — |
 | memcpy | `FUN_080540ca` | `FUN_0808750a` |
 
 Evidence: `*/analysis/protocol/`.
 
 ## Unknowns
 
-- The 2 header bytes after `type` (seq? address? length? sub-id?).
-- Full command-ID map and payload field layouts (424/512/358/104-B
-  blocks — these are the radio's shared state; decode next).
+- Who sends `0x02` in the field (a factory tool?).
 - Direction/role handshake and the CH394-Ethernet relationship.

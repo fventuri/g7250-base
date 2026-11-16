@@ -1,0 +1,8 @@
+type,direction,frame_len,payload_off,payload_len,builder,receiver,timing,confidence
+0x01,C->M,0x1AD,3,0x1A8,C:FUN_080228cc,M:FUN_08049658,TIM13 period (~20ms) when TX free,VERIFIED(timing MEDIUM)
+0x02,M->req,0x16B,3,0x166,M:FUN_08049658,M:FUN_08049658,reply to 5-B request; 0x16B-B frame = set,VERIFIED
+0x02,?->M,5,-,0,none in Control v1.0.1,M:FUN_08049658,request,VERIFIED
+0x03,M->C,0x22D,3,0x228,M:FUN_0804995c,C:FUN_08034984,per FFT frame (TIM7 ISR path),VERIFIED(rate MEDIUM)
+0x06,C->M,5,-,0,C:FUN_08034c0c,M:FUN_08049658,on UI request; retry 100ms,VERIFIED
+0x06,M->C,0x6D,3,0x68,M:FUN_08049658,C:FUN_08034984,reply,VERIFIED
+0x08,M->C,0x33,3,0x2E,M:FUN_0804995c,C:FUN_08034984,on change + resend >=300ms until acked,VERIFIED

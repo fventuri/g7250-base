@@ -111,12 +111,14 @@ Roadmap mirrors `REVERSE_ENGINEERING_GUIDE.md`, tracked per unit.
       0x02=calibration data, 0x06=slave info. Structs located.
 - [x] 0x01 settings block: partial field map (18 fields) in
       docs/protocol.md + cmd01_fields.csv; consumer FUN_08041EF4.
-- [ ] Identify the 2 header bytes after `type` (seq/addr/len/sub-id?).
+- [x] Header bytes after `type`: reserved, always zero (docs/protocol.md).
 - [ ] Finish the 0x01 424-B layout (VFO/freq/mode, RF gain, VOX, EQ,
       DNR, wfview user/pass, flags 2 — offsets TBD).
 - [ ] Decode 0x02 calibration (358B @0x24013AA4) and 0x06 slave-info
       (104B @0x24018F30) layouts; relate 0x02 to TRX struct 0x24013C0C.
-- [ ] Complete the command-ID map (watch for more types beyond 01/02/03/06/08).
+- [x] Complete message-type map: 0x01/0x02/0x03/0x06/0x08 only, with timing
+      and the 0x08 sequence/ack scheme.
+- [ ] Who sends SLIP 0x02 in the field (factory tool?).
 - [x] Physical layer: USART2 PD5/PD6 AF7, 460 800 8N1, DMA (docs/protocol.md).
 - [ ] Roles of Main UART4 (PD1/PH14) and USART1, and Control USART1.
 - [ ] Main Unit networking: CH394 Ethernet, CI-V over LAN, "WFV" audio/
