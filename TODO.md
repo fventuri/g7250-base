@@ -159,6 +159,8 @@ Roadmap mirrors `REVERSE_ENGINEERING_GUIDE.md`, tracked per unit.
 - [x] X6100 tooling leftovers: verify_tx_biquads.py and generate_analysis_markdown.py
       removed; evidence manifest and lib matcher ported; tools/filter_response.py added.
 - [ ] run_headless_*.sh wrappers: accept absolute output paths.
+- [x] Full export runner (tools/run_full_export.sh) + doc checker (tools/check_docs.py) + CreateVectorFunctions.java.
+- [ ] Add confidence tags to the ~77 findings check_docs.py flags; regenerate */analysis/memory/function_ranges.csv from a --vectors export.
 - [ ] Compare with X6100 and G90 findings where behavior overlaps.
 
 ## Round 2 — follow-up items (N01–N44)
@@ -178,7 +180,7 @@ Roadmap mirrors `REVERSE_ENGINEERING_GUIDE.md`, tracked per unit.
 - [ ] N25 SLIP 0x03/0x08 completeness · [ ] N26 SLIP link state machine · [ ] N27 Control storage
 - [ ] N42 CI-V command set · [ ] N43 GUI layer
 - [x] N15 X6100 tooling leftovers · [ ] N38 library identification · [ ] N39 RAM object map
-- [ ] N40 reproducible export run + doc checker
+- [x] N40 reproducible export run + doc checker
 - [ ] N44 X6100/G90 comparison — BLOCKED: no X6100/G90 material in this repo
 - [ ] Identify the SPI2 DAC chip; circuit roles of DAC channels 5 and 6.
 - [ ] Confirm in hardware whether an analog SWR/ALC fold-back exists outside the MCU.

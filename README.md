@@ -101,7 +101,21 @@ OUTPUT_DIR="$OUTPUT_ROOT/interrupts" ./tools/run_headless_interrupts.sh
 ./tools/run_headless_function_ranges.sh "$OUTPUT_ROOT/memory/function_ranges.csv"
 ```
 
-Ghidra: 12.1.4. Tooling verified with OpenJDK 25.
+Full, reproducible export (all exporters, both units, output outside the
+repo or in a git-ignored directory):
+
+```sh
+FW_DIR=/path/to/FW tools/run_full_export.sh --all-steps /path/outside/repo all
+python3 tools/check_docs.py --main-ranges /path/outside/repo/main/function_ranges.csv \
+    --control-ranges /path/outside/repo/control/function_ranges.csv
+```
+
+A raw-binary import does not create functions at the vector-table
+targets. The `--vectors` step (`ghidra_scripts/CreateVectorFunctions.java`)
+creates them. `check_docs.py` verifies cited addresses, flags untagged
+findings and rejects verbatim firmware text.
+
+Ghidra: 12.1.4 and 12.2. Tooling verified with OpenJDK 25.
 
 ------------------------------------------------------------------------
 
