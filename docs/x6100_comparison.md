@@ -1,6 +1,6 @@
 # G7250 compared with the X6100 (and G90)
 
-Status: X6100 part DONE; G90 part BLOCKED. The G7250 side comes from this repo's own findings.
+Status: X6100 and G90 parts DONE, each limited to its source (below). The G7250 side comes from this repo's own findings.
 The X6100 side comes from two places:
 - the X6100 facts already recorded in these docs (the tooling and
   method were ported from an X6100 BASE project);
@@ -9,7 +9,9 @@ The X6100 side comes from two places:
 
 Only interface facts visible in that public source are used, and no
 code is taken from it. There is **no G90 material** in this repo or its
-sources, so no G90 comparison is possible here (BLOCKED).
+sources. The G90 comparison below therefore uses only Radioddity's
+public document "G90 CAT control and digital modes" v1.0 (its CI-V
+table and connection notes), not G90 firmware.
 
 ## Architecture
 
@@ -146,6 +148,48 @@ Several X6100 DSP and trim registers are missing, while network, CW
 decoder and RTTY fields are new. This is consistent with Xiegu evolving
 the X6100 base protocol into the G7250 settings image (HYPOTHESIS).
 
+## G90 (from its published CI-V table)
+
+**Architecture.** Like the G7250, the G90 is split into a base unit and
+a display unit, each with its own firmware update. The published guide
+lists separate updates for both units. CAT runs at 19 200 baud on the
+display unit's serial port, and firmware updates at 115 200 baud.
+
+**CI-V.** The G90 implements a subset of Icom CI-V and answers several
+addresses (default 0x70). The G7250 has two parsers (`docs/civ.md`):
+- the **Control Unit USART1 parser**, which closely matches the G90;
+- the **Main Unit wfview parser**, an IC-7300 emulation.
+
+| Command | G90 (published) | G7250 Control parser | G7250 Main (wfview) |
+| --- | --- | --- | --- |
+| addressing | answers several addresses | no address filter; 0x19 echoes the caller's address | 0xA0 or broadcast only |
+| 00 / 05 | set frequency | 05 sets frequency | 00 sets frequency; 05 selects the VFO (quirk) |
+| 01 / 06 | set mode | 06 sets mode | 06 sets mode |
+| 02 | get band edges | fixed band-edge reply | not handled |
+| 03 / 04 | get frequency / mode | same | same |
+| 07 | 00 VFO A, 01 VFO B, B0 swap | **same three** | adds A0 copy A→B, B1 copy |
+| 0F | split off/on | same | same |
+| 11 | toggle/get ATT | read (0x20 = on) / set | same as Control |
+| 14 | 01 AF, 03 SQL, 09 CW tone, 0A power, 0C key speed; others read 255 | 01 02 03 06 0A 0B 0C 12; others read 0 | full set incl. NR, mic, compressor, break-in, NB, monitor, VOX |
+| 15 | 01 SQL, 02 S, 11 Po, 12 SWR | 02 S, 12 SWR, 15 Vd | 02 S, 11 Po, 12 SWR, 13 ALC, 15 Vd, 16 Id |
+| 16 | 02 PRE, 12 AGC, 22 NB, 44 COMP, 50 dial lock | 02 PRE, 22 NB, 40–50 subset | 02, 22, 40–47 functions |
+| 1C | 00 PTT, 01 ATU off/on/tune | 00 PTT | 00 PTT, 01 ATU off/on/tune |
+| 19, 1A, 1D, 25, 26 | not listed | 19, 1A (filter, AGC), 1D vendor, 25, 26 | 19, 1A, 25, 26, 27 scope |
+
+**Mode codes on the wire.** All three use the Icom codes (00 LSB, 01 USB,
+02 AM, 03 CW, 07 CWR). The G7250 adds RTTY and FM codes.
+
+**Conclusion (HYPOTHESIS).** The G7250 Control CI-V parser looks like
+the G90 parser, extended with more levels, meters and the 0x25/0x26
+VFO commands: same VFO sub-commands, same ATT/PTT/ATU forms, the same
+"answer any address" behaviour. The Main wfview parser is a separate
+IC-7300 emulation.
+
+**Limits.** The table compares the G7250 firmware with the G90's
+*published* command list, not with G90 firmware. G90 internals (MCUs,
+the base protocol between its two units) are not covered by any source
+available here.
+
 ## Timing and robustness
 
 - **X6100 (from the public GUI code).** Base writes can fail and are
@@ -157,7 +201,8 @@ the X6100 base protocol into the G7250 settings image (HYPOTHESIS).
 
 ## Open
 
-- G90: no firmware analysis available.
+- G90: internals (MCUs, base↔display protocol) need G90 firmware analysis,
+  which is not available here.
 
 **Why this needed the firmware:** the G7250 side of every row (image
 layout, mode codes, timing) exists only in the G7250 firmware.
