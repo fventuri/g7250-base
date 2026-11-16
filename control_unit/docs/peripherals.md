@@ -40,7 +40,7 @@ the H7 IRQ numbering.
 | **SDMMC1** | base refs + IRQ49 | SD card (config.ini on `1:/`) | HIGH |
 | SPI1/2, SPI5 | base refs; SPI2/I2S2 ×6 | SPI2/I2S2 likely audio I²S; others TBD | MED |
 | **USART2** | IRQ38; PD5/PD6 AF7; 460 800 8N1; DMA1 S2 TX / S3 RX circular | inter-MCU SLIP link (↔ Main USART2) | VERIFIED |
-| USART1 | init `FUN_08023234`; PA9/PA10 AF7; 115 200; RX DMA1 S4 circular | console (role open) | HIGH |
+| USART1 | init `FUN_08023234`; PA9/PA10 AF7; 115 200 8N1; RX DMA1 S4 circular | **Bluetooth module (AT commands)** | VERIFIED |
 | **USB_OTG_FS** | base ref ×52 | **PC USB** (manual): CAT/control + **audio sound card** (digital-mode line-in) + firmware update; PC driver **CH342**. N1MM CW keying | HIGH |
 | TIM2/3/5/7/8/13/14 | active IRQs + strings | service timers (touch, encoders, audio, SLIP, input) | HIGH |
 | GPIOA/B/C/E/H/I | heavy GPIO access | panel discretes, display/touch control | HIGH |
@@ -103,4 +103,43 @@ table is `analysis/peripherals/gpio_map.csv`.
 
 **Why this needed the firmware:** no schematic is public. The
 datasheet lists only possible pin functions.
+
+## USART1 — Bluetooth module (XG-BT-G7250), VERIFIED unless noted
+
+**Link.** USART1 (PA9 TX / PA10 RX, AF7) runs at 115 200 8N1.
+Reception uses circular DMA1 Stream4 (request 41) into a 1 KiB ring at
+`0x38003000` (SRAM4), started by `FUN_080332dc` and drained by polling
+from the superloop task `FUN_080332c8`. There is no USART1 IRQ, and
+transmission is blocking.
+
+**Protocol: line-based AT commands.** Each command is "AT" + command +
+arguments + CR LF, and the driver expects an "OK" line. Each command
+has a 3 s timeout, 5 retries and a completion callback. Lines with an
+unsolicited-message prefix go to a handler that is empty in V1.0.1.
+
+**Commands.**
+- `+BD<name>` sets the device name (under 32 characters; defaults to
+  the module name).
+- `+CZ`, `+B4` with argument `00`, and `+CW` take no other arguments.
+  Their meaning is a HYPOTHESIS: they look like a vendor BT-audio
+  module command set.
+
+No command reads the address or the link status back, so the
+Bluetooth settings page shows placeholders (MEDIUM CONFIDENCE).
+
+**Power (HIGH CONFIDENCE).** Module power is bit 4 of a PCA9557 I2C GPIO
+expander (I2C2, 7-bit 0x19, reset PG3). BT-on (`FUN_08033248`) sets
+the bit and queues the name command. BT-off (`FUN_08033230`) clears it
+and flushes the queue. At boot `FUN_080447d8` applies the stored enable
+setting.
+
+**Audio (MEDIUM CONFIDENCE).** There is no digital audio link to the
+module: no SAI, I²S2 belongs to the codec, and USART1 carries only AT
+text. BT audio presumably runs analog through the Control Unit audio
+codec (HYPOTHESIS). Bluetooth is handled entirely on the Control Unit;
+there is no SLIP message for it (HIGH CONFIDENCE).
+
+**Why this needed the firmware:** the manual names only the module. The
+UART, pins, DMA, AT dialect, timeouts and the power switch on the
+expander exist only in the code.
 

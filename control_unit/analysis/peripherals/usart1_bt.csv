@@ -1,0 +1,14 @@
+field,value
+instance,0x40011000
+handle,0x24002588
+baud,115200
+frame,8N1
+tx_pin,PA9 AF7
+rx_pin,PA10 AF7
+rx_dma,DMA1_Stream4 req41 circular byte
+rx_ring,0x38003000 len0x400
+task,0x080332C8
+init,0x080332DC
+power_on,0x08033248
+power_off,0x08033230
+power_ctl,PCA9557 I2C2 0x19 bit4

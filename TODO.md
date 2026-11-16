@@ -96,9 +96,10 @@ Roadmap mirrors `REVERSE_ENGINEERING_GUIDE.md`, tracked per unit.
 - [x] Main Unit USB: not used at runtime (false-positive references); see
       main_unit/docs/peripherals.md. Bootloader jump via RTC wake-up documented.
 - [ ] Who arms the Main RTC wake-up timer (bootloader?).
-- [ ] Map the **Bluetooth** module (XG-BT-G7250) on the Control Unit —
-      two-way audio + control channel (candidate: UART-attached BT). New
-      peripheral from the manual; not yet located in firmware.
+- [x] Bluetooth XG-BT-G7250 on Control USART1 (AT commands, PCA9557 power
+      bit); see control_unit/docs/peripherals.md.
+- [ ] Bluetooth: identify the module chip, the meaning of +CZ/+B4/+CW, and
+      the analog audio routing into the codec.
 
 ## Phase 5 — Inter-MCU SLIP protocol (docs/protocol.md)
 
