@@ -1,0 +1,70 @@
+pin,mode,pull,af,init,role,source,confidence
+PA2,analog,none,,,ADC1 input,FUN_08020f44,HIGH
+PA4,analog,none,,,DAC1_OUT1,FUN_08021300,HIGH
+PA5,analog,none,,,DAC1_OUT2,FUN_08021300,HIGH
+PA6,analog,none,,,ADC1 input,FUN_08020f44,HIGH
+PA8,output OD,pull-up,,1,unknown,FUN_08021830,VERIFIED
+PA10,output PP,none,,1,SPI1 chain A output-enable (also set in power-off),FUN_08049568,VERIFIED
+PA11,output PP,none,,1,SPI1 chain A latch (no USB AF),FUN_08049584,VERIFIED
+PA12,output PP,none,,1,unknown (set in power-off; no USB AF),FUN_08021470,VERIFIED
+PA15,AF PP,pull-up,6,,I2S3_WS,FUN_08021ccc,HIGH
+PB1,analog,none,,,ADC1 input,FUN_08020f44,HIGH
+PB5,output PP,none,,0,CH394 RST#,FUN_08048d28,VERIFIED
+PB6,AF PP,none,7,,USART1_TX,FUN_08024218,HIGH
+PB7,AF PP,none,7,,USART1_RX,FUN_08024218,HIGH
+PB8,AF OD,none,4,,I2C1_SCL,FUN_08021a00,HIGH
+PB9,AF OD,none,4,,I2C1_SDA,FUN_08021a00,HIGH
+PB10,output PP,none,,0,audio codec reset,FUN_0804a65c,HIGH
+PB11,output PP,none,,1,unknown,FUN_08021470,VERIFIED
+PB12,output PP,none,,0,unknown,FUN_08021470,VERIFIED
+PB13,AF PP,none,5,,SPI2_SCK,FUN_0802317c,HIGH
+PB14,output PP,none,,0,unknown,FUN_08021470,VERIFIED
+PB15,AF PP,none,5,,SPI2_MOSI,FUN_0802317c,HIGH
+PC4,analog,none,,,ADC1 input,FUN_08020f44,HIGH
+PC5,analog,none,,,ADC1 input,FUN_08020f44,HIGH
+PC7,output PP,none,,0,TX/RX line (high in TX),FUN_0803e338,VERIFIED
+PC8,output OD,pull-up,,1,unknown,FUN_08021830,VERIFIED
+PC9,AF PP,none,5,,I2S_CKIN external clock,FUN_08021470,HIGH
+PC10,AF PP,pull-up,6,,I2S3_CK,FUN_08021ccc,HIGH
+PC11,AF PP,pull-up,6,,I2S3_SDI,FUN_08021ccc,HIGH
+PC12,AF PP,pull-up,6,,I2S3_SDO,FUN_08021ccc,HIGH
+PC13,IT falling,pull-up,,,CH394 INT#,FUN_08023ab4,HIGH
+PD1,AF PP,none,8,,UART4_TX,FUN_08024218,HIGH
+PD5,AF PP,none,7,,USART2_TX SLIP,FUN_08024218,VERIFIED
+PD6,AF PP,none,7,,USART2_RX SLIP,FUN_08024218,VERIFIED
+PD7,AF PP,none,5,,SPI1_MOSI,FUN_0802317c,HIGH
+PD12,AF PP,none,2,,TIM4_CH1 PWM (role unknown),FUN_08023c88,HIGH
+PD13,output PP,none,,1,SPI1 ATU control latch CS,.data 0x2400484c,VERIFIED
+PE0-PE7,output PP,pull-up,,0,FPGA parallel bus D0-D7,FUN_0803a3a0,HIGH
+PE8,output PP,pull-up,,0,FPGA bus strobe,FUN_0803a3a0,HIGH
+PE9,output PP,pull-up,,0,FPGA bus strobe,FUN_0803a3a0,HIGH
+PE10,IT rising,pull-up,,,FPGA event,FUN_08023ab4,MEDIUM
+PE14,output OD,none,,1,unknown,FUN_08021470,VERIFIED
+PE15,output OD,none,,1,unknown,FUN_08021470,VERIFIED
+PF0,AF OD,none,4,,I2C2_SDA,FUN_08021a00,HIGH
+PF1,AF OD,none,4,,I2C2_SCL,FUN_08021a00,HIGH
+PF4,output PP,none,,0,TX/RX line (high in RX),FUN_0803d03c,VERIFIED
+PF6,output PP,none,,0,TX/RX line (high in TX),FUN_0803e338,VERIFIED
+PF11,analog,none,,,ADC1 input,FUN_08020f44,HIGH
+PF13,input,pull-up,,,unknown,FUN_08021470,VERIFIED
+PF14,output PP,pull-up,,0,unknown,FUN_08021470,VERIFIED
+PG2,output PP,none,,1,SPI1 ATU bank latch CS,.data 0x24004858,VERIFIED
+PG5,output PP,none,,1,SPI1 ATU bank latch CS,.data 0x24004864,VERIFIED
+PG11,AF PP,none,5,,SPI1_SCK,FUN_0802317c,HIGH
+PG12,AF PP,none,5,,SPI6_MISO,FUN_0802317c,VERIFIED
+PG13,AF PP,none,5,,SPI6_SCK,FUN_0802317c,VERIFIED
+PG14,AF PP,none,5,,SPI6_MOSI,FUN_0802317c,VERIFIED
+PG15,output PP,none,,1,CH394 CS#,FUN_080487d4,VERIFIED
+PH3,IT both,pull-up,,,CW key contact A,FUN_08023ab4,HIGH
+PH4,IT both,pull-up,,,CW key contact B,FUN_08023ab4,HIGH
+PH5,input,pull-up,,,unknown (read in power-off),FUN_08021edc,VERIFIED
+PH6,IT both,pull-up,,,PTT input,FUN_08023ab4,HIGH
+PH7,AF OD,none,4,,I2C3_SCL,FUN_08021a00,HIGH
+PH8,AF OD,none,4,,I2C3_SDA,FUN_08021a00,HIGH
+PH9,output PP,none,,0,power enable?,FUN_0802239c,HYPOTHESIS
+PH10,output PP,none,,1,SPI1 chain B output-enable (also set in power-off),FUN_0804a2b8,VERIFIED
+PH11,output PP,pull-up,,0,TX/RX line (high in TX),FUN_08021830,VERIFIED
+PH12,output PP,none,,1,SPI1 chain B latch,FUN_0804a2d4,VERIFIED
+PH13,output PP,none,,0,unknown (high after FPGA init),FUN_0802239c,VERIFIED
+PH14,AF PP,none,8,,UART4_RX,FUN_08024218,HIGH
+PH15,output PP,none,,1,unknown (low after FPGA init),FUN_0802239c,VERIFIED

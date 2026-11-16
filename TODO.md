@@ -80,7 +80,15 @@ Roadmap mirrors `REVERSE_ENGINEERING_GUIDE.md`, tracked per unit.
 - [ ] Confirm the VC6 crystal (26 MHz?), whether OUT1 is 245.76 or
       122.88 MHz, and where OUT1 goes (FPGA/ADC): needs a board photo or
       a probe.
-- [ ] GPIO pin maps (I2C/SPI/UART AF pins) — compare X6100 assignments.
+- [x] GPIO pin maps for both units (*/analysis/peripherals/gpio_map.csv,
+      */docs/peripherals.md). X6100 comparison skipped: its pin map is not
+      in this repo.
+- [ ] Roles of unknown Main outputs (PH9/PH13/PH15, PE14/PE15, PA8/PC8,
+      PA12, PB11/PB12/PB14, PF14) and inputs (PH5, PF13).
+- [ ] Main Unit: confirm whether external SDRAM/FMC exists at all (no FMC
+      pins or kernel clock configured).
+- [ ] Control Unit: roles of the pull-up inputs (keys/encoders); confirm
+      whether PC USB is the MCU's own OTG_FS port or a CH342.
 - [ ] Identify the ~26 (main) / ~28 (control) init functions from `main()`.
 - [ ] Main Unit TRX-state struct at `0x24013C0C` — recover layout.
 - [ ] Re-examine **Main Unit `USB_OTG_FS`** (base ref ×32): the Main Unit

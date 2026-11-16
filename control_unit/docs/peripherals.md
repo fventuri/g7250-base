@@ -9,7 +9,7 @@ the **STM32H7** NVIC table.
 
 | IRQ | Handler | H7 peripheral | Inferred role | Conf |
 | ---: | --- | --- | --- | --- |
-| 8 | `FUN_08022780` | EXTI2 | external line (touch INT?) | HIGH |
+| 8 | `FUN_08022780` | EXTI2 | **GT911 touch INT on PE2** | VERIFIED |
 | 11 | `FUN_0802275c` | DMA1_Stream0 | DMA (I2C/SPI/audio) | HIGH |
 | 12 | `FUN_08022768` | DMA1_Stream1 | DMA | HIGH |
 | 13 | `FUN_08022774` | DMA1_Stream2 | DMA | HIGH |
@@ -61,3 +61,45 @@ new subsystem: GT911 touch, LTDC + FMC SDRAM + DMA2D graphics, SDMMC SD
 card, rotary encoders, H-22 mic, and the PC-facing USB (CH342) — a full
 GUI front end driving the Main Unit over SLIP. External connectors and
 the full menu/parameter set are in `docs/hardware.md`.
+
+## GPIO pin map — register values VERIFIED, roles as noted
+
+**Method.** HAL_GPIO_Init on this unit is `FUN_08026d80` (it also
+programs SYSCFG EXTICR and the EXTI trigger/mask registers). The
+write and read helpers are `FUN_080271a4` / `FUN_08027198`. The full
+table is `analysis/peripherals/gpio_map.csv`.
+
+**Highlights:**
+- **FMC SDRAM (`FUN_08020f38`, AF12).** 16-bit data, A0–A12, BA0/1 and
+  NBL0/1 on SDRAM bank 1. Data pins: PD0/1, PD8–10, PD14/15, PE0/1 and
+  PE7–15. Address pins: PF0–5, PF11–15, PG0–2, PG4/5 and PG15. Strobes:
+  PG8 SDCLK, PC0 SDNWE, PC3 SDCKE0, PH3 SDNE0.
+- **LTDC (`FUN_08021928`).** 16-bit RGB565 with HSYNC on PI10, VSYNC on
+  PI9, DE on PF10 and the pixel clock on PG7.
+- **SDMMC1.** 4-bit, on PC8–PC12 and PD2.
+- **GT911 touch (VERIFIED).** INT on PE2 (EXTI2, rising edge), RST on
+  PG14, held low for 20 ms.
+- **Encoder.** TIM2 in encoder mode on PA5/PA1, probably the main dial
+  (HIGH CONFIDENCE).
+- **PWM.** TIM4 CH1/CH2 on PD12/PD13, started during display bring-up
+  (backlight? HYPOTHESIS).
+- **Key matrix (MEDIUM CONFIDENCE).** `FUN_08035f80` scans open-drain
+  lines with pull-ups and reads them back: PA2, PA7, PB2, PC4, PC5,
+  PC13, PH6, PH7, PH9 and PI8.
+- **SPI and I²S.**
+  - SPI1 on PB3–PB5 (with MISO). A log line about a FatFS init on SPI
+    suggests an SPI flash (HYPOTHESIS).
+  - SPI2 runs as I²S2 on PB12–PB15: full-duplex, with circular 32-bit
+    DMA on DMA1 Stream0 (RX) and Stream1 (TX).
+- **Audio codec reset on PH2 (HIGH CONFIDENCE).** It is held low for
+  100 ms, then the codec is initialised for 48 kHz/32-bit, with the
+  same sequence the Main Unit uses. **The Control Unit therefore has
+  its own audio codec.**
+- **USB.** USB_OTG_FS is on PA11/PA12 (AF10), clocked from HSI48, with
+  IRQ101. The MCU drives its own USB port, so the note that the PC USB
+  goes through a CH342 needs re-checking.
+- **UARTs.** USART1 on PA9/PA10, USART2 (SLIP) on PD5/PD6.
+
+**Why this needed the firmware:** no schematic is public. The
+datasheet lists only possible pin functions.
+

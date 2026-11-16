@@ -48,7 +48,7 @@ From base-address references and register-access counts:
 | **ADC1/2 + ADC3** | IRQ18 + 27/41 accesses | RF metering: fwd/ref power, SWR, Vext, temp, S-meter | HIGH |
 | TIM5/6/7 | active IRQs | time bases / DAC & audio triggers | HIGH |
 | **USB_OTG_FS** | base ref ×32 | USB device — role unclear: the **Main Unit has no external USB connector** (manual), so this is **not** the PC CAT/audio port (that is on the Controller, CH342). Vestigial / internal / FW-update? | LOW |
-| **FMC @ 0xC0000000** | ×65 refs | external SDRAM (DSP / streaming buffers) | HIGH |
+| FMC @ 0xC0000000 | ×65 refs (earlier count); **no FMC pins (AF12) configured and no FMC kernel clock set** | external SDRAM doubtful — re-check (see GPIO pin map) | LOW |
 | DMA1 (str0/4/5/7), DMA2 (str5) | active IRQs | peripheral DMA | HIGH |
 | GPIOA/B/E/G/H | heavy GPIOE/G access | RF band switching, PA control, discretes | HIGH |
 | RTC, IWDG1, EXTI | accesses + IRQs | wakeup, watchdog, external lines | HIGH |
@@ -314,6 +314,58 @@ only the fallback. No code reprograms the chip later.
 or from OTP. Their datasheets give register maps only. The voltages,
 enables, divider plan and output types exist only in the init code and
 table.
+
+## GPIO pin map — register values VERIFIED, roles as noted
+
+**Method.** Built from every HAL_GPIO_Init call (`FUN_0802abd8`, 49
+call sites: the main GPIO init `FUN_08021470`, `FUN_08021830` and the
+MSP functions), the write/read helpers (`FUN_0802afc8` /
+`FUN_0802afbc`) and inline BSRR/ODR writes. The full table is
+`analysis/peripherals/gpio_map.csv`. Alternate-function → signal
+mapping follows the STM32H7 datasheet tables (HIGH CONFIDENCE).
+
+**Highlights:**
+- **FPGA bus (HIGH CONFIDENCE).** PE0–PE7 form a bit-banged 8-bit
+  bidirectional data bus with PE8/PE9 as strobes. The FPGA init and bus
+  test `FUN_0803a3a0` switches PE0–7 between output and input and
+  pulses PE9 for every byte. PE10 (rising-edge EXTI) is an FPGA event
+  line (MEDIUM CONFIDENCE).
+- **EXTI inputs (HIGH CONFIDENCE).** All are dispatched by the callback
+  `FUN_08023ab4`:
+  - PC13 = CH394 INT#;
+  - PE10 = FPGA event;
+  - PH6 = PTT in (both edges);
+  - PH3/PH4 = CW key or paddle contacts (both edges). A setting swaps
+    them, like a paddle-reverse option.
+- **T/R switching lines (VERIFIED).** In RX, PF4 is high and PF6, PC7
+  and PH11 are low. In TX it is the reverse. The function of each line
+  is a HYPOTHESIS.
+- **SPI1 latch lines.**
+  - Chain A: PA11 latch, PA10 enable.
+  - Chain B: PH12 latch, PH10 enable.
+  - ATU latches: PD13, PG2 and PG5.
+- **Clocks.**
+  - **PC9 = I2S_CKIN (AF5),** the external clock for SPI1/2/3 and I²S3.
+  - PD12 = TIM4_CH1 PWM, role unknown.
+- **Analog.** ADC1 inputs are PA2, PA6, PB1, PC4, PC5 and PF11, on
+  circular DMA1 Stream7. DAC1 outputs are PA4/PA5.
+- **Other.**
+  - PB10 = audio-codec reset.
+  - PH9 is driven high just before the PSU init (power enable?
+    HYPOTHESIS).
+  - The roles of several other outputs and inputs are open; see the CSV.
+
+**Two absences (MEDIUM CONFIDENCE):**
+- **No FMC pins are configured.** No pin uses AF12; the FMC data pins
+  are analog or used as the FPGA bus. Together with the missing FMC
+  kernel-clock setup, this casts doubt on the "external SDRAM" row
+  above, unless something reprograms the pins with raw register writes.
+- **No USB pins are configured.** PA11/PA12 are plain outputs, which
+  supports the vestigial-USB reading.
+
+**Why this needed the firmware:** no schematic is public. Datasheets
+only list which functions a pin *can* carry, not the mode, level, edge
+or driver actually used.
 
 ### vs. X6100
 
