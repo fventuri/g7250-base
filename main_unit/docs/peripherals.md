@@ -199,7 +199,8 @@ Both chains are written from the band and frequency update path
 - **Bits 18–20** form a 1-of-3 selector from one TRX-state setting
   (`FUN_0804a370`). **Bits 21–22** form a 2-way selector from another
   setting (`FUN_0804a608`). The switch-to-TX path sets both to the "off"
-  value. They are probably the RX attenuator and preamp (HYPOTHESIS).
+  value. Bits 18–20 are the **preamp** selector (from the VFO PRE byte)
+  and bits 21–22 the **attenuator** (from the VFO ATT byte); VERIFIED.
 - **Init value:** bits 17, 20 and 22 set, all others cleared.
 
 **Built-in ATU latches, also on SPI1 (HIGH CONFIDENCE).**

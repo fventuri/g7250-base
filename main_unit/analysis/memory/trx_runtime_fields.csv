@@ -2,18 +2,19 @@ offset,abs,width,field,consumer,confidence
 0x1b2,0x24013DBE,4,current RX filter edges,FUN_0803e128,MEDIUM
 0x1b8,0x24013DC4,40,shadow of active VFO record (diffed to apply mode/notch/DNR/AGC/ATT/PRE),FUN_0803ec3c,HIGH
 0x1e0,0x24013DEC,2,PA drive DAC code (channel 1),FUN_0803ec3c/FUN_0803d3b0,MEDIUM
-0x1e2,0x24013DEE,2,sqrt(power)*75 drive value,FUN_0803ec3c,MEDIUM
-0x1f0,0x24013DFC,4,TX activity counter (>0 means TX),many,MEDIUM
+0x1e2,0x24013DEE,2,SPI2 DAC ch6 = 75*sqrt(P),FUN_0803ec3c,VERIFIED
+0x1f0,0x24013DFC,4,TX hang counter ms (-10 per 10 ms tick),FUN_08037c10,VERIFIED
 0x21c,0x24013E28,4,XIT offset i32,FUN_08041ef4,VERIFIED
 0x220,0x24013E2C,4,RIT offset i32,FUN_08041ef4,VERIFIED
 0x224,0x24013E30,2,ADC max,FUN_08041a94,VERIFIED
-0x228,0x24013E34,1,global-TX-enabled mirror,FUN_0803ec3c,HIGH
+0x228,0x24013E34,1,TX allowed at current freq (band check + global TX),FUN_0803d658/FUN_0803ec3c,VERIFIED
 0x22c,0x24013E38,1,status flag -> 0x03 flags bit6,FUN_0804995c,HIGH
-0x22d,0x24013E39,1,FFT gating flag,FUN_08038da8,MEDIUM
-0x22e,0x24013E3A,1,TX-state flag,many,MEDIUM
-0x234,0x24013E40,1,TX-state flag,many,MEDIUM
-0x235,0x24013E41,1,TX-state flag,many,MEDIUM
+0x22d,0x24013E39,1,radio ready (gates EXTI PTT/key; cleared at power-off),FUN_0802239c/FUN_08021edc,HIGH
+0x22e,0x24013E3A,1,ATU tune carrier request,FUN_08041358,VERIFIED
+0x234,0x24013E40,1,combined TX request,FUN_08037c10,VERIFIED
+0x235,0x24013E41,1,hardware PTT PH6 active,FUN_08023ab4,VERIFIED
+0x236,0x24013E42,1,VOX TX,FUN_08035b50,VERIFIED
 0x237,0x24013E43,1,PTT from built-in source,FUN_08041ef4,VERIFIED
-0x238,0x24013E44,1,PTT from SWR/tune source,FUN_08041ef4,VERIFIED
-0x23b,0x24013E47,1,PTT from CI-V,FUN_08041ef4,VERIFIED
+0x238,0x24013E44,1,SWR-scan PTT (bypasses band table),FUN_08041ef4,VERIFIED
+0x23b,0x24013E47,1,CI-V / wfview PTT,FUN_08041ef4/wfview,VERIFIED
 0x241,0x24013E4D,1,global TX enable (= not flags1 bit3),FUN_08041ef4/FUN_0803ec3c,HIGH

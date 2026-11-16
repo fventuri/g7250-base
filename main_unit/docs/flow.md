@@ -265,3 +265,60 @@ EEPROM.
 **BandMap.** The 1920-byte "BandMap" size printed at boot belongs to a
 type that no Main code allocates, loads or sends. It is probably the
 Control Unit band stack (HYPOTHESIS).
+
+## PTT and T/R switching — VERIFIED unless noted
+
+**PTT sources.**
+- `0x01` byte `0x15E`:
+  - bit 0 = built-in PTT (TRX+0x237);
+  - bit 1 = serial CW key;
+  - bit 5 = start an ATU tune;
+  - bit 6 = SWR scan (TRX+0x238);
+  - bit 7 = CI-V PTT (TRX+0x23B, also written by the wfview LAN path).
+- The hardware PTT on PH6 (TRX+0x235).
+- VOX (`FUN_08035b50`: mic level against setting 0x117, hang time from
+  setting 0xEA; TRX+0x236).
+- The ATU tune carrier (TRX+0x22E).
+- The CW paddles/key on PH3/PH4.
+
+**Arbiter.** `FUN_08037c10` runs in the TIM6 interrupt at 100 Hz. It
+ORs all the sources into TRX+0x234 and calls the T/R switch when the
+result changes.
+- **CW/QSK hang:** a counter (TRX+0x1F0) is loaded with the setting
+  0x12A + 20 ms and counts down 10 ms per tick.
+- **Edge-triggered sources** react immediately, but only after the
+  "ready" flag (TRX+0x22D) is set at the end of boot.
+
+**TX entry** (`FUN_0803e338`), in order:
+1. Meter TX flag set; codec buffers cleared.
+2. Bias on (SPI2 DAC channels 2/8/7 = calibrated values).
+3. PF4 low, PC7 high.
+4. Chain B preamp/attenuator selectors set to their TX ("off") value.
+5. PF6 high.
+6. Chain A bit 7 (T/R) set.
+7. PH11 high.
+8. TX state set, and an FPGA config resend with the TX status bits.
+
+**RX entry** (`FUN_0803d03c`), in order:
+1. Meter TX flag cleared.
+2. Chain A bit 7 off.
+3. Bias 2/8/7 = 0.
+4. Chain B attenuator restored from the VFO.
+5. PF6 low, PF4 high, PC7 low, PH11 low.
+6. FPGA TX rings and audio buffers cleared.
+
+**Timing.** No explicit delay separates the steps. The only timing is:
+- the 10 ms arbiter tick;
+- the CW hang;
+- the VOX hang;
+- the 200 zero samples sent to the FPGA after keying.
+
+Bias is applied before the relay lines at TX and removed before them
+at RX. The LPF/BPF band bits are reselected by the band/frequency path
+(`FUN_0803ec3c`) when the TX state changes, not by the T/R routines
+(HIGH CONFIDENCE).
+
+**Chain B selectors.** Bits 18–20 follow the VFO PRE byte (0 → 2,
+PRE1 → 0, PRE2 → 1), and bits 21–22 the VFO ATT byte (VERIFIED).
+
+Open: which of PC7/PF6/PH11 is the rear SEND output.
