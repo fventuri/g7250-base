@@ -1,0 +1,22 @@
+item,value,source,confidence
+L latch,PG2 rec 0x24004858 bit order kept,FUN_08044e34,VERIFIED
+C latch,PG5 rec 0x24004864 bit order mirrored,FUN_08044dc0,VERIFIED
+ctrl bits 0-1,network style one-hot,FUN_08044d78,HIGH
+ctrl bits 2-3,set = in line; clear = bypass,FUN_08044d38,HIGH
+ctrl bits 4-5,antenna select,FUN_08044ea4,MEDIUM
+coarse grid,0 1 2 4 8 16 32 64 128 255,0x0807E994,VERIFIED
+fine steps,16 8 4 2 1,0x0807E98C,VERIFIED
+carry offsets,+2 -2 +4 -4 +8 -8,0x0807E984,VERIFIED
+guard ms,8000,FUN_08042d34,VERIFIED
+tune power W,10,FUN_08041358,VERIFIED
+tune mode,4 (CW),FUN_08041358,VERIFIED
+max freq Hz,54000000,FUN_08041358,VERIFIED
+self-test fwd W,0.5,FUN_08042d34,VERIFIED
+self-test delta,0.2,FUN_08042d34,VERIFIED
+warm accept g,2.0,FUN_08042d34,VERIFIED
+early exit g,1.5,FUN_08042d34,VERIFIED
+abort g,8.0,FUN_08042d34,VERIFIED
+final ok g,3.0,FUN_08042d34,VERIFIED
+min improvement,0.05,FUN_08042d34,VERIFIED
+merit sample timeout ms,25,FUN_08042d34,VERIFIED
+result codes,1 ok 3 fail 4 abort,0x24004848,VERIFIED

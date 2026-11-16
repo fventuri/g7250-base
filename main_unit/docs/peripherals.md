@@ -217,8 +217,8 @@ sends it as one byte, with the CS line acting as the latch.
 
 The tuning engine logs coarse and fine search steps over a style, an
 L value and a C value. These are the same three bytes the EEPROM ATU
-table stores per 100 kHz slot (`memory_map.md`). Which bank is L and
-which is C is open.
+table stores per 100 kHz slot (`memory_map.md`). PG2 is the L bank
+(bit order kept) and PG5 the C bank (mirrored); see `docs/atu.md`.
 
 SPI1 therefore drives five serial-in latches in total: chain A, chain
 B and these three ATU latches.
