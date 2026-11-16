@@ -86,8 +86,10 @@ Roadmap mirrors `REVERSE_ENGINEERING_GUIDE.md`, tracked per unit.
       in this repo.
 - [x] Main GPIO roles resolved where code allows (PH5 power button, PB11 heartbeat,
       PB12/PB14 DAC, PF13 unused).
-- [ ] Main outputs without a code consumer (PH9/PH13/PH15, PE14/PE15, PA8/PC8, PA12):
-      board trace. Control static outputs PH13/PG9/PG10/PI4 and CTRL routing of PE3/PE4/PI6.
+- [x] GPIO roles from firmware: exhausted. The remaining pins (Main PH9/PH13/PH15,
+      PE14/PE15, PA8/PC8, PA12; Control PH13/PG9/PG10/PI4) are only set at init or
+      power-off and have no other code consumer, so firmware cannot name them.
+- [ ] Hardware follow-up: board trace for those pins and the CTRL-cable routing of PE3/PE4/PI6.
 - [x] Main Unit has no external SDRAM/FMC (VERIFIED).
 - [x] Control pull-up inputs = button matrix, 8 encoders, SD detect (peripherals.md).
 - [x] Init functions from `main()` identified on both units (*/docs/flow.md,
