@@ -1,6 +1,6 @@
 # G7250 compared with the X6100 (and G90)
 
-Status: PARTIAL. The G7250 side comes from this repo's own findings.
+Status: X6100 part DONE; G90 part BLOCKED. The G7250 side comes from this repo's own findings.
 The X6100 side comes from two places:
 - the X6100 facts already recorded in these docs (the tooling and
   method were ported from an X6100 BASE project);
@@ -94,6 +94,58 @@ DSP map):
 - a CW decoder on the Control Unit;
 - band-limit tables in the calibration EEPROM block.
 
+## Field-by-field: X6100 base registers → G7250 `0x01` image
+
+**Source.** The X6100 register list is the public enum of the X6100
+control library (GitHub gdyuldin/X6100Control). It has 47 I2C register
+slots (indices 0–55, with gaps), each carrying a 32-bit word. The
+G7250 offsets are from `main_unit/analysis/protocol/cmd01_fields.csv`
+and `cmd01_vfo_record.csv`.
+
+| X6100 register (index) | Content | G7250 equivalent |
+| --- | --- | --- |
+| vfoa_ham_band (0) … vfoa_agc (5), vfob_* (6–11) | per-VFO band, frequency, ATT, PRE, mode, AGC | VFO records at `0x024` / `0x04C` (frequency u64, mode +0x18, ATT +0x25, PRE +0x26, AGC +0x20/+0x23); no band id |
+| sple_atue_trx (12) | split, voice-record, SWR-scan, ATU enable, ATU tune, modem TX, calibration TX, power-off, internal PTT bits | split `0x0A4`, ATU switch `0x0AC`, PTT-source bits in `0x15E` (built-in PTT, CW serial, tune, SWR scan, CI-V); power-off travels the other way (`0x03` flags bit 2) |
+| vi_vm (13) | selected VFO, band id | selected VFO `0x098` |
+| rxvol (14) | RX volume | AF gain stays on Control (applied in its own codec) |
+| rfg_txpwr (15) | RF gain, TX power, FFT span | RF gain `0x07B`, TX power `0x154` (f32 W), span index `0x088` |
+| atu_network (17) | ATU L/C/style | held on Main only (EEPROM ATU table, `docs/atu.md`); not in the image |
+| flow_fm_emp (18) | flow format, FM emphasis | none |
+| dac_adc_offsets (19) | gain offsets | none (Main-internal) |
+| ling_loutg_imicg_hmicg (20) | line-in, line-out, internal and handheld mic gain | line-in `0x0C8`, line-out `0x100`, one mic gain `0x0C4` |
+| micsel_pttmode_chge_spmode_auxiqgen_sqlthr (21) | mic select, PTT mode, charger, speaker mode, aux IQ, squelch threshold | global squelch `0x15D`; the rest has no counterpart |
+| voxg_voxag_voxdly_voxe (22) | VOX gain, anti-VOX, delay, on | VOX threshold `0x117`, timeout `0x0EA`, switch `0x11F`; no anti-VOX |
+| nrthr_nbw_nbthr_nre_nbe (23) | NR level, NB width/level, NR/NB enable | NR level `0x0F2`, NB level `0x0F7`, NB switch `0x11B`; NR type per VFO (+0x1C); no NB width |
+| dnfcnt_dnfwidth_dnfe (24) | notch centre/width/enable | notch centre (VFO +0x1A), manual/auto notch (+0x1E/+0x1F); no width |
+| cmplevel_cmpe (25) | compressor level (off, 1:2, 1:4, 1:8), enable | compressor switch `0x170`, ratio index `0x171` |
+| agcknee/agcslope/agchang (27), agctime (28) | AGC shape | none (AGC is a per-VFO mode only) |
+| monilevel (29) | monitor level | `0x0FF` |
+| ks_km_kimb_cwtone_cwvol_cwtrain (33) | key speed, key mode, iambic, CW tone, CW volume, trainer | `0x12E`, `0x134/0x137/0x139`, `0x138`, `0x128`, `0x15A`, `0x159` |
+| qsktime_kr (34) | QSK time, key ratio | `0x12A`, `0x124` |
+| if_shift (35), cw_peak_cessb (36) | IF shift, CW peak filter, CESSB | none |
+| tx_filter (38) | TX filter low/high | TX filter edges per mode `0x0DA`–`0x0E6` |
+| biasdrive_biasfinal (41) | PA bias values | calibration block `0x02` (`0x14E`–`0x152`), not the settings image |
+| rit (42), xit (43) | RIT/XIT | `0x074` / `0x076` plus switches `0x0A2` / `0x0A3` |
+| filter1/2_low/high (44–47) | RX filter edges | RX filter half-words `0x0D4`–`0x0E8` per mode |
+| rphscmp, rmagcmp (48–49), txiofs, txqofs (50–51) | RX/TX I/Q phase, magnitude and offset trims | none (no I/Q trim in the image) |
+| pwrsync (53) | supply-switching sync | none |
+
+**Matching enums.**
+- **Key mode.** The X6100 key mode (manual, auto-left, auto-right) has
+  the same 0/1/2 codes as the G7250 key type (straight, paddle,
+  reversed). The G7250 spreads it over three bytes on the wire.
+- **Iambic A/B** use the same codes.
+- **Compressor.** The X6100 compressor levels (off, 1:2, 1:4, 1:8)
+  correspond to the G7250 switch plus a four-step ratio index.
+- **AGC differs.** On the X6100 it is off/slow/fast/auto; on the G7250
+  it is an on/off byte plus a speed code, mapped by CI-V as FAST/MID/SLOW.
+
+**What the comparison shows.** The G7250 `0x01` image carries
+essentially the X6100 base register set, flattened into fixed offsets.
+Several X6100 DSP and trim registers are missing, while network, CW
+decoder and RTTY fields are new. This is consistent with Xiegu evolving
+the X6100 base protocol into the G7250 settings image (HYPOTHESIS).
+
 ## Timing and robustness
 
 - **X6100 (from the public GUI code).** Base writes can fail and are
@@ -105,9 +157,6 @@ DSP map):
 
 ## Open
 
-- A field-by-field comparison of the X6100 base register map with the
-  G7250 settings image needs the X6100 control library's register
-  list. Only the call names are visible in OpenX6X00.
 - G90: no firmware analysis available.
 
 **Why this needed the firmware:** the G7250 side of every row (image

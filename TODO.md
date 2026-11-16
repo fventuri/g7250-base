@@ -183,8 +183,7 @@ Roadmap mirrors `REVERSE_ENGINEERING_GUIDE.md`, tracked per unit.
 - [x] N15 X6100 tooling leftovers · [x] N38 library identification · [x] N39 RAM object map
 - [x] N40 reproducible export run + doc checker
 - [x] N44 X6100 comparison (docs/x6100_comparison.md: architecture, host-baseband interface,
-      mode codes, feature set). G90 part BLOCKED: no G90 material.
-- [ ] X6100: field-by-field comparison needs the X6100 base register list.
+      mode codes, feature set, register-by-register mapping). G90 part BLOCKED: no G90 material.
 - [ ] Identify the SPI2 DAC chip; circuit roles of DAC channels 5 and 6.
 - [ ] Confirm in hardware whether an analog SWR/ALC fold-back exists outside the MCU.
 - [ ] Confirm on the Control side what the 1920-byte BandMap type is.
