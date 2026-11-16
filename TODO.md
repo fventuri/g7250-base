@@ -179,7 +179,7 @@ Roadmap mirrors `REVERSE_ENGINEERING_GUIDE.md`, tracked per unit.
 - [ ] N32 unknown GPIOs
 - [x] N23 CW · [x] N24 ATU algorithm · [x] N35 H-22 mic protocol · [x] N37 voice recorder · [x] N41 SWR scanner
 - [x] N25 SLIP 0x03/0x08 completeness · [x] N26 SLIP link state machine · [x] N27 Control storage
-- [x] N42 CI-V command set · [ ] N43 GUI layer
+- [x] N42 CI-V command set · [x] N43 GUI layer
 - [x] N15 X6100 tooling leftovers · [x] N38 library identification · [x] N39 RAM object map
 - [x] N40 reproducible export run + doc checker
 - [ ] N44 X6100/G90 comparison — BLOCKED: no X6100/G90 material in this repo
@@ -197,3 +197,4 @@ Roadmap mirrors `REVERSE_ENGINEERING_GUIDE.md`, tracked per unit.
 - [ ] ATU: producer of the merit value (meter block +0x20); TUNER TRG/RET connector hardware-only?
 - [ ] H-22: measure the absolute bit period and confirm which mic line feeds PI5.
 - [ ] Control codec slot routing (mic, speaker, Main TX) and what PI6, PE3 and PE4 connect to.
+- [ ] GUI: confirm the screen-id to page mapping; key-code and encoder-to-function tables.

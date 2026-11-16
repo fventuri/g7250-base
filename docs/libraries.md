@@ -91,6 +91,7 @@ created (`CreateVectorFunctions.java`).
   byte-identical on both units: Main `0x08044034`–`0x080444D4` equals
   Control `0x08031EB8`–`0x080324F4`. SLIP encode/decode and the CRC-16
   are also identical.
+- **emWin version.** V5.44a, the STemWin build from STM32Cube (VERIFIED; see `control_unit/docs/gui.md`).
 - **Licensing (non-technical note).** SEGGER emWin is licensed to ST
   customers for STM32 use. An independent firmware needs its own GUI
   library or a licence check.
