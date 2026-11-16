@@ -138,6 +138,16 @@ See [TODO.md](TODO.md) and the per-unit `docs/`.
 
 ------------------------------------------------------------------------
 
+## Acknowledgments
+
+Much of this project's current depth — the second analysis pass across
+clocks, peripherals, DSP, protocol blocks, the ATU, CI-V, and the Control
+front end — comes from **ON8ST**. See
+[CONTRIBUTORS.md](CONTRIBUTORS.md) for details. Contributions are reviewed
+for clean-room compliance before merging.
+
+------------------------------------------------------------------------
+
 ## Scope of this public repository
 
 This public repository contains the project's **documentation**, the
