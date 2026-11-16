@@ -1,11 +1,20 @@
 offset,width,type,field,confidence
 0x000,512,u8[512],spectrum bins; level dB = byte-145; zoom by setting 0x088,VERIFIED
-0x200,4,f32,S-meter dBm,VERIFIED
+0x200,4,f32,S-meter dBm (Control adds 27 before display),VERIFIED
 0x204,4,f32,forward power W (0 when not transmitting),VERIFIED
 0x208,4,f32,SWR (1.0 when not transmitting),VERIFIED
 0x20c,4,f32,Vext V,VERIFIED
 0x210,4,f32,Idd A,VERIFIED
 0x214,4,f32,EALC %,VERIFIED
 0x218,4,f32,PA temperature C,VERIFIED
-0x21c,4,u32,not written by Main (Control copies raw),HIGH
-0x220,4,u32,flags: b1 TX b2 Main powering off b3/b4 two mode states b5/b6 two status flags b7 network client active,VERIFIED (b3-b6 meaning MEDIUM)
+0x21c,4,u32,never written by Main (zero); Control stores it (INI baseFlags1) and never reads it,VERIFIED
+0x220,4,u32,flags word; Control stores it (INI baseFlags2); bit map in next rows,VERIFIED
+0x220.b0,1,bit,never set,VERIFIED
+0x220.b1,1,bit,transmitting,VERIFIED
+0x220.b2,1,bit,Main powering off; Control saves and shuts down,VERIFIED
+0x220.b3,1,bit,SSB/AM squelch closed and squelch active; Control shows MUTE,HIGH
+0x220.b4,1,bit,FM squelch closed and squelch active; Control shows MUTE,HIGH
+0x220.b5,1,bit,LAN PHY link up; Control shows a LAN icon,HIGH
+0x220.b6,1,bit,FPGA status bit 0 = ADC overload; Control shows OVF,HIGH
+0x220.b7,1,bit,network client in control; Control shows REMOTE,VERIFIED
+0x220.b8-31,24,bits,never set,VERIFIED

@@ -163,10 +163,19 @@ Main waits 100 ms before shutting down. Control reacts only to this
 bit (see `main_unit/docs/flow.md`, Power-on and power-off).
 
 **Tail (40 bytes).** S-meter (dBm), forward power, SWR, Vext, Idd, EALC
-and PA temperature as floats, followed by a flags word:
+and PA temperature as floats, then a reserved word at 0x21C (always
+zero) and a flags word at 0x220:
 - bit 1 = transmitting;
 - bit 2 = Main is powering off;
+- bit 3 = SSB/AM squelch closed (with squelch active);
+- bit 4 = FM squelch closed (with squelch active);
+- bit 5 = LAN PHY link up;
+- bit 6 = ADC overload (FPGA status bit 0);
 - bit 7 = a network client is active.
+
+Bits 0 and 8–31 are never set. On Control, bits 3/4 show a mute
+indicator, bit 6 an overload indicator, bit 7 a remote indicator and
+bit 5 a LAN icon (VERIFIED/HIGH).
 
 See `cmd03_fields.csv`.
 

@@ -177,7 +177,7 @@ Roadmap mirrors `REVERSE_ENGINEERING_GUIDE.md`, tracked per unit.
 - [ ] N14 GT911 · [ ] N28 Control inputs · [ ] N29 Control USB descriptors · [ ] N30 display bring-up
 - [ ] N32 unknown GPIOs
 - [x] N23 CW · [x] N24 ATU algorithm · [x] N35 H-22 mic protocol · [x] N37 voice recorder · [x] N41 SWR scanner
-- [ ] N25 SLIP 0x03/0x08 completeness · [ ] N26 SLIP link state machine · [ ] N27 Control storage
+- [x] N25 SLIP 0x03/0x08 completeness · [ ] N26 SLIP link state machine · [ ] N27 Control storage
 - [ ] N42 CI-V command set · [ ] N43 GUI layer
 - [x] N15 X6100 tooling leftovers · [x] N38 library identification · [x] N39 RAM object map
 - [x] N40 reproducible export run + doc checker
