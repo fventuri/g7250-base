@@ -274,3 +274,36 @@ Mic keys are ignored while the SWR scanner or a popup is active.
 
 **Why this needed the firmware:** the H-22 serial format is not
 published; only the decoder defines it.
+
+## I2C devices and the PCA9557 expander — VERIFIED unless noted
+
+**Buses.**
+- **I2C1:** GT911 touch only (address in the GT911 section).
+- **I2C2:** two devices, at about 100 kHz:
+  - the AIC3204 codec (0x18), through HAL I2C transmit;
+  - a PCA9557 I/O expander (0x19), through HAL I2C memory write.
+- **I2C3** is not used. The "I2C3 kernel clock" seen earlier is the
+  shared I2C1/2/3 clock mux.
+
+**PCA9557 driver.**
+- **Reset and init.** The expander is reset through PG3 (low 1 ms, then
+  10 ms settle). It is then configured as all outputs with the value
+  0x8B.
+- **Writes are deferred.** `FUN_08052b68(mask, on)` changes a shadow
+  copy, and the superloop flush `FUN_08052b5c` writes only the registers
+  that changed.
+
+| Bit | Boot | Behaviour | Role |
+| --- | --- | --- | --- |
+| 0, 1, 3 | 1 | never changed | static enables (HYPOTHESIS) |
+| 2 | 0 | never changed | unused |
+| 4 | 0 | BT-on sets, BT-off clears | Bluetooth module power |
+| 5 | 0 | set when Main signals power-off (0x03 flags bit 2), cleared at the end of the Control shutdown | power-down pulse (role HYPOTHESIS) |
+| 6 | 0 | 1 while transmitting | TX audio path |
+| 7 | 1 | 1 while receiving | RX audio path |
+
+Bits 6/7 follow bit 1 (TX) of the Main status word received in `0x03`
+(`FUN_0804e4e8`). The switching is VERIFIED; its analog function is a
+HYPOTHESIS. This corrects the earlier note that the audio path switch
+followed a menu setting. Values are in
+`analysis/peripherals/pca9557_bits.csv`.
