@@ -1,0 +1,34 @@
+address,role,conf
+08034b88,TX baseband block (192 samples),HIGH
+08033610,RX baseband block (192 samples),HIGH
+080239c8,TIM5 IRQ: DSP scheduler,VERIFIED
+080239e0,TIM6 IRQ: housekeeping cycle,HIGH
+08039078,FPGA sample ISR (EXTI10 / PE10),VERIFIED
+08039a6c,FPGA RX sample read (cmd 0x04),VERIFIED
+08039d90,FPGA TX sample write (cmd 0x03),VERIFIED
+08035ed4,I2S3 half-transfer callback,VERIFIED
+08035f40,I2S3 complete callback,VERIFIED
+08035fac,I2S3 start (2x 0xC00 B),VERIFIED
+08033390,wide-span decimation / scope feed,MEDIUM
+08032020,filter design + FIR init,HIGH
+08031cdc,EQ peaking biquad design,HIGH
+0803ab34,biquad cascade DF2T,VERIFIED
+0803abb4,stereo biquad cascade,HIGH
+08025378,FIR f32,HIGH
+08024fc8,FIR decimator,MEDIUM
+080257a4,FIR interpolator,MEDIUM
+08031f7c,DC blocker,HIGH
+08032e08,IF gain + overload,MEDIUM
+08032f80,S-meter level,MEDIUM
+0803b100,noise blanker,MEDIUM
+08035c50,auto-notch (adaptive),HYPOTHESIS
+08032d54,squelch,MEDIUM
+080330c8,FM squelch,MEDIUM
+080318d0,gain control (AGC?),HYPOTHESIS
+0803b4c4,NR wrapper (16 kHz),MEDIUM
+08040238,NR engine,HYPOTHESIS
+08032cc4,TX compressor/clipper,MEDIUM
+080362c0,CW keyer envelope,MEDIUM
+08032b44,CW sidetone,MEDIUM
+08079fe0,Hilbert FIR table 201 taps,VERIFIED
+08079cbc,delay FIR table 201 taps,HIGH

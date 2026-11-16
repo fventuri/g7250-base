@@ -150,6 +150,10 @@ Roadmap mirrors `REVERSE_ENGINEERING_GUIDE.md`, tracked per unit.
 - [x] Phase 4 Scheduler: bare-metal superloops, no RTOS, on both units
       (see Done; `*/docs/flow.md`).
 - Phase 5 Inter-MCU protocol: tracked in its own section above.
-- [ ] Phase 6 RX DSP pipeline.
-- [ ] Phase 7 TX DSP pipeline.
+- [~] Phase 6 RX DSP pipeline: structure mapped (main_unit/docs/dsp.md).
+- [~] Phase 7 TX DSP pipeline: structure mapped (main_unit/docs/dsp.md).
+- [ ] DSP open: FPGA strobe rate (absolute I/Q rate), AGC location and
+      parameters, NR engine identity, TX ALC loop, FM discriminator.
+- [ ] `tools/verify_tx_biquads.py` is an X6100 leftover (12.5 kHz, 31-float
+      entries) — port or remove.
 - [ ] Compare with X6100 and G90 findings where behavior overlaps.
