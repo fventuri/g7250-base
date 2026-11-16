@@ -8,7 +8,10 @@
 # differs per unit (docs/mcu_identification.md): the Main Unit is an
 # H725/H735-class part (layout "h72x"), the Control Unit an H743 ("h743").
 #
-#   GHIDRA_INSTALL=/opt/ghidra JAVA_HOME=/usr/lib/jvm/java ./tools/import.sh [main|control|all]
+#   GHIDRA_INSTALL=/opt/ghidra JAVA_HOME=/usr/lib/jvm/java FW_DIR=/path/to/FW ./tools/import.sh [main|control|all]
+#
+# Follow with tools/run_full_export.sh --vectors (creates the handler functions a
+# raw-binary import does not).
 #
 set -euo pipefail
 
@@ -17,7 +20,7 @@ set -euo pipefail
 PROJECT_DIR="${PROJECT_DIR:-/tmp/g7250-ghidra-project}"
 PROJECT_NAME="${PROJECT_NAME:-g7250_import}"
 GHIDRA_CONFIG_DIR="${GHIDRA_CONFIG_DIR:-/tmp/g7250-ghidra-config}"
-FW_DIR="${FW_DIR:-/home/franco/radios/g7250/FW}"
+: "${FW_DIR:?set FW_DIR to the directory holding the firmware images}"
 BASE_ADDR="${BASE_ADDR:-0x08020000}"
 PROCESSOR="${PROCESSOR:-ARM:LE:32:Cortex}"
 

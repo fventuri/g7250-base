@@ -7,6 +7,13 @@ tool reports which firmware functions correspond to which library symbols, each
 with a confidence score in the interval [0, 1], and can classify every firmware
 function as library / likely-library / application.
 
+G7250 note: both images were linked by GNU Tools for STM32 12.3.rel1 (newlib build
+path in the string tables). Matching libraries are that toolchain's
+thumb/v7e-m+dp/hard libc_nano.a, libm.a and libgcc.a, and the STemWin CM7 archive.
+HAL, CMSIS-DSP, FatFS and the USB device library were compiled from source, so
+they only match an archive rebuilt from the same Cube package with the same flags
+(see tools/classify_lib_functions.py for the region-based classification).
+
 Method (relocation-aware FLIRT-style matching)
 ----------------------------------------------
 For every function symbol in each library the tool reads the exact bytes of its
@@ -57,7 +64,10 @@ import subprocess
 import sys
 from dataclasses import dataclass, field
 
-from elftools.elf.elffile import ELFFile
+try:
+    from elftools.elf.elffile import ELFFile
+except ImportError:  # pragma: no cover
+    sys.exit("identify_lib_functions.py needs pyelftools: python3 -m pip install pyelftools")
 from elftools.elf.sections import SymbolTableSection
 from elftools.elf.relocation import RelocationSection
 
@@ -178,7 +188,12 @@ def load_firmware(image_path, functions_csv):
     with open(functions_csv, newline="") as fh:
         for row in csv.DictReader(fh):
             entry = int(row["entry"], 16)
-            length = int(row["body_max_exclusive"], 16) - int(row["body_min"], 16)
+            # Ghidra bodies can be fragmented (shared tails, absorbed handlers):
+            # prefer the address count over max - min when the export has it.
+            if row.get("body_bytes"):
+                length = int(row["body_bytes"])
+            else:
+                length = int(row["body_max_exclusive"], 16) - int(row["body_min"], 16)
             fws.append(FwFunc(entry, length, row.get("name", "")))
     return image, fws
 

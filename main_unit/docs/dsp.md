@@ -99,9 +99,19 @@ HYPOTHESIS. Function list: `analysis/dsp/dsp_functions.csv`.
 - **Fixed tables.** Only the 201-tap SSB Hilbert and delay tables are
   fixed in flash, at `0x08079FE0` and `0x08079CBC`.
 
-`tools/verify_tx_biquads.py` assumes a 12.5 kHz rate and fixed
-31-float filter entries. It is an X6100 leftover that does not match
-this firmware (MEDIUM CONFIDENCE).
+**Fixed SSB FIR pair (VERIFIED numerically).**
+- `0x08079FE0` holds a 201-tap antisymmetric FIR with every other tap
+  zero: a Hilbert transformer.
+- `0x08079CBC` holds a 201-tap symmetric FIR whose centre tap is close
+  to 1: a delay FIR.
+- Both have a linear-phase delay of 100 samples, and their phase
+  difference is +90° at all frequencies.
+- Assuming 48 kHz (HYPOTHESIS), the Hilbert magnitude is about −0.45 dB
+  at 300 Hz and flat within 0.04 dB from about 1 kHz to 20 kHz.
+
+Reproduce with `tools/filter_response.py` (FIR mode on the image,
+address, 201 taps). The X6100 biquad checker was removed, because the
+G7250 biquads are designed at runtime.
 
 **Why this needed the firmware:** no public document describes the
 I/Q-vs-audio split, the sample formats, the block scheduling, the LAN

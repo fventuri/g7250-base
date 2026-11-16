@@ -156,8 +156,9 @@ Roadmap mirrors `REVERSE_ENGINEERING_GUIDE.md`, tracked per unit.
 - [~] Phase 7 TX DSP pipeline: structure mapped (main_unit/docs/dsp.md).
 - [ ] DSP open: FPGA strobe rate (absolute I/Q rate), AGC location and
       parameters, NR engine identity, TX ALC loop, FM discriminator.
-- [ ] `tools/verify_tx_biquads.py` is an X6100 leftover (12.5 kHz, 31-float
-      entries) — port or remove.
+- [x] X6100 tooling leftovers: verify_tx_biquads.py and generate_analysis_markdown.py
+      removed; evidence manifest and lib matcher ported; tools/filter_response.py added.
+- [ ] run_headless_*.sh wrappers: accept absolute output paths.
 - [ ] Compare with X6100 and G90 findings where behavior overlaps.
 
 ## Round 2 — follow-up items (N01–N44)
@@ -176,7 +177,7 @@ Roadmap mirrors `REVERSE_ENGINEERING_GUIDE.md`, tracked per unit.
 - [ ] N23 CW · [ ] N24 ATU algorithm · [ ] N35 H-22 mic protocol · [ ] N37 voice recorder · [ ] N41 SWR scanner
 - [ ] N25 SLIP 0x03/0x08 completeness · [ ] N26 SLIP link state machine · [ ] N27 Control storage
 - [ ] N42 CI-V command set · [ ] N43 GUI layer
-- [ ] N15 X6100 tooling leftovers · [ ] N38 library identification · [ ] N39 RAM object map
+- [x] N15 X6100 tooling leftovers · [ ] N38 library identification · [ ] N39 RAM object map
 - [ ] N40 reproducible export run + doc checker
 - [ ] N44 X6100/G90 comparison — BLOCKED: no X6100/G90 material in this repo
 - [ ] Identify the SPI2 DAC chip; circuit roles of DAC channels 5 and 6.
