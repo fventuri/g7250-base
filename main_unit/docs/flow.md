@@ -231,3 +231,37 @@ Values are in `analysis/flow/protections.csv`.
 
 **Why this needed the firmware:** which conditions are checked, and
 which the firmware ignores, is software policy that no schematic shows.
+
+## TX band enforcement — VERIFIED
+
+**Band table.** The calibration block holds an 11-entry TX band table
+at offset `0x072` ({u64 start Hz, u64 end Hz, u32 enable}, 20 B each).
+The defaults cover 160 m to 6 m, including 5.332–5.405 MHz, all
+enabled (`main_unit/analysis/protocol/cal02_band_defaults.csv`).
+
+**Check.** `FUN_0803d198` denies TX when:
+- the global TX enable is off, or
+- the frequency is outside the hard window of 1.2–54.0 MHz.
+
+Inside the window it allows TX when any of these holds:
+- the SWR-scan PTT is active;
+- a factory override in the calibration block is set (cleared at boot
+  in V1.0.1, so it is not active in normal use);
+- the frequency lies inside an enabled table entry (inclusive edges).
+
+**Applying the result.**
+- The frequency setter `FUN_0803d658` stores the result in TRX+0x228
+  on every frequency change.
+- Keying while denied enters the TX state and logs a message, but
+  applies no bias and switches no T/R lines (the SWR scan overrides
+  this).
+- A split TX on a denied frequency is refused.
+- A frequency change into a denied range during TX forces RX.
+
+**Who can change the table.** The `0x01` settings image cannot. Only a
+`0x02` set frame (factory tool) can, and that path does not write the
+EEPROM.
+
+**BandMap.** The 1920-byte "BandMap" size printed at boot belongs to a
+type that no Main code allocates, loads or sends. It is probably the
+Control Unit band stack (HYPOTHESIS).
