@@ -16,7 +16,7 @@ offset,width,type,field,control_source,main_consumer,confidence
 0x0a4,1,u8,split switch (split TX/RX logic),ui+0x991,FUN_0803e338/FUN_0803d658,HYPOTHESIS
 0x0ac,1,u8,ATU switch,ui+0x992,FUN_08041ef4/FUN_080412bc,VERIFIED
 0x0c4,2,i16,mic gain,ui+0x97C (float),FUN_08041ef4,VERIFIED
-0x0c8,2,u16,unknown (Main ignores),ui+0xA10,-,LOW
+0x0c8,2,u16,LINE IN gain (Main ignores),ui+0xA10,-,HIGH
 0x0d4,2,u16,RX audio filter (CW?),ui+0x9D2,FUN_08032020/FUN_0803e128,MEDIUM
 0x0d6,2,u16,RX audio filter (CW?),ui+0x9D0,FUN_08032020/FUN_0803e128,MEDIUM
 0x0d8,2,u16,RX audio filter (SSB LPF RX?),ui+0x9CC,FUN_08032020/FUN_0803d454,MEDIUM
@@ -34,32 +34,33 @@ offset,width,type,field,control_source,main_consumer,confidence
 0x0f6,1,u8,Main-derived from active VFO byte +0x24,-,FUN_08041ef4,MEDIUM
 0x0f7,1,u8,audio parameter (noise-blanker threshold?),ui+0x974,FUN_0803b100,LOW
 0x0ff,1,u8,monitor level,ui+0xA14,FUN_08041ef4,VERIFIED
-0x100,1,u8,unknown (Main ignores),ui+0xA12,-,LOW
+0x100,1,u8,LINE OUT gain low byte (Main ignores),ui+0xA12,-,HIGH
 0x102,5,i8[5],RX EQ bands 1-5 (active mode group),ui+0xA2A/0xA2F,FUN_08041ef4,VERIFIED
 0x107,5,i8[5],RX EQ bands 1-5 WFM set (never written by Control),-,FUN_08041ef4,VERIFIED
 0x10c,10,i8[10],further EQ bands (TX EQ?) (never written by Control),-,FUN_08041ef4/FUN_08034b88,HYPOTHESIS
 0x117,1,i8,VOX threshold,ui+0x9F2,FUN_08041ef4/FUN_08035b50,VERIFIED
 0x11b,1,u8,audio-path boolean (echoed in 0x08),ui+0x973,FUN_08033610,MEDIUM
 0x11f,1,u8,VOX switch,ui+0x9ED,FUN_08041ef4/FUN_08035b50,VERIFIED
-0x124,4,f32,CW-related parameter,ui+0x9A0,FUN_080362c0,MEDIUM
-0x128,2,u16,CW pitch Hz (default 800),ui+0x998,FUN_08032b44/FUN_08033610,HYPOTHESIS
-0x12a,2,u16,CW weight; Main stores value*120/WPM,ui+0x99C,FUN_08041ef4/FUN_080362c0,HYPOTHESIS
+0x124,4,f32,CW DI/DA ratio (dash = dot x ratio),ui+0x9A0,FUN_080362c0,HIGH
+0x128,2,u16,CW tone / sidetone pitch Hz,ui+0x998,FUN_08032b44/FUN_08033610,HIGH
+0x12a,2,u16,QSK delay in 0.1 dot; Main stores ms = v*120/WPM (hang = ms+20),ui+0x99C,settings_apply/FUN_08023ab4,HIGH
 0x12e,2,u16,CW speed WPM,ui+0x980 (float),FUN_080362c0,MEDIUM
 0x130,4,u32,state word (Control never writes; Main tests bits other than bit1),-,~15 TX/RX funcs,HYPOTHESIS
-0x134,1,u8,CW keyer setting,ui+0x997,FUN_08023ab4/FUN_080362c0,HYPOTHESIS
+0x134,1,u8,keyer on (paddle) / 0 = straight,ui+0x997,FUN_08023ab4/FUN_080362c0,HIGH
 0x136,1,u8,unknown,-,FUN_08033610,LOW
-0x137,1,u8,unknown (Main ignores),ui+0x996,-,LOW
-0x138,1,u8,CW-related byte,ui+0x995,FUN_080362c0,MEDIUM
-0x139,1,u8,CW-related byte,ui+0x9A8,FUN_08023ab4,MEDIUM
+0x137,1,u8,straight-key flag (Main ignores),ui+0x996,-,HIGH
+0x138,1,u8,iambic type 0 = A 1 = B,ui+0x995,FUN_080362c0,HIGH
+0x139,1,u8,paddle reverse (swap PH3/PH4),ui+0x9A8,FUN_08023ab4,VERIFIED
 0x13b,1,u8,CW zoom,ui+0x9B2,FUN_08041ef4,VERIFIED
-0x140,1,u8,CW decoder threshold (Control-only),ui+0x9A6,C:FUN_08051bc8,MEDIUM
-0x141,1,u8,CW decoder enable (Control-only),ui+0x9A5,C:FUN_08051bc8,MEDIUM
+0x140,1,u8,CW decoder threshold (Control only),ui+0x9A6,C:FUN_08051bc8,HIGH
+0x141,1,u8,CW decoder enable (Control only),ui+0x9A5,C:FUN_08051bc8,HIGH
 0x154,4,f32,TX power W (drives PA DAC),ui+0x978,FUN_08041ef4/FUN_0803d3b0,VERIFIED
 0x158,1,u8,ack = last received 0x08 seq,ui+0xBCD,FUN_08049658/FUN_0804995c,VERIFIED
-0x159,1,u8,unknown (read at TX start),ui+0x9A4,FUN_0803e338,LOW
-0x15a,2,u16,unknown audio level (default 100),ui+0x99A,FUN_08032b44,LOW
+0x159,1,u8,CW trainer (TX without RF switching),ui+0x9A4,FUN_0803e338,HIGH
+0x15a,2,u16,CW sidetone level,ui+0x99A,FUN_08032b44,HIGH
 0x15d,1,u8,global SQL threshold (never written by Control),-,FUN_08041ef4,VERIFIED
-0x15e,1,u8,PTT sources: b0 built-in PTT b1 CW key serial b5 need-tune b6 SWR/tune PTT b7 CI-V PTT,ui+0x9C0,FUN_08041ef4,VERIFIED
+0x15e,1,u8,PTT sources: b0 built-in PTT b1 CW key serial b5 need-tune b6 SWR/tune PTT b7 CI-V PTT (Control V1.0.1 sets only bits 5 6 7),ui+0x9C0,FUN_08041ef4,VERIFIED
+0x15f,1,u8,keySignals (never written by Control; Main ignores),ui+0x9C1,-,HIGH
 0x170,1,u8,boolean (CI-V sync; echoed in 0x08),ui+0x9EE,FUN_0804f1ec,MEDIUM
 0x171,1,u8,boolean (CI-V sync),ui+0x9EF,FUN_0804f1ec,MEDIUM
 0x174,4,u32,IPv4 address (MSB first),ui+0xB48,FUN_08041ef4/FUN_08048e20,VERIFIED

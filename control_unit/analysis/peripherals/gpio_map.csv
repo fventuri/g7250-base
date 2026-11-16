@@ -40,7 +40,8 @@ PD6,AF PP,none,7,,USART2_RX SLIP,FUN_08023344,VERIFIED
 PD12,AF PP,none,2,,TIM4_CH1 PWM,FUN_08022b90,HIGH
 PD13,AF PP,none,2,,TIM4_CH2 PWM,FUN_08022b90,HIGH
 PE2,IT rising,pull-up,,,GT911 INT,FUN_08035034,VERIFIED
-PE3,output PP,pull-up,,1,bit-banged line,FUN_08052364,VERIFIED
+PE3,output PP,pull-up,,1,CW memory keying (low with PE4 = key down),FUN_08052364,VERIFIED
+PE4,output PP,pull-up,,1,CW memory keying (with PE3),FUN_08052364,VERIFIED
 PE6,output PP,none,,0,display power?,FUN_080364ec,HYPOTHESIS
 PF9,output PP,none,,0,LCD reset?,FUN_080364ec,HYPOTHESIS
 PF10,AF PP,none,14,,LTDC_DE,FUN_08021928,HIGH
@@ -63,7 +64,7 @@ PH14,AF PP,none,14,,LTDC_G3,FUN_08021928,HIGH
 PI2,AF PP,none,14,,LTDC_G7,FUN_08021928,HIGH
 PI3,output PP,none,,0,display enable?,FUN_080364ec,HYPOTHESIS
 PI5,AF PP,none,3,,TIM8_CH1,FUN_08022f18,HIGH
-PI6,output OD,pull-up,,1,toggled line,FUN_08052b78,VERIFIED
+PI6,output OD,pull-up,,1,driven low during voice playback (PTT? HYPOTHESIS),FUN_08052b78,VERIFIED
 PI8,output OD,pull-up,,1,key-matrix line,FUN_08035f80,MEDIUM
 PI9,AF PP,none,14,,LTDC_VSYNC,FUN_08021928,HIGH
 PI10,AF PP,none,14,,LTDC_HSYNC,FUN_08021928,HIGH
