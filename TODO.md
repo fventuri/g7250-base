@@ -89,7 +89,9 @@ Roadmap mirrors `REVERSE_ENGINEERING_GUIDE.md`, tracked per unit.
       pins or kernel clock configured).
 - [ ] Control Unit: roles of the pull-up inputs (keys/encoders); confirm
       whether PC USB is the MCU's own OTG_FS port or a CH342.
-- [ ] Identify the ~26 (main) / ~28 (control) init functions from `main()`.
+- [x] Init functions from `main()` identified on both units (*/docs/flow.md,
+      */analysis/flow/init_sequence.csv).
+- [ ] Purpose of TIM4 PWM (Main PD12; Control PD12/PD13 backlight?).
 - [ ] Main Unit TRX-state struct at `0x24013C0C` — recover layout.
 - [x] Main Unit USB: not used at runtime (false-positive references); see
       main_unit/docs/peripherals.md. Bootloader jump via RTC wake-up documented.

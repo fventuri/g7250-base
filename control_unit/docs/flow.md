@@ -18,8 +18,33 @@ This MCU is the **touchscreen front panel / human interface**.
    SDRAM/framebuffer). HIGH CONFIDENCE.
 2. **Enable Cortex-M7 I-cache + D-cache** (same `SCB->CCR` sequence as
    the Main Unit; SCB `0xE000ED00`). VERIFIED.
-3. ~28 subsystem init calls (`FUN_08024BB4` … `FUN_080348DC`) — not yet
-   individually identified.
+3. **HAL bring-up** (HIGH CONFIDENCE; table in
+   `analysis/flow/init_sequence.csv`):
+   HAL_Init `FUN_08024bb4` → SystemClock_Config `FUN_08021d98` → GPIO
+   `FUN_080210d8` → DMA1 NVIC (IRQ 11–13) → DMA2D (RGB565) → FMC SDRAM
+   `FUN_08020ecc` (32 MiB, 16-bit, 4 banks, CAS 2, SDCLK = HCLK/2) →
+   I2C1 (GT911) → I2C2 (AIC3204 codec) → RTC → SDMMC1 handle (4-bit) →
+   SPI1 → TIM2 encoder → TIM3 → TIM4 PWM (PD12/PD13) → TIM8 input
+   capture (mic serial line) → TIM13 → TIM14 → USART1 → USART2 → CRC →
+   I²S2 (48 kHz) → LTDC `FUN_08021878` (1024×600 RGB565, HSYNC 20 /
+   HBP 140 / HFP 160, VSYNC 3 / VBP 20 / VFP 12, framebuffer at
+   0xC0000000) → application objects → USB device `FUN_0803d90c`
+   (OTG_FS, mass-storage class) → TIM5 → TIM7 → USART2 RX `FUN_080348dc`
+   into a 4 KiB D3-SRAM buffer (on failure: abort, de-init, 10 ms,
+   retry).
+3b. **Services and drivers:**
+   1. TIM13 SLIP client, then the banner;
+   2. SDRAM command sequence;
+   3. AIC3204 codec init (I2C2 0x18, reset PH2) and I²S2 DMA start;
+   4. TIM5 audio service;
+   5. FatFS mount of the SPI flash;
+   6. GUI library init;
+   7. backlight PWM set to 50 % (HYPOTHESIS);
+   8. TIM8 mic capture, then TIM14;
+   9. GT911 init, followed by TIM3 if it succeeds;
+   10. TIM2 encoders;
+   11. settings/INI loads;
+   12. version banner.
 4. Start the hardware-timer "services" and peripherals, with a VT100
    console banner (`\x1b[2J`, `\x1b[H`, `[OK] System started.`).
 5. Enter the superloop.
@@ -53,7 +78,7 @@ Each iteration (`do { … } while(true)`):
   (`FUN_080366B0`, `FUN_080332C8`, `FUN_08034680`, `FUN_08034C0C`).
 
 `FUN_08024C20(ms)` ≈ `HAL_Delay` (called `(10)`, `(3000)`).
-`FUN_08021840(level, msg)` / `FUN_0802DDA4(msg)` = console logger
+`FUN_08021840(level, msg)` = console logger; `FUN_0802DDA4(htim)` = HAL_TIM_Base_Start_IT (not a logger)
 (HIGH CONFIDENCE).
 
 ## Version

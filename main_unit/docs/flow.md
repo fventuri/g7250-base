@@ -10,15 +10,46 @@ VERIFIED (the function never returns; ends in `do { … } while(true)`).
 ## Boot sequence (in order)
 
 1. If in privileged mode, disable interrupts (`enableIRQinterrupts(0)`).
-2. Early setup: `FUN_0804a7c0`, then buffer/clear helpers
-   (`FUN_08053b3c/08053f64/08053fb6/08053ca4`).
+2. Early setup: MPU (`FUN_0804a7c0`: 4 regions at 0x60000000, the D2
+   SRAM, the backup SRAM and the D3 SRAM), stdout unbuffered
+   (`FUN_08053b3c`), then the 104-byte slave-info block at `0x24018F30`
+   is filled with the MCU and FPGA versions and the build date/time
+   (`FUN_08053f64/08053fb6/08053ca4`). HIGH CONFIDENCE.
 3. **Enable Cortex-M7 I-cache then D-cache** via `SCB->CCR` (SCB base
    `0xE000ED00`): invalidate (`ICIALLU` @+0x250, `DCISW` set/way loop
    @+0x260), set `CCR.IC` (bit 17) and `CCR.DC` (bit 16), with DSB/ISB.
    VERIFIED.
-4. `FUN_08027774` — tick / clock setup (see below).
-5. ~26 subsystem init calls (`FUN_080222f0`, `FUN_08021470`, … through
-   `FUN_08021830`) — not yet individually identified.
+4. `FUN_08027774` = HAL_Init (priority grouping, tick, HAL_MspInit `FUN_080233e0`).
+5. **HAL bring-up in CubeMX order** (HIGH CONFIDENCE; the full table
+   with handles is in `analysis/flow/init_sequence.csv`):
+   SystemClock_Config `FUN_080222f0` → GPIO + EXTI `FUN_08021470` →
+   DMA1/DMA2 `FUN_080213ac` (DMA2 Stream5 memory-to-memory) → MDMA
+   channels 0–4 `FUN_08022dc8` (polled) → BDMA NVIC (IRQ 129/130)
+   `FUN_080211bc` → I²S3 → USART1 → ADC1 → USART2 → I2C3 → CRC → DAC1
+   → I2C1 → UART4 → I2C2 → TIM5 → TIM6 → TIM7 → TIM17 → RTC (time and
+   date only) → SPI2 → SPI6 → SPI1 → TIM4 PWM CH1 on PD12 (prescaler
+   54, period 250) → extra GPIOs `FUN_08021830` (PH11, PA8, PC8).
+5b. **Application bring-up.** The boot log prints each "[OK] …" header
+   *before* the step it names, whatever the result; only the ADC
+   calibration line reports the outcome. The order is:
+   1. console USART1 RX on circular DMA into a 1 KiB ring in D2 SRAM;
+   2. the banner; PH9 is driven high, then a 1 s wait;
+   3. AXP223 PSU;
+   4. CRC-8 table;
+   5. settings, calibration and NVPARAM from the EEPROM;
+   6. VersaClock 6 (the log names the 5P49V6965);
+   7. CH394 init and IP setup, then the LAN service (UDP socket);
+   8. SPI1 latch devices;
+   9. ATU table;
+   10. DSP tables;
+   11. TIM7;
+   12. ADC calibration and ADC DMA;
+   13. AIC3204 codec;
+   14. TRX hardware setup (`FUN_0803e2f4`), then the audio processor
+       (`FUN_08033334`);
+   15. TIM5, TIM6 and TIM17 (HAL_TIM_Base_Start_IT `FUN_0802f9cc`);
+   16. FPGA init `FUN_0803a3a0`: bus test and version;
+   17. PH15 is driven low and PH13 high.
 6. Initialize the large TRX-state struct at `0x24013C0C`
    (`DAT_08022750`, in `.bss`): many field writes (mode, band, filter,
    drive, etc.).
