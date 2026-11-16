@@ -167,10 +167,8 @@ recorder/player; hook use HYPOTHESIS). `FUN_0804e4e8` applies the codec
 settings: right-channel input select and gain, headphone gain, and
 PCA9557 bits 6/7 as an audio path switch (HYPOTHESIS).
 
-**USB.** USB_OTG_FS is a **USB mass-storage device**, not a sound card.
-The descriptor is VID 0x0483 / PID 0x572A with a bulk-only SCSI
-interface. The PC sound card must therefore be a separate USB audio
-chip that the firmware does not see (HYPOTHESIS).
+**USB.** USB_OTG_FS is a USB mass-storage device, not a sound card (see
+the USB mass storage section).
 
 **Main↔Control audio (MEDIUM CONFIDENCE).** Audio does not travel over
 SLIP: 460 800 baud is too slow for 48 kHz audio, and no message type
@@ -203,6 +201,24 @@ exposes one writable LUN: the on-board **W25Qxx SPI NOR flash**, in
   8 or 16 MiB.
 - The same chip is a FatFS volume used by the application. There is no
   arbitration beyond a "flash ready" flag (MEDIUM CONFIDENCE).
+
+**Descriptors (VERIFIED).**
+- Device: USB 2.00, **VID 0x0483 / PID 0x572A** (the STM32Cube MSC
+  default), one configuration, self-powered, 100 mA.
+- One interface: mass storage, SCSI, bulk-only, with bulk endpoints
+  0x81/0x01 of 64 bytes.
+- **No CDC and no audio class.** The strings are the stock ST example
+  names.
+- The disk reports "not ready" while the firmware itself is using the
+  flash. There is no other locking, so concurrent writes from the PC and
+  the firmware could corrupt it (HIGH CONFIDENCE).
+
+**The CH342 and the sound card (HYPOTHESIS, strong).** This port cannot
+be the CH342 serial bridge or the sound card the manual describes, and
+the Control MCU has no spare UART for a bridge. Both must be separate
+chips on the Controller, presumably behind a USB hub that shares the
+rear connector. Their serial lines most plausibly reach the Main Unit
+UARTs over the CTRL cable.
 
 **No update code in the application** (VERIFIED):
 - no update file name;

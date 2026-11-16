@@ -55,7 +55,7 @@ Two physically separate boxes joined by a **dedicated CTRL cable**:
 | Rear | **CTRL** (to Main) | inter-MCU USART2 SLIP link |
 | Rear | **SSPK** external speaker | 4–8 Ω passive (GY10 / GY-03); **not** earphones |
 | Rear | **KEY** Morse key | 3.5 mm: Dot / Dash / Common (straight or iambic) |
-| Rear | **USB** (to PC) | **CH342 USB-serial**: CAT/control **+ audio (sound card) + firmware update**; N1MM CW keying |
+| Rear | **USB** (to PC) | **CH342 USB-serial**: CAT/control **+ audio (sound card) + firmware update**; N1MM CW keying. Firmware: the Control MCU's own USB port is only a mass-storage drive (the SPI flash); the CH342 and the sound card are separate chips (HYPOTHESIS) |
 
 > **The PC-facing USB is on the CONTROLLER**, not the Main Unit, and the
 > PC driver is **CH342** (WCH USB-serial). It carries CAT control, a
