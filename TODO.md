@@ -163,7 +163,7 @@ Roadmap mirrors `REVERSE_ENGINEERING_GUIDE.md`, tracked per unit.
 ## Round 2 — follow-up items (N01–N44)
 
 - [x] N01 Main option bytes · [x] N06 Main image tail · [ ] N09 IWDG · [ ] N17 RTC/backup regs
-- [x] N33 Main bootloader self-update · [x] N34 FPGA flash update · [ ] N36 Control FW update over USB
+- [x] N33 Main bootloader self-update · [x] N34 FPGA flash update · [x] N36 Control FW update over USB
 - [x] N02 full vector/IRQ CSVs (exporters fixed)
 - [x] N03 DMA/NVIC allocation (docs/dma.md)
 - [x] N04 protection thresholds · [x] N05 BandMap/TX band enforcement · [x] N20 ADC/DAC map
@@ -185,3 +185,4 @@ Roadmap mirrors `REVERSE_ENGINEERING_GUIDE.md`, tracked per unit.
 - [ ] What drives PH5 (front-panel key over the CTRL cable?); is PH9 a power latch; Control PCA9557 bit 5 role.
 - [ ] Read the option bytes (RDP, BOOT_ADD, CPUFREQ_BOOST, IWDG_SW) from a unit over SWD, if RDP allows.
 - [ ] Main firmware update path (bootloader only; transport from Control unknown).
+- [ ] Control bootloader: update file name and checks (needs a sector-0 dump).

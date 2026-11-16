@@ -42,7 +42,7 @@ the H7 IRQ numbering.
 | SPI1, SPI5 | SPI1 on PB3–PB5; SPI5 base refs | SPI1 = SPI flash for FatFS (HYPOTHESIS); SPI5 TBD | MED |
 | **USART2** | IRQ38; PD5/PD6 AF7; 460 800 8N1; DMA1 S2 TX / S3 RX circular | inter-MCU SLIP link (↔ Main USART2) | VERIFIED |
 | USART1 | init `FUN_08023234`; PA9/PA10 AF7; 115 200 8N1; RX DMA1 S4 circular | **Bluetooth module (AT commands)** | VERIFIED |
-| **USB_OTG_FS** | base ref ×52 | **PC USB** (manual): CAT/control + **audio sound card** (digital-mode line-in) + firmware update; PC driver **CH342**. N1MM CW keying | HIGH |
+| **USB_OTG_FS** | base ref ×52; init `FUN_0803d90c`; IRQ101 | the MCU's own USB port, **mass-storage device** exposing the W25Qxx SPI flash (see USB section). The CAT/sound-card functions the manual names are not in this firmware; they must come from another USB chip (CH342 per the manual) | HIGH |
 | TIM2/3/5/7/8/13/14 | active IRQs + strings | service timers (touch, encoders, audio, SLIP, input) | HIGH |
 | GPIOA/B/C/E/H/I | heavy GPIO access | panel discretes, display/touch control | HIGH |
 | EXTI2, RTC, IWDG1, CRC | accesses + IRQ8 | touch INT, RTC, watchdog, CRC | HIGH |
@@ -191,3 +191,24 @@ The table is in `analysis/peripherals/timers.csv`.
 | TIM13 | 50 Hz (20 ms) | SLIP client (this makes the SLIP `0x01` period VERIFIED) |
 | TIM14 | 1 kHz | input service |
 
+## USB mass storage and firmware update — HIGH CONFIDENCE
+
+**The disk.** The OTG_FS mass-storage class (`FUN_0803d90c`, VERIFIED)
+exposes one writable LUN: the on-board **W25Qxx SPI NOR flash**, in
+512-byte blocks.
+- The storage callbacks read and write through the W25Qxx driver
+  (`FUN_08036e6c` / `FUN_08036e94`).
+- The size is detected from the JEDEC ID: 0xEF4014/15/17/18 give 1, 2,
+  8 or 16 MiB.
+- The same chip is a FatFS volume used by the application. There is no
+  arbitration beyond a "flash ready" flag (MEDIUM CONFIDENCE).
+
+**No update code in the application** (VERIFIED):
+- no update file name;
+- no flash programming key;
+- no jump to the bootloader.
+
+Its only software reset is the factory-reset path in the UI handler.
+A firmware update is therefore done by the bootloader in sector 0
+after a reset, presumably from a file the PC copied to this disk
+(HYPOTHESIS: file names and checks are not in the application).
