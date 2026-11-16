@@ -60,9 +60,46 @@ Each iteration (`do { … } while(true)`):
 
 Strings: `VER: V1.0.1   DATE: %s   TIME: %s`, `V1.0.0`.
 
+## Clock configuration — `FUN_08021d98` (SystemClock_Config), VERIFIED
+
+`main` (`FUN_08021e74`) calls it. It runs in this order:
+1. **Supply:** LDO only (`FUN_08029ba4`, value 2).
+2. **Voltage scaling:** Scale 1, then SYSCFG_PWRCR.ODEN = 1, then a wait
+   for VOSRDY. This is the H743 rev-V way to reach Scale 0.
+3. **Backup domain and LSE:** backup-domain access is enabled and the
+   LSE drive is set high.
+4. **Oscillators and PLL:** OscConfig (`FUN_08029ce0`).
+5. **Bus clocks:** ClockConfig (`FUN_0802a3e0`), flash latency 4.
+
+| Item | Setting | Result |
+| --- | --- | --- |
+| HSE | on, crystal; built for 25 MHz | 25 MHz |
+| LSE / HSI48 | on / on | RTC / USB |
+| PLL1 | from HSE, M=5 N=192 P=2 Q=10 R=2, input range 4–8 MHz | VCO 960 MHz; P 480, Q 96, R 480 MHz |
+| SYSCLK / CPU | PLL1P | **480 MHz** |
+| HCLK | /2 | **240 MHz** |
+| PCLK1/2/3/4 | all /2 | **120 MHz** (timer clocks 240 MHz) |
+| PLL2 | M=25 N=240 P=2 Q=2 R=1 | VCO 240 MHz; R = 240 MHz (FMC) |
+| PLL3 | M=25 N=200 P=2 Q=2 R=5 | VCO 200 MHz; R = 40 MHz (LTDC) |
+
+| Kernel clock | Source | Rate | Set in |
+| --- | --- | --- | --- |
+| FMC (SDRAM) | PLL2R | 240 MHz | `FUN_08020f38` |
+| LTDC pixel clock | PLL3R | 40 MHz | `FUN_08021928` |
+| SDMMC1 | PLL1Q | 96 MHz | `FUN_08022340` |
+| SPI1/2 | PLL1Q | 96 MHz | `FUN_08022630`, `FUN_080216c4` |
+| USARTs | PCLK2 / PCLK1 | 120 MHz | `FUN_08023344` |
+| I2C1/3 | PCLK1 | 120 MHz | `FUN_080214f0` |
+| USB OTG_FS | HSI48 | 48 MHz | `FUN_0803dc10` |
+| RTC | LSE | 32.768 kHz | `FUN_080222c0` |
+
+PLL2 and PLL3 run from a 1 MHz reference with the wide-VCO range
+selected. The reference manual expects the medium range below 2 MHz,
+so this setup may be slightly out of spec (MEDIUM CONFIDENCE).
+Values are in `analysis/clocks/clock_config.csv`.
+
 ## Unknowns
 
 - Identify the ~28 init functions (step 3) and the UI dispatch functions.
 - Display controller behind the FMC region (`0xC0000000`).
 - SLIP client command set (shared with Main Unit; Phase 5).
-- PLL / SystemClock_Config (as on the Main Unit, not yet located).

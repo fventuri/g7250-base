@@ -32,9 +32,9 @@ Roadmap mirrors `REVERSE_ENGINEERING_GUIDE.md`, tracked per unit.
 
 - [ ] Confirm exact STM32H7 part number (no hardware on hand; infer from
       flash size / RCC PLL config / peripheral IRQ usage instead).
-- [ ] Locate the running clock config (PLL / SystemClock_Config): neither
-      SystemInit sets a running PLL. `FUN_08027774` (main) is tick setup,
-      not PLL bring-up — find the PLL config and resulting SYSCLK.
+- [x] Running clock config: Main `FUN_080222f0` (550/275/137.5 MHz, HSE
+      25 MHz, PLL2 = ADC), Control `FUN_08021d98` (480/240/120 MHz, PLL2 =
+      FMC, PLL3 = LTDC). See */docs/flow.md.
 - [ ] Resolve the 8-byte `.data`/`.bss` gap on the Control Unit.
 - [ ] Rename the VERIFIED startup functions in Ghidra via
       `RenameVerifiedFromCsv.java` (SystemInit, __libc_init_array, PWR init,
@@ -63,8 +63,8 @@ Roadmap mirrors `REVERSE_ENGINEERING_GUIDE.md`, tracked per unit.
       Manual lead: the digital-mode line-in is the **Controller's USB
       "sound card"** (DIG-ON), audio relayed to Main over SLIP — look on
       the Control Unit USB-audio / I2S path (docs/hardware.md §6).
-- [ ] CH394: find the chip-select, reset and interrupt GPIOs, and the
-      absolute SPI6 SCK rate (needs PCLK4, see the clock-config item).
+- [ ] CH394: find the chip-select, reset and interrupt GPIOs (SPI6 SCK
+      is ≈17.19 MHz: PCLK4 137.5 MHz / 8).
 - [x] EEPROM layout: settings / calibration / NVPARAM marker / 2× ATU
       tables, CRC-8 0x31, 64-B pages (main_unit/docs/memory_map.md).
 - [ ] Who writes the settings area (EEPROM 0x0000 / backup SRAM)? Nothing

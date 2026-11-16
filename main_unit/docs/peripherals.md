@@ -108,7 +108,7 @@ hardware was on hand for measurements.
 | Role | master, full-duplex (2 lines) |
 | Frame | 8-bit, MSB first, mode 0 (CPOL 0, CPHA 0), no CRC, no TI mode |
 | NSS | software (`SSM`); NSS pulse mode set in the init struct; **no NSS pin in AF** → CS is a GPIO |
-| Prescaler | `/8` from the SPI6 kernel clock (PCLK4); absolute SCK rate open until SYSCLK/PCLK4 is known |
+| Prescaler | `/8` from PCLK4 (137.5 MHz), so **SCK ≈ 17.19 MHz** (HIGH CONFIDENCE; assumes the 25 MHz HSE the firmware is built for) |
 | Transfer | DMA (BDMA ch0 RX, ch1 TX) + SPI IRQ86 |
 
 **Still open:** which GPIO serves as CS, plus the CH394 reset and

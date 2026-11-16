@@ -55,9 +55,63 @@ a shift table (CMSIS `AHB/APBPrescTable` pattern), stores
 (`FUN_08027728(0xF)`, returns 1 on failure) and `FUN_080233E0`.
 
 This is tick/`SystemCoreClockUpdate` setup, **not** the PLL bring-up —
-by the time it runs the clock is already selected. The actual
-PLL/`SystemClock_Config` has not yet been located (SystemInit only
-resets the clock tree). TODO.
+by the time it runs the clock is already selected. The PLL bring-up is
+`FUN_080222f0` (next section).
+
+## Clock configuration — `FUN_080222f0` (SystemClock_Config), VERIFIED
+
+`main` calls it before the tick setup. It runs in this order:
+1. **Supply:** `FUN_0802c208` with value `0x2E`, the SMPS 2.5 V output
+   feeding external loads and the LDO.
+2. **Voltage scaling:** VOS = 00 in `PWR_D3CR`. On STM32H72x/H73x that
+   is Scale 0, with no SYSCFG overdrive.
+3. **Oscillators and PLL:** HAL_RCC_OscConfig (`FUN_0802c538`).
+4. **Bus clocks:** HAL_RCC_ClockConfig (`FUN_0802cba0`), flash latency
+   3 wait states.
+
+| Item | Setting | Result |
+| --- | --- | --- |
+| HSE | on, crystal (not bypass); built for 25 MHz (HSE_VALUE) | 25 MHz |
+| LSI | on | RTC clock |
+| PLL1 | from HSE, M=2 N=44 P=1 Q=2 R=2, input range 8–16 MHz, wide VCO | VCO 550 MHz; P 550, Q 275, R 275 MHz |
+| SYSCLK / CPU | PLL1P, D1CPRE /1 | **550 MHz** |
+| HCLK (AXI/AHB) | HPRE /2 | **275 MHz** |
+| PCLK1/2/3/4 | all /2 | **137.5 MHz** (timer clocks 275 MHz) |
+| PLL2 | from HSE, M=2 N=16 P=Q=R=2 | VCO 200 MHz; 100 MHz outputs (ADC only) |
+| PLL3 | not configured | — |
+
+Peripheral kernel clocks, set through HAL_RCCEx_PeriphCLKConfig
+(`FUN_0802d15c`):
+
+| Kernel clock | Source | Rate | Set in |
+| --- | --- | --- | --- |
+| SPI6 (CH394) | PCLK4 | 137.5 MHz, so SCK at /8 ≈ **17.19 MHz** | `FUN_0802317c` |
+| SPI1/2/3 (shared mux) | **I2S_CKIN pin** (mux value 3) | the firmware assumes 12.288 MHz | `FUN_0802317c`, `FUN_08021ccc` |
+| ADC | PLL2P | 100 MHz, before the ADC's own prescaler | `FUN_08020f44` |
+| I2C1/2/3 | PCLK1 | 137.5 MHz | `FUN_08021a00` |
+| USART1/6 | PCLK2 | 137.5 MHz | `FUN_08024218` |
+| USART2/3/4/5/7/8 | PCLK1 | 137.5 MHz | `FUN_08024218` |
+| RTC | LSI | ~32 kHz | `FUN_08023008` |
+| FMC, USB | never configured (reset defaults) | — | — |
+
+The 12.288 MHz value is the constant that HAL_RCCEx_GetPeriphCLKFreq
+(`FUN_0802e320`) returns for the external-pin source. 12.288 MHz /
+3.072 MHz gives the I²S3 bit-clock divider of exactly 4 (48 kHz ×
+64 bit). The same 12.288 MHz / 48 kHz pair is passed to the audio-codec
+init (`FUN_0804a65c`). The pin clock is 245.76 MHz / 20, so it plausibly
+comes from the VersaClock 6 output through the FPGA (HYPOTHESIS; see
+`peripherals.md`).
+
+Open: the 550 MHz clock needs the CPU-frequency-boost option byte on
+H72x/H73x. The firmware never programs option bytes, so the byte was
+either set in production or the part runs above the default 520 MHz
+limit.
+
+**Why this needed the firmware:** PLL dividers, prescalers, the supply
+mode and the kernel-clock muxes are runtime register values. The
+firmware is also the only source for the HSE_VALUE and I2S_CKIN
+constants it was built with. Values are in
+`analysis/clocks/clock_config.csv`.
 
 ## Named helpers (HIGH CONFIDENCE, not yet renamed in Ghidra)
 
