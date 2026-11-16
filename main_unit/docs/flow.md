@@ -160,3 +160,25 @@ constants it was built with. Values are in
 - Locate PLL / SystemClock_Config and the resulting SYSCLK.
 - Decode the TRX-state struct layout at `0x24013C0C`.
 - CH394 Ethernet / CI-V / "WFV" streaming internals (Phase 5+).
+
+## Interrupt paths — VERIFIED
+
+Each vector stub calls the HAL handler and then the user code directly
+(the HAL period-elapsed callbacks are empty).
+
+| IRQ | Path |
+| --- | --- |
+| 3 | bootloader jump `FUN_0802200c`, then the RTC wake-up HAL handler |
+| 9 / 10 / 23 / 40 | HAL EXTI, pins 3 / 4 / 6 / 10+13 → callback `FUN_08023ab4` (FPGA sample routine, CH394 INT flags, PTT, CW contacts) |
+| 11 / 16 | HAL DMA on the I²S3 RX/TX DMA handles; `i2s3_stream_start` installs the half/complete/error callbacks |
+| 15 | HAL DMA for USART2 TX; the user TX-complete callback is `FUN_08049638` |
+| 18 | HAL ADC |
+| 38 | HAL UART (USART2) |
+| 47 | inline filtering of the seven ADC samples for the meters, then HAL DMA |
+| 50 | HAL TIM, then the DSP scheduler (TX block `FUN_08034b88` / RX block `FUN_08033610`) |
+| 54 | HAL DAC + HAL TIM, then the 100 Hz housekeeping cycle |
+| 55 | HAL TIM, the 1 kHz service, conditionally the FFT, then the SLIP status frames |
+| 68 | HAL DMA on the unused DMA2 Stream5 handle |
+| 86 | HAL SPI (SPI6) |
+| 118 | HAL TIM, then wide-span decimation and the wfview TX-audio ring step |
+| 129 / 130 | HAL DMA on the BDMA channel handles (SPI6) |

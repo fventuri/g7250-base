@@ -143,7 +143,8 @@ Roadmap mirrors `REVERSE_ENGINEERING_GUIDE.md`, tracked per unit.
 
 - [x] Map active IRQ numbers → H7 peripherals (main: 16, control: 13
       active) — done, see Phase 2/3 above and per-unit `docs/peripherals.md`.
-- [ ] Identify Default_Handler and DMA callbacks per unit.
+- [x] Default/fault handlers and IRQ callback paths (*/docs/startup.md, */docs/flow.md).
+- [ ] Is the IWDG started by the bootloader or by option bytes?
 
 ## Later phases (per RE guide)
 
@@ -167,7 +168,7 @@ Roadmap mirrors `REVERSE_ENGINEERING_GUIDE.md`, tracked per unit.
 - [x] N03 DMA/NVIC allocation (docs/dma.md)
 - [ ] N04 protection thresholds · [ ] N05 BandMap/TX band enforcement · [ ] N20 ADC/DAC map
 - [ ] N21 PA bias / power control · [ ] N22 PTT arbitration + T/R sequencing · [ ] N31 power on/off
-- [ ] N07 stale doc claims · [ ] N08 exception handlers · [ ] N16 H72x Ghidra memory map
+- [ ] N07 stale doc claims · [x] N08 exception handlers · [ ] N16 H72x Ghidra memory map
 - [ ] N18 MPU/cache/RAM placement · [ ] N19 timer map
 - [ ] N10 UART roles · [ ] N11 Main SDRAM? · [ ] N12 Control I2C · [ ] N13 Control SPI5/SPI flash
 - [ ] N14 GT911 · [ ] N28 Control inputs · [ ] N29 Control USB descriptors · [ ] N30 display bring-up

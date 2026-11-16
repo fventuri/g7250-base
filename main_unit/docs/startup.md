@@ -76,3 +76,26 @@ separate PWR/VOSRDY call before SystemInit.
   actual clock-up (PLL/SystemClock_Config) must happen later (in `main`
   or a HAL init). Not yet located.
 - Whether an RTOS is started inside `main`.
+
+## Exception handlers — VERIFIED
+
+**Default handler.** `0x080245A4` (107 vectors) is a bare infinite loop.
+
+**Load-meter hook.** Every other handler starts by calling a
+cycle-counter hook (`FUN_0803adc0`). It feeds a CPU-load meter, which
+`FUN_0803ae04` reports about once per second.
+
+**Per-handler behaviour:**
+- NMI, MemManage, BusFault and UsageFault then loop forever.
+- SVC, DebugMon and PendSV return.
+- SysTick runs the HAL tick.
+- **HardFault** writes CFSR, HFSR, MMFAR and BFAR, then two words
+  labelled PC and LR, to USART1 by direct register polling, and halts.
+
+**Dump bug (HIGH CONFIDENCE).** The HardFault handler reads MSP after
+pushing 16 bytes, so the words it labels PC and LR are really the
+stacked R2 and R1.
+
+No handler resets the MCU. The HAL timer callbacks are empty: all
+periodic work sits in the vector stubs (interrupt paths in `flow.md`,
+priorities in `docs/dma.md`).

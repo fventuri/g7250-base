@@ -88,3 +88,17 @@ CONFIDENCE); the other two are not examined.
 - (Resolved) The running clock config is `FUN_08021d98`; see `flow.md`.
 - The conditional RCC `0xD4`/`0x30D2` tweak's exact purpose.
 - Whether an RTOS is started inside `main`.
+
+## Exception handlers — VERIFIED
+
+**Handlers:**
+- The default handler (`0x08023600`), NMI, MemManage, BusFault and
+  UsageFault are bare infinite loops.
+- SVC, DebugMon and PendSV return at once.
+- HardFault logs a one-line error through the console logger
+  (`FUN_08021840`) and halts, without a register dump.
+
+**Watchdog in SysTick.** The SysTick handler advances the HAL tick and
+also writes the IWDG refresh key every 256 ticks. The watchdog is
+therefore fed from interrupt context, so a stuck superloop does not by
+itself cause a watchdog reset.

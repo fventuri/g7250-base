@@ -128,3 +128,20 @@ Values are in `analysis/clocks/clock_config.csv`.
 - Identify the ~28 init functions (step 3) and the UI dispatch functions.
 - Display controller behind the FMC region (`0xC0000000`).
 - SLIP client command set (shared with Main Unit; Phase 5).
+
+## Interrupt paths — VERIFIED
+
+| IRQ | Path |
+| --- | --- |
+| 8 | clears EXTI pending bit 2, then the GT911 callback (`0x08035798`) |
+| 11 / 12 / 13 | HAL DMA on the I²S2 RX/TX and USART2 TX handles (`FUN_08052830` installs the I²S callbacks) |
+| 29 | GT911 poll `FUN_08035ce8`, then HAL TIM |
+| 38 | HAL UART (USART2) |
+| 44 | HAL TIM on TIM8, then on TIM13 (SLIP client callback) |
+| 45 | when TIM14 updates: key scan `FUN_08035f80` and input services, every 10th tick `FUN_08036674`; then HAL TIM |
+| 46 | CC1: mic-line decoder `FUN_08035e2c` with period and pulse; CC2: latch the pulse; then HAL TIM |
+| 49 | HAL SD |
+| 50 | HAL TIM, then the audio service `FUN_08050cb0` |
+| 55 | CW text-keyer step `FUN_08052364`, then HAL TIM |
+| 88 | HAL LTDC |
+| 101 | HAL PCD (USB) |
