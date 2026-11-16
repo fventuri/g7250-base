@@ -93,6 +93,7 @@ i.e. into the struct at `0x24018F9C`. Evidence:
 | `0x074` | i16 | RIT frequency | HIGH |
 | `0x076` | i16 | XIT frequency | HIGH |
 | `0x088` | i32 | sample rate | HIGH |
+| `0x09F` | u8 | antenna select (bit 0 = ANT index; used by the ATU table) | HIGH |
 | `0x0C4` | i16 | MIC gain | HIGH |
 | `0x0DA` | i16 | AM LPF TX filter | HIGH |
 | `0x0DE` | i16 | SSB LPF TX filter | HIGH |
@@ -113,6 +114,10 @@ selected VFO / frequency / mode, RF gain, XIT/RIT switch, VOX
 threshold/timeout, EQ parameters, audio filters, ATU switch, CW zoom,
 DNR1/DNR2 threshold, global SQL threshold, monitor level, wfview
 username/password, flags 2. Full 424-byte layout is TODO.
+
+The same 424-byte struct is the Main Unit's EEPROM / backup-SRAM
+settings image, with validity markers 0x64 at offsets 0x000, 0x1A3 and
+0x1A4 (see `main_unit/docs/memory_map.md`).
 
 > **Decoding key:** the front-panel menu catalog in
 > [`hardware.md`](hardware.md) §5 lists the authoritative parameter set

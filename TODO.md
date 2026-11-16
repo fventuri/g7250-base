@@ -65,7 +65,10 @@ Roadmap mirrors `REVERSE_ENGINEERING_GUIDE.md`, tracked per unit.
       the Control Unit USB-audio / I2S path (docs/hardware.md §6).
 - [ ] CH394: find the chip-select, reset and interrupt GPIOs, and the
       absolute SPI6 SCK rate (needs PCLK4, see the clock-config item).
-- [ ] EEPROM NVPARAM layout (header/checksum/ENDBit) + ATU network format.
+- [x] EEPROM layout: settings / calibration / NVPARAM marker / 2× ATU
+      tables, CRC-8 0x31, 64-B pages (main_unit/docs/memory_map.md).
+- [ ] Who writes the settings area (EEPROM 0x0000 / backup SRAM)? Nothing
+      in the Main firmware does — factory tool or older firmware?
 - [x] AXP223 rail map + VersaClock output plan (peripherals.md). Rail
       *use* is HYPOTHESIS.
 - [ ] Confirm the VC6 crystal (26 MHz?), whether OUT1 is 245.76 or
