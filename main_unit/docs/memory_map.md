@@ -131,3 +131,16 @@ The firmware places nothing in ITCM or DTCM.
 
 **Why this needed the firmware:** the MPU attributes, buffer placement,
 heap/stack reserve and cache strategy are linker and software choices.
+
+## RAM objects — HIGH CONFIDENCE unless noted
+
+The key globals (87 objects) are listed in `analysis/memory/ram_objects.csv`
+with address, size, region, role, owner and users. Sizes marked ≤ are
+upper bounds, taken from the gap to the next referenced address.
+
+Beyond the structures documented elsewhere, the map includes:
+- the RX I/Q ping-pong buffers (4 × 768 B at `0x2400F5F0`);
+- the scope/FFT ping-pong (2 × 1 KiB at `0x24035420`);
+- the FIR state buffers (1568 B = 201 + 192 − 1 floats, MEDIUM);
+- the NR frame and resampler buffers (MEDIUM);
+- the wfview session buffers, the largest `.bss` objects (MEDIUM).

@@ -1,0 +1,43 @@
+address,size,region,role,owner_function,users,confidence,evidence
+24000038,4,.data,emWin GUI context pointer (GUI_pContext) in .data,0807bb1c,111,HIGH,referenced by most functions of the emWin block
+24001648,4,.data,newlib _impure_ptr,08085154,20,HIGH,read by __assert_func and the stdio functions (byte-identical code to Main)
+240016a0,1,.bss,GCC destructor-helper completed flag (first .bss object),080202a0,,VERIFIED,memory_map.md
+240016a4,24,.bss,GCC frame-info object,080202c4,1,VERIFIED,memory_map.md (size = the 6-word libgcc object)
+240016bc,<=1024,.bss,emWin private .bss (non-COMMON objects; through 0x24001ABC),0807ad8c,1,HIGH,only emWin-block functions reference 0x240016BC-0x24001ABC; precompiled archive objects land at the start of .bss
+24001b98,,.bss,HAL I2C2 handle (AIC3204 codec + PCA9557),08021480,1,VERIFIED,peripherals.md
+24001d38,,.bss,HAL I2S2 handle,08052830,3,HIGH,taken by the I2S2 DMA start routine together with both SRAM4 buffers
+24001ed4,<=428,.bss,HAL SD handle (SDMMC1),0802246c,2,MEDIUM,owner is the SDMMC1 init path (peripherals.md SDMMC1)
+24002110,4,.bss,_sbrk heap-end pointer,08022944,1,HIGH,only object written by _sbrk
+240024f0,,.bss,HAL USART2 handle (SLIP link),080348dc,7,HIGH,used by the SLIP RX start and TX routines
+24002588,,.bss,USART1 (Bluetooth) driver state + HAL handle area,080332dc,7,MEDIUM,BT RX DMA start routine
+240027c0,1024,.bss,Bluetooth AT line/command buffer,080332dc,1,HYPOTHESIS,owner is the BT USART1 service; second 1 KiB next to the DMA ring
+240033ec,8192,.bss,SLIP decoded RX (linear frame) buffer,08034984,1,VERIFIED,protocol.md
+240063ec,,.bss,SLIP TX build buffer,08034c0c,2,VERIFIED,protocol.md
+240073f0,4,.bss,SLIP TX-busy lock,08034c0c,3,VERIFIED,protocol.md
+240074cc,<=256,.bss,FatFS-side work buffer,08036a0c,1,HYPOTHESIS,used next to the FATFS objects by fatfs.c helpers
+240075cc,564,.bss,FATFS volume object (SPI flash volume),080367cc,1,HIGH,owner mounts the SPI-flash volume; 564 B = FATFS struct with a 512-B window
+24007808,564,.bss,FATFS volume object (SD card volume),080366b0,1,MEDIUM,same size as the SPI-flash FATFS object
+24007a48,<=536,.bss,FIL object (config/INI file),080374b0,1,HYPOTHESIS,536 B fits a FIL with a 512-B sector buffer
+24007cdc,<=732,.bss,USB device handle (hUsbDeviceFS),0803d90c,1,HIGH,taken by MX_USB_DEVICE_Init
+24007fb8,512,.bss,USB string-descriptor buffer,0803d9a0,4,HIGH,shared by the four string-descriptor getters (512 = USBD_MAX_STR_DESC_SIZ)
+240081b8,<=4216,.bss,USB MSC class data (static allocation),0803df08,1,MEDIUM,returned by USBD_static_malloc
+24009230,,.bss,USB OTG_FS PCD handle,080391c0,1,MEDIUM,owner initialises the PCD layer on OTG_FS
+24009718,<=3024,.bss,UI/radio state block A,0803e748,2,HYPOTHESIS,two accessor stubs return it; mirrors block B
+2400a2e8,<=3024,.bss,UI/radio state block B,0803e73c,2,HYPOTHESIS,same size as block A
+2402c72c,<=2054,.bss,object used by the band-stacking menu,0804a058,1,MEDIUM,single owner that draws the band-stacking menu
+24030478,<=2048,.bss,TIM5 audio-service buffer,08050cb0,1,MEDIUM,owner is the 256-frame audio block service (peripherals.md)
+24030c78,<=1024,.bss,TIM5 audio-service buffer,08050cb0,1,MEDIUM,same owner
+24031078,<=1552,.bss,TIM5 audio-service buffer,08050cb0,1,MEDIUM,same owner
+240331f0,<=6144,.bss,voice recorder/player buffer,0805247c,2,HYPOTHESIS,two users next to the wav/voice-memory code
+24038a1a,,.bss,large UI/scope state (up to about 0x24055198),080508d0,1,HYPOTHESIS,single owner; gap to the next referenced address is about 114 KiB
+24055198,<=2200,.bss,shared UI object table (16 users),0806d3c8,16,MEDIUM,referenced by 16 UI functions including the largest one
+240612f8,<=332,.bss,emWin COMMON objects (through 0x24061444),0807bbb4,14,HIGH,end-of-.bss addresses referenced only from the emWin block
+240614a8,109400,heap,heap (newlib malloc via _sbrk),08022944,1,HIGH,_sbrk bounds: _end (0x240614A8) to stack top minus 0x4000
+2407c000,16384,stack,minimum stack reserve (_Min_Stack_Size 0x4000),08022944,1,HIGH,_sbrk refuses to grow past this address; MSP starts at 0x24080000
+38000000,4096,D3 SRAM4,SLIP USART2 RX DMA ring,080348dc,3,VERIFIED,protocol.md
+38001000,<=8192,D3 SRAM4,SLIP encoded TX buffer,08034c0c,3,VERIFIED,protocol.md (size from the gap to the next object)
+38003000,1024,D3 SRAM4,Bluetooth USART1 RX DMA ring,080332dc,2,VERIFIED,peripherals.md USART1
+38003400,4096,D3 SRAM4,I2S2 DMA buffer 0,08052830,1,VERIFIED,peripherals.md I2S2
+38004400,4096,D3 SRAM4,I2S2 DMA buffer 1,08052830,1,VERIFIED,peripherals.md I2S2
+c0000000,1228800,SDRAM (FMC),LTDC framebuffer (1024 x 600 RGB565),08021878,,HIGH,flow.md LTDC layer address; size from the panel geometry
+c0800000,,SDRAM (FMC),emWin memory pool (GUI_ALLOC),08039b9c,1,MEDIUM,assigned by the STemWin config glue

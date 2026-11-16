@@ -79,3 +79,19 @@ ITCM, DTCM or D2 SRAM.
 
 Open: whether the SDMMC internal DMA writes into cacheable AXI buffers
 without cache maintenance, which would be a coherency risk.
+
+## RAM objects — HIGH CONFIDENCE unless noted
+
+The key globals (42 objects) are listed in `analysis/memory/ram_objects.csv`.
+Sizes marked ≤ are upper bounds.
+
+**emWin.** The GUI context is at `0x24000038`. Its private `.bss`
+(`0x240016BC`–`0x24001ABC`) sits at the start of `.bss`, which is the
+likely source of the 32-byte `.bss` alignment (HYPOTHESIS). The emWin
+memory pool is in SDRAM at `0xC0800000` (MEDIUM).
+
+**Other objects:**
+- newlib `_impure_ptr` (`0x24001648`);
+- the FatFS volume objects (`0x240075CC`, `0x24007808`);
+- the USB device handle (`0x24007CDC`);
+- the 1024×600 RGB565 framebuffer at `0xC0000000` (1 228 800 B).
