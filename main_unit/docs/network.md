@@ -97,10 +97,47 @@ IC-7300, with CI-V address 0xA0 and an Icom-style virtual audio device.
 500 ms on audio. Retransmit requests are served from a sent-packet ring
 (`0x30002740`) (VERIFIED).
 
-**Audio.** LPCM 16-bit or 8-bit mono, at 48 or 16 kHz. Other client
-codecs (µ-law, Opus, stereo) are rejected with a warning. RX audio goes
-out every 20 ms in chunks of at most 1364 bytes. TX audio feeds the TX
-DSP.
+**Audio packets (VERIFIED).** Accepted client codecs are LPCM 16-bit
+or 8-bit mono at 48 or 16 kHz; other codecs (µ-law, Opus, stereo) are
+rejected with a warning, and other rates fall back to the configured
+default.
+- **Radio to PC.** A 20 ms deadline paces the stream; it resyncs when it
+  falls more than 800 ms behind. Each tick pulls one 20 ms block (at
+  most 1920 bytes) from the audio source and sends it in chunks of at
+  most 1364 bytes (so 1364 + 556).
+- **Header.** Each chunk has the standard 0x18-byte Icom audio header:
+  type 0, the audio-socket sequence number, a fixed 0x0080 ident at
+  0x10, a big-endian send sequence at 0x12 and a big-endian length at
+  0x16. 8-bit LPCM is sent unsigned (offset 128).
+- **PC to radio.** Incoming audio is length-checked against the
+  datagram and handed to the TX DSP; three length mismatches reopen the
+  audio socket.
+- Packet table: `analysis/protocol/wfview_packets.csv` (`FUN_0804bc90`,
+  `FUN_0804de38`).
+
+**Scope stream (VERIFIED).** When the client enables scope display and
+scope data output, the superloop sends one waveform frame at most every
+50 ms (20 fps) on the **CI-V** socket (`FUN_08052b78`, frame built in
+`FUN_0804d800`).
+- **Frame.** 518 bytes: the 0x15-byte CI-V wrapper (reply 0xC1), then a
+  standard CI-V `27 00` waveform frame with one division of one: mode,
+  BCD centre frequency, BCD span, out-of-range flag and 475 amplitude
+  points (0–160), ended by FD.
+- **Data.** The points come from the same 512-bin spectrum as SLIP
+  `0x03` (dB + 145), scaled to 0–160 and resampled 512→475 by point
+  sampling (no averaging).
+- **Span.** Setting the span (`27 15`) selects the FPGA rate index
+  (≤ 48 kHz → 3, ≤ 96 kHz → 2, ≤ 192 kHz → 1, wider → 0) and reloads
+  the FFT and filters (HIGH). The firmware takes the set value as the
+  full width, but the frame header reports half of it (MEDIUM: differs
+  from Icom, where both are ± values).
+- Unlike Icom radios over USB, the whole trace goes in a single
+  division.
+
+**Keep-alive packet formats (VERIFIED).** Pings are 0x15-byte type-7
+packets with a time-of-day millisecond stamp; incoming pings are
+answered with reply = 1. Idle packets are 0x10-byte type-0 packets every
+100 ms on control and, when armed, on CI-V.
 
 **Timeouts.** Login, capabilities, conninfo and stream start each have
 5 s. CI-V and audio streams are dropped after 15 s of silence.
