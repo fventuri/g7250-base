@@ -3,7 +3,9 @@ offset,width,type,field,consumer,confidence
 0x001,32,f32[8],scale factors (defaults 10..1000),FUN_0803c5e4,MEDIUM
 0x021,2,u16,runtime per-mode value (0 in CW modes else 50),FUN_0803ec3c/FUN_08034b88/FUN_080362c0,HIGH
 0x023,4,u16x2,set to 30 at load,FUN_0803c5e4,MEDIUM
-0x027,30,mixed,extended-band frequency offsets for band ids 0x22-0x27,FUN_0803d658,MEDIUM
+0x027,2,u16,unknown (default 100; not read by the offset code),-,LOW
+0x029,20,u16[5][2],transverter RF MHz / IF MHz for band ids 0x22-0x26 (defaults 432/1296/2320/5760/10368 to 144),FUN_0803d658,VERIFIED
+0x03d,10,mixed,QO-100 offset fields (RF kHz 10489500; RX IF kHz 739500; IF MHz),FUN_0803d658,VERIFIED
 0x047,38,u8[],byte tables (per-band-looking defaults),various,LOW
 0x05c,6,u8[6],parameters sent in the FPGA config frame,FUN_08039238,MEDIUM
 0x068,1,u8,parameter,FUN_08034b88,LOW

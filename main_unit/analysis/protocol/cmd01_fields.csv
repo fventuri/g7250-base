@@ -15,6 +15,8 @@ offset,width,type,field,control_source,main_consumer,confidence
 0x0a3,1,u8,XIT switch,ui+0x96F,FUN_08041ef4,VERIFIED
 0x0a4,1,u8,split switch,ui+0x991,FUN_0803e338/FUN_0803d658,VERIFIED
 0x0ac,1,u8,ATU switch,ui+0x992,FUN_08041ef4/FUN_080412bc,VERIFIED
+0x0af,6,u8[6],transverter enable for band ids 0x22-0x27 (never written in V1.0.1),-,FUN_0803d658,VERIFIED
+0x0b9,1,u8,split VFO tracking (never written in V1.0.1),-,FUN_0803d658,VERIFIED
 0x0c4,2,i16,mic gain,ui+0x97C (float),FUN_08041ef4,VERIFIED
 0x0c8,2,u16,LINE IN gain 0..30 (Main never reads it; Control has no local use),ui+0xA10,-,VERIFIED
 0x0ca,2,u16,sidetone master level 0..100 (Main-only; init 85; not copied from 0x01),-,FUN_08032b44,HIGH

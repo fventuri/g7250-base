@@ -1,6 +1,6 @@
 rel,width,type,field,confidence
 0x00,8,u64,frequency Hz (Control accepts 0.5-108 MHz from 0x08),VERIFIED
-0x08,8,u64,second frequency (init only; same default),LOW
+0x08,8,u64,tuned frequency (dial + RIT + transverter offset; written by FUN_0803d658),HIGH
 0x10,2,u16,RX HPF edge Hz (per-mode copy written by FUN_0803d454/FUN_08032020),HIGH
 0x12,2,u16,TX HPF edge Hz,HIGH
 0x14,2,u16,RX LPF edge Hz,HIGH

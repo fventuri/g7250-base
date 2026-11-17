@@ -285,6 +285,49 @@ see `control_unit/docs/storage.md`). 1920 = 2 VFOs × 24 bands × the
 band map (layout HYPOTHESIS). The separate 1920 in the wfview code
 (`FUN_0804de38`) is the cap on a 20 ms RX-audio fetch.
 
+## Transverter band offsets — VERIFIED (dormant in V1.0.1)
+
+**Bands.** Main has a 40-entry band table at `0x0807A420` (48 B each:
+name, flag, start/default/end Hz as u64, two step/channel lists).
+`FUN_08035d3c` returns the band id of a frequency, or the nearest band.
+Band ids 0x22–0x27 are 70cm, 23cm, 13cm, 6cm, 3cm and QO-100
+(10489.5–10490 MHz); see `analysis/flow/band_table.csv`.
+
+**Offsets.** The frequency-apply routine `FUN_0803d658` subtracts an RF
+value and adds an IF value when the band's enable byte is set and the
+frequency (after RIT/XIT) lies in that band:
+- enables: settings bytes `0x0AF`–`0x0B4`, one per band id 0x22–0x27;
+- values: calibration block, u16 RF MHz / u16 IF MHz pairs at
+  `0x029`–`0x03C` (defaults 432/1296/2320/5760/10368 MHz to a 144 MHz
+  IF, the classic 2 m-IF transverter);
+- QO-100 has its own kHz fields from `0x03D`; its RX IF default of
+  739.5 MHz fits a standard 9750 MHz LNB (HIGH CONFIDENCE for the
+  intent).
+
+**Dial versus tuned frequency.** The VFO record keeps the dial frequency
+at +0x00; the routine writes the tuned frequency (dial + RIT + offset)
+to +0x08 of both VFO records, and the NCO words use it. The NCO
+converter takes only the low 32 bits, so the tuned frequency must stay
+below 4.29 GHz. Band changes and the TX band check use the dial
+frequency, so the hard TX window above still applies unchanged.
+
+**Clamp.** With no transverter enabled, a dial frequency of 750 MHz or
+more is clamped to 750 MHz.
+
+**Status.** Nothing in V1.0.1 sets the enable bytes: the `0x01` handler
+does not copy them, Main boots on default settings (all zero), and the
+Control image has no band names, UI or INI key for them. Settings byte
+`0x0B9` (copy a VFO change to the other VFO in split) is equally
+unwritten. This looks like shared or prepared code with no front end.
+
+**Harmonic flag (computation VERIFIED, purpose HYPOTHESIS).** The
+routine also sets `0x24013E20` when the tuned RX frequency is closer to
+a 960 kHz harmonic than to a 1.2 MHz harmonic; it reaches the FPGA as
+bit 5 of the config frame's second status byte (spur avoidance?).
+
+**Why this needed the firmware:** the feature has no front end; the
+band ids, field layout and defaults exist only in Main's code.
+
 ## PTT and T/R switching — VERIFIED unless noted
 
 **PTT sources.**
