@@ -71,19 +71,20 @@ scope waveform data (HIGH, `docs/civ.md`; `civ_main.csv`).
 - **Bus.** The FPGA is the RF I/Q front end, on a bit-banged 8-bit GPIO
   bus (PE0–PE7 data, PE8/PE9 strobes, PE10 data-ready EXTI). VERIFIED,
   `peripherals.md` FPGA bus.
-- **Samples.** Command `0x04` reads signed 24-bit I and Q, with 1, 2, 4
-  or 8 complex samples per interrupt for rate settings 0–3. The samples
-  go into 192-sample blocks. VERIFIED.
-- **Sample rate.** The absolute rate is **not visible in the
-  firmware**. 48 kHz × 1/2/4/8 (48/96/192/384 kS/s) is a
-  **HYPOTHESIS**. It is consistent with the decimate-by-8/4/2/1 path
-  and with a VersaClock 6 output of 245.76 MHz = 5120 × 48 kHz (MEDIUM;
-  `peripherals.md`, `vc6_clock_plan.csv`).
+- **Samples.** Command `0x04` reads signed 24-bit I and Q, with 8, 4, 2
+  or 1 complex samples per interrupt for rate settings 0, 1, 2 and 3.
+  NFM/WFM always use setting 0. The samples go into 192-sample blocks,
+  which `FUN_08033390` decimates by 8/4/2/1. VERIFIED.
+- **Sample rate (MEDIUM).** The absolute rate is not measured. The
+  decimation factors, the wfview span thresholds (48/96/192 kHz for
+  settings 3/2/1) and the 122.88 MHz NCO clock (2560 × 48 kHz) together
+  give a 48 kHz interrupt rate, so 384/192/96/48 kS/s for settings
+  0/1/2/3 (`peripherals.md`, FPGA bus; `vc6_clock_plan.csv`).
 - **Rate control.** The span/rate index is settings `0x088` (0..3,
   HIGH). It is sent to the FPGA as a sample-rate code inside the 24-byte
   configuration frame (command `0x01`). That frame also carries three
-  32-bit words that may be NCO tuning words (HYPOTHESIS) and per-rate
-  calibration bytes.
+  32-bit NCO phase increments for a 122.88 MHz clock (VERIFIED,
+  `peripherals.md`) and per-rate calibration bytes.
 - **Single receiver.** Only one I/Q stream is read. No second receiver,
   raw-ADC or wideband command is known (VERIFIED for the documented
   command set).
@@ -92,8 +93,8 @@ scope waveform data (HIGH, `docs/civ.md`; `civ_main.csv`).
 - **Narrow rate (derived, MEDIUM).** The DSP runs on 192-sample blocks,
   and the codec moves 192-frame halves at 48 kHz (VERIFIED). The
   decimated I/Q that the HDSDR tap exports is therefore most likely the
-  48 kHz rate. Whether the wider spans really reach 384 kS/s depends on
-  the hypothesis above.
+  48 kHz rate. The wide settings deliver up to 384 kS/s at the FPGA bus
+  (MEDIUM, see above).
 
 ### 1.4 Audio, TX path, PTT, CAT
 
@@ -147,7 +148,7 @@ FPGA or hardware capability.
 | Start/stop `EF FE 04` (bit 0 I/Q+mic, bit 1 wideband) | HDSDR discover/heartbeat session (VERIFIED) | MAP | |
 | Host watchdog (HL2: TX stops when host commands stop) | 10 s HDSDR timeout; wfview 15 s stream timeout; 2–3 s SLIP controller timeout drops PTT (VERIFIED) | GAP | Needs a short network-loss TX drop; see §2.3 |
 | EP6 frames: 1032-B datagram, 2 × 512-B frames, sync `7F7F7F`, C0–C4, 63 × (I24, Q24, mic16) for one RX | 24-bit FPGA I/Q (VERIFIED); 16-bit mic from I²S3 (VERIFIED) | MAP | The native 24-bit format matches. 192-sample blocks must be repacked into 63-sample frames |
-| Rates 48/96/192/384 kHz (address 0x00, C1[1:0]) | span index `0x088` 0..3 (HIGH); absolute rates HYPOTHESIS | MAP / unknown | 384 kHz exceeds the SPI budget (§2.4) |
+| Rates 48/96/192/384 kHz (address 0x00, C1[1:0]) | span index `0x088` 0..3 = 384/192/96/48 kHz (index HIGH, rates MEDIUM) | MAP / unknown | 384 kHz exceeds the SPI budget (§2.4) |
 | Number of receivers (address 0x00, C4[5:3]) | one I/Q stream (VERIFIED) | GAP | Report 1 receiver |
 | Duplex bit | RX entry clears the TX rings; RX during TX not documented | unknown | |
 | RX1 frequency (address 0x02), TX frequency (address 0x01) | VFO A/B u64 Hz at `0x024`/`0x04C`, split `0x0A4`; HDSDR LO 0.5–108 MHz (VERIFIED) | MAP | 32-bit Hz in P1 is sufficient for HF |
@@ -325,7 +326,7 @@ application drivers:
 
 | # | Question | Why it matters | How to answer |
 | --- | --- | --- | --- |
-| Q1 | The PE10 data-ready rate for span index 0..3 (48 × 1/2/4/8 kHz is a HYPOTHESIS) | Sets the HPSDR rate table and the SPI budget | Scope PE10, or count HDSDR `0x0202` packets per second per span |
+| Q1 | Confirm the PE10 data-ready rate (expected 48 kHz at every index, so 384/192/96/48 kS/s for index 0..3; MEDIUM) | Sets the HPSDR rate table and the SPI budget | Scope PE10, or count HDSDR `0x0202` packets per second per span |
 | Q2 | The FPGA TX sample rate and how TX I/Q is clocked (per-interrupt count during TX) | Decides between P1 48 kHz and P2 192 kHz DUC and the need to resample | Logic analyser on PE0–PE10 while keyed into a dummy load |
 | Q3 | The meaning of the configuration-frame words at TRX `0x200`–`0x208` and the per-rate calibration bytes | Needed to tune the FPGA without the OEM firmware | Correlate with VFO changes on a bus capture |
 | Q4 | The maximum SPI clock the CH394 accepts on this board, and the measured SPI6 efficiency | Raises or lowers every row of §2.4 | Datasheet plus a throughput test |

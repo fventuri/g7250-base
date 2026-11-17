@@ -393,11 +393,11 @@ bit-banged bus on GPIOE. No FMC bank is used.
 | Code | Function |
 | --- | --- |
 | 0x00 | loopback/test register; the boot bus check writes and reads back 0–255 (`FUN_0803a3a0`) |
-| 0x01 | 24-byte configuration frame (`FUN_08039238`): TX/RX status bits, three 32-bit words from the TRX struct (offsets 0x200–0x208; NCO tuning words? HYPOTHESIS), per-rate calibration bytes from the calibration block, and a sample-rate code |
-| 0x02 | status read (`FUN_08039950`): two flag bits plus three 16-bit values |
+| 0x01 | 24-byte configuration frame (`FUN_08039238`), sent when the frequency-apply routine `FUN_0803d658` raises its request flag: status flag bytes, three big-endian 32-bit NCO words from the TRX struct (offsets 0x200–0x208), per-rate calibration bytes from the calibration block, and the rate index |
+| 0x02 | status read (`FUN_08039950`): two flag bits (TRX+0x22C, +0x22B; ignored for the first 50 reads), then three big-endian 16-bit values: TRX+0x226, the ADC peak (TRX+0x224, shown in the service menu) and `0x2400E9E4` |
 | 0x03 | TX I/Q write (`FUN_08039d90`): two signed 24-bit values per sample. Zeros are sent for the first 200 interrupts after keying |
 | 0x04 | RX I/Q read (`FUN_08039a6c`): two signed 24-bit values per sample, scaled to float. 8/4/2/1 samples per interrupt for sample-rate settings 0–3, in 192-sample blocks. An unconsumed block sets the FPGA underrun flag |
-| 0x05/0x06, 0x09/0x0A | two on/off toggles (init sends 0x06 and 0x0A); roles unknown |
+| 0x05/0x06, 0x09/0x0A | two pulse commands: init sends the "off" codes 0x06 and 0x0A; pulse helpers exist (`FUN_08039fdc`, `FUN_0803a02c`) but nothing sets their request flags in V1.0.1 (HIGH); roles unknown |
 | 0x08 | 3-byte FPGA firmware version read |
 
 **Bitstream and version.**
@@ -408,9 +408,20 @@ bit-banged bus on GPIOE. No FMC bank is used.
 - **Version.** The 3-byte version read at boot (command 0x08) is only
   logged. The version reported to the Control Unit in the slave-info
   block is the compiled-in "1.0.0" string.
-- **Sample rate.** The absolute I/Q rate depends on the PE10 interrupt
-  rate, which the firmware does not reveal (48 kHz × 1/2/4/8 is a
-  HYPOTHESIS).
+- **NCO tuning words (VERIFIED).** The three words are 32-bit phase
+  increments for a 122.88 MHz clock (f × 2³² / 122.88 MHz). The
+  frequency is first folded into 0–61.44 MHz (Nyquist zones of
+  122.88 MS/s), with a spectral-inversion flag that the RX reader uses.
+  TRX+0x208 is the main VFO plus RIT (and the transverter offset),
+  TRX+0x204 the other VFO plus RIT (MEDIUM for its role). 122.88 MHz is
+  half of the VersaClock 6 output, which supports OUT1 = 245.76 MHz
+  (MEDIUM). Branches above 245.76 MHz that divide the frequency by 3 or
+  9 are unused on this radio (shared code, MEDIUM).
+- **Sample rate (MEDIUM).** The interrupt delivers 8/4/2/1 samples for
+  rate index 0–3, and each 192-sample block is decimated by the same
+  factor into the 48 kHz chain. The wfview span thresholds are
+  48/96/192 kHz for indices 3/2/1. With the 122.88 MHz NCO clock this
+  gives a 48 kHz PE10 rate and 384/192/96/48 kS/s I/Q; still unmeasured.
 
 **Error handling — log only (VERIFIED).**
 - **Boot.** The bus test writes and reads back 0–255 twice. A mismatch
@@ -541,6 +552,15 @@ selects the MSP and re-enables interrupts.
 - **No transfer path.** The Main application has no firmware-transfer
   path (no SLIP type, no LAN code), so updates are entirely the
   bootloaders' job.
+
+**Update transport — not in the applications (HIGH).** The Control
+application has no forwarding code either: no file name, no SLIP type
+and no Main reset or boot line (its unexplained outputs PG9/PG10 are
+set high once and never changed). The transport therefore lives in the
+two sector-0 bootloaders. Most likely the image goes from the MSC disk
+via the Control bootloader over USART2, or in through the Main console
+USART1 (HYPOTHESIS). Settling it needs a sector-0 dump or a bus capture
+during a vendor update.
 
 **Why this needed the firmware:** the manual only says there is no USB
 connector. Only the absence of init code, vectors and base constants
