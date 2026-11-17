@@ -95,9 +95,9 @@ table is `analysis/peripherals/gpio_map.csv`.
   - SPI2 runs as I²S2 on PB12–PB15: full-duplex, with circular 32-bit
     DMA on DMA1 Stream0 (RX) and Stream1 (TX).
 - **Audio codec reset on PH2 (HIGH CONFIDENCE).** It is held low for
-  100 ms, then the codec is initialised for 48 kHz/32-bit, with the
-  same sequence the Main Unit uses. **The Control Unit therefore has
-  its own audio codec.**
+  100 ms, then the codec is initialised for 48 kHz/32-bit as I²S master
+  (see the codec section). **The Control Unit therefore has its own
+  audio codec.**
 - **USB.** USB_OTG_FS is on PA11/PA12 (AF10), clocked from HSI48, with
   IRQ101. The MCU drives its own USB port, so the note that the PC USB
   goes through a CH342 needs re-checking.
@@ -112,32 +112,44 @@ datasheet lists only possible pin functions.
 Reception uses circular DMA1 Stream4 (request 41) into a 1 KiB ring at
 `0x38003000` (SRAM4), started by `FUN_080332dc` and drained by polling
 from the superloop task `FUN_080332c8`. There is no USART1 IRQ, and
-transmission is blocking.
+transmission is blocking. The C library console (stdout) is also sent
+on USART1 (`FUN_08021be0`), so runtime log lines reach the module
+(VERIFIED).
 
 **Protocol: line-based AT commands.** Each command is "AT" + command +
 arguments + CR LF, and the driver expects an "OK" line. Each command
 has a 3 s timeout, 5 retries and a completion callback. Lines with an
 unsolicited-message prefix go to a handler that is empty in V1.0.1.
 
-**Commands.**
-- `+BD<name>` sets the device name (under 32 characters; defaults to
-  the module name).
-- `+CZ`, `+B4` with argument `00`, and `+CW` take no other arguments.
-  Their meaning is a HYPOTHESIS: they look like a vendor BT-audio
-  module command set.
+**Power-on sequence (VERIFIED).** BT-on (`FUN_08033248`) sets PCA9557
+bit 4 and queues four commands: +CW, +BD with the module name, +B4 with
+argument 00, then +CZ. Each has a 3 s timeout and 5 retries, and the first
+is sent in the same superloop pass as power-on.
+
+**The firmware ignores the replies (VERIFIED).** No command has a reply or
+OK callback; an OK line only advances the queue. The single unsolicited
+prefix ("TS+") has an empty handler. Bluetooth therefore never changes the
+UI, the audio routing or the codec.
+
+**Meaning (MEDIUM).** The commands and the status prefix match the public
+BT401-family audio/SPP module dialect: +CW restores factory settings, +BD
+sets the name, +B4 00 disables BLE, +CZ is a software reset, and TS+ is
+the classic-Bluetooth status report. In that reading every BT-on
+re-provisions the module and may clear its pairings (HYPOTHESIS).
 
 No command reads the address or the link status back, so the
 Bluetooth settings page shows placeholders (MEDIUM CONFIDENCE).
 
 **Power (HIGH CONFIDENCE).** Module power is bit 4 of a PCA9557 I2C GPIO
 expander (I2C2, 7-bit 0x19, reset PG3). BT-on (`FUN_08033248`) sets
-the bit and queues the name command. BT-off (`FUN_08033230`) clears it
+the bit and queues the power-on sequence above. BT-off (`FUN_08033230`) clears it
 and flushes the queue. At boot `FUN_080447d8` applies the stored enable
 setting.
 
 **Audio (MEDIUM CONFIDENCE).** There is no digital audio link to the
 module: no SAI, I²S2 belongs to the codec, and USART1 carries only AT
-text. BT audio presumably runs analog through the Control Unit audio
+text and CI-V. Bluetooth on/off changes no codec register and no other
+PCA9557 bit (VERIFIED). BT audio presumably runs analog through the Control Unit audio
 codec (HYPOTHESIS). Bluetooth is handled entirely on the Control Unit;
 there is no SLIP message for it (HIGH CONFIDENCE).
 
@@ -147,11 +159,30 @@ expander exist only in the code.
 
 ## Audio codec and I²S2 — VERIFIED unless noted
 
-**Second codec.** A second **TLV320AIC3204** sits on **I2C2** at 7-bit
-0x18 (`0x40005800`, handle `0x24001B98`), with reset on **PH2**
-(`FUN_08052964`). Here the **codec is the I²S master**: its PLL runs
-from a 12.288 MHz MCLK, BCLK and WCLK are outputs, and a CLKOUT
-divider is enabled (HIGH CONFIDENCE).
+**Second codec — not the Main init sequence.** The Control AIC3204 (I2C2
+0x18, reset PH2) is the **I²S master** (VERIFIED register values; field
+meanings from the AIC3204 register map, HIGH unless noted):
+- **Clocks.** MCLK 12.288 MHz feeds the PLL (P 1, R 1, J 8) to 98.304 MHz;
+  NDAC 2, MDAC 8 and DOSR 128 give 48 kHz. BCLK = DAC_CLK / 16 = 3.072 MHz
+  (two 32-bit slots), I²S format, BCLK and WCLK driven by the codec. The
+  ADC dividers are left unpowered, so the ADC shares the DAC clocks
+  (MEDIUM).
+- **PLL quirk.** The PLL burst write is shifted by one register: PLL D-LSB
+  always receives 8 and the computed value lands in a reserved register.
+  The effective multiplier is 8.0008, so fs is about 48.005 kHz (MEDIUM).
+- **CLKOUT.** CLKOUT = ADC_CLK / 2 is enabled on the codec's MFP4 (MISO)
+  pin; its destination is unknown (MEDIUM / HYPOTHESIS).
+- **Inputs.** Left PGA: IN1L against CM, 0 dB. Right PGA: IN1R against
+  CM, 0 dB. MICBIAS is on.
+- **Outputs.** The DACs feed HPR, LOL and LOR. LOL runs at +20 dB, the
+  others at 0 dB. **HPL is fed only by the analog mixer amplifier MAL**,
+  i.e. the left input passed through without the ADC/DAC path.
+- **Runtime** (only `FUN_0804e4e8`, through cached setters):
+  - the per-VFO **digiMode** flag switches the right PGA from IN1R to
+    IN2R + IN3R, sets the right PGA gain to LINE IN GAIN (0 dB otherwise)
+    and forces the speech compressor off;
+  - the HPL gain is LINE OUT GAIN − 7 dB (0 = mute).
+  Nothing else writes the codec after init. TX/RX and Bluetooth do not.
 
 **I²S2 on the MCU side** (`FUN_08021680`, MSP in the SPI2 branch) is
 an **I²S slave, full-duplex, 32-bit, 48 kHz**, on PB12–PB15 (AF5).
@@ -160,12 +191,25 @@ circular and word-wide; this accounts for IRQs 11 and 12. The 4 KiB
 buffers are in SRAM4 (`0x38003400` / `0x38004400`), and the DMA is
 started by `FUN_08052830`.
 
-**TIM5 audio service.** `FUN_08050cb0` processes 256-frame blocks: it
-passes ADC to DAC with a gain table on the left channel, and offers one
-capture hook and two playback hooks (probably the voice
-recorder/player; hook use HYPOTHESIS). `FUN_0804e4e8` applies the codec
-settings: right-channel input select and gain, headphone gain, and
-PCA9557 bits 6/7 as an audio path switch (HYPOTHESIS).
+**TIM5 audio service** (`FUN_08050cb0`, VERIFIED). It processes
+256-frame blocks.
+- **Left slot.** The output is the input scaled by the **AF volume**
+  through a 256-step table. The volume index is set by `FUN_08052a9c`
+  from the volume keys.
+- **Right slot.** Passed through unchanged.
+- **Hooks.** One capture hook (voice recorder) and two playback hooks
+  (voice playback, key beep).
+
+**Derived routing** (MEDIUM; analog destinations HYPOTHESIS):
+
+| Slot | Codec input | Codec output | Presumed use |
+| --- | --- | --- | --- |
+| 0 (left) | IN1L = RX audio from Main | DAC → LOL +20 dB (volume-scaled); IN1L → MAL → HPL (LINE OUT GAIN) | speaker/phones; line out to the USB sound card |
+| 1 (right) | IN1R = microphone; IN2R + IN3R = line-in in digiMode | DAC → HPR / LOR (unchanged) | TX audio to the Main mic input |
+
+The left input is also copied into the 1536-sample CW-decoder ring at
+`0x240331F0`. The codec register values of both units are in
+`analysis/peripherals/aic3204_init.csv`.
 
 **USB.** USB_OTG_FS is a USB mass-storage device, not a sound card (see
 the USB mass storage section).
@@ -265,6 +309,19 @@ does not matter. With r = low time / high time:
 The frame is accepted only if bits 12–19 of A equal bits 12–19 of B.
 Key code = ((A >> 15) & 0x0F) | ((A >> 6) & 0xF0).
 
+**Timing limits (VERIFIED; bounds derived).** TIM8 counts at 30 MHz
+(33.3 ns) and is reset by every rising edge at PI5. CH1 captures the
+period on the rising edge; CH2 captures the high time on the falling edge.
+- **No absolute window.** The decoder applies no minimum or maximum
+  duration, so the absolute bit period is not in the firmware.
+- **Upper bound.** The 16-bit counter limits a symbol to 2.18 ms. The sync
+  symbol (5 high-times) must fit, so the high time is under about 437 µs.
+  That makes a 0-symbol shorter than 0.87 ms and a 1-symbol shorter than
+  1.31 ms.
+- **Release.** 50 ms without an edge (counted by the 1 kHz TIM14 tick)
+  clears the frame and the key code; this is how a key release is seen.
+The real period needs a scope measurement.
+
 **Key map** (`FUN_080478d0`). The codes are VERIFIED; the legends are
 inferred from the actions (MEDIUM). Every new code first plays a
 100 ms key beep. The full table is in
@@ -318,6 +375,20 @@ published; only the decoder defines it.
 | 5 | 0 | set when Main signals power-off (0x03 flags bit 2), cleared at the end of the Control shutdown | power-down pulse (role HYPOTHESIS) |
 | 6 | 0 | 1 while transmitting | TX audio path |
 | 7 | 1 | 1 while receiving | RX audio path |
+
+**Write sites (VERIFIED).** The init routine (`FUN_08052b38`) resets the
+expander through PG3 and stages output 0x8B as all-outputs. The first
+superloop flush, about 3 s after reset, applies it: output first, then
+direction, so there is no glitch. After that, the only writes are:
+- bits 6/7 from `FUN_0804e4e8`, following TX/RX;
+- bit 5 set by the SLIP `0x03` power-off flag (`FUN_08034984`) and cleared
+  as the last step of `FUN_08021c20`, after the configuration save — so
+  bit 5 is high exactly while the Control shuts down;
+- bit 4 from BT on/off.
+Bits 0, 1 and 3 are never written after init, and Bluetooth and digiMode
+touch no other bit. Roles: bit 7 RX (speaker enable?), bit 6 TX (TX-audio
+path?), bit 5 shutdown-in-progress (power hold or amplifier mute?),
+bits 0/1/3 static enables. All roles are HYPOTHESIS.
 
 Bits 6/7 follow bit 1 (TX) of the Main status word received in `0x03`
 (`FUN_0804e4e8`). The switching is VERIFIED; its analog function is a

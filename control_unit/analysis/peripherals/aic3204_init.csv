@@ -1,0 +1,94 @@
+unit,phase,function,page,reg,value,meaning,confidence
+control,reset,FUN_08052964,-,-,-,PH2 low 100 ms then high 100 ms,VERIFIED
+control,softreset,FUN_08032488,0,0x01,0x01,software reset,HIGH
+control,pll,FUN_08031bc4,0,0x04,0x40,clock mux (rewritten by table),HIGH
+control,pll,FUN_08031bc4,0,0x05,0x91,PLL on P=1 R=1,HIGH
+control,pll,FUN_08031bc4,0,0x06,0x08,PLL J=8,HIGH
+control,pll,FUN_08031bc4,0,0x07,0x00,PLL D MSB,HIGH
+control,pll,FUN_08031bc4,0,0x08,0x08,PLL D LSB: constant 8 (quirk; D=8),MEDIUM
+control,pll,FUN_08031bc4,0,0x09,0x00,reserved; computed D LSB lands here,MEDIUM
+control,clock,FUN_08031bc4,0,0x0D,0x00,DOSR MSB,HIGH
+control,clock,FUN_08031bc4,0,0x0E,0x80,DOSR 128,HIGH
+control,clock,FUN_08031bc4,0,0x14,0x80,AOSR 128,HIGH
+control,clock,FUN_08031bc4,0,0x0B,0x82,NDAC 2 powered,HIGH
+control,clock,FUN_08031bc4,0,0x0C,0x88,MDAC 8 powered,HIGH
+control,clock,FUN_08031bc4,0,0x12,0x02,NADC 2 not powered (ADC uses DAC clocks),MEDIUM
+control,clock,FUN_08031bc4,0,0x13,0x08,MADC 8 not powered,MEDIUM
+control,table,FUN_08032524,0,0x04,0x43,PLL_CLKIN=MCLK; CODEC_CLKIN=PLL; high range,HIGH
+control,table,FUN_08032524,0,0x1D,0x00,BDIV_CLKIN=DAC_CLK; no loopback,HIGH
+control,table,FUN_08032524,0,0x1E,0x90,BCLK N=16 powered (3.072 MHz),HIGH
+control,table,FUN_08032524,0,0x1B,0x3C,I2S; 32-bit; BCLK and WCLK outputs (master),HIGH
+control,table,FUN_08032524,0,0x19,0x06,CLKOUT source ADC_CLK,MEDIUM
+control,table,FUN_08032524,0,0x1A,0x82,CLKOUT M=2 powered,MEDIUM
+control,table,FUN_08032524,0,0x37,0x06,MFP4 (MISO pin) = CLKOUT,MEDIUM
+control,table,FUN_08032524,0,0x3C,0x19,DAC block PRB_P25,HIGH
+control,table,FUN_08032524,0,0x3D,0x01,ADC block PRB_R1,HIGH
+control,table,FUN_08032524,1,0x01,0x08,weak AVDD-DVDD link off,HIGH
+control,table,FUN_08032524,1,0x02,0x01,AVDD LDO on; analog blocks on,HIGH
+control,table,FUN_08032524,1,0x0A,0x03,CM 0.9 V; HP from LDOIN,MEDIUM
+control,table,FUN_08032524,1,0x3D,0x00,ADC power tune PTM_R4,HIGH
+control,table,FUN_08032524,1,0x03,0x00,left DAC PTM_P3/4,HIGH
+control,table,FUN_08032524,1,0x04,0x00,right DAC PTM_P3/4,HIGH
+control,table,FUN_08032524,1,0x47,0x32,input quick-charge 6.4 ms,HIGH
+control,table,FUN_08032524,1,0x7B,0x05,reference forced on; 40 ms,HIGH
+control,table,FUN_08032524,0,0x51,0xC0,left+right ADC powered,HIGH
+control,table,FUN_08032524,0,0x52,0x00,ADC unmuted; fine gain 0,HIGH
+control,table,FUN_08032524,0,0x53,0x00,left ADC 0 dB,HIGH
+control,table,FUN_08032524,0,0x54,0x00,right ADC 0 dB,HIGH
+control,table,FUN_08032524,1,0x09,0x3F,HPL HPR LOL LOR MAL MAR powered,HIGH
+control,table,FUN_08032524,1,0x0C,0x08,left DAC to HPL (replaced later),HIGH
+control,table,FUN_08032524,1,0x0D,0x08,right DAC to HPR,HIGH
+control,table,FUN_08032524,1,0x0E,0x08,left DAC to LOL,HIGH
+control,table,FUN_08032524,1,0x0F,0x08,right DAC to LOR,HIGH
+control,table,FUN_08032524,1,0x10,0x40,HPL muted 0 dB,HIGH
+control,table,FUN_08032524,1,0x11,0x40,HPR muted 0 dB,HIGH
+control,table,FUN_08032524,1,0x12,0x40,LOL muted 0 dB,HIGH
+control,table,FUN_08032524,1,0x13,0x40,LOR muted 0 dB,HIGH
+control,table,FUN_08032524,1,0x14,0x25,HP driver start-up timing,MEDIUM
+control,table,FUN_08032524,0,0x3F,0xD6,both DACs on; L<-left R<-right; soft-step off,HIGH
+control,table,FUN_08032524,0,0x40,0x00,DACs unmuted,HIGH
+control,table,FUN_08032524,0,0x41,0x00,left DAC 0 dB,HIGH
+control,table,FUN_08032524,0,0x42,0x00,right DAC 0 dB,HIGH
+control,enable,FUN_08032428,1,0x02,0x01,AVDD LDO on (repeat),HIGH
+control,post,FUN_08032220,1,0x34,0x40,IN1L to left PGA+ 10k,HIGH
+control,post,FUN_08032220,1,0x36,0x40,CM1L to left PGA- 10k,HIGH
+control,post,FUN_08032220,1,0x37,0x40,IN1R to right PGA+ 10k,HIGH
+control,post,FUN_08032220,1,0x39,0x40,CM1R to right PGA- 10k,HIGH
+control,post,FUN_08031eb8,1,0x3B,0x00,left MICPGA 0 dB,HIGH
+control,post,FUN_08031eb8,1,0x3C,0x00,right MICPGA 0 dB,HIGH
+control,post,FUN_08031f98,1,0x12,0x14,LOL +20 dB unmuted,HIGH
+control,post,FUN_08031f98,1,0x13,0x00,LOR 0 dB unmuted,HIGH
+control,post,FUN_08032058,1,0x10,0x00,HPL 0 dB unmuted,HIGH
+control,post,FUN_08032058,1,0x11,0x00,HPR 0 dB unmuted,HIGH
+control,post,FUN_08032118,0,0x40,0x00,DACs unmuted,HIGH
+control,post,FUN_0803219c,0,0x52,0x00,ADCs unmuted,HIGH
+control,post,FUN_080323bc,1,0x33,0x60,MICBIAS on,MEDIUM
+control,post,FUN_08032d0c,1,0x0C,0x02,HPL fed by MAL only (analog bypass of left PGA),HIGH
+control,post,FUN_08032d0c,1,0x18,0x00,MAL volume 0 dB,HIGH
+control,runtime,FUN_08052b00,1,0x37,0x40/0x14,right PGA+ = IN1R (digiMode off) or IN2R+IN3R (on),HIGH
+control,runtime,FUN_08052ae0,1,0x3C,0x00/lineInGain,right MICPGA gain 0 dB or LINE IN GAIN in digiMode,HIGH
+control,runtime,FUN_08052ab0,1,0x10,lineOutGain-7,HPL gain in dB (below -6 = mute),HIGH
+main,reset,FUN_0804a65c,-,-,-,PB10 low 100 ms then high 100 ms,VERIFIED
+main,softreset,FUN_08044468,0,0x01,0x01,software reset,HIGH
+main,table,FUN_08044504,0,0x04,0x00,CODEC_CLKIN=MCLK; PLL unused,HIGH
+main,table,FUN_08044504,0,0x05,0x00,PLL off,HIGH
+main,table,FUN_08044504,0,0x0D,0x80,DOSR MSB (reserved bits; DOSR stays 128),MEDIUM
+main,table,FUN_08044504,0,0x14,0x80,AOSR 128,HIGH
+main,table,FUN_08044504,0,0x0B,0x81,NDAC 1 powered,HIGH
+main,table,FUN_08044504,0,0x0C,0x82,MDAC 2 powered,HIGH
+main,table,FUN_08044504,0,0x12,0x01,NADC 1 not powered,MEDIUM
+main,table,FUN_08044504,0,0x13,0x02,MADC 2 not powered,MEDIUM
+main,table,FUN_08044504,0,0x1B,0x30,I2S; 32-bit; BCLK and WCLK inputs (slave),HIGH
+main,table,FUN_08044504,0-1,0x3C..0x42,same as control,same block as control from 0x3C on,HIGH
+main,enable,FUN_08044408,1,0x02,0x01,AVDD LDO on,HIGH
+main,post,FUN_080441d4,1,0x10,0x0A,HPL +10 dB unmuted,HIGH
+main,post,FUN_080441d4,1,0x11,0x0A,HPR +10 dB unmuted,HIGH
+main,post,FUN_08044034,1,0x3B,0x1E,left MICPGA 15 dB (later mic gain),HIGH
+main,post,FUN_08044034,1,0x3C,0x00,right MICPGA 0 dB,HIGH
+main,post,FUN_0804439c,1,0x33,0x60,MICBIAS on,MEDIUM
+main,post,FUN_08044294,0,0x40,0x00,DACs unmuted,HIGH
+main,post,FUN_08044318,0,0x52,0x00,ADCs unmuted,HIGH
+main,post,FUN_08044d00,1,0x34,0x40,IN1L to left PGA+ 10k,HIGH
+main,post,FUN_08044d00,1,0x36,0x10,IN2R to left PGA- 10k,MEDIUM
+main,post,FUN_0804a65c,1,0x12,0x01,LOL +1 dB unmuted (LOR stays muted),HIGH
+main,runtime,FUN_0804a790,1,0x3B,micGain,left MICPGA = MIC GAIN from SLIP 0x01,VERIFIED

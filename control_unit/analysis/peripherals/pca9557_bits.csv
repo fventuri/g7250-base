@@ -1,9 +1,9 @@
 bit,boot,set_by,cleared_by,role,confidence
-0,1,init,never,static enable,HYPOTHESIS
-1,1,init,never,static enable,HYPOTHESIS
-2,0,never,never,unused,HIGH
-3,1,init,never,static enable,HYPOTHESIS
-4,0,FUN_08033248,FUN_08033230,BT module power,VERIFIED
-5,0,slip_rx_handler (0x03 flags b2),FUN_08021c20 end,power-down pulse,VERIFIED
+0,1,FUN_08052b38 (first flush),never,static enable,HYPOTHESIS
+1,1,FUN_08052b38 (first flush),never,static enable,HYPOTHESIS
+2,0,never,never,unused,VERIFIED
+3,1,FUN_08052b38 (first flush),never,static enable,HYPOTHESIS
+4,0,FUN_08033248 (BT on),FUN_08033230 (BT off),BT module power,VERIFIED
+5,0,FUN_08034984 @0x08034b12 (0x03 flags b2),FUN_08021c20 @0x08021d3e (end),high during shutdown/save,VERIFIED
 6,0,FUN_0804e4e8 (TX),FUN_0804e4e8 (RX),TX path,VERIFIED
 7,1,FUN_0804e4e8 (RX),FUN_0804e4e8 (TX),RX path,VERIFIED

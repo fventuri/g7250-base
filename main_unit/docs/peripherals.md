@@ -370,8 +370,12 @@ VersaClock 6 output plan below).
      codec is a slave;
    - ADC and DAC powered;
    - DAC routed to the HPL/HPR and LOL/LOR outputs.
-4. Sets headphone gain +10 dB, unmutes and enables MICBIAS.
-5. Routes the mic input to the left MICPGA (routing MEDIUM CONFIDENCE).
+4. Sets HPL/HPR to +10 dB and LOL to +1 dB (LOR stays muted), unmutes
+   the ADC and DAC, and enables MICBIAS.
+5. Routes IN1L (+) and IN2R (−) to the left MICPGA, a differential
+   input (MEDIUM). The right MICPGA has no input. The DOSR write sets
+   only reserved bits of the high byte, so DOSR stays 128. Register
+   values: `control_unit/analysis/peripherals/aic3204_init.csv`.
 
 MICPGA gain starts at 15 dB. It is updated from the MIC gain field of
 the SLIP `0x01` settings block (`FUN_0804a790`). MCLK is the same

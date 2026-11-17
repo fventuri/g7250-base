@@ -1,0 +1,8 @@
+param,value,source,confidence
+tick,33.33 ns (30 MHz),TIM8 PSC 7 @240 MHz,VERIFIED
+max_symbol,2.1845 ms,ARR 0xFFFF,VERIFIED
+sym0_ratio,0.65-1.35 low/high,FUN_08035e2c,VERIFIED
+sym1_ratio,1.65-2.35,FUN_08035e2c,VERIFIED
+sync_ratio,3.65-4.35,FUN_08035e2c,VERIFIED
+max_high_time,<437 us,5h < 2.1845 ms,HIGH
+release_timeout,50 ms,FUN_08035e14 @1 kHz,VERIFIED
