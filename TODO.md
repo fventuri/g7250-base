@@ -65,8 +65,10 @@ Roadmap mirrors `REVERSE_ENGINEERING_GUIDE.md`, tracked per unit.
 - [x] Audio / I-Q path: AIC3204 on Main I2C1 0x18 (I²S3 slave) and on
       Control I2C2 0x18 (I²S2 master); RF I/Q via the FPGA GPIOE parallel
       bus (24-bit I/Q, command set). See */docs/peripherals.md.
-- [ ] FPGA: layout of the 0x01 config frame (NCO words?), status values,
-      toggles 0x05/06 and 0x09/0A, PE10 interrupt rate (absolute I/Q rate).
+- [~] FPGA: NCO words (122.88 MHz phase increments), status read and
+      toggle state documented (peripherals.md FPGA bus). Open: roles of
+      0x05/06 and 0x09/0A, the status values TRX+0x226 and 0x2400E9E4;
+      measure PE10 (expected 48 kHz).
 - [ ] Analog audio routing across the CTRL cable; the PC USB sound-card chip.
 - [x] CH394 control pins: CS# PG15, RST# PB5, INT# PC13/EXTI13 (falling);
       SPI6 SCK ≈17.19 MHz. See peripherals.md SPI6 section.
@@ -130,7 +132,8 @@ Roadmap mirrors `REVERSE_ENGINEERING_GUIDE.md`, tracked per unit.
 - [~] Main Unit networking: CH394 driver, socket plan, HDSDR mode, wfview
       session and self-heal documented (main_unit/docs/network.md).
 - [x] CI-V command map for both parsers (docs/civ.md).
-- [ ] wfview audio and scope packet layouts.
+- [x] wfview audio and scope packet layouts (network.md, wfview_packets.csv).
+- [ ] wfview: scope span set/report factor-2 mismatch (confirm with a wfview client).
 - [ ] Control USART1 CI-V: physical endpoint (BT SPP vs PC serial bridge).
 
 ## Tooling
@@ -158,8 +161,10 @@ Roadmap mirrors `REVERSE_ENGINEERING_GUIDE.md`, tracked per unit.
 - Phase 5 Inter-MCU protocol: tracked in its own section above.
 - [~] Phase 6 RX DSP pipeline: structure mapped (main_unit/docs/dsp.md).
 - [~] Phase 7 TX DSP pipeline: structure mapped (main_unit/docs/dsp.md).
-- [ ] DSP open: FPGA strobe rate (absolute I/Q rate), AGC location and
-      parameters, NR engine identity, TX ALC loop, FM discriminator.
+- [~] DSP: AGC, NR engine (SpeexDSP) and FM discriminator documented
+      (dsp.md); interrupt rate MEDIUM (48 kHz). Open: AGC code-to-label
+      mapping (on-air check), DNR2 and DNR-type path, Speex vendor
+      controls 0x30–0x36, FM stereo flag +0x11D, TX ALC loop.
 - [x] X6100 tooling leftovers: verify_tx_biquads.py and generate_analysis_markdown.py
       removed; evidence manifest and lib matcher ported; tools/filter_response.py added.
 - [x] run_headless_*.sh wrappers accept absolute output paths (decompile wrapper pending).
@@ -197,7 +202,10 @@ Roadmap mirrors `REVERSE_ENGINEERING_GUIDE.md`, tracked per unit.
       unit); layout HYPOTHESIS 2 × 24 × 40-byte VFO records (flow.md).
 - [ ] What drives PH5 (front-panel key over the CTRL cable?); is PH9 a power latch; Control PCA9557 bit 5 role.
 - [ ] Read the option bytes (RDP, BOOT_ADD, CPUFREQ_BOOST, IWDG_SW) from a unit over SWD, if RDP allows.
-- [ ] Main firmware update path (bootloader only; transport from Control unknown).
+- [ ] Main firmware update transport: not in either application (peripherals.md); needs a
+      sector-0 dump of both units or a USART1/USART2 capture during a vendor update.
+- [ ] Per-band frequency offsets in FUN_0803d658 (settings 0xAF–0xB4, band ids 0x22–0x27):
+      transverter feature? (MEDIUM).
 - [ ] Control bootloader: update file name and checks (needs a sector-0 dump).
 - [ ] IWDG timeout and the IWDG_SW option byte (needs an SWD read).
 - [x] Exact toolchain matching against ST's GNU Tools 12.3 build (tools/match_static_libs.py, docs/libraries.md).

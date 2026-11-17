@@ -23,12 +23,16 @@ address,role,conf
 0803b100,noise blanker,MEDIUM
 08035c50,auto-notch (adaptive),HYPOTHESIS
 08032d54,squelch,MEDIUM
-080330c8,FM squelch,MEDIUM
-080318d0,gain control (AGC?),HYPOTHESIS
-0803b4c4,NR wrapper (16 kHz),MEDIUM
-08040238,NR engine,HYPOTHESIS
+080330c8,FM discriminator and squelch,VERIFIED
+080318d0,AGC (look-ahead peak),VERIFIED
+0803b4c4,NR wrapper (48 to 16 kHz; Speex),HIGH
+08040238,speex_preprocess_run,HIGH
 08032cc4,TX compressor/clipper,MEDIUM
 080362c0,CW keyer envelope,MEDIUM
 08032b44,CW sidetone,MEDIUM
 08079fe0,Hilbert FIR table 201 taps,VERIFIED
 08079cbc,delay FIR table 201 taps,HIGH
+08031c60,AGC init,HIGH
+0803b228,NR init,HIGH
+08040cd8,speex_preprocess_ctl,HIGH
+08024aa8,atan2 f32 (CMSIS),HIGH

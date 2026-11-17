@@ -9,16 +9,17 @@ HYPOTHESIS. Function list: `analysis/dsp/dsp_functions.csv`.
 - **RF I/Q from the FPGA.** The FPGA bit-banged bus on PE0–PE9 (see
   `peripherals.md`, FPGA bus) carries 24-bit signed I and Q.
   - The FPGA sample interrupt (PE10 / EXTI10, `FUN_08039078`) reads
-    1, 2, 4 or 8 complex samples, depending on the span setting
+    8, 4, 2 or 1 complex samples for span settings 0, 1, 2 and 3
     (settings `0x088`, or `0x08C` in NFM/WFM; `0x08C` is never updated
     from `0x01` and stays 0, so NFM/WFM always use index 0) (VERIFIED).
   - The samples go into a 192-sample ping-pong for the audio DSP and a
     256-sample ping-pong for the FFT/scope.
   - TX samples go back to the FPGA from a 2×192-sample ring
     (`0x2400E9F0` / `0x2400EFF0`) (VERIFIED).
-  - The interrupt rate is not visible in the firmware. 48 kHz, giving
-    384/192/96/48 kS/s, is a HYPOTHESIS, consistent with the
-    decimate-by-8/4/2/1 path `FUN_08033390`.
+  - The interrupt rate is not measured. 48 kHz, giving 384/192/96/48
+    kS/s, is MEDIUM: it follows from the decimate-by-8/4/2/1 path
+    `FUN_08033390`, the wfview span thresholds and the 122.88 MHz NCO
+    clock (`peripherals.md`).
 - **Audio through the AIC3204 on I²S3.** 48 kHz, 32-bit stereo, in
   4 ms DMA halves of 192 frames.
 - **Block size and scheduling.** All baseband DSP runs on
@@ -48,22 +49,62 @@ HYPOTHESIS. Function list: `analysis/dsp/dsp_functions.csv`.
    - **CW:** complex band-pass and a pitch shift (MEDIUM).
    - **AM:** envelope with a DC blocker (MEDIUM).
    - **SAM:** a carrier-tracking loop (MEDIUM).
-   - **FM:** FM squelch with filters; the discriminator itself is not
-     pinned down.
+   - **FM (VERIFIED):** a conjugate-product discriminator (`FUN_080330c8`):
+     atan2 of the current sample times the conjugate of the previous
+     one (CMSIS atan2 `FUN_08024aa8`), scaled by 1/(1000π). Squelch uses
+     the VFO +0x1D threshold with 20 ms hysteresis and a soft-mute ramp.
+     In WFM, with settings +0x11D set, an optional stereo stage (pilot
+     phase via atan2, doubled) splits L/R (MEDIUM).
 6. **Optional stages:**
    - noise blanker (MEDIUM);
    - adaptive auto-notch (HYPOTHESIS);
    - squelch;
-   - a gain-control stage (AGC? HYPOTHESIS).
-7. **Noise reduction (MEDIUM).** The audio is resampled to 16 kHz in
-   256-sample frames, passed through a suppressor engine whose level is
-   set from 1–100, then resampled back to 48 kHz.
+   - AGC (`FUN_080318d0`, VERIFIED; see below).
+7. **Noise reduction (HIGH).** The SpeexDSP preprocessor (float build),
+   frame 256 at 16 kHz, with denoise on and the Speex AGC and VAD off
+   (init `FUN_0803b228`, run `FUN_08040238`, control `FUN_08040cd8`).
+   - It has four vendor control extensions (0x30–0x36: band count and
+     three tuning floats).
+   - The wrapper `FUN_0803b4c4` collects 768 samples at 48 kHz,
+     decimates by 3 to 256, runs Speex, then interpolates back by 3
+     (about 16 ms latency).
+   - The DNR1 level 1–100 (settings 0x0F2) maps to −1…−25 dB
+     suppression. DNR2 and the DNR-type path are open.
 8. **RX equaliser.** Five-band biquad EQ, designed at runtime.
 9. **Output.**
    - the wfview RX audio tap;
    - AF volume;
    - the line-monitor mix and beeps;
    - an MDMA copy into the I²S3 TX buffer.
+
+### AGC (`FUN_080318d0`, VERIFIED)
+
+A feed-forward peak AGC with look-ahead.
+- **Detector.** Instant attack, 0.25 step toward lower values; level is
+  20·log10(peak + 1e-6).
+- **Gain update.** Error = target − gain − level. A negative error
+  lowers the gain by error × attack coefficient and reloads the hang
+  counter; a positive error raises it by error × decay coefficient once
+  the hang counter has run out.
+- **Parameters** (init `FUN_08031c60`, struct `0x24031DE0`): target
+  −20 dB re float full scale, gain range −100…+30 dB, attack about
+  0.36 ms, initial gain −10 dB, a 480-sample (10 ms) look-ahead delay on
+  both channels.
+- **AGC off** (VFO byte +0x23 = 0) gives a fixed +30 dB. The stage is
+  skipped when settings +0x11E is set.
+- **Outputs.** Gain at `0x24005E50` (the service-menu AGC value), hang
+  count at `0x24005E54`.
+
+Decay time constants by VFO byte +0x23 and mode:
+
+| +0x23 | SSB (mode < 4) | CW (4–5) | AM/SAM etc. | FM (8–9) |
+| --- | --- | --- | --- | --- |
+| 1 (and other) | 0.5 s | 0.12 s | 1.2 s | 30 ms |
+| 2 | 1.4 s | 0.28 s | 1.6 s | 30 ms |
+| 3 | 80 ms + 40 ms hang | 30 ms | 0.7 s | 30 ms |
+
+CI-V labels codes 1/2/3 FAST/MID/SLOW, but code 3 has the fastest
+decay. Which side is mislabelled is a HYPOTHESIS to check on air.
 
 ## TX chain (`FUN_08034b88`)
 
