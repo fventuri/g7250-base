@@ -1,11 +1,27 @@
 // Apply only explicitly VERIFIED function renames from a CSV file.
+//
+// CSV format (unchanged): header line
+//   address,current_name,new_name,confidence,evidence
+// followed by one rename per line; the evidence field may contain commas.
+//
+// Each row is validated and applied on its own. A row that cannot be applied
+// (malformed line, not VERIFIED, bad address, address inside another function
+// or outside loaded memory, current-name mismatch, target name already used
+// elsewhere, function creation failure) is logged with its line number and
+// skipped; the remaining rows are still processed. A summary line is printed
+// at the end:
+//   RENAME SUMMARY: rows=N renamed=R created=C unchanged=U skipped=S errors=E
+// "skipped" counts rows rejected by validation, "errors" counts rows where an
+// unexpected exception occurred while applying them.
+//
+// Only fatal problems abort the script with an exception (wrong arguments,
+// unreadable or empty file, unexpected header).
 // @category X6100
 
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
-import java.util.ArrayList;
-import java.util.List;
+import java.io.IOException;
 
 import ghidra.app.script.GhidraScript;
 import ghidra.program.model.address.Address;
@@ -14,19 +30,21 @@ import ghidra.program.model.symbol.SourceType;
 import ghidra.program.model.symbol.Symbol;
 
 public class RenameVerifiedFromCsv extends GhidraScript {
-	private static class Rename {
-		Address address;
-		String currentName;
-		String newName;
-		boolean create;
+	private static final String HEADER = "address,current_name,new_name,confidence,evidence";
 
-		Rename(Address address, String currentName, String newName, boolean create) {
-			this.address = address;
-			this.currentName = currentName;
-			this.newName = newName;
-			this.create = create;
+	/** A row rejected by validation; skipped, not fatal. */
+	private static class SkipRow extends Exception {
+		SkipRow(String message) {
+			super(message);
 		}
 	}
+
+	private int rows;
+	private int renamed;
+	private int created;
+	private int unchanged;
+	private int skipped;
+	private int errors;
 
 	@Override
 	protected void run() throws Exception {
@@ -35,83 +53,132 @@ public class RenameVerifiedFromCsv extends GhidraScript {
 			throw new IllegalArgumentException(
 				"usage: RenameVerifiedFromCsv.java <renames.csv>");
 		}
-
-		List<Rename> renames = readAndValidate(new File(args[0]));
-		for (Rename rename : renames) {
-			Function function = getFunctionAt(rename.address);
-			if (rename.create) {
-				if (currentProgram.getListing().getInstructionAt(rename.address) == null) {
-					disassemble(rename.address);
-				}
-				function = createFunction(rename.address, rename.newName);
-				if (function == null) {
-					throw new IllegalStateException(
-						"could not create function at " + rename.address);
-				}
-				println(rename.address + ": <missing> -> " + rename.newName);
-				continue;
-			}
-			if (function.getName().equals(rename.newName)) {
-				continue;
-			}
-			function.setName(rename.newName, SourceType.USER_DEFINED);
-			println(rename.address + ": " + rename.currentName + " -> " + rename.newName);
+		File input = new File(args[0]);
+		if (!input.isFile() || !input.canRead()) {
+			throw new IOException("cannot read rename CSV: " + input);
 		}
-	}
 
-	private List<Rename> readAndValidate(File input) throws Exception {
-		List<Rename> renames = new ArrayList<>();
 		try (BufferedReader reader = new BufferedReader(new FileReader(input))) {
 			String header = reader.readLine();
-			if (!"address,current_name,new_name,confidence,evidence".equals(header)) {
-				throw new IllegalArgumentException("unexpected CSV header");
+			if (header == null) {
+				throw new IllegalArgumentException("empty rename CSV: " + input);
+			}
+			header = stripLineNoise(header);
+			if (header.startsWith("﻿")) {
+				header = header.substring(1);
+			}
+			if (!HEADER.equals(header)) {
+				throw new IllegalArgumentException("unexpected CSV header in " + input);
 			}
 
 			String line;
 			int lineNumber = 1;
 			while ((line = reader.readLine()) != null) {
 				lineNumber++;
+				line = stripLineNoise(line);
 				if (line.isBlank()) {
 					continue;
 				}
-				String[] fields = line.split(",", 5);
-				if (fields.length != 5 || !"VERIFIED".equals(fields[3])) {
-					throw new IllegalArgumentException(
-						"line " + lineNumber + " is not an explicit VERIFIED rename");
+				rows++;
+				try {
+					applyRow(line);
 				}
-
-				Address address = toAddr(fields[0]);
-				Function function = getFunctionAt(address);
-				boolean create = false;
-				if (function == null) {
-					if (getFunctionContaining(address) != null) {
-						throw new IllegalArgumentException(
-							"address " + address + " lies inside another function");
-					}
-					if (!currentProgram.getMemory().contains(address)) {
-						throw new IllegalArgumentException(
-							"address is outside loaded memory at " + address +
-							" on line " + lineNumber);
-					}
-					create = true;
+				catch (SkipRow e) {
+					skipped++;
+					printerr("SKIP line " + lineNumber + ": " + e.getMessage());
 				}
-				if (!create && !function.getName().equals(fields[1]) &&
-						!function.getName().equals(fields[2])) {
-					throw new IllegalArgumentException(
-						"name mismatch at " + address + ": expected " + fields[1] +
-						" or " + fields[2] + ", found " + function.getName());
+				catch (Exception e) {
+					errors++;
+					printerr("ERROR line " + lineNumber + ": " + e.getClass().getSimpleName() +
+						": " + e.getMessage());
 				}
-
-				for (Symbol collision :
-						currentProgram.getSymbolTable().getGlobalSymbols(fields[2])) {
-					if (collision.getAddress().compareTo(address) != 0) {
-						throw new IllegalArgumentException(
-							"target name already exists at " + collision.getAddress());
-					}
-				}
-				renames.add(new Rename(address, fields[1], fields[2], create));
 			}
 		}
-		return renames;
+
+		println("RENAME SUMMARY: rows=" + rows + " renamed=" + renamed + " created=" + created +
+			" unchanged=" + unchanged + " skipped=" + skipped + " errors=" + errors);
+	}
+
+	private static String stripLineNoise(String line) {
+		// Tolerate CRLF files.
+		if (line.endsWith("\r")) {
+			return line.substring(0, line.length() - 1);
+		}
+		return line;
+	}
+
+	private void applyRow(String line) throws Exception {
+		String[] fields = line.split(",", 5);
+		if (fields.length != 5) {
+			throw new SkipRow("malformed line (expected 5 fields, found " + fields.length + ")");
+		}
+		String addressText = fields[0].trim();
+		String currentName = fields[1].trim();
+		String newName = fields[2].trim();
+		if (!"VERIFIED".equals(fields[3].trim())) {
+			throw new SkipRow("not an explicit VERIFIED rename (confidence '" +
+				fields[3].trim() + "')");
+		}
+		if (addressText.isEmpty() || newName.isEmpty()) {
+			throw new SkipRow("empty address or new name");
+		}
+
+		Address address;
+		try {
+			address = toAddr(addressText);
+		}
+		catch (Exception e) {
+			address = null;
+		}
+		if (address == null) {
+			throw new SkipRow("unparsable address '" + addressText + "'");
+		}
+
+		Function function = getFunctionAt(address);
+		boolean create = false;
+		if (function == null) {
+			Function container = getFunctionContaining(address);
+			if (container != null) {
+				throw new SkipRow("address " + address + " lies inside function " +
+					container.getName() + " at " + container.getEntryPoint());
+			}
+			if (!currentProgram.getMemory().contains(address)) {
+				throw new SkipRow("address is outside loaded memory at " + address);
+			}
+			create = true;
+		}
+		if (!create && !function.getName().equals(currentName) &&
+				!function.getName().equals(newName)) {
+			throw new SkipRow("name mismatch at " + address + ": expected " + currentName +
+				" or " + newName + ", found " + function.getName());
+		}
+
+		for (Symbol collision : currentProgram.getSymbolTable().getGlobalSymbols(newName)) {
+			if (collision.getAddress().compareTo(address) != 0) {
+				throw new SkipRow("target name " + newName + " already exists at " +
+					collision.getAddress());
+			}
+		}
+
+		if (create) {
+			if (currentProgram.getListing().getInstructionAt(address) == null) {
+				disassemble(address);
+			}
+			function = createFunction(address, newName);
+			if (function == null) {
+				throw new SkipRow("could not create function at " + address);
+			}
+			created++;
+			println(address + ": <missing> -> " + newName);
+			return;
+		}
+		if (function.getName().equals(newName)) {
+			unchanged++;
+			return;
+		}
+		String oldName = function.getName();
+		function.setName(newName, SourceType.USER_DEFINED);
+		renamed++;
+		println(address + ": " + oldName + " -> " + newName);
 	}
 }
