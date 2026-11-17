@@ -191,7 +191,8 @@ Roadmap mirrors `REVERSE_ENGINEERING_GUIDE.md`, tracked per unit.
 - [ ] G90 internals (MCUs, base-display protocol): needs a G90 firmware analysis.
 - [ ] Identify the SPI2 DAC chip; circuit roles of DAC channels 5 and 6.
 - [ ] Confirm in hardware whether an analog SWR/ALC fold-back exists outside the MCU.
-- [ ] Confirm on the Control side what the 1920-byte BandMap type is.
+- [x] 1920-byte BandMap: an unused shared type in V1.0.1 (no object on either
+      unit); layout HYPOTHESIS 2 × 24 × 40-byte VFO records (flow.md).
 - [ ] What drives PH5 (front-panel key over the CTRL cable?); is PH9 a power latch; Control PCA9557 bit 5 role.
 - [ ] Read the option bytes (RDP, BOOT_ADD, CPUFREQ_BOOST, IWDG_SW) from a unit over SWD, if RDP allows.
 - [ ] Main firmware update path (bootloader only; transport from Control unknown).

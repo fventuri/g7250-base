@@ -273,9 +273,17 @@ Inside the window it allows TX when any of these holds:
 `0x02` set frame (factory tool) can, and that path does not write the
 EEPROM.
 
-**BandMap.** The 1920-byte "BandMap" size printed at boot belongs to a
-type that no Main code allocates, loads or sends. It is probably the
-Control Unit band stack (HYPOTHESIS).
+**BandMap.** The boot line prints the sizes of four shared protocol
+types: BandMap 1920, settings 424, calibration 358 and report 552 B. The
+last three match the `0x01`, `0x02` and `0x03` payloads (VERIFIED). No
+code in either V1.0.1 image allocates, loads or sends a 1920-byte object
+(HIGH CONFIDENCE: whole-image scalar scans; the Control SLIP receiver
+handles only `0x03`, `0x06` and `0x08`). The Control band stack is a
+different structure (2 × 24 × 56 B, persisted in the band-stack files;
+see `control_unit/docs/storage.md`). 1920 = 2 VFOs × 24 bands × the
+40-byte wire VFO record, so BandMap is probably an unused wire-format
+band map (layout HYPOTHESIS). The separate 1920 in the wfview code
+(`FUN_0804de38`) is the cap on a 20 ms RX-audio fetch.
 
 ## PTT and T/R switching — VERIFIED unless noted
 

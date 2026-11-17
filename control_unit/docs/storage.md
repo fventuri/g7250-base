@@ -66,6 +66,16 @@ and a ham-band flag) live in flash at `0x080C2078`. Ham bands default to
 LSB below 10 MHz and USB above; the broadcast segments default to AM and
 78–108 MHz to WFM.
 
+**In RAM (VERIFIED).** The stack is two tables of 24 × 56-byte records
+at `0x2400BA88` (VFO A, then VFO B), filled from the defaults at
+`0x080C2078` by `FUN_0803ea94`; `FUN_0803ec18` resets one VFO table.
+Record layout: band-name pointer (+0x00); lower and upper edge (+0x08,
++0x10) and default frequency (+0x18), all u64 Hz; default mode (+0x20),
+antenna (+0x24) and ATU (+0x25 bit 0); then the live part: frequency
+(+0x28), mode (+0x30), AGC, PRE, ATT, antenna and ATU (+0x31..+0x35) —
+the seven keys of the file. Load `FUN_08048544`, save `FUN_08048520`.
+The stack is persisted only; it is never sent over SLIP.
+
 ## CW messages, memory channels, voice
 
 - **CW messages.** `[MSG-nn]` sections (01–10) with one quoted `msg` text of
