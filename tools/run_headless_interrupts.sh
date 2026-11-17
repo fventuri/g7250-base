@@ -1,6 +1,10 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
+# Output (and input) paths may be absolute or relative to the current directory
+# (the repository root, which -scriptPath below also assumes).
+abspath() { case "$1" in /*) printf '%s\n' "$1" ;; *) printf '%s/%s\n' "$(pwd)" "$1" ;; esac; }
+
 : "${GHIDRA_INSTALL:?set GHIDRA_INSTALL to the Ghidra directory}"
 : "${JAVA_HOME:?set JAVA_HOME to the JDK directory}"
 PROJECT_DIR="${PROJECT_DIR:-/tmp/g7250-ghidra-project}"
@@ -17,4 +21,4 @@ XDG_CONFIG_HOME="$GHIDRA_CONFIG_DIR" \
 	-process "$PROGRAM_NAME" \
 	-readOnly \
 	-scriptPath "$(pwd)/ghidra_scripts" \
-	-postScript ExportInterruptEvidence.java "$(pwd)/$OUTPUT_DIR"
+	-postScript ExportInterruptEvidence.java "$(abspath "$OUTPUT_DIR")"

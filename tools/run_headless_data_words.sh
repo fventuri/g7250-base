@@ -1,6 +1,10 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
+# Output (and input) paths may be absolute or relative to the current directory
+# (the repository root, which -scriptPath below also assumes).
+abspath() { case "$1" in /*) printf '%s\n' "$1" ;; *) printf '%s/%s\n' "$(pwd)" "$1" ;; esac; }
+
 if (($# != 3)); then
 	echo "usage: $0 <output.csv> <address> <word-count>" >&2
 	exit 2
@@ -22,4 +26,4 @@ XDG_CONFIG_HOME="$GHIDRA_CONFIG_DIR" \
 	-readOnly \
 	-scriptPath "$(pwd)/ghidra_scripts" \
 	-preScript MapSTM32H7Memory.java \
-	-postScript ExportDataWords.java "$(pwd)/$1" "$2" "$3"
+	-postScript ExportDataWords.java "$(abspath "$1")" "$2" "$3"
