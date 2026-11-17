@@ -76,7 +76,7 @@ Each iteration (`do { … } while(true)`):
 - Service calls: `FUN_08042C20`, `FUN_08046CD8`, `FUN_080478D0`,
   `FUN_0803ED20`, `FUN_0804E4E8`, `FUN_080365A0`, `FUN_0803E76C`, then a
   conditional branch on `*pcVar1`, then UI/dispatch
-  (`FUN_080366B0`, `FUN_080332C8`, `FUN_08034680`, `FUN_08034C0C`).
+  (`FUN_080366B0`, `FUN_080332C8`, `FUN_08034680`, `FUN_08034C0C`) (VERIFIED).
 
 `FUN_08024C20(ms)` ≈ `HAL_Delay` (called `(10)`, `(3000)`).
 `FUN_08021840(level, msg)` = console logger; `FUN_0802DDA4(htim)` = HAL_TIM_Base_Start_IT (not a logger)

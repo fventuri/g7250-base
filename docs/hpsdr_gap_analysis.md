@@ -55,9 +55,9 @@ services (VERIFIED, `network.md`).
 | | HDSDR / IQ mode | wfview mode |
 | --- | --- | --- |
 | Sockets | 1 UDP socket, local port 50002 | 3 UDP sockets: control, CI-V, audio on base port P, P+1, P+2 |
-| Discovery | magic + command `0x0101`; reply `0x0201` carries IPv4, port, 4-byte id | Icom-style are-you-there / login / token / conninfo handshake |
-| RX data | `0x0202`: 192 complex int16, 774 B per packet; the 48 kHz decimated receiver I/Q, tapped before demodulation | demodulated audio, LPCM 16/8-bit mono at 48/16 kHz, every 20 ms |
-| Tuning | `0x0103` set LO, 64-bit Hz, 0.5–108 MHz | CI-V (IC-7300 emulation, address 0xA0) |
+| Discovery | magic + command `0x0101`; reply `0x0201` carries IPv4, port, 4-byte id | Icom-style are-you-there / login / token / conninfo handshake (VERIFIED) |
+| RX data | `0x0202`: 192 complex int16, 774 B per packet; the 48 kHz decimated receiver I/Q, tapped before demodulation | demodulated audio, LPCM 16/8-bit mono at 48/16 kHz, every 20 ms (VERIFIED) |
+| Tuning | `0x0103` set LO, 64-bit Hz, 0.5–108 MHz | CI-V (IC-7300 emulation, address 0xA0) (VERIFIED) |
 | TX | **none** | TX audio into the TX DSP; PTT through CI-V `1C 00` |
 | Keep-alive | session drops after 10 s without heartbeat/discover | pings every 100/500 ms; streams dropped after 15 s silence |
 | Conf | VERIFIED | VERIFIED (CI-V map PARTIAL) |

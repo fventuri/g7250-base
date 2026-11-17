@@ -31,16 +31,16 @@ Reset vectors (first two words of each image), VERIFIED:
 
 | Unit | Initial MSP | Reset handler |
 | --- | --- | --- |
-| Main | `0x24050000` | `0x08024554` |
-| Control | `0x24080000` | `0x080235AC` |
+| Main | `0x24050000` | `0x08024554` (VERIFIED) |
+| Control | `0x24080000` | `0x080235AC` (VERIFIED) |
 
 1. **AXI SRAM at `0x24000000`.** Both initial stack pointers lie in the
    `0x24000000` region. On STM32F4 (including F427) SRAM is at
    `0x20000000` and CCMRAM at `0x10000000`; there is no memory at
-   `0x24000000`. On STM32H7, `0x24000000` is the D1-domain AXI SRAM.
+   `0x24000000`. On STM32H7, `0x24000000` is the D1-domain AXI SRAM (VERIFIED).
 2. **512 KiB boundary.** The Control Unit MSP `0x24080000` is exactly
    `0x24000000 + 0x80000` — the top of the 512 KiB AXI SRAM on
-   H742/H743/H750/H753-class parts.
+   H742/H743/H750/H753-class parts (VERIFIED).
 3. **Standard ARM GCC startup** in both reset handlers (load SP,
    SystemInit, copy `.data`, clear `.bss`, `__libc_init_array`, main),
    consistent with STM32 HAL/CMSIS firmware.

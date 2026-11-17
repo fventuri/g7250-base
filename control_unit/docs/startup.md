@@ -1,6 +1,6 @@
 # Control Unit — Startup
 
-Image: `G7250_ControlUnit_Fw_V1.0.1.bin` · load base `0x08020000`
+Image: `G7250_ControlUnit_Fw_V1.0.1.bin` · load base `0x08020000` (VERIFIED)
 Evidence: `control_unit/analysis/startup/`
 
 ## Vector table (core entries)
@@ -11,7 +11,7 @@ Evidence: `control_unit/analysis/startup/`
 | `vector[1]` | `0x080235AD` | Reset_Handler (Thumb → `0x080235AC`) | VERIFIED |
 
 `0x24080000` is exactly the top of the H743/H750/H753-class 512 KiB AXI
-SRAM — the strongest single pointer to the STM32H7 part class.
+SRAM (VERIFIED) — the strongest single pointer to the STM32H7 part class.
 
 ## Reset handler — `FUN_080235ac`
 

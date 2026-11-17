@@ -8,7 +8,7 @@ Status: VERIFIED unless marked. Evidence: `FUN_080367cc` (flash mount),
 
 | Drive | Medium | Mounted | No filesystem found |
 | --- | --- | --- | --- |
-| `1:` | SPI flash (SPI1) | at boot, by `FUN_080367cc` | formatted automatically (FAT) |
+| `1:` | SPI flash (SPI1) | at boot, by `FUN_080367cc` | formatted automatically (FAT) (VERIFIED) |
 | `0:` | SD card (SDMMC1) | when a card is detected (superloop state machine, 5 s step timeout, 3 retries) | formatted automatically (FAT) |
 
 The system page also offers *SD card format* (volume 0) and *Factory
@@ -55,7 +55,7 @@ i8/u8/i16/u16/i32/u32/i64/u64/f32/f64, 10 for a string and 11 for a bool.
 by `slip01_build_settings` (`0x0803E76C`); see
 `analysis/storage/ini_to_cmd01.csv`. Many keys are Control-only and never
 reach the Main Unit, for example display, steps, scope colours and handle
-keys.
+keys (VERIFIED).
 
 ## Band stack files
 
@@ -64,7 +64,7 @@ There are 24 sections named after the band segments (mw, 160m, sw1, …,
 `ant` and `atu`. Compiled defaults (band edges, default frequency, mode
 and a ham-band flag) live in flash at `0x080C2078`. Ham bands default to
 LSB below 10 MHz and USB above; the broadcast segments default to AM and
-78–108 MHz to WFM.
+78–108 MHz to WFM (VERIFIED).
 
 **In RAM (VERIFIED).** The stack is two tables of 24 × 56-byte records
 at `0x2400BA88` (VFO A, then VFO B), filled from the defaults at

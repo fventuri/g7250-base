@@ -55,7 +55,7 @@ the H7 IRQ numbering.
 | I2C1 | **0x14** (fallback **0x5D**) | GT911 capacitive touch controller | `gt911_init` (`FUN_08035034`) holds INT high during reset, which selects 0x14, probes 0x14 first and falls back to 0x5D; which one the fitted panel answers cannot be told from code | VERIFIED (probe order) |
 
 GT911 driver: init `FUN_08035034`, transfer `FUN_08034ec4`, GPIO/clock
-`FUN_08021414`. Other I2C1/I2C2 devices (if any) not yet enumerated.
+`FUN_08021414` (HIGH CONFIDENCE). Other I2C1/I2C2 devices (if any) not yet enumerated.
 
 ## Differences vs. X6100
 

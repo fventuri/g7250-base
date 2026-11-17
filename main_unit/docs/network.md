@@ -27,14 +27,14 @@ RX pools differently:
 - **wfview mode:** sockets 1/2/3 get 2/6/8 KB.
 - Sockets 4–7 are always unused.
 
-**Sending** (`FUN_08047440`, `FUN_080455dc`):
+**Sending** (`FUN_08047440`, `FUN_080455dc`) (VERIFIED):
 1. DMA the datagram (1–2048 B) into the socket TX buffer.
 2. Set the TX write pointer and issue SEND.
 3. Poll the command register. A stuck SEND is logged and retried, at
    most once per 500 ms.
 
 **Receiving** (`FUN_08045de8` for HDSDR, `FUN_080469f8` for the wfview
-batch):
+batch) (VERIFIED):
 1. Read the received size twice, so the value is stable.
 2. DMA the 8-byte per-datagram header (peer IP, port, length) and then
    the payload.
@@ -65,16 +65,16 @@ One UDP socket on local port **50002**. Every packet starts with the
 
 | Command | Direction | Content |
 | --- | --- | --- |
-| `0x0101` | PC→radio | discover: PC IPv4 and port (if the IPv4 is 0, the source address is used); sets the destination |
-| `0x0102` | PC→radio | heartbeat |
-| `0x0103` | PC→radio | set LO: 64-bit Hz, accepted 0.5–108 MHz |
-| `0x0201` | radio→PC | report: radio IPv4, port 50002, 4-byte device id |
-| `0x0202` | radio→PC | IQ: 192 complex int16 samples (I, Q interleaved), 774 bytes per packet |
+| `0x0101` | PC→radio | discover: PC IPv4 and port (if the IPv4 is 0, the source address is used); sets the destination (VERIFIED) |
+| `0x0102` | PC→radio | heartbeat (VERIFIED) |
+| `0x0103` | PC→radio | set LO: 64-bit Hz, accepted 0.5–108 MHz (VERIFIED) |
+| `0x0201` | radio→PC | report: radio IPv4, port 50002, 4-byte device id (VERIFIED) |
+| `0x0202` | radio→PC | IQ: 192 complex int16 samples (I, Q interleaved), 774 bytes per packet (VERIFIED) |
 
 The session drops after 10 s without a heartbeat or discover. The IQ is
 the 48 kHz decimated receiver I/Q, taken in the RX DSP routine
 (`FUN_08033610`) before demodulation, from the ping-pong buffers
-`0x38001000` / `0x38001300`.
+`0x38001000` / `0x38001300` (VERIFIED).
 
 ## wfview mode — Icom-network emulation (`FUN_0804db5c`, `FUN_0804bc90`, `FUN_0804de38`)
 
@@ -95,7 +95,7 @@ IC-7300, with CI-V address 0xA0 and an Icom-style virtual audio device.
 
 **Keep-alive.** Pings go out every 100 ms on control and CI-V and every
 500 ms on audio. Retransmit requests are served from a sent-packet ring
-(`0x30002740`).
+(`0x30002740`) (VERIFIED).
 
 **Audio.** LPCM 16-bit or 8-bit mono, at 48 or 16 kHz. Other client
 codecs (µ-law, Opus, stereo) are rejected with a warning. RX audio goes

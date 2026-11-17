@@ -1,6 +1,6 @@
 # Main Unit — Startup
 
-Image: `G7250_MainUnit_Fw_V1.0.1.bin` · load base `0x08020000`
+Image: `G7250_MainUnit_Fw_V1.0.1.bin` · load base `0x08020000` (VERIFIED)
 Evidence: `main_unit/analysis/startup/`
 
 ## Vector table (core entries)

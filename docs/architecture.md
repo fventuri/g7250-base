@@ -61,7 +61,7 @@ Per-unit peripheral inventories (IRQ map, buses, I2C slaves) are in
 | | Main Unit | Control Unit |
 | --- | --- | --- |
 | Program | `G7250_MainUnit_Fw_V1.0.1.bin` | `G7250_ControlUnit_Fw_V1.0.1.bin` |
-| `main()` | `0x0802239C` | `0x08021E74` |
+| `main()` | `0x0802239C` | `0x08021E74` (HIGH CONFIDENCE) |
 | Functions recovered | 717 | 1721 |
 | Role | RF/DSP baseband, PA, audio, networking | Human interface / front panel |
 | Notable HW | FPGA I/Q front end, SPI2 bias/drive DAC, shift-register RF switching, built-in ATU, **CH394 Ethernet (LAN)**, AIC3204 codec, CI-V over LAN; no external SDRAM | GT911 touch, LTDC RGB565 panel + FMC SDRAM framebuffers, encoders, H-22 mic, SD card + SPI flash (FatFS), AIC3204 codec, Bluetooth module, USB mass storage (the CH342/sound card are separate chips) |

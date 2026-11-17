@@ -19,7 +19,7 @@ VERIFIED (the function never returns; ends in `do { … } while(true)`).
    `0xE000ED00`): invalidate (`ICIALLU` @+0x250, `DCISW` set/way loop
    @+0x260), set `CCR.IC` (bit 17) and `CCR.DC` (bit 16), with DSB/ISB.
    VERIFIED.
-4. `FUN_08027774` = HAL_Init (priority grouping, tick, HAL_MspInit `FUN_080233e0`).
+4. `FUN_08027774` = HAL_Init (priority grouping, tick, HAL_MspInit `FUN_080233e0`) (HIGH CONFIDENCE).
 5. **HAL bring-up in CubeMX order** (HIGH CONFIDENCE; the full table
    with handles is in `analysis/flow/init_sequence.csv`):
    SystemClock_Config `FUN_080222f0` → GPIO + EXTI `FUN_08021470` →
@@ -46,13 +46,13 @@ VERIFIED (the function never returns; ends in `do { … } while(true)`).
    12. ADC calibration and ADC DMA;
    13. AIC3204 codec;
    14. TRX hardware setup (`FUN_0803e2f4`), then the audio processor
-       (`FUN_08033334`);
-   15. TIM5, TIM6 and TIM17 (HAL_TIM_Base_Start_IT `FUN_0802f9cc`);
-   16. FPGA init `FUN_0803a3a0`: bus test and version;
+       (`FUN_08033334`) (HIGH CONFIDENCE);
+   15. TIM5, TIM6 and TIM17 (HAL_TIM_Base_Start_IT `FUN_0802f9cc`) (HIGH CONFIDENCE);
+   16. FPGA init `FUN_0803a3a0`: bus test and version (VERIFIED);
    17. PH15 is driven low and PH13 high.
 6. Initialize the large TRX-state struct at `0x24013C0C`
    (`DAT_08022750`, in `.bss`): many field writes (mode, band, filter,
-   drive, etc.).
+   drive, etc.) (HIGH CONFIDENCE).
 7. **PA bias (Idd) auto-calibration**. It logs each stage (driver,
    final 1, final 2) and first checks that the external supply Vext is
    within 11–15 V, logging an error otherwise. Sets
@@ -61,7 +61,7 @@ VERIFIED (the function never returns; ends in `do { … } while(true)`).
    static Idd + 0.5 A / + 0.9 A, ±0.1 A (see peripherals.md, SPI2).
    HIGH CONFIDENCE.
 8. `Init Radio Server`, TIM5 start (`[OK] Start TIM5`), audio processor
-   init (`FUN_08033334`), etc.
+   init (`FUN_08033334`), etc. (HIGH CONFIDENCE)
 9. Enter the superloop.
 
 ## Superloop (periodic dispatch)
@@ -70,13 +70,13 @@ Time base: `FUN_080277EC` = `HAL_GetTick`/millis, `FUN_080277F8(ms)` =
 `HAL_Delay` (HIGH CONFIDENCE from usage). Each iteration:
 
 - Refresh **IWDG** (`*(0x58004800) = 0xAAAA`, `IWDG_KR` key). VERIFIED.
-- Poll serial for a line (`FUN_08041858(&ch)`, CR/LF terminates).
+- Poll serial for a line (`FUN_08041858(&ch)`, CR/LF terminates) (HIGH CONFIDENCE).
 - 1000 ms cadence block (guarded by `tick - last >= 1000`): status /
-  telemetry push (`FUN_0803B474`, `FUN_08021EB0`).
-- ~2 ms cadence inner loop (`FUN_0803AD78` until `tick - mark >= 2`).
-- Mode check `FUN_08048FA4()` (== 1 selects an alternate service path).
+  telemetry push (`FUN_0803B474`, `FUN_08021EB0`) (HIGH CONFIDENCE).
+- ~2 ms cadence inner loop (`FUN_0803AD78` until `tick - mark >= 2`) (HIGH CONFIDENCE).
+- Mode check `FUN_08048FA4()` (== 1 selects an alternate service path) (HIGH CONFIDENCE).
 - Network/CI-V/streaming servicing (`FUN_0804AF68`, `FUN_0804B184`,
-  `FUN_08041EF4`, `FUN_0803EC3C`, `FUN_08041358`).
+  `FUN_08041EF4`, `FUN_0803EC3C`, `FUN_08041358`) (HIGH CONFIDENCE).
 
 ## Clock / tick init — `FUN_08027774`
 
@@ -84,11 +84,11 @@ Evidence: `clock_init_08027774.txt`. Calls `FUN_080289A4(3)`, computes
 the core/bus clocks by reading `RCC->CFGR` prescaler fields and indexing
 a shift table (CMSIS `AHB/APBPrescTable` pattern), stores
 `SystemCoreClock`-style globals, then configures SysTick
-(`FUN_08027728(0xF)`, returns 1 on failure) and `FUN_080233E0`.
+(`FUN_08027728(0xF)`, returns 1 on failure) and `FUN_080233E0` (HIGH CONFIDENCE).
 
 This is tick/`SystemCoreClockUpdate` setup, **not** the PLL bring-up —
 by the time it runs the clock is already selected. The PLL bring-up is
-`FUN_080222f0` (next section).
+`FUN_080222f0` (next section) (HIGH CONFIDENCE).
 
 ## Clock configuration — `FUN_080222f0` (SystemClock_Config), VERIFIED
 

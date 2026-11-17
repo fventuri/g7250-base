@@ -27,16 +27,16 @@ the file — the application occupies essentially the whole image.
 
 - Initial MSP (stack top): `0x24080000` — VERIFIED; exactly the top of a
   512 KiB AXI SRAM.
-- AXI SRAM used: the full `0x24000000`–`0x24080000` 512 KiB window.
+- AXI SRAM used: the full `0x24000000`–`0x24080000` 512 KiB window (VERIFIED).
 - The 8-byte gap between `.data` and `.bss` is **linker alignment
   padding** (HIGH CONFIDENCE). Evidence:
   - The `.data` copy loop in the reset handler stops exactly at
-    `0x24001698`.
+    `0x24001698` (VERIFIED).
   - Nothing in the image refers into the gap.
   - `.bss` starts at the 32-byte boundary `0x240016A0` with the standard
     GCC runtime objects: the destructor-helper "completed" flag at
     `0x240016A0` (used by `0x080202a0`) and the frame-info object at
-    `0x240016A4` (used by `FUN_080202c4`).
+    `0x240016A4` (used by `FUN_080202c4`) (HIGH CONFIDENCE).
 
   So the `.bss` output section is aligned to at least 16 bytes, most
   likely 32. That is typical of cache-line-aligned DMA buffers on the

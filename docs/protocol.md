@@ -32,9 +32,9 @@ baud rate, pins and DMA assignment exist only in the init code.
   Unit, 4096 B (`0x1000`) on the Control Unit. The RX handler drains the
   ring using the DMA counter (`0x400/0x1000 − DMA_NDTR`), handling
   wraparound, and reassembles into a linear frame buffer (2048 B main /
-  8192 B control).
+  8192 B control) (VERIFIED).
 - RX handlers:
-  - Main Unit: `FUN_08049658`, polled from the superloop.
+  - Main Unit: `FUN_08049658`, polled from the superloop (VERIFIED).
   - Control Unit: `FUN_08034984`, called from the TIM13 period callback
     `FUN_080228cc`, so it runs in interrupt context (HIGH CONFIDENCE).
 - **RX re-arm.** The receiver is re-armed only when it has made no
@@ -93,12 +93,12 @@ Message identities (VERIFIED from the handlers' debug strings):
 
 - **`0x01` = remote-control settings/state** pushed to the Main Unit.
   Copied to a 424-B struct at `0x24018F9C`; consumed each superloop by
-  `FUN_08041EF4` (diffs each field vs. a working copy and logs changes).
+  `FUN_08041EF4` (diffs each field vs. a working copy and logs changes) (VERIFIED).
 - **`0x02` = calibration data.** 358-B block at `0x24013AA4`. It ends two
   bytes before the TRX-state struct (`0x24013C0C`), but it is a separate
   block, with its own loader, EEPROM location and checksum (VERIFIED).
 - **`0x06` = "slave info"** (the handler logs a debug line). 104-B block at
-  `0x24018F30`.
+  `0x24018F30` (VERIFIED).
 
 The Main Unit emulates an **Icom-style network radio for wfview** — the
 settings block carries the wfview username and password and the IPv4
@@ -109,11 +109,11 @@ configuration, and Main logs when the remote controller goes offline.
 **What it is.** The `0x01` payload is the radio's **settings image**.
 It has the same layout as the first 0x1A8 bytes of the Main TRX struct
 (`0x24013C0C`), which Main also loads from backup SRAM or the EEPROM
-(see `main_unit/docs/memory_map.md`).
+(see `main_unit/docs/memory_map.md`) (HIGH CONFIDENCE).
 
 **Producers and consumers.** Control fills the payload in
 `FUN_0803e76c` from its UI state, with byte 0 = 0xAA; Main ignores
-byte 0. Main applies the payload in `FUN_08041EF4`.
+byte 0. Main applies the payload in `FUN_08041EF4` (VERIFIED).
 
 **Special handling:**
 - The VFO block (`0x024`–`0x073`, two 40-byte VFO records) is applied
@@ -216,7 +216,7 @@ monitor level. See `cmd08_fields.csv`.
 ### `0x02` calibration (358 B)
 
 This is an independent EEPROM block (`0x0800`) with its own integrity
-fields:
+fields (VERIFIED):
 - layout id 10 at byte 0;
 - CRC-8 at `0x164`;
 - end marker 0x64 at `0x165`.
@@ -343,14 +343,14 @@ receive-to-idle DMA (about 2 s).
 
 | Role | Main Unit | Control Unit |
 | --- | --- | --- |
-| RX handler (superloop) | `FUN_08049658` | `FUN_08034984` |
-| SLIP decode | `FUN_0804a258` | `FUN_08052be4` |
-| SLIP encode | `FUN_0804a200` | `FUN_08052b8c` |
-| CRC-16/ARC | `FUN_0804ae3c` | `FUN_08052c44` |
-| TX frame | `FUN_08030358` | `FUN_0802f2f4` (HAL UART DMA transmit) |
-| RX re-arm | — | `FUN_080300a4` (receive-to-idle DMA restart) |
-| debug log | `FUN_08021eb0` (printf-style) | — |
-| memcpy | `FUN_080540ca` | `FUN_0808750a` |
+| RX handler (superloop) | `FUN_08049658` | `FUN_08034984` (VERIFIED) |
+| SLIP decode | `FUN_0804a258` | `FUN_08052be4` (VERIFIED) |
+| SLIP encode | `FUN_0804a200` | `FUN_08052b8c` (VERIFIED) |
+| CRC-16/ARC | `FUN_0804ae3c` | `FUN_08052c44` (VERIFIED) |
+| TX frame | `FUN_08030358` | `FUN_0802f2f4` (HAL UART DMA transmit) (HIGH CONFIDENCE) |
+| RX re-arm | — | `FUN_080300a4` (receive-to-idle DMA restart) (HIGH CONFIDENCE) |
+| debug log | `FUN_08021eb0` (printf-style) (HIGH CONFIDENCE) | — |
+| memcpy | `FUN_080540ca` | `FUN_0808750a` (HIGH CONFIDENCE) |
 
 Evidence: `*/analysis/protocol/`.
 

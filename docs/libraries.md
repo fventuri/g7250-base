@@ -86,7 +86,7 @@ created (`CreateVectorFunctions.java`).
   - The DF2T biquad `0x0803AB34` is application code that only looks
     CMSIS-shaped (HIGH CONFIDENCE).
   - The FIR, decimator and interpolator routines (`0x08024FC8`,
-    `0x08025378`, `0x080257A4`) are stock CMSIS-DSP.
+    `0x08025378`, `0x080257A4`) are stock CMSIS-DSP (HIGH CONFIDENCE).
 - **Shared module (HIGH CONFIDENCE).** The AIC3204 codec driver is
   byte-identical on both units: Main `0x08044034`–`0x080444D4` equals
   Control `0x08031EB8`–`0x080324F4`. SLIP encode/decode and the CRC-16

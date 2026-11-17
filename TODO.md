@@ -165,7 +165,8 @@ Roadmap mirrors `REVERSE_ENGINEERING_GUIDE.md`, tracked per unit.
 - [x] run_headless_*.sh wrappers accept absolute output paths (decompile wrapper pending).
 - [ ] RenameVerifiedFromCsv.java aborts the whole CSV on one bad row (0x0804995c on a fresh import).
 - [x] Full export runner (tools/run_full_export.sh) + doc checker (tools/check_docs.py) + CreateVectorFunctions.java.
-- [ ] Add confidence tags to the ~77 findings check_docs.py flags; regenerate */analysis/memory/function_ranges.csv from a --vectors export.
+- [x] Confidence tags added (check_docs CONF 90 -> 3, the rest false positives); function ranges regenerated.
+- [ ] check_docs.py: accept wrapped status lines, "unless marked", and tags on bold lead-in lines.
 - [ ] Compare with X6100 and G90 findings where behavior overlaps.
 
 ## Round 2 — follow-up items (N01–N44)

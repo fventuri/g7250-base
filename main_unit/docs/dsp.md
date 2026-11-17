@@ -11,11 +11,11 @@ HYPOTHESIS. Function list: `analysis/dsp/dsp_functions.csv`.
   - The FPGA sample interrupt (PE10 / EXTI10, `FUN_08039078`) reads
     1, 2, 4 or 8 complex samples, depending on the span setting
     (settings `0x088`, or `0x08C` in NFM/WFM; `0x08C` is never updated
-    from `0x01` and stays 0, so NFM/WFM always use index 0).
+    from `0x01` and stays 0, so NFM/WFM always use index 0) (VERIFIED).
   - The samples go into a 192-sample ping-pong for the audio DSP and a
     256-sample ping-pong for the FFT/scope.
   - TX samples go back to the FPGA from a 2×192-sample ring
-    (`0x2400E9F0` / `0x2400EFF0`).
+    (`0x2400E9F0` / `0x2400EFF0`) (VERIFIED).
   - The interrupt rate is not visible in the firmware. 48 kHz, giving
     384/192/96/48 kS/s, is a HYPOTHESIS, consistent with the
     decimate-by-8/4/2/1 path `FUN_08033390`.
@@ -26,7 +26,7 @@ HYPOTHESIS. Function list: `analysis/dsp/dsp_functions.csv`.
   runs the TX routine `FUN_08034b88` while PTT, VOX or tune is active,
   and the RX routine `FUN_08033610` otherwise. The TIM6 interrupt
   (`FUN_080239e0`) runs housekeeping, including underrun checks and PTT
-  handling. The RX routine is timed with the DWT cycle counter.
+  handling. The RX routine is timed with the DWT cycle counter (VERIFIED).
 - **Mode codes** (VFO record byte 0x18): 0 LSB, 1 L-D, 2 USB, 3 U-D,
   4 CW, 5 CWR, 6 AM, 7 SAM, 8 NFM, 9 WFM, 10 IQ, 11 LBK (loopback,
   skips the FPGA bus), 12 RTTY.
@@ -98,13 +98,13 @@ HYPOTHESIS. Function list: `analysis/dsp/dsp_functions.csv`.
   peaking design in `FUN_08031cdc`, and are recomputed when the mode or
   filter changes.
 - **Fixed tables.** Only the 201-tap SSB Hilbert and delay tables are
-  fixed in flash, at `0x08079FE0` and `0x08079CBC`.
+  fixed in flash, at `0x08079FE0` and `0x08079CBC` (VERIFIED).
 
 **Fixed SSB FIR pair (VERIFIED numerically).**
 - `0x08079FE0` holds a 201-tap antisymmetric FIR with every other tap
-  zero: a Hilbert transformer.
+  zero: a Hilbert transformer (VERIFIED).
 - `0x08079CBC` holds a 201-tap symmetric FIR whose centre tap is close
-  to 1: a delay FIR.
+  to 1: a delay FIR (VERIFIED).
 - Both have a linear-phase delay of 100 samples, and their phase
   difference is +90° at all frequencies.
 - Assuming 48 kHz (HYPOTHESIS), the Hilbert magnitude is about −0.45 dB

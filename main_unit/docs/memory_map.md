@@ -20,7 +20,7 @@ FPGA image. The 0xFF words may be unstamped placeholders, as in erased
 flash (HYPOTHESIS).
 
 Bytes for `0x08000000`–`0x0801FFFF` are absent (bootloader region, not
-in this image), same convention as the X6100.
+in this image), same convention as the X6100 (HIGH CONFIDENCE).
 
 ## RAM (all in AXI SRAM, `0x24000000` / D1 domain)
 
@@ -34,7 +34,7 @@ in this image), same convention as the X6100.
   `ldr sp`).
 - AXI SRAM used: `0x24000000`–`0x24050000` = the full 320 KiB AXI
   SRAM of an H72x/H73x (default TCM/AXI split; see docs/mcu_identification.md). On an H72x with the default TCM split, `0x24050000` is the top of
-  AXI SRAM; nothing above it exists or is referenced.
+  AXI SRAM; nothing above it exists or is referenced (HIGH CONFIDENCE).
 
 ## I2C EEPROM (24Cxx @ 0x50) layout — VERIFIED
 

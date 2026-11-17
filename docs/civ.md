@@ -8,12 +8,12 @@ Two independent CI-V parsers exist. Tables:
 
 **Emulated radio.** An **IC-7300** at address **0xA0**. The parser
 (`0x080504E8`) runs only while a wfview session is streaming. It accepts
-frames addressed to 0xA0 or 0x00 and replies from 0xA0 to the sender.
+frames addressed to 0xA0 or 0x00 and replies from 0xA0 to the sender (VERIFIED).
 
 **Dispatch.**
 - Commands 0x00–0x06 are handled inline.
-- 0x07–0x29 go through the jump table `0x080505A0`.
-- Sub-tables: `0x08050CC0` (0x14 levels) and `0x08050B40` (0x16 functions).
+- 0x07–0x29 go through the jump table `0x080505A0` (HIGH CONFIDENCE).
+- Sub-tables: `0x08050CC0` (0x14 levels) and `0x08050B40` (0x16 functions) (HIGH CONFIDENCE).
 - 0x1A and 0x27 have their own handlers.
 - 0x29 (VFO prefix) is stripped and the inner command re-dispatched, so
   the VFO selector is ignored.
