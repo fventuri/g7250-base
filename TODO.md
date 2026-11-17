@@ -210,3 +210,10 @@ Roadmap mirrors `REVERSE_ENGINEERING_GUIDE.md`, tracked per unit.
 - [ ] Panel legends for the 22 matrix buttons and the knob/push pairing (needs a photo).
 - [ ] Board trace: USB hub, CH342 and USB sound-card chips on the Controller and where their UART lines go.
 - [ ] Display: panel model and SDRAM part (board photo).
+
+## Round 3 — follow-up items
+
+- [x] HPSDR gap analysis: what it would take for the G7250 to appear as an
+      OpenHPSDR P1/P2 radio, or be integrated into an app (docs/hpsdr_gap_analysis.md).
+- [ ] HPSDR open questions Q1–Q9 (sample rates, FPGA TX rate, CH394 SPI limit,
+      install path): need hardware.
