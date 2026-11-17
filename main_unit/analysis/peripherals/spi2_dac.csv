@@ -9,7 +9,11 @@ addr table,0x0807e9c4 (bit-reversed ch),FUN_08045088,VERIFIED
 ch1,drive code 300..1000,FUN_0803acb0,VERIFIED
 ch2,driver bias,FUN_0803e338,VERIFIED
 ch3,fan 10*T-50,FUN_08048d88,VERIFIED
-ch5,0x3FF at boot,FUN_0802239c,VERIFIED
+ch4,never written (VrefL after reset),call-site scan,VERIFIED
+ch5,0x3FF at boot (after DAC1 OUT1=0xFFF); 0 at power-off; no other writer,FUN_0802239c/FUN_08021edc,VERIFIED
 ch6,75*sqrt(P),FUN_0803d3b0,VERIFIED
 ch7,final 2 bias,FUN_0803e338,VERIFIED
 ch8,final 1 bias,FUN_0803e338,VERIFIED
+chip,BU2506FV-type (14-bit word; LD latch; RESET),datasheet pattern,MEDIUM
+bus,SPI2 mode 0 MSB-first 8-bit x2 at 6.144 MHz,FUN_080230c0,VERIFIED
+frame bits,2 pad + 4 addr LSB-first + 10 data MSB-first,FUN_08045088,VERIFIED

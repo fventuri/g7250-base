@@ -201,7 +201,7 @@ Roadmap mirrors `REVERSE_ENGINEERING_GUIDE.md`, tracked per unit.
       table.
 - [~] G90 internals: the head-base protocol is publicly described (zeroping/xiegu-g90-headprotocol);
       MCUs still open.
-- [ ] Identify the SPI2 DAC chip; circuit roles of DAC channels 5 and 6.
+- [~] SPI2 DAC = BU2506FV-type (peripherals.md); circuit roles of channels 5/6 still need a schematic.
 - [ ] Confirm in hardware whether an analog SWR/ALC fold-back exists outside the MCU.
 - [x] 1920-byte BandMap: an unused shared type in V1.0.1 (no object on either
       unit); layout HYPOTHESIS 2 × 24 × 40-byte VFO records (flow.md).
@@ -209,8 +209,7 @@ Roadmap mirrors `REVERSE_ENGINEERING_GUIDE.md`, tracked per unit.
 - [ ] Read the option bytes (RDP, BOOT_ADD, CPUFREQ_BOOST, IWDG_SW) from a unit over SWD, if RDP allows.
 - [ ] Main firmware update transport: not in either application (peripherals.md); needs a
       sector-0 dump of both units or a USART1/USART2 capture during a vendor update.
-- [ ] Per-band frequency offsets in FUN_0803d658 (settings 0xAF–0xB4, band ids 0x22–0x27):
-      transverter feature? (MEDIUM).
+- [x] Per-band frequency offsets: transverter feature (70cm to 3cm, QO-100), dormant in V1.0.1 (flow.md).
 - [ ] Control bootloader: update file name and checks (needs a sector-0 dump).
 - [ ] IWDG timeout and the IWDG_SW option byte (needs an SWD read).
 - [x] Exact toolchain matching against ST's GNU Tools 12.3 build (tools/match_static_libs.py, docs/libraries.md).

@@ -257,8 +257,9 @@ B and these three ATU latches.
 > first handle scan missed it.
 
 **Bus.** SPI2 is transmit-only (PB13 SCK, PB15 MOSI; init
-`FUN_080230c0`). It drives an **8-channel 10-bit serial DAC** (chip
-type HYPOTHESIS) through a small device layer at `0x240177cc`.
+`FUN_080230c0`). It drives an **8-channel 10-bit serial DAC**
+(BU2506FV-type, see below) through a small device layer at
+`0x240177cc`.
 
 **Frame.** `FUN_08045088(ch, value)` clamps the value to 0x3FF and keeps
 a shadow copy at `0x240177bc`. It sends two bytes:
@@ -270,13 +271,24 @@ The transmit callback `FUN_08045018` (HAL SPI transmit on the SPI2
 handle) is followed by a high pulse on **PB12** (load strobe). At init
 `FUN_0804506c`, **PB14** is pulsed low and then high (reset/enable).
 
+**Chip (HIGH CONFIDENCE for the family, MEDIUM for the part).** The word
+format matches Rohm's BU2505FV/BU2506FV 10-bit DACs (public datasheet)
+with REVERSE tied low: a 14-bit shift register takes a 4-bit address
+LSB first and 10 data bits MSB first, so the two leading zero bits of
+the 16-bit SPI frame shift out. LD high (PB12) latches the word; PB14 is
+the active-low RESET that forces all outputs to VrefL. Eight channels
+and the firmware's refusal of channels above 8 point to the BU2506FV.
+The part has no power-down or reference commands, and the firmware
+sends none. SPI2 runs at 6.144 MHz (12.288 MHz kernel clock / 2),
+mode 0.
+
 | Ch | Use |
 | ---: | --- |
 | 1 | drive code (`FUN_0803acb0`, clamped to 300–1000) |
 | 2 | driver-stage bias |
 | 3 | fan level (10·T − 50 above 35 °C, off at ≤ 30 °C) |
-| 4 | unused |
-| 5 | 0x3FF at boot, 0 at power-off (role open) |
+| 4 | unused (never written; stays at VrefL after reset) |
+| 5 | 0x3FF once at boot, next to the RF-gain DAC; 0 at power-off; no other writer (role HYPOTHESIS: enable or reference) |
 | 6 | power reference 75·√P (P = TX power, ×0.25 in AM/SAM) |
 | 7 | final-stage 2 bias |
 | 8 | final-stage 1 bias |
@@ -423,7 +435,7 @@ bit-banged bus on GPIOE. No FMC bank is used.
   increments for a 122.88 MHz clock (f × 2³² / 122.88 MHz). The
   frequency is first folded into 0–61.44 MHz (Nyquist zones of
   122.88 MS/s), with a spectral-inversion flag that the RX reader uses.
-  TRX+0x208 is the main VFO plus RIT (and the transverter offset),
+  TRX+0x208 is the main VFO plus RIT (plus the transverter offset when enabled; dormant in V1.0.1, see `flow.md`),
   TRX+0x204 the other VFO plus RIT (MEDIUM for its role). 122.88 MHz is
   half of the VersaClock 6 output, which supports OUT1 = 245.76 MHz
   (MEDIUM). Branches above 245.76 MHz that divide the frequency by 3 or
