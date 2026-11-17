@@ -46,7 +46,7 @@ frames addressed to 0xA0 or 0x00 and replies from 0xA0 to the sender (VERIFIED).
 ## Control Unit — local CI-V (USART1)
 
 **Transport (VERIFIED path; endpoint MEDIUM).**
-- **Receive.** USART1 RX DMA fills a 1 KiB ring. `FUN_08036880` copies
+- **Receive (VERIFIED).** USART1 RX DMA fills a 1 KiB ring. `FUN_08036880` copies
   every new chunk into two separate rings: one for the Bluetooth AT
   parser (line-based) and one for the CI-V parser `FUN_08034680` (FE FE …
   FD). There is no mux; both parsers see every byte, and CI-V is parsed

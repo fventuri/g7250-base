@@ -108,10 +108,10 @@ default.
 - **Header.** Each chunk has the standard 0x18-byte Icom audio header:
   type 0, the audio-socket sequence number, a fixed 0x0080 ident at
   0x10, a big-endian send sequence at 0x12 and a big-endian length at
-  0x16. 8-bit LPCM is sent unsigned (offset 128).
+  0x16. 8-bit LPCM is sent unsigned (offset 128) (VERIFIED).
 - **PC to radio.** Incoming audio is length-checked against the
   datagram and handed to the TX DSP; three length mismatches reopen the
-  audio socket.
+  audio socket (VERIFIED).
 - Packet table: `analysis/protocol/wfview_packets.csv` (`FUN_0804bc90`,
   `FUN_0804de38`).
 

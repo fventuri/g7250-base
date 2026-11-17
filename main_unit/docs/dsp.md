@@ -67,7 +67,7 @@ HYPOTHESIS. Function list: `analysis/dsp/dsp_functions.csv`.
      three tuning floats).
    - The wrapper `FUN_0803b4c4` collects 768 samples at 48 kHz,
      decimates by 3 to 256, runs Speex, then interpolates back by 3
-     (about 16 ms latency).
+     (about 16 ms latency) (HIGH).
    - The DNR1 level 1–100 (settings 0x0F2) maps to −1…−25 dB
      suppression. DNR2 and the DNR-type path are open.
 8. **RX equaliser.** Five-band biquad EQ, designed at runtime.
