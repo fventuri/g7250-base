@@ -129,8 +129,21 @@ scope data output, the superloop sends one waveform frame at most every
 - **Span.** Setting the span (`27 15`) selects the FPGA rate index
   (≤ 48 kHz → 3, ≤ 96 kHz → 2, ≤ 192 kHz → 1, wider → 0) and reloads
   the FFT and filters (HIGH). The firmware takes the set value as the
-  full width, but the frame header reports half of it (MEDIUM: differs
-  from Icom, where both are ± values).
+  full width, but the frame header reports half of it.
+- **Effect in wfview (HIGH, from the public wfview source).** wfview
+  uses Icom ± half-widths both ways: its IC-7300 rig file offers
+  ±2.5 kHz to ±500 kHz spans, and its spectrum parser reads the
+  centre-mode header as centre ± value. The wfview axis therefore covers
+  half the width the user selected. Because the trace always spans the
+  full I/Q rate, offsets from centre appear about 0.5× their true value
+  for ±25 to ±100 kHz (MEDIUM, assumes no cropping). Not yet confirmed
+  on a unit; a UDP capture of `27 15` against the `27 00` header, plus a
+  known VFO step against a fixed signal, would settle it.
+- **wfview needs a user rig file (HIGH).** The radio answers `19 00`
+  with 0xA0, an address no stock wfview rig file uses. wfview then falls
+  back to its default Icom profile, which has no spectrum, and discards
+  the scope frames. A copy of the IC-7300 rig file with address 0xA0
+  avoids that.
 - Unlike Icom radios over USB, the whole trace goes in a single
   division.
 
