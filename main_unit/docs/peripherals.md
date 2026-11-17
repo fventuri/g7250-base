@@ -363,6 +363,10 @@ All application I2C traffic is on **I2C1** (handle `0x24004F38`). I2C2 and
 I2C3 are initialized (`FUN_08021920` / `FUN_0802198c`) but **no driver
 uses them** — idle/reserved (vestigial X6100 topology, or strapped-only).
 
+Bus speeds (register values VERIFIED, rates HIGH): I2C1 about 400 kHz
+(TIMINGR 0x00D049FB), I2C2 about 100 kHz, I2C3 about 400 kHz with its
+own address 0x72. See `docs/hardware_init.md`.
+
 I2C transfer helpers: read `FUN_0802BB3C(handle, devAddr, memAddr,
 addrSize, buf, len, timeout)`, write `FUN_0802B940(...)`. `devAddr` is the
 8-bit (`<<1`) address written to `I2C_CR2.SADD`.

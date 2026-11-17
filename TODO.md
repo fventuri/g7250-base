@@ -78,8 +78,10 @@ Roadmap mirrors `REVERSE_ENGINEERING_GUIDE.md`, tracked per unit.
       never written. The 0x80 write has no documented effect (peripherals.md SPI6).
 - [x] EEPROM layout: settings / calibration / NVPARAM marker / 2× ATU
       tables, CRC-8 0x31, 64-B pages (main_unit/docs/memory_map.md).
-- [ ] Who writes the settings area (EEPROM 0x0000 / backup SRAM)? Nothing
-      in the Main firmware does — factory tool or older firmware?
+- [x] Who writes the settings area (EEPROM 0x0000 / backup SRAM)? Nothing in either V1.0.1
+      image; both copies are read-only and ignored, because defaults are forced (memory_map.md).
+- [ ] Contents of EEPROM 0x0000 and backup SRAM on a shipped unit (factory tool, bootloader or
+      older firmware?): needs an EEPROM or SWD read.
 - [x] AXP223 rail map + VersaClock output plan (peripherals.md). Rail
       *use* is HYPOTHESIS.
 - [ ] Confirm the VC6 crystal (26 MHz?), whether OUT1 is 245.76 or
@@ -159,7 +161,7 @@ Roadmap mirrors `REVERSE_ENGINEERING_GUIDE.md`, tracked per unit.
 
 ## Later phases (per RE guide)
 
-- [ ] Phase 3 Hardware init (RCC/GPIO/DMA/SPI/I2C/USART/TIM/WDG).
+- [x] Phase 3 Hardware init (RCC/GPIO/DMA/SPI/I2C/USART/TIM/WDG): docs/hardware_init.md.
 - [x] Phase 4 Scheduler: bare-metal superloops, no RTOS, on both units
       (see Done; `*/docs/flow.md`).
 - Phase 5 Inter-MCU protocol: tracked in its own section above.

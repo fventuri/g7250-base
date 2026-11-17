@@ -115,7 +115,7 @@ Strings: `VER: V1.0.1   DATE: %s   TIME: %s`, `V1.0.0`.
 | SDMMC1 | PLL1Q | 96 MHz | `FUN_08022340` |
 | SPI1/2 | PLL1Q | 96 MHz | `FUN_08022630`, `FUN_080216c4` |
 | USARTs | PCLK2 / PCLK1 | 120 MHz | `FUN_08023344` |
-| I2C1/3 | PCLK1 | 120 MHz | `FUN_080214f0` |
+| I2C1/2/3 (shared mux; I2C1 and I2C2 used) | PCLK1 | 120 MHz | `FUN_080214f0` |
 | USB OTG_FS | HSI48 | 48 MHz | `FUN_0803dc10` |
 | RTC | LSE | 32.768 kHz | `FUN_080222c0` |
 

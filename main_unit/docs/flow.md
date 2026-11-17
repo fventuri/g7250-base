@@ -86,13 +86,16 @@ a shift table (CMSIS `AHB/APBPrescTable` pattern), stores
 `SystemCoreClock`-style globals, then configures SysTick
 (`FUN_08027728(0xF)`, returns 1 on failure) and `FUN_080233E0` (HIGH CONFIDENCE).
 
-This is tick/`SystemCoreClockUpdate` setup, **not** the PLL bring-up —
-by the time it runs the clock is already selected. The PLL bring-up is
-`FUN_080222f0` (next section) (HIGH CONFIDENCE).
+This is tick/`SystemCoreClockUpdate` setup, **not** the PLL bring-up.
+It runs on the reset HSI clock; the PLL bring-up is `FUN_080222f0`
+(next section), which re-initialises the tick (VERIFIED).
 
 ## Clock configuration — `FUN_080222f0` (SystemClock_Config), VERIFIED
 
-`main` calls it before the tick setup. It runs in this order:
+`main` calls it right after HAL_Init (`FUN_08027774`), so HAL_Init and
+its first SysTick setup run on the reset HSI clock (VERIFIED, call sites
+0x08022474 / 0x0802247a). Correction: an earlier version said the clock
+was already selected when HAL_Init ran. It runs in this order:
 1. **Supply:** `FUN_0802c208` with value `0x2E`, the SMPS 2.5 V output
    feeding external loads and the LDO.
 2. **Voltage scaling:** VOS = 00 in `PWR_D3CR`. On STM32H72x/H73x that
