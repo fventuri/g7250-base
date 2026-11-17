@@ -16,8 +16,16 @@ Scans docs/*.md and */docs/*.md (plus any --extra files) and reports:
          naming it ("Main", "Control") when both exports disagree.
 2. CONF  table rows and paragraphs that state a finding (they cite an address,
          a FUN_ name or a register/hex value) but carry no confidence tag, neither
-         themselves nor through the section heading chain, a table "Confidence" column
-         or a document/section status line ("... VERIFIED unless noted").
+         themselves nor through
+           - the section heading chain (also "## Foo — VERIFIED unless noted"),
+           - a table "Confidence" column,
+           - a bold lead-in directly above a bullet list ("**Foo (HIGH).**" then the
+             bullets; also an enclosing list item that opens with such a lead-in),
+             or a bold lead-in naming an exempt topic ("**Blocking unknowns:**"),
+           - a document status line in the first 15 lines or a section status line
+             (first paragraph of a section), e.g. "Status: VERIFIED unless noted"
+             or "... unless marked"; the status may wrap onto the next line.
+             --conf-all ignores these status lines.
 3. STR   any run of >= 20 characters that also occurs in a firmware string table
          (*/analysis/strings/strings.txt), per line and across line breaks. This
          mirrors the repository commit guard (runs with at least 12 letters).
@@ -43,6 +51,10 @@ ADDR_RE = re.compile(r"\b0x(080[0-9A-Fa-f]{5})\b")
 FINDING_RE = re.compile(r"\bFUN_[0-9A-Fa-f]{8}\b|\b0x[0-9A-Fa-f]{4,8}\b|\b[0-9A-Fa-f]{8}\b")
 EXEMPT_HEAD = re.compile(r"unknown|open|todo|question|why this needed|raw evidence|see also|"
                          r"usage|how to|reproduc|status", re.I)
+# A status line: a tag followed, within the same paragraph (it may wrap onto the
+# next line), by "unless noted" / "unless marked" / "unless otherwise noted".
+STATUS_RE = re.compile(r"\b(VERIFIED|HIGH|MEDIUM)\b(?:[^\n]|\n(?![ \t]*\n)){0,60}?"
+                       r"\bunless\s+(?:otherwise\s+)?(?:noted|marked|stated)\b")
 N = 20
 
 
@@ -128,20 +140,59 @@ def load_strings(paths):
     return windows
 
 
+ITEM_RE = re.compile(r"^\s*([-*]|\d+\.)\s+")
+# A bold lead-in: "**Foo (HIGH).**" or "**Foo** (…; VERIFIED unless noted)." — the bold
+# span plus the rest of its first sentence. Optionally after a list marker.
+LEAD_RE = re.compile(r"^\s*(?:(?:[-*]|\d+\.)\s+)?(\*\*(.+?)\*\*([^.:]*[.:]?))")
+
+
+def bold_lead(text: str):
+    """Return (lead_text, bold_text) when text opens with a bold lead-in, else None."""
+    m = LEAD_RE.match(text)
+    return (m.group(1), m.group(2)) if m else None
+
+
 def blocks(lines):
-    """Yield (kind, first_line_no, text, heading_chain, table_header) blocks."""
+    """Yield (kind, first_line_no, text, heading_chain, table_header, leads) blocks.
+
+    leads: for list items (and indented continuation paragraphs of a list), the bold
+    lead-ins that govern them, outermost first: the bold lead-in paragraph directly
+    above the list ("**Foo (HIGH).**" followed by the bullets) and every enclosing
+    list item that opens with a bold lead-in. Each entry is (lead_text, bold_text).
+    """
     heads: list[tuple[int, str]] = []
     para: list[tuple[int, str]] = []
     header = None
     in_code = False
+    st = {
+        "item": False,        # current paragraph is a list item
+        "leads": [],          # leads governing the current paragraph
+        "in_list": False,     # the previous block was part of a list
+        "list_lead": None,    # lead-in paragraph governing the current list
+        "stack": [],          # enclosing items: [indent, lead or None]
+    }
+
+    def reset_list():
+        st["in_list"] = False
+        st["list_lead"] = None
+        st["stack"] = []
 
     def flush():
         nonlocal para
-        if para:
-            yield_ = ("para", para[0][0], " ".join(t.strip() for _, t in para), list(heads), None)
-            para = []
-            return yield_
-        return None
+        if not para:
+            return None
+        text = " ".join(t.strip() for _, t in para)
+        if st["item"] and st["stack"]:
+            st["stack"][-1][1] = bold_lead(text)
+        block = ("para", para[0][0], text, list(heads), None, list(st["leads"]))
+        para = []
+        st["item"] = False
+        st["leads"] = []
+        return block
+
+    def leads_for(indent):
+        out = [st["list_lead"]] + [ld for ind, ld in st["stack"] if ind < indent]
+        return [ld for ld in out if ld]
 
     for no, line in enumerate(lines, 1):
         if line.strip().startswith("```"):
@@ -149,6 +200,7 @@ def blocks(lines):
             f = flush()
             if f:
                 yield f
+            reset_list()
             continue
         if in_code:
             continue
@@ -157,6 +209,7 @@ def blocks(lines):
             f = flush()
             if f:
                 yield f
+            reset_list()
             level = len(m.group(1))
             heads = [h for h in heads if h[0] < level] + [(level, m.group(2))]
             header = None
@@ -165,14 +218,15 @@ def blocks(lines):
             f = flush()
             if f:
                 yield f
+            reset_list()
             cells = [c.strip() for c in line.strip().strip("|").split("|")]
             if all(re.fullmatch(r":?-{2,}:?", c) for c in cells if c):
                 continue
             if header is None:
                 header = cells
-                yield ("thead", no, line, list(heads), cells)
+                yield ("thead", no, line, list(heads), cells, [])
             else:
-                yield ("row", no, line, list(heads), header)
+                yield ("row", no, line, list(heads), header, [])
             continue
         header = None if not line.strip() else header
         if not line.strip():
@@ -180,10 +234,32 @@ def blocks(lines):
             if f:
                 yield f
             continue
-        if re.match(r"^\s*([-*]|\d+\.)\s+", line) and para:
-            f = flush()
-            if f:
-                yield f
+        indent = len(line) - len(line.lstrip())
+        if ITEM_RE.match(line):
+            if para and not st["item"] and not st["in_list"]:
+                # a paragraph directly followed by a list: a lead-in if it opens in bold
+                lead = bold_lead(" ".join(t.strip() for _, t in para))
+                f = flush()
+                if f:
+                    yield f
+                reset_list()
+                st["list_lead"] = lead
+            elif para:
+                f = flush()
+                if f:
+                    yield f
+            elif not st["in_list"]:
+                reset_list()
+            st["stack"] = [e for e in st["stack"] if e[0] < indent]
+            st["leads"] = leads_for(indent)
+            st["stack"].append([indent, None])
+            st["item"] = True
+            st["in_list"] = True
+        elif not para:
+            if st["in_list"] and indent > 0:
+                st["leads"] = leads_for(indent)    # indented continuation inside a list
+            else:
+                reset_list()
         para.append((no, line))
     f = flush()
     if f:
@@ -223,9 +299,27 @@ def check_file(path: Path, root: Path, units, windows, findings, conf_all):
             findings.append((pick[1], "ADDR", rel, no, f"{label}: {pick[2]} [{pick[0]}]"))
 
     # 2. confidence tags
-    doc_tagged = bool(re.search(r"(VERIFIED|HIGH|MEDIUM)[^\n]{0,60}unless (otherwise )?noted",
-                                "\n".join(lines[:15])))
-    for kind, no, block, heads, header in blocks(lines):
+    # document status line: a plain paragraph (not a bold lead-in, not a list item)
+    # in the first 15 lines, before the first section heading
+    doc_tagged = False
+    for kind, no, block, heads, *_ in blocks(lines[:15]):
+        if any(level > 1 for level, _ in heads):
+            break
+        if kind == "para" and not block.startswith("**") and not ITEM_RE.match(block) \
+                and STATUS_RE.search(block):
+            doc_tagged = True
+            break
+    status_sections: set[tuple] = set()   # sections opened by a "Status: … unless noted" line
+    seen_sections: set[tuple] = set()
+    for kind, no, block, heads, header, leads in blocks(lines):
+        key = tuple(heads)
+        if key not in seen_sections and kind == "para":
+            seen_sections.add(key)
+            # first paragraph of a section: a section status line ("Status: HIGH unless
+            # noted.") tags the section and its subsections, like a document status line
+            if heads and not block.startswith("**") and not ITEM_RE.match(block) \
+                    and STATUS_RE.search(block):
+                status_sections.add(key)
         if kind == "thead":
             continue
         if not FINDING_RE.search(block):
@@ -235,13 +329,19 @@ def check_file(path: Path, root: Path, units, windows, findings, conf_all):
         chain = " / ".join(h for _, h in heads)
         if any(EXEMPT_HEAD.search(h) for _, h in heads):
             continue
-        if any(TAGS.search(h) for _, h in heads):
+        # a tag in the heading chain, including "— VERIFIED unless noted" / "unless marked"
+        if any(TAGS.search(h) or STATUS_RE.search(h) for _, h in heads):
+            continue
+        # bullets under a bold lead-in that carries a tag ("**Foo (HIGH).**"), or under a
+        # bold lead-in that names an exempt topic ("**Blocking unknowns:**")
+        if any(TAGS.search(text) or EXEMPT_HEAD.search(bold) for text, bold in leads):
             continue
         if kind == "row" and header and any(re.search(r"confidence|conf\b|status", c, re.I) for c in header):
             # table has a confidence column but this row left it empty
             findings.append(("warn", "CONF", rel, no, "table row with an empty confidence cell"))
             continue
-        if doc_tagged and not conf_all:
+        if not conf_all and (doc_tagged or
+                             any(key[:i] in status_sections for i in range(1, len(key) + 1))):
             continue
         findings.append(("warn", "CONF", rel, no,
                          f"{'table row' if kind == 'row' else 'paragraph'} states a finding without a "
