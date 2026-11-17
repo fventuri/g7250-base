@@ -140,8 +140,8 @@ Roadmap mirrors `REVERSE_ENGINEERING_GUIDE.md`, tracked per unit.
       STM32F427 cap. `ExportInterruptEvidence.java`: same cap removed.
       `*/analysis/startup/vectors.csv` and `*/analysis/interrupts/active_irqs.csv`
       regenerated (adds Main IRQ118/129/130, Control IRQ101).
-- [ ] Decide whether to add STM32H7 peripheral blocks to the memory map
-      (currently RAM-only, matching the X6100 approach).
+- [x] STM32H7 peripheral blocks: opt-in via `periph` / `MAP_PERIPHERALS=1`;
+      the default stays RAM-only (false pointers and non-reproducible globals).
 
 ## Phase 2 — Interrupts
 
@@ -162,7 +162,8 @@ Roadmap mirrors `REVERSE_ENGINEERING_GUIDE.md`, tracked per unit.
       parameters, NR engine identity, TX ALC loop, FM discriminator.
 - [x] X6100 tooling leftovers: verify_tx_biquads.py and generate_analysis_markdown.py
       removed; evidence manifest and lib matcher ported; tools/filter_response.py added.
-- [ ] run_headless_*.sh wrappers: accept absolute output paths.
+- [x] run_headless_*.sh wrappers accept absolute output paths (decompile wrapper pending).
+- [ ] RenameVerifiedFromCsv.java aborts the whole CSV on one bad row (0x0804995c on a fresh import).
 - [x] Full export runner (tools/run_full_export.sh) + doc checker (tools/check_docs.py) + CreateVectorFunctions.java.
 - [ ] Add confidence tags to the ~77 findings check_docs.py flags; regenerate */analysis/memory/function_ranges.csv from a --vectors export.
 - [ ] Compare with X6100 and G90 findings where behavior overlaps.

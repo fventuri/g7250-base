@@ -13,6 +13,10 @@
 # Follow with tools/run_full_export.sh --vectors (creates the handler functions a
 # raw-binary import does not).
 #
+# MAP_PERIPHERALS=1 also adds the STM32H7 peripheral bus windows as volatile blocks
+# (opt-in; see ghidra_scripts/MapSTM32H7Memory.java). The committed exports were made
+# without them.
+#
 set -euo pipefail
 
 : "${GHIDRA_INSTALL:?set GHIDRA_INSTALL to the Ghidra directory}"
@@ -22,6 +26,7 @@ PROJECT_NAME="${PROJECT_NAME:-g7250_import}"
 GHIDRA_CONFIG_DIR="${GHIDRA_CONFIG_DIR:-/tmp/g7250-ghidra-config}"
 : "${FW_DIR:?set FW_DIR to the directory holding the firmware images}"
 BASE_ADDR="${BASE_ADDR:-0x08020000}"
+MAP_PERIPHERALS="${MAP_PERIPHERALS:-0}"
 PROCESSOR="${PROCESSOR:-ARM:LE:32:Cortex}"
 
 which="${1:-all}"
@@ -43,6 +48,9 @@ layout_for() {
 	esac
 }
 
+MAP_ARGS=()
+[ "$MAP_PERIPHERALS" = 1 ] && MAP_ARGS=(periph)
+
 mkdir -p "$GHIDRA_CONFIG_DIR" "$PROJECT_DIR"
 
 for img in "${IMAGES[@]}"; do
@@ -55,7 +63,7 @@ for img in "${IMAGES[@]}"; do
 		-loader BinaryLoader \
 		-loader-baseAddr "$BASE_ADDR" \
 		-scriptPath "$(pwd)/ghidra_scripts" \
-		-preScript MapSTM32H7Memory.java "$(layout_for "$img")" \
+		-preScript MapSTM32H7Memory.java "$(layout_for "$img")" ${MAP_ARGS[@]+"${MAP_ARGS[@]}"} \
 		-overwrite
 done
 echo ">>> done. Programs are in project $PROJECT_NAME under $PROJECT_DIR"
