@@ -55,22 +55,37 @@ The table is built at boot by `FUN_0804ad24` into `0x24019158`, and
 | 0x1800–0x1E53 | 1620 B | ATU table, antenna index 0 | `0x24016A34` | `FUN_080411d8` / `FUN_08041228` | empty slot = 0xFF |
 | 0x1E54–0x24A7 | 1620 B | ATU table, antenna index 1 | `0x24017088` | same | empty slot = 0xFF |
 
-**Settings.** The loader reads backup SRAM (`0x38800000`) first and
-falls back to the EEPROM, checking the 0x64 markers both times. Main
-calls it with an argument that forces defaults, so in practice the
-Main Unit boots on defaults and waits for the Control Unit's `0x01`
-push. (HIGH CONFIDENCE.) No code in this firmware writes the settings
-area of the EEPROM, and no writer of the backup SRAM was found either
-(HIGH CONFIDENCE).
+**Settings.** The loader `FUN_0803c08c` turns on the backup regulator
+(PWR_CR2.BREN, up to 1 s wait), opens backup-domain write access,
+copies 424 B from backup SRAM (`0x38800000`) and checks the 0x64
+markers; if they fail it reads the same 424 B from EEPROM 0x0000. It
+then closes backup access. Main calls it with an argument that always
+loads the compiled defaults, so neither stored copy is used: the Main
+Unit boots on defaults and waits for the Control Unit's `0x01` push
+(VERIFIED).
+
+**Read-only in V1.0.1 (VERIFIED).** No code writes the settings area or
+the backup SRAM. There are exactly three EEPROM write routines:
+calibration at 0x0800 (`FUN_0803c534`), the NVPARAM marker at 0x1000
+(`FUN_0803c448`) and the ATU tables at 0x1800 (`FUN_08041228`). The only
+references to `0x38800000` are this copy and the MPU region. The
+backup-SRAM clock (BKPRAMEN) is never enabled by the application (HIGH
+CONFIDENCE). Opening write access for a read suggests a save routine
+that was removed (HYPOTHESIS). The user settings persist only in the
+Control Unit's `config.ini`.
 
 **Calibration.** A bad block is replaced by defaults and written back
 at once. After loading, a few runtime fields are overridden without
 being saved. The block is saved at shutdown (`FUN_08021edc`) when its
-dirty flag (`0x24013A9C`) is set.
+dirty flag (`0x24013A9C`) is set. Only the boot bias trim sets that
+flag: when a stored bias is out of range or a trim step changes it. A
+calibration block replaced by a SLIP `0x02` set is therefore saved at
+the next orderly shutdown only if that boot's trim marked the block
+dirty (HIGH CONFIDENCE).
 
 **NVPARAM marker.** On a bad header or CRC the firmware logs an error.
 When the record is valid, it rewrites it with the flag set and logs
-that it was saved. Its purpose is probably a boot marker (HYPOTHESIS).
+that it was saved; this happens on every boot with a valid record. Its purpose is probably a boot marker (HYPOTHESIS).
 
 **ATU table.** There are two antenna blocks of 540 three-byte slots.
 - **Slot number** = frequency in Hz / 100000 − 1, clamped to 0–539.
