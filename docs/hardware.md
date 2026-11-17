@@ -234,3 +234,65 @@ pinning the still-unmapped `0x01` offsets.
   Controller**, with line audio relayed to the Main Unit over the SLIP
   link — a lead for the open "audio/I-Q codec control path" task.
 - **Bluetooth** (XG-BT-G7250) peripheral on the Controller — unmapped.
+
+## 7. Teardown observations (third-party video)
+
+Source: a public teardown video of the Main/RF body by KM9G,
+<https://www.youtube.com/watch?v=uAaz5RHYPB4>. Frames were inspected
+locally; no images are stored in this repo. Timestamps are mm:ss in that
+video. Only the Main/RF body is opened; the Controller (front panel) is not
+shown, so none of its chips can be identified from this source.
+
+**Resolution limit.** Chip bodies are only 35–60 px wide in the 1080p
+footage. Logos and large print are legible (after frame averaging); most
+part-number lines are not.
+
+### Boards
+
+The body holds four boards, each named on its silkscreen (VERIFIED for
+Main and Filter, HIGH for PA and ATU where the version digit is blurred):
+
+| Board | Contents seen | Timestamp |
+| --- | --- | --- |
+| Main Unit (V1.1x) | MCU, FPGA, Ethernet controller, RJ45, CTRL connector, two shield cans, crystals or oscillators | 05:06, 06:08, 07:29 |
+| PA Unit (V1.x) | two flanged push-pull PA devices, binocular output transformer, 7-section LPF relay bank (2 × 7 relays), power input, blade fuse, relay-driver row | 02:09 |
+| Filter Unit (V1.0a) | about 16 SMD inductors in BPF sections, 3 TSSOP and 1 SOIC-14 logic parts, one shield can, one relay, U.FL coax | 02:09, 02:58 |
+| ATU Unit (V1.x) | three relay rows (about 28 relays), air-wound and toroidal inductors, own driver ICs | 05:06, 06:34 |
+
+The Main Unit links to the ATU Unit by one FFC and to the PA and Filter
+units by two more FFCs, plus a power lead and U.FL coax (HIGH). This fits
+the firmware finding that SPI1 drives separate shift-register chains for
+the LPF/T-R side and the BPF/front-end side, and three ATU latches
+(`main_unit/docs/peripherals.md`).
+
+### Main Unit parts
+
+| Part | What is legible | Confidence | Timestamp |
+| --- | --- | --- | --- |
+| FPGA | Intel logo and "Cyclone 10"; ordering code not legible. BGA about 14 mm, consistent with the Cyclone 10 LP UBGA-256 package | Cyclone 10 VERIFIED; LP family HIGH; package HYPOTHESIS | 05:06, 06:08, 07:29 |
+| FPGA configuration flash | SOIC-8 next to the FPGA, not legible | HYPOTHESIS | 05:02–05:09 |
+| MCU | ST logo; first line of 9 characters, consistent with an STM32H7x5; H725 vs H735 not legible; small BGA | ST STM32H7 MEDIUM | 05:02–05:09, 06:08 |
+| Ethernet controller | WCH logo, LQFP-48, next to the RJ45 | HIGH that it is the CH394 (with the firmware evidence) | 05:54, 06:08 |
+| RJ45 | ZXCNT ZXRJ-115-01NL, integrated magnetics | VERIFIED | 05:54 |
+| Possible RF ADC | QFN about 7 mm (about 48 pins) next to the FPGA, apparently an ADI logo, first line starting "AD" | HYPOTHESIS | 05:02–05:09 |
+| TSSOP-28 next to the FPGA | not legible; a parallel TX DAC or a bus buffer would fit | HYPOTHESIS | 05:06 |
+
+Not identified in the footage: the VersaClock 6 and its crystal, the SPI2
+bias DAC, the AXP223, the TLV320AIC3204 and the EEPROM.
+
+### Rear panel and CTRL connector
+
+Rear panel (VERIFIED, 03:10): ANT1 and ANT2 (SO-239), GND, 13.8 V 22 A
+power, a 4-pin TUNER port, ALC and SEND (RCA), LAN, and CTRL. The CTRL
+connector is a 15-pin high-density D-sub (VGA style), male, soldered on
+the Main Unit board (VERIFIED, 03:10 and 05:06).
+
+**What this settles or narrows.**
+- The FPGA family is known (Intel Cyclone 10, very likely LP), so its
+  configuration flash is a serial NOR next to it (narrows N34).
+- The CTRL cable has at most 15 conductors for power, ground, the SLIP
+  link, audio and keys (narrows the CTRL-cable routing items).
+- The external TUNER port is a separate 4-pin connector; the internal ATU
+  is its own board (narrows the TUNER TRG/RET item).
+- Still open: the I/Q sample rate, the ADC and DAC parts, the VersaClock 6
+  crystal, the H725/H735 question, and every Controller part.

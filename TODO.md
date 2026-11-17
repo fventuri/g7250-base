@@ -215,5 +215,7 @@ Roadmap mirrors `REVERSE_ENGINEERING_GUIDE.md`, tracked per unit.
 
 - [x] HPSDR gap analysis: what it would take for the G7250 to appear as an
       OpenHPSDR P1/P2 radio, or be integrated into an app (docs/hpsdr_gap_analysis.md).
+- [x] Teardown video (KM9G) reviewed: FPGA = Intel Cyclone 10 (LP likely), CTRL = 15-pin
+      HD D-sub, four named boards (docs/hardware.md §7). Controller not shown.
 - [ ] HPSDR open questions Q1–Q9 (sample rates, FPGA TX rate, CH394 SPI limit,
       install path): need hardware.
