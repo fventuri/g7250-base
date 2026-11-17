@@ -10,7 +10,8 @@ HYPOTHESIS. Function list: `analysis/dsp/dsp_functions.csv`.
   `peripherals.md`, FPGA bus) carries 24-bit signed I and Q.
   - The FPGA sample interrupt (PE10 / EXTI10, `FUN_08039078`) reads
     1, 2, 4 or 8 complex samples, depending on the span setting
-    (settings `0x088`, or `0x08C` in NFM/WFM).
+    (settings `0x088`, or `0x08C` in NFM/WFM; `0x08C` is never updated
+    from `0x01` and stays 0, so NFM/WFM always use index 0).
   - The samples go into a 192-sample ping-pong for the audio DSP and a
     256-sample ping-pong for the FFT/scope.
   - TX samples go back to the FPGA from a 2×192-sample ring

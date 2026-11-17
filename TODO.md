@@ -118,8 +118,8 @@ Roadmap mirrors `REVERSE_ENGINEERING_GUIDE.md`, tracked per unit.
       docs/protocol.md + cmd01_fields.csv; consumer FUN_08041EF4.
 - [x] Header bytes after `type`: reserved, always zero (docs/protocol.md).
 - [x] 0x01 settings layout mostly mapped (cmd01_fields.csv, cmd01_vfo_record.csv).
-- [ ] 0x01: unknown offsets 0x0C8/0x100/0x130/0x136/0x137/0x159/0x15A; names of
-      the RX filter half-words 0xD4–0xE8.
+- [x] 0x01: offsets 0x0C8/0x100/0x136/0x137/0x159/0x15A and the RX filter
+      half-words 0xD4–0xE8 named (docs/protocol.md, cmd01_fields.csv).
 - [x] 0x02 calibration, 0x03 spectrum/meters, 0x06 slave info and 0x08
       network state decoded (*_fields.csv); 0x02 is separate from the TRX struct.
 - [x] Complete message-type map: 0x01/0x02/0x03/0x06/0x08 only, with timing

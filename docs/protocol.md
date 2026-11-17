@@ -151,6 +151,29 @@ Several of the original partial-map entries were wrong and are
 corrected in the CSV: the TX-filter offsets, VOX switch, PTT signals,
 port and network mode, and offset `0x158`.
 
+**Filter half-words (VERIFIED).** All edges are in Hz. A zero HPF means
+300 Hz, a zero LPF 2700 Hz, and an LPF below its HPF is raised to HPF + 100.
+- SSB (modes 0/2): RX LPF `0x0D8`, RX HPF `0x0DC`; TX `0x0DA`/`0x0DE`.
+- DIGI (1/3/12): one LPF `0x0D6` for RX and TX; HPF fixed at 300 Hz.
+- CW (4): bandwidth `0x0D4` for RX and TX; the filter cutoff is half of
+  it, at most 1200 Hz.
+- AM/SAM (6/7): `0x0E0` RX, `0x0E2` TX, as full bandwidth (cutoff = half).
+- NFM (8): LPF `0x0E4` RX / `0x0E6` TX (full bandwidth), HPF `0x0E8` RX.
+- WFM is fixed at 16 kHz. CWR, IQ and LBK get no per-mode edges.
+
+**Fields with no effect in V1.0.1.**
+- LINE IN gain `0x0C8` and LINE OUT gain `0x100` (0–30 on Control): no
+  code on either unit uses them (VERIFIED).
+- `0x08C` (NFM/WFM span index): Main reads it but never copies it from
+  `0x01`; it stays at its init value 0 (HIGH). This corrects the earlier
+  "ignored by Main" note.
+- `0x136` (CW peak filter: a Q = 9 band-pass at the CW pitch): Main copies
+  it, but Control always sends 0 (HIGH).
+- `0x137`: Control sends its straight-key flag, but Main does not copy it;
+  Main's own `0x137` (always 1) enables iambic alternation (HIGH).
+- Sidetone loudness: level `0x15A` (0–63) times a Main-only master level
+  `0x0CA` (85 of 100), each through a 0 to −50 dB audio taper (VERIFIED).
+
 ### `0x03` spectrum and meters (552 B)
 
 **Spectrum.** 512 bytes; the level in dB is the byte value minus 145,

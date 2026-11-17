@@ -8,7 +8,7 @@ offset,width,type,field,control_source,main_consumer,confidence
 0x076,2,i16,XIT offset Hz (i32 at TRX+0x21C),ui+0x96C,FUN_08041ef4,VERIFIED
 0x07b,1,u8,RF gain (DAC = 0x447 + 30*gain; max 0xFFF),ui+0x988 (float),FUN_08041ef4/FUN_0803ec3c,VERIFIED
 0x088,4,u32,sample rate / spectrum span index (0..3),ui+0x9B0,FUN_08041ef4/FUN_0804995c,HIGH
-0x08c,4,u32,index sent by Control; ignored by Main,ui+0x9B1,-,MEDIUM
+0x08c,4,u32,span index for NFM/WFM; Main reads it but never copies it from 0x01 (keeps its init value 0),ui+0x9B1,FUN_08032020/FUN_08039078/FUN_08039238/FUN_0803e128 (value from FUN_0802239c),HIGH
 0x098,1,u8,selected VFO (0=A 1=B),ui+0x923,FUN_08041ef4,VERIFIED
 0x09f,1,u8,antenna select (bit0 = ANT index; selects the ATU table block),ui+0xB9B,FUN_08044ea4/FUN_08041358,HIGH
 0x0a2,1,u8,RIT switch,ui+0x96E,FUN_08041ef4,VERIFIED
@@ -16,25 +16,27 @@ offset,width,type,field,control_source,main_consumer,confidence
 0x0a4,1,u8,split switch,ui+0x991,FUN_0803e338/FUN_0803d658,VERIFIED
 0x0ac,1,u8,ATU switch,ui+0x992,FUN_08041ef4/FUN_080412bc,VERIFIED
 0x0c4,2,i16,mic gain,ui+0x97C (float),FUN_08041ef4,VERIFIED
-0x0c8,2,u16,LINE IN gain (Main ignores),ui+0xA10,-,HIGH
-0x0d4,2,u16,CW LPF RX filter,ui+0x9D2,FUN_08032020/FUN_0803e128,VERIFIED
-0x0d6,2,u16,DIGI LPF filter,ui+0x9D0,FUN_08032020/FUN_0803e128,VERIFIED
-0x0d8,2,u16,SSB LPF RX filter,ui+0x9CC,FUN_08032020/FUN_0803d454,VERIFIED
+0x0c8,2,u16,LINE IN gain 0..30 (Main never reads it; Control has no local use),ui+0xA10,-,VERIFIED
+0x0ca,2,u16,sidetone master level 0..100 (Main-only; init 85; not copied from 0x01),-,FUN_08032b44,HIGH
+0x0d4,2,u16,CW RX/TX filter bandwidth Hz (mode 4; cutoff = value/2 capped at 1200; VFO-record copy clamped to 1000),ui+0x9D2,FUN_08032020/FUN_0803d454/FUN_0803e128,VERIFIED
+0x0d6,2,u16,DIGI LPF Hz (modes 1/3/12; used for RX and TX; HPF fixed at 300),ui+0x9D0,FUN_08032020/FUN_0803d454,VERIFIED
+0x0d8,2,u16,SSB LPF RX Hz (modes 0/2; 0 = 2700),ui+0x9CC,FUN_08032020/FUN_0803d454,VERIFIED
 0x0da,2,u16,SSB LPF TX filter,ui+0xBBE,FUN_08041ef4,VERIFIED
-0x0dc,2,u16,SSB HPF RX filter,ui+0x9CE,FUN_08032020/FUN_0803d454,VERIFIED
+0x0dc,2,u16,SSB HPF RX Hz (modes 0/2; 0 = 300),ui+0x9CE,FUN_08032020/FUN_0803d454,VERIFIED
 0x0de,2,u16,SSB HPF TX filter,ui+0xBC0,FUN_08041ef4,VERIFIED
-0x0e0,2,u16,AM LPF RX filter,ui+0x9D4,FUN_08032020/FUN_0803d454,VERIFIED
+0x0e0,2,u16,AM LPF RX Hz (modes 6/7; full bandwidth so cutoff = value/2; HPF 300),ui+0x9D4,FUN_08032020/FUN_0803d454,VERIFIED
 0x0e2,2,u16,AM LPF TX filter,ui+0xBC2,FUN_08041ef4,VERIFIED
-0x0e4,2,u16,FM LPF RX filter,ui+0x9D6,FUN_08032020/FUN_0803d454,VERIFIED
+0x0e4,2,u16,FM LPF RX Hz (mode 8; full bandwidth so cutoff = value/2),ui+0x9D6,FUN_08032020/FUN_0803d454,VERIFIED
 0x0e6,2,u16,FM LPF TX filter,ui+0xBC4,FUN_08041ef4,VERIFIED
-0x0e8,2,u16,FM HPF RX filter,ui+0x9D8,FUN_08032020,VERIFIED
+0x0e8,2,u16,FM HPF RX Hz (mode 8; 0 = 300),ui+0x9D8,FUN_08032020/FUN_0803d454,VERIFIED
 0x0ea,2,i16,VOX timeout,ui+0x9F0,FUN_08041ef4/FUN_08035b50,VERIFIED
+0x0ec,3,u8[3],filter order bytes CW / SSB-DIGI-WFM / AM-SAM-NFM (Main-only; loader defaults 10/15/3),-,FUN_08032020,MEDIUM
 0x0f2,1,u8,DNR1 threshold,ui+0x972,FUN_08041ef4/FUN_0803b4c4,VERIFIED
 0x0f3,1,u8,DNR2 threshold,-,FUN_08041ef4,VERIFIED
 0x0f6,1,u8,Main-derived from active VFO byte +0x24,-,FUN_08041ef4,MEDIUM
 0x0f7,1,u8,NB level,ui+0x974,FUN_0803b100,VERIFIED
 0x0ff,1,u8,monitor level,ui+0xA14,FUN_08041ef4,VERIFIED
-0x100,1,u8,LINE OUT gain low byte (Main ignores),ui+0xA12,-,HIGH
+0x100,1,u8,LINE OUT gain 0..30 low byte (Main never reads it; Control has no local use),ui+0xA12,-,VERIFIED
 0x102,5,i8[5],RX EQ bands 1-5 (active mode group),ui+0xA2A/0xA2F,FUN_08041ef4,VERIFIED
 0x107,5,i8[5],RX EQ bands 1-5 WFM set (never written by Control),-,FUN_08041ef4,VERIFIED
 0x10c,10,i8[10],further EQ bands (TX EQ?) (never written by Control),-,FUN_08041ef4/FUN_08034b88,HYPOTHESIS
@@ -44,11 +46,13 @@ offset,width,type,field,control_source,main_consumer,confidence
 0x124,4,f32,CW DI/DA ratio (dash = dot x ratio),ui+0x9A0,FUN_080362c0,HIGH
 0x128,2,u16,CW tone / sidetone pitch Hz,ui+0x998,FUN_08032b44/FUN_08033610,HIGH
 0x12a,2,u16,QSK delay in 0.1 dot; Main stores ms = v*120/WPM (hang = ms+20),ui+0x99C,settings_apply/FUN_08023ab4,HIGH
+0x12c,2,u16,sidetone enable (Main-only; init 1),-,FUN_08032b44,HIGH
 0x12e,2,u16,CW speed WPM,ui+0x980 (float),FUN_080362c0,MEDIUM
-0x130,4,u32,state word (Control never writes; Main tests bits other than bit1),-,~15 TX/RX funcs,HYPOTHESIS
+0x130,4,u32,CW break-in/hold mode word (0 or 2 lets the CW hang count as TX); Control always sends 0; Main loader default 2,-,FUN_08041ef4 then ~15 TX/RX funcs,MEDIUM (name HYPOTHESIS)
 0x134,1,u8,keyer on (paddle) / 0 = straight,ui+0x997,FUN_08023ab4/FUN_080362c0,HIGH
-0x136,1,u8,unknown,-,FUN_08033610,LOW
-0x137,1,u8,straight-key flag (Main ignores),ui+0x996,-,HIGH
+0x135,1,u8,keyer paddle memory (Main-only; init 1),-,FUN_080362c0,MEDIUM
+0x136,1,u8,CW peak filter on: band-pass Q 9 at the CW pitch in mode 4 RX; Control always sends 0,-,FUN_08041ef4/FUN_08033610 (designed in FUN_08032020),HIGH
+0x137,1,u8,Control: straight-key flag; Main never copies it and uses its own value (init 1) as the iambic auto-repeat enable,ui+0x996,FUN_080362c0 (Main value),HIGH
 0x138,1,u8,iambic type 0 = A 1 = B,ui+0x995,FUN_080362c0,HIGH
 0x139,1,u8,paddle reverse (swap PH3/PH4),ui+0x9A8,FUN_08023ab4,VERIFIED
 0x13b,1,u8,CW zoom,ui+0x9B2,FUN_08041ef4,VERIFIED
@@ -56,8 +60,8 @@ offset,width,type,field,control_source,main_consumer,confidence
 0x141,1,u8,CW decoder enable (Control only),ui+0x9A5,C:FUN_08051bc8,HIGH
 0x154,4,f32,TX power W (drives PA DAC),ui+0x978,FUN_08041ef4/FUN_0803d3b0,VERIFIED
 0x158,1,u8,ack = last received 0x08 seq,ui+0xBCD,FUN_08049658/FUN_0804995c,VERIFIED
-0x159,1,u8,CW trainer (TX without RF switching),ui+0x9A4,FUN_0803e338,HIGH
-0x15a,2,u16,CW sidetone level,ui+0x99A,FUN_08032b44,HIGH
+0x159,1,u8,CW trainer (TX without RF switching; modes 4/5),ui+0x9A4,FUN_0803e338/FUN_08034b88,VERIFIED
+0x15a,2,u16,CW sidetone level 0..63 (gain = taper(v/63) x taper(0x0CA/100); taper 0 to -50 dB; mute below 1%),ui+0x99A,FUN_08032b44,VERIFIED
 0x15d,1,u8,global SQL threshold (never written by Control),-,FUN_08041ef4,VERIFIED
 0x15e,1,u8,PTT sources: b0 built-in PTT b1 CW key serial b5 need-tune b6 SWR/tune PTT b7 CI-V PTT (Control V1.0.1 sets only bits 5 6 7),ui+0x9C0,FUN_08041ef4,VERIFIED
 0x15f,1,u8,keySignals (never written by Control; Main ignores),ui+0x9C1,-,HIGH

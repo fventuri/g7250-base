@@ -1,8 +1,10 @@
 rel,width,type,field,confidence
 0x00,8,u64,frequency Hz (Control accepts 0.5-108 MHz from 0x08),VERIFIED
 0x08,8,u64,second frequency (init only; same default),LOW
-0x10,4,u16x2,filter low edge pair (Main FUN_0803d454 writes),MEDIUM
-0x14,4,u16x2,filter high edge pair,MEDIUM
+0x10,2,u16,RX HPF edge Hz (per-mode copy written by FUN_0803d454/FUN_08032020),HIGH
+0x12,2,u16,TX HPF edge Hz,HIGH
+0x14,2,u16,RX LPF edge Hz,HIGH
+0x16,2,u16,TX LPF edge Hz,HIGH
 0x18,1,u8,mode code (0 LSB 1 L-D 2 USB 3 U-D 4 CW 5 CWR 6 AM 7 SAM 8 NFM 9 WFM 10 IQ 11 LBK 12 RTTY),VERIFIED
 0x1a,2,u16,notch centre frequency,VERIFIED
 0x1c,1,u8,DNR type,VERIFIED
