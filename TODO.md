@@ -74,7 +74,8 @@ Roadmap mirrors `REVERSE_ENGINEERING_GUIDE.md`, tracked per unit.
       SPI6 SCK ≈17.19 MHz. See peripherals.md SPI6 section.
 - [x] CH394 INT#: no interrupt register is read; HDSDR uses the flag plus a
       5 s poll, wfview ignores it; only RECV is enabled (peripherals.md SPI6).
-- [ ] CH394: confirm from WCH documentation that a write to 0x0039 is a soft reset.
+- [x] CH394 0x0039: WCH lists it as CHIPV (read-only); the documented soft reset is MODE bit 7,
+      never written. The 0x80 write has no documented effect (peripherals.md SPI6).
 - [x] EEPROM layout: settings / calibration / NVPARAM marker / 2× ATU
       tables, CRC-8 0x31, 64-B pages (main_unit/docs/memory_map.md).
 - [ ] Who writes the settings area (EEPROM 0x0000 / backup SRAM)? Nothing
@@ -134,7 +135,9 @@ Roadmap mirrors `REVERSE_ENGINEERING_GUIDE.md`, tracked per unit.
       session and self-heal documented (main_unit/docs/network.md).
 - [x] CI-V command map for both parsers (docs/civ.md).
 - [x] wfview audio and scope packet layouts (network.md, wfview_packets.csv).
-- [ ] wfview: scope span set/report factor-2 mismatch (confirm with a wfview client).
+- [~] wfview scope span: wfview sends and reads ± half-widths, the G7250 takes full width and reports
+      half, so the axis is 2x too narrow (network.md). Confirm with a UDP capture.
+- [ ] wfview: value the radio returns on a 27 15 read; whether Xiegu ships a rig file for CI-V 0xA0.
 - [x] Control USART1 CI-V: endpoint is Bluetooth SPP (MEDIUM); both parsers see every byte (civ.md).
 
 ## Tooling
@@ -173,7 +176,7 @@ Roadmap mirrors `REVERSE_ENGINEERING_GUIDE.md`, tracked per unit.
 - [x] Full export runner (tools/run_full_export.sh) + doc checker (tools/check_docs.py) + CreateVectorFunctions.java.
 - [x] Confidence tags added (check_docs CONF 90 -> 3, the rest false positives); function ranges regenerated.
 - [ ] check_docs.py: accept wrapped status lines, "unless marked", and tags on bold lead-in lines.
-- [ ] Compare with X6100 and G90 findings where behavior overlaps.
+- [x] Compare with X6100 and G90 findings where behavior overlaps (docs/related_radios.md).
 
 ## Round 2 — follow-up items (N01–N44)
 
@@ -196,7 +199,8 @@ Roadmap mirrors `REVERSE_ENGINEERING_GUIDE.md`, tracked per unit.
 - [x] N44 X6100 comparison (docs/x6100_comparison.md: architecture, host-baseband interface,
       mode codes, feature set, register-by-register mapping) and G90 comparison from its published CI-V
       table.
-- [ ] G90 internals (MCUs, base-display protocol): needs a G90 firmware analysis.
+- [~] G90 internals: the head-base protocol is publicly described (zeroping/xiegu-g90-headprotocol);
+      MCUs still open.
 - [ ] Identify the SPI2 DAC chip; circuit roles of DAC channels 5 and 6.
 - [ ] Confirm in hardware whether an analog SWR/ALC fold-back exists outside the MCU.
 - [x] 1920-byte BandMap: an unused shared type in V1.0.1 (no object on either

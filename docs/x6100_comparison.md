@@ -21,7 +21,7 @@ table and connection notes), not G90 firmware.
 | Baseband processor | STM32F427 "BASE" | STM32H725/H735 "Main Unit" (550 MHz) |
 | RF front end | codec-based I/Q (CS4272 + TLV320AIC3204 on I2C) | an FPGA delivering 24-bit I/Q over a bit-banged GPIO bus; an AIC3204 only for audio |
 | Clock generator | VersaClock 5P49V60 at 0x6A | VersaClock 6 (5P49V6965) at 0x68, fallback 0x6A |
-| Power | battery with a MAX17205 fuel gauge; the control library has a charger setting | mains only; AXP223 PMIC, no battery |
+| Power | battery with a MAX17205 fuel gauge; the control library has a charger setting | mains only; AXP223 PMIC, no battery (the X6100's Linux host also has an AXP223, per its public device tree) |
 | Networking | via the Linux host | CH394 Ethernet on the Main Unit (HDSDR and wfview modes) |
 
 The G7250 keeps the X6100's split between UI and baseband, but replaces
