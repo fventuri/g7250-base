@@ -29,3 +29,10 @@ cs_gpio,GPIOG,PG15,CH394 cluster,BSRR bit31 assert / bit15 release around every 
 rst_gpio,GPIOB,PB5,FUN_08048d28,low 10 ms then high; wait 100 ms; re-init FUN_080487d4
 int_gpio,GPIOC,PC13 EXTI13 falling pull-up,FUN_08023ab4,EXTI15_10 IRQ40 prio 2; sets pending flags for network servers (HIGH)
 sck_hz,,17187500,FUN_080222f0,PCLK4 137.5 MHz / 8 assuming HSE 25 MHz
+int_flag_wfview,0x2401a646,set when settings 0x182 = 1,FUN_08023ab4,cleared but never tested (FUN_0804de38 FUN_0804db5c FUN_0804e9d0)
+int_flag_hdsdr,0x24019729,set when settings 0x182 != 1,FUN_08023ab4,gates RX in FUN_0804af68 with 5 s fallback (0x24019704)
+tx_busy_flag,0x240177e9,TX DMA in flight,FUN_080455dc,HDSDR tick skips RX while set (FUN_08045874)
+reg_simr,0x0018,0xFF,FUN_080487d4,all socket interrupts enabled
+reg_sn_imr,0x002C,0x04 RECV only,FUN_0804785c,callers FUN_0804aed8 FUN_0804db5c FUN_0804b8fc
+reg_sn_ir_clear,0x0002,write 0x04,FUN_08045de8;FUN_080469f8,blind RECV clear; IR/SIR/Sn_IR never read
+reg_0039,0x0039,write 0x80 then 20 ms then read = version,FUN_080487d4,soft reset HYPOTHESIS; MR 0x0000 never written

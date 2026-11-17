@@ -70,8 +70,9 @@ Roadmap mirrors `REVERSE_ENGINEERING_GUIDE.md`, tracked per unit.
 - [ ] Analog audio routing across the CTRL cable; the PC USB sound-card chip.
 - [x] CH394 control pins: CS# PG15, RST# PB5, INT# PC13/EXTI13 (falling);
       SPI6 SCK ≈17.19 MHz. See peripherals.md SPI6 section.
-- [ ] CH394: confirm the INT flag consumers read the chip's interrupt
-      register; meaning of the write to register 0x39 at init.
+- [x] CH394 INT#: no interrupt register is read; HDSDR uses the flag plus a
+      5 s poll, wfview ignores it; only RECV is enabled (peripherals.md SPI6).
+- [ ] CH394: confirm from WCH documentation that a write to 0x0039 is a soft reset.
 - [x] EEPROM layout: settings / calibration / NVPARAM marker / 2× ATU
       tables, CRC-8 0x31, 64-B pages (main_unit/docs/memory_map.md).
 - [ ] Who writes the settings area (EEPROM 0x0000 / backup SRAM)? Nothing

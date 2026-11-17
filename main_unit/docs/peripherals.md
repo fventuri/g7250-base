@@ -121,7 +121,7 @@ hardware was on hand for measurements.
 | --- | --- | --- | --- |
 | CS# | **PG15** | push-pull output, very high speed, idles high | every CH394 register routine asserts it through GPIOG_BSRR bit 31 before its SPI bytes and releases it with bit 15 afterwards; no HAL write-pin calls in the cluster |
 | RST# | **PB5** | push-pull output, low at boot, so the chip is held in reset until its init runs | the hardware-reset routine `FUN_08048d28` (called from the hard re-init path `FUN_08048fb0`) stops the SPI6 DMA and releases CS, holds PB5 low for 10 ms, raises it, waits 100 ms and reruns chip init `FUN_080487d4`. That init raises PB5 and then soft-resets the chip (0x80 into register 0x0039). Power-off clears PB5 again |
-| INT# | **PC13** (EXTI13) | interrupt input, falling edge, pull-up; EXTI15_10 (IRQ40) at priority 2 | the EXTI callback `FUN_08023ab4` turns PC13 events into "interrupt pending" flags. Depending on the network mode, the wfview server or the other network server reads them (HIGH CONFIDENCE; the read of a CH394 interrupt register after the flag is not yet traced) |
+| INT# | **PC13** (EXTI13) | interrupt input, falling edge, pull-up; EXTI15_10 (IRQ40) at priority 2 | the EXTI callback `FUN_08023ab4` sets a "data pending" byte: `0x2401A646` when settings byte 0x182 = 1 (wfview), `0x24019729` otherwise (HDSDR). The HDSDR tick `FUN_0804af68` receives on socket 0 only when this flag is set or 5 s have passed, and clears it first. The wfview loop `FUN_0804de38` clears its flag and polls anyway, so INT# has no effect in wfview mode. No interrupt register is ever read (see "Interrupt use" below) (HIGH CONFIDENCE) |
 
 The link-monitor "edge detect" in the logs is a software detector of
 link-state changes, not a GPIO.
@@ -140,6 +140,26 @@ map. That covers the common registers (gateway, mask, MAC, IP,
 socket-interrupt mask, PHY configuration, version) and the per-socket
 registers (mode, command, status, port, destination IP/port, buffer
 sizes, TX write pointer, RX received size, RX read pointer).
+
+**Interrupt use (HIGH CONFIDENCE).** Chip init enables all eight
+sockets in the socket-interrupt mask (SIMR, `0x0018` = 0xFF). Each used
+socket (HDSDR 0, wfview 1–3) enables only the RECV interrupt (Sn_IMR,
+`0x002C` = 0x04, `FUN_0804785c`). Each receive call starts by writing
+0x04 to Sn_IR (`0x0002`), a blind write-1-to-clear of RECV, and then
+reads the received size. The interrupt register (`0x0015`), its mask
+(`0x0016`), SIR (`0x0017`) and Sn_IR are never read: INT# only means "a
+datagram arrived", and the code does not ask which socket fired.
+SEND_OK is never enabled. Correction: an earlier version said the
+wfview server reads its flag; it only clears it.
+
+**Reset via 0x0039 (position VERIFIED, meaning HYPOTHESIS).** After
+raising RST# (PB5), chip init `FUN_080487d4` writes 0x80 to common
+register `0x0039`, waits 20 ms, then reads the same register and logs it
+as the chip version. The mode register `0x0000` is never written, so the
+driver has no W5500-style MR soft reset. On a W5500, `0x0039` is the
+read-only version register. On the CH394 it apparently also takes a
+soft-reset command on write (bit 7); this is not confirmed from WCH
+documentation.
 
 **Transfers.** Register writes are byte-by-byte SPI transmits.
 Single-register reads switch SPI6 to receive-only and poll it. Bulk
