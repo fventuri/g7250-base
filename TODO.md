@@ -220,5 +220,6 @@ Roadmap mirrors `REVERSE_ENGINEERING_GUIDE.md`, tracked per unit.
       OpenHPSDR P1/P2 radio, or be integrated into an app (docs/hpsdr_gap_analysis.md).
 - [x] Teardown video (KM9G) reviewed: FPGA = Intel Cyclone 10 (LP likely), CTRL = 15-pin
       HD D-sub, four named boards (docs/hardware.md §7). Controller not shown.
+- [x] Hardware verification plan in tiers 0–3 (docs/hardware_test_plan.md).
 - [ ] HPSDR open questions Q1–Q9 (sample rates, FPGA TX rate, CH394 SPI limit,
       install path): need hardware.
