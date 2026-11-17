@@ -1,0 +1,156 @@
+address,size,library,object,symbol,match_quality,invariant_bytes,ratio,also_in,alternatives,note
+080202a0,36,crtbegin,crtbegin.o,__do_global_dtors_aux,masked,20,1.000,,,"trivial (unique, inside anchored block)"
+080202c4,28,crtbegin,crtbegin.o,frame_dummy,masked,12,1.000,,,"trivial (unique, inside anchored block)"
+080202e0,20,libc_nano,libc_a-strcmp.o,strcmp,exact,20,1.000,libc,,"trivial (unique, inside anchored block)"
+08020300,160,libc_nano,libc_a-memchr.o,memchr,exact,160,1.000,libc,,
+080203a0,16,libc_nano,libc_a-strlen.o,strlen,exact,16,1.000,libc,,"trivial (unique, inside anchored block)"
+080203b0,8,libgcc,_arm_addsubdf3.o,__aeabi_drsub,exact,8,1.000,,,"trivial (unique, inside anchored block)"
+080203b8,634,libgcc,_arm_addsubdf3.o,__subdf3,exact,634,1.000,,__aeabi_dsub,
+080203bc,630,libgcc,_arm_addsubdf3.o,__adddf3,exact,630,1.000,,__aeabi_dadd,
+08020634,30,libgcc,_arm_addsubdf3.o,__aeabi_ui2d,exact,30,1.000,,__floatunsidf,
+08020654,34,libgcc,_arm_addsubdf3.o,__aeabi_i2d,exact,34,1.000,,__floatsidf,
+08020678,66,libgcc,_arm_addsubdf3.o,__aeabi_f2d,exact,66,1.000,,__extendsfdf2,
+080206bc,106,libgcc,_arm_addsubdf3.o,__aeabi_ul2d,exact,106,1.000,,__floatundidf,
+080206cc,90,libgcc,_arm_addsubdf3.o,__aeabi_l2d,exact,90,1.000,,__floatdidf,name confirmed by a placed caller
+08020728,364,libgcc,_arm_addsubsf3.o,__aeabi_frsub,exact,364,1.000,,,
+08020730,356,libgcc,_arm_addsubsf3.o,__subsf3,exact,356,1.000,,__aeabi_fsub,
+08020734,352,libgcc,_arm_addsubsf3.o,__addsf3,exact,352,1.000,,__aeabi_fadd,
+08020894,36,libgcc,_arm_addsubsf3.o,__aeabi_ui2f,exact,36,1.000,,__floatunsisf,
+0802089c,28,libgcc,_arm_addsubsf3.o,__aeabi_i2f,exact,28,1.000,,__floatsisf,
+080208b8,140,libgcc,_arm_addsubsf3.o,__aeabi_ul2f,exact,140,1.000,,__floatundisf,
+080208c8,124,libgcc,_arm_addsubsf3.o,__aeabi_l2f,exact,124,1.000,,__floatdisf,
+08020944,160,libgcc,_aeabi_ldivmod.o,__aeabi_ldivmod,masked,140,1.000,,,
+080209e4,48,libgcc,_aeabi_uldivmod.o,__aeabi_uldivmod,masked,40,1.000,,,
+08020a14,48,libgcc,_fixdfdi.o,__aeabi_d2lz,masked,40,1.000,,__fixdfdi,name fixed by a placed caller;name confirmed by a placed caller
+08020a48,64,libgcc,_fixunsdfdi.o,__aeabi_d2ulz,exact,64,1.000,,__fixunsdfdi,name fixed by a placed caller;name confirmed by a placed caller
+08020a88,698,libgcc,_udivmoddi4.o,__udivmoddi4,exact,698,1.000,,,
+08020d44,2,libgcc,_dvmd_tls.o,__aeabi_ldiv0,exact,2,1.000,,,small; name confirmed by a placed caller
+08084edc,184,libm,libm_a-s_llround.o,llround,masked,180,1.000,,,
+08084f94,84,libm,libm_a-sinf.o,sinf_poly,exact,84,1.000,,,
+08084fe8,304,libm,libm_a-sinf.o,sinf,masked,284,1.000,,,
+08085118,28,libm,libm_a-math_errf.o,with_errnof,masked,24,1.000,,,
+08085134,30,libm,libm_a-math_errf.o,__math_invalidf,masked,26,1.000,,,
+08085154,60,libc_nano,libc_a-assert.o,__assert_func,masked,36,1.000,libc,,
+08085198,16,libc_nano,libc_a-malloc.o,malloc,masked,8,1.000,,,call target confirmed (1 branch(es) land on placed symbols)
+080851a8,16,libc_nano,libc_a-malloc.o,free,masked,8,1.000,,cfree,call target confirmed (1 branch(es) land on placed symbols)
+080851b8,68,libc_nano,libc_a-mallocr.o,sbrk_aligned,masked,52,1.000,,,
+080851fc,256,libc_nano,libc_a-mallocr.o,_malloc_r,masked,228,1.000,,,
+080852fc,12,libc_nano,libc_a-mlock.o,__malloc_lock,masked,4,1.000,,,small; name confirmed by a placed caller
+08085308,12,libc_nano,libc_a-mlock.o,__malloc_unlock,masked,4,1.000,,,small; name confirmed by a placed caller
+08085314,52,libc_nano,libc_a-strtod.o,sulp,masked,48,1.000,libc,,
+08085348,2860,libc_nano,libc_a-strtod.o,_strtod_l,masked,2652,1.000,libc,,
+08085e74,24,libc_nano,libc_a-strtod.o,strtod,masked,12,1.000,libc,strtold;wcstod,"trivial (unique, inside anchored block);shape-ambiguous; branches to 08085348"
+08085e8c,244,libc_nano,libc_a-strtol.o,_strtol_l.constprop.0,masked,236,1.000,libc,,
+08085f84,20,libc_nano,libc_a-strtol.o,strtol,masked,12,1.000,,strtol_l,call target confirmed (1 branch(es) land on placed symbols)
+08085f98,284,libc_nano,libc_a-strtoll.o,_strtoll_l.constprop.0,masked,276,1.000,libc,,
+080860b4,20,libc_nano,libc_a-strtoll.o,strtoll,masked,12,1.000,,strtoll_l,call target confirmed (1 branch(es) land on placed symbols)
+080860c8,300,libc_nano,libc_a-strtoull.o,_strtoull_l.constprop.0,masked,288,1.000,libc,,
+080861f4,20,libc_nano,libc_a-strtoull.o,strtoull,masked,12,1.000,,strtoull_l,call target confirmed (1 branch(es) land on placed symbols)
+08086208,168,libc_nano,libc_a-nano-vfprintf_float.o,__cvt,masked,164,1.000,,,
+080862b0,116,libc_nano,libc_a-nano-vfprintf_float.o,__exponent,exact,116,1.000,,,
+08086328,1076,libc_nano,libc_a-nano-vfprintf_float.o,_printf_float,masked,1036,1.000,,,
+0808675c,218,libc_nano,libc_a-nano-vfprintf_i.o,_printf_common,exact,218,1.000,,,
+08086838,576,libc_nano,libc_a-nano-vfprintf_i.o,_printf_i,masked,472,1.000,,,
+08086a78,264,libc_nano,libc_a-fflush.o,__sflush_r,masked,260,1.000,,,
+08086b80,80,libc_nano,libc_a-fflush.o,_fflush_r,masked,64,1.000,,,
+08086bd0,40,libc_nano,libc_a-fflush.o,fflush,masked,16,1.000,libc,fflush_unlocked,"trivial (unique, inside anchored block);shape-ambiguous; branches to 08086d64 08086b80;name confirmed by its branch targets"
+08086bf8,108,libc_nano,libc_a-findfp.o,std,masked,80,1.000,,,
+08086c64,24,libc_nano,libc_a-fcloseall.o,fcloseall,masked,8,1.000,libc,stdio_exit_handler,"trivial (unique, inside anchored block);shape-ambiguous; branches to 08086d64"
+08086c7c,64,libc_nano,libc_a-findfp.o,cleanup_stdio,masked,40,1.000,libc,,
+08086cbc,60,libc_nano,libc_a-findfp.o,global_stdio_init.part.0,masked,36,1.000,libc,,
+08086cf8,12,libc_nano,libc_a-findfp.o,__sfp_lock_acquire,masked,4,1.000,,,small; name confirmed by a placed caller
+08086d04,12,libc_nano,libc_a-findfp.o,__sfp_lock_release,masked,4,1.000,,,small; name confirmed by a placed caller
+08086d10,48,libc_nano,libc_a-findfp.o,__sinit,masked,28,1.000,,,
+08086d40,36,libc_nano,libc_a-fprintf.o,fiprintf,masked,28,1.000,,diprintf;dprintf;fiscanf;fprintf;fscanf;fwprintf;fwscanf,name fixed by a placed caller;name confirmed by a placed caller
+08086d64,60,libc_nano,libc_a-fwalk.o,_fwalk_sglue,exact,60,1.000,libc,,
+08086da0,36,libc_nano,libc_a-printf.o,printf,masked,28,1.000,libc,iprintf;wprintf,shape-ambiguous; branches to 08089844
+08086dc4,170,libc_nano,libc_a-puts.o,_puts_r,masked,146,1.000,,,
+08086e70,16,libc_nano,libc_a-puts.o,puts,masked,8,1.000,,,call target confirmed (1 branch(es) land on placed symbols)
+08086e80,360,libc_nano,libc_a-setvbuf.o,setvbuf,masked,312,1.000,,,
+08086fe8,104,libc_nano,libc_a-snprintf.o,snprintf,masked,96,1.000,libc,sniprintf,shape-ambiguous; branches to 08089260
+08087050,84,libc_nano,libc_a-sscanf.o,sscanf,masked,68,1.000,,siscanf,
+080870a4,34,libc_nano,libc_a-stdio.o,__sread,masked,30,1.000,,,
+080870ca,56,libc_nano,libc_a-stdio.o,__swrite,masked,48,1.000,libc,,
+08087102,36,libc_nano,libc_a-stdio.o,__sseek,masked,32,1.000,,,
+08087130,20,libc_nano,libc_a-vprintf.o,vprintf,masked,12,1.000,libc,viprintf;vwprintf,"trivial (unique, inside anchored block);shape-ambiguous; branches to 08089844"
+08087144,124,libc_nano,libc_a-wbuf.o,__swbuf_r,masked,108,1.000,,,
+080871c0,172,libc_nano,libc_a-wsetup.o,__swsetup_r,masked,156,1.000,,,
+0808726c,32,libc_nano,libc_a-memcmp.o,memcmp,exact,32,1.000,libc,,
+0808728c,52,libc_nano,libc_a-memmove.o,memmove,exact,52,1.000,libc,,
+080872c0,16,libc_nano,libc_a-memset.o,memset,exact,16,1.000,libc,,"trivial (unique, inside anchored block)"
+080872d0,30,libc_nano,libc_a-strcat.o,strcat,exact,30,1.000,libc,,
+080872ee,26,libc_nano,libc_a-strchr.o,strchr,exact,26,1.000,libc,,
+08087308,64,libc_nano,libc_a-strncasecmp.o,strncasecmp,masked,60,1.000,libc,,
+08087348,36,libc_nano,libc_a-strncmp.o,strncmp,exact,36,1.000,libc,,
+0808736c,38,libc_nano,libc_a-strncpy.o,strncpy,exact,38,1.000,libc,,
+08087392,44,libc_nano,libc_a-strrchr.o,strrchr,masked,36,1.000,libc,,
+080873be,44,libc_nano,libc_a-strstr.o,strstr,exact,44,1.000,libc,,
+080873ec,8,libc_nano,libc_a-localeconv.o,_localeconv_r,masked,4,1.000,,,small; name confirmed by a placed caller
+080873f4,32,libc_nano,libc_a-closer.o,_close_r,masked,24,1.000,,_unlink_r;_wait_r,same-shape names placed elsewhere excluded; still ambiguous
+08087414,36,libc_nano,libc_a-lseekr.o,_lseek_r,masked,28,1.000,,_execve_r;_fcntl_r;_open_r;_read_r;_write_r,name fixed by a placed caller;name confirmed by a placed caller
+08087438,36,libc_nano,libc_a-readr.o,_read_r,masked,28,1.000,,_execve_r;_fcntl_r;_lseek_r;_open_r;_write_r,name fixed by a placed caller;name confirmed by a placed caller
+0808745c,32,libc_nano,libc_a-sbrkr.o,_sbrk_r,masked,24,1.000,libc,_close_r;_isatty_r;_unlink_r;_wait_r,pattern occurs 3x in image;shape-ambiguous; branches to 08022944;name confirmed by a placed caller
+0808747c,36,libc_nano,libc_a-writer.o,_write_r,masked,28,1.000,,_execve_r;_fcntl_r;_lseek_r;_open_r;_read_r,name fixed by a placed caller;name confirmed by a placed caller
+080874a0,12,libc_nano,libc_a-errno.o,__errno,masked,8,1.000,,,small; name confirmed by a placed caller
+080874ac,72,libc_nano,libc_a-init.o,__libc_init_array,masked,52,1.000,libc,,
+080874f4,2,libc_nano,libc_a-lock.o,__retarget_lock_init_recursive,exact,2,1.000,,,small; name confirmed by a placed caller
+080874f6,2,libc_nano,libc_a-lock.o,__retarget_lock_acquire_recursive,exact,2,1.000,,,small; name confirmed by a placed caller
+080874f8,2,libc_nano,libc_a-lock.o,__retarget_lock_release_recursive,exact,2,1.000,,,small; name confirmed by a placed caller
+080874fa,16,libc_nano,libc_a-strcpy.o,strcpy,exact,16,1.000,libc,,"trivial (unique, inside anchored block)"
+0808750a,28,libc_nano,libc_a-memcpy-stub.o,memcpy,exact,28,1.000,libc,,
+08087528,16,libc_nano,libm_a-s_nan.o,nan,exact,16,1.000,libc;libm,,"trivial (unique, inside anchored block)"
+08087538,14,libc_nano,libc_a-abort.o,abort,masked,6,1.000,,,small; name confirmed by a placed caller
+08087546,272,libc_nano,libc_a-dtoa.o,quorem,masked,268,1.000,libc,,
+08087658,2732,libc_nano,libc_a-dtoa.o,_dtoa_r,masked,2516,1.000,,,
+08088104,148,libc_nano,libc_a-freer.o,_free_r,masked,136,1.000,,,
+08088198,164,libc_nano,libc_a-gdtoa-gethex.o,rshift,exact,164,1.000,libc,__rshift_D2A,name confirmed by a placed caller
+0808823c,42,libc_nano,libc_a-gdtoa-gethex.o,__hexdig_fun,exact,42,1.000,libc,,
+08088268,1056,libc_nano,libc_a-gdtoa-gethex.o,__gethex,masked,928,1.000,libc,,
+08088688,36,libc_nano,libc_a-gdtoa-hexnan.o,L_shift,exact,36,1.000,libc,,
+080886ac,40,libc_nano,libc_a-gdtoa-hexnan.o,__match,exact,40,1.000,libc,,
+080886d4,310,libc_nano,libc_a-gdtoa-hexnan.o,__hexnan,masked,298,1.000,libc,,
+0808880a,36,libc_nano,libc_a-mbtowc_r.o,__ascii_mbtowc,exact,36,1.000,libc,,
+08088830,128,libc_nano,libc_a-mprec.o,_Balloc,masked,104,1.000,,,
+080888b0,68,libc_nano,libc_a-mprec.o,_Bfree,masked,52,1.000,,,
+080888f4,140,libc_nano,libc_a-mprec.o,__multadd,masked,116,1.000,libc,,
+08088980,148,libc_nano,libc_a-mprec.o,__s2b,masked,124,1.000,libc,,
+08088a14,62,libc_nano,libc_a-mprec.o,__hi0bits,exact,62,1.000,libc,,
+08088a52,90,libc_nano,libc_a-mprec.o,__lo0bits,exact,90,1.000,libc,,
+08088aac,44,libc_nano,libc_a-mprec.o,__i2b,masked,28,1.000,libc,,
+08088ad8,340,libc_nano,libc_a-mprec.o,__multiply,masked,324,1.000,libc,,
+08088c2c,180,libc_nano,libc_a-mprec.o,__pow5mult,masked,140,1.000,,,
+08088ce0,216,libc_nano,libc_a-mprec.o,__lshift,masked,196,1.000,libc,,
+08088db8,54,libc_nano,libc_a-mprec.o,__mcmp,exact,54,1.000,libc,,
+08088df0,296,libc_nano,libc_a-mprec.o,__mdiff,masked,272,1.000,libc,,
+08088f18,76,libc_nano,libc_a-mprec.o,__ulp,exact,76,1.000,libc,,
+08088f64,148,libc_nano,libc_a-mprec.o,__b2d,masked,144,1.000,libc,,
+08088ff8,176,libc_nano,libc_a-mprec.o,__d2b,masked,148,1.000,libc,,
+080890a8,94,libc_nano,libc_a-mprec.o,__ratio,masked,86,1.000,libc,,
+08089106,70,libc_nano,libc_a-mprec.o,__copybits,exact,70,1.000,libc,,
+0808914c,66,libc_nano,libc_a-mprec.o,__any_on,exact,66,1.000,libc,,
+0808918e,26,libc_nano,libc_a-wctomb_r.o,__ascii_wctomb,exact,26,1.000,libc,,
+080891a8,182,libc_nano,libc_a-nano-svfprintf.o,__ssputs_r,masked,162,1.000,,,
+08089260,504,libc_nano,libc_a-nano-svfprintf.o,_svfprintf_r,masked,456,1.000,,_svfiprintf_r,name confirmed by a placed caller
+08089458,118,libc_nano,libc_a-nano-svfscanf.o,_sungetc_r,masked,114,1.000,,,
+080894ce,58,libc_nano,libc_a-nano-svfscanf.o,__ssrefill_r,masked,54,1.000,,,
+08089508,744,libc_nano,libc_a-nano-svfscanf.o,__ssvfscanf_r,masked,572,1.000,,__ssvfiscanf_r,name confirmed by a placed caller
+080897f0,46,libc_nano,libc_a-nano-vfprintf.o,__sfputc_r,masked,42,1.000,,,
+0808981e,36,libc_nano,libc_a-nano-vfprintf.o,__sfputs_r,masked,32,1.000,,,
+08089844,560,libc_nano,libc_a-nano-vfprintf.o,_vfprintf_r,masked,496,1.000,,_vfiprintf_r,name confirmed by a placed caller
+08089a74,180,libc_nano,libc_a-nano-vfscanf_i.o,_scanf_chars,masked,176,1.000,,,
+08089b28,488,libc_nano,libc_a-nano-vfscanf_i.o,_scanf_i,masked,464,1.000,,,
+08089d10,76,libc_nano,libc_a-makebuf.o,__swhatbuf_r,masked,72,1.000,,,
+08089d5c,120,libc_nano,libc_a-makebuf.o,__smakebuf_r,masked,108,1.000,,,
+08089dd4,114,libc_nano,libc_a-sccl.o,__sccl,exact,114,1.000,libc,,
+08089e46,116,libc_nano,libc_a-ungetc.o,__submore,masked,104,1.000,,,
+08089eba,80,libc_nano,libc_a-signal.o,_raise_r,masked,72,1.000,,,
+08089f0c,16,libc_nano,libc_a-signal.o,raise,masked,8,1.000,,,call target confirmed (1 branch(es) land on placed symbols)
+08089f1c,36,libc_nano,libc_a-fstatr.o,_fstat_r,masked,28,1.000,,_getentropy_r;_gettimeofday_r;_kill_r;_link_r;_mkdir_r;_stat_r,name fixed by a placed caller;name confirmed by a placed caller
+08089f40,32,libc_nano,libc_a-isattyr.o,_isatty_r,masked,24,1.000,,_close_r;_sbrk_r;_unlink_r;_wait_r,name fixed by a placed caller;name confirmed by a placed caller
+08089f60,36,libc_nano,libc_a-signalr.o,_kill_r,masked,28,1.000,libc,_fstat_r;_getentropy_r;_gettimeofday_r;_link_r;_mkdir_r;_stat_r,pattern occurs 2x in image;shape-ambiguous; branches to 080228ec;name confirmed by a placed caller
+08089f84,4,libc_nano,libc_a-signalr.o,_getpid_r,masked,0,1.000,,,small; name confirmed by a placed caller
+08089f88,40,libc_nano,libc_a-callocr.o,_calloc_r,masked,32,1.000,,,
+08089fb0,92,libc_nano,libc_a-reallocr.o,_realloc_r,masked,68,1.000,,,
+0808a00c,220,libc_nano,libc_a-strtoul.o,_strtoul_l.constprop.0,masked,216,1.000,libc,,
+0808a0ec,16,libc_nano,libc_a-msizer.o,_malloc_usable_size_r,exact,16,1.000,,,"trivial (unique, inside anchored block)"
+0808a0fc,4,crti,crti.o,_init,exact,4,1.000,,,small; name confirmed by a placed caller

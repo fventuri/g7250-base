@@ -23,9 +23,13 @@ Three independent signals, each region tagged with its own confidence:
 3. **Shape signatures.** Register use, constants, assert-text
    references, sizes and file order.
 
-**Toolchain (HIGH CONFIDENCE).** Both images were built with GNU Tools
-for STM32 12.3.rel1; the newlib build path in both string tables shows
-it.
+**Toolchain (VERIFIED).** Both images were linked with ST's build of GNU
+Tools for STM32 12.3.rel1 (the STM32CubeIDE 1.17.0 toolchain plugin,
+built in late September 2024). The multilib is `thumb/v7e-m+dp/hard`
+with newlib-nano (`--specs=nano.specs`) and float `printf` enabled; Main
+also enables float `scanf`. Arm's own 12.3.Rel1 release matches libgcc
+but not most of newlib and libm: ST rebuilt newlib, so match against
+ST's archives.
 
 ## Main Unit layout (HIGH CONFIDENCE unless noted)
 
@@ -37,7 +41,7 @@ it.
 | –`0x080312B4` | ST HAL, modules in alphabetical order (hal, adc, cortex, crc, dac, dma, gpio, i2c, i2s, pwr, rcc, rtc, spi, tim, uart) |
 | –`0x08052C44` | application |
 | –`0x08057534` | newlib-nano libc |
-| –`0x0805AEC0` | libm (MEDIUM CONFIDENCE) |
+| –`0x0805AEC0` | libm (VERIFIED: starts with acos at `0x08057534`) |
 | after that | crti/crtn |
 
 ## Control Unit layout (HIGH CONFIDENCE unless noted)
@@ -56,7 +60,7 @@ it.
 | –`0x0803DF14` | CubeMX USB_DEVICE |
 | –`0x0807AC6C` | application |
 | –`0x08084ED0` | SEGGER emWin (GUI context pointer `0x24000038`) |
-| –`0x0808A0EC` | newlib (libc and libm) |
+| –`0x0808A0FC` | newlib (libc and libm); crti `_init` at `0x0808A0FC` |
 
 ## Counts (functions / bytes)
 
@@ -96,10 +100,37 @@ created (`CreateVectorFunctions.java`).
   customers for STM32 use. An independent firmware needs its own GUI
   library or a licence check.
 
+## Exact toolchain matching
+
+`tools/match_static_libs.py` searches each image for every function in
+libc_nano.a, libm.a, libgcc.a and the crt objects of the ST toolchain.
+Bytes under relocations are masked; short or same-shape functions are
+confirmed by decoding their branches. Results are in
+`*/analysis/libs/toolchain_matches.csv` (address, size, archive, object,
+symbol, match quality; no code bytes), and the multilib comparison in
+`main_unit/analysis/libs/multilib_comparison.csv`.
+
+| | Main | Control |
+| --- | --- | --- |
+| libc_nano (exact / masked) | 34 / 80 functions, 19.3 KB | 34 / 92 functions, 20.5 KB |
+| libm | 56 functions, 14.2 KB | 5 functions, 0.6 KB |
+| libgcc | 23 functions, 4.1 KB | 21 functions, 4.0 KB |
+| crtbegin + crti | 3 | 3 |
+
+Every newlib function in the Main layout is matched; Control is matched
+except for 4-byte stubs. No match falls outside the toolchain regions
+(VERIFIED). Results:
+- The two 64-bit division wrappers are `__aeabi_ldivmod` and
+  `__aeabi_uldivmod`.
+- Main `FUN_08053B2C` is the `puts` wrapper; `_puts_r` is at
+  `0x08053A80`.
+- Main `_read_r` and `_write_r` call application code, which overrides
+  the weak CubeMX syscalls (HIGH CONFIDENCE).
+- Control libm is only `llround`, `sinf` and the float error helpers.
+
 ## Open
 
-- Exact matching against the GNU Tools for STM32 12.3 and STemWin
-  archives with `tools/identify_lib_functions.py`: needs the archives
-  and pyelftools.
+- STemWin 5.44a exact matching: the archive is only distributed after
+  st.com login or e-mail confirmation, so it was not used.
 - Exact start of Control libc (about `0x08084ED0`), the USB library
   extent, and the Main libm boundary.

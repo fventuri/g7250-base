@@ -200,7 +200,8 @@ Roadmap mirrors `REVERSE_ENGINEERING_GUIDE.md`, tracked per unit.
 - [ ] Main firmware update path (bootloader only; transport from Control unknown).
 - [ ] Control bootloader: update file name and checks (needs a sector-0 dump).
 - [ ] IWDG timeout and the IWDG_SW option byte (needs an SWD read).
-- [ ] Exact library matching with the GNU Tools for STM32 12.3 and STemWin archives (identify_lib_functions.py).
+- [x] Exact toolchain matching against ST's GNU Tools 12.3 build (tools/match_static_libs.py, docs/libraries.md).
+- [ ] STemWin 5.44a exact match (needs a licensed download).
 - [ ] Pin exact sizes of the ≤ RAM objects; identify the Control UI blocks.
 - [ ] CI-V CW handlers (pitch/WPM/break-in) in undisassembled code near 0x08052400; confirm KEY jack wiring to Main PH3/PH4.
 - [x] ATU merit producer: raw block SWR from the ADC ISR FUN_080235e8 (docs/atu.md).

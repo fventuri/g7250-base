@@ -1,0 +1,21 @@
+toolchain,multilib,unit,libc_nano_fn,libc_nano_bytes,libm_fn,libm_bytes,libgcc_fn,libgcc_bytes,libc_full_only_fn
+Arm GNU Toolchain 12.3.Rel1,v7e-m+dp/hard,Control,90,9702,2,58,18,3804,0
+Arm GNU Toolchain 12.3.Rel1,v7e-m+dp/softfp,Control,84,9140,0,0,18,3804,0
+Arm GNU Toolchain 12.3.Rel1,v7e-m+fp/hard,Control,88,9556,2,58,16,3692,0
+Arm GNU Toolchain 12.3.Rel1,v7e-m+fp/softfp,Control,84,9140,0,0,16,3692,0
+Arm GNU Toolchain 12.3.Rel1,v7e-m/nofp,Control,79,7394,0,0,16,3692,0
+Arm GNU Toolchain 12.3.Rel1,v7e-m+dp/hard,Main,85,9586,14,322,20,3908,0
+Arm GNU Toolchain 12.3.Rel1,v7e-m+dp/softfp,Main,75,8476,0,0,20,3908,0
+Arm GNU Toolchain 12.3.Rel1,v7e-m+fp/hard,Main,81,8988,5,88,17,3732,0
+Arm GNU Toolchain 12.3.Rel1,v7e-m+fp/softfp,Main,75,8476,0,0,17,3732,0
+Arm GNU Toolchain 12.3.Rel1,v7e-m/nofp,Main,70,6730,0,0,16,3692,0
+GNU Tools for STM32 12.3.rel1 (CubeIDE 1.17.0 plugin),v7e-m+dp/hard,Control,105,20120,5,630,17,3800,0
+GNU Tools for STM32 12.3.rel1 (CubeIDE 1.17.0 plugin),v7e-m+dp/softfp,Control,95,12722,0,0,17,3800,0
+GNU Tools for STM32 12.3.rel1 (CubeIDE 1.17.0 plugin),v7e-m+fp/hard,Control,99,13138,3,242,15,3688,0
+GNU Tools for STM32 12.3.rel1 (CubeIDE 1.17.0 plugin),v7e-m+fp/softfp,Control,95,12722,0,0,15,3688,0
+GNU Tools for STM32 12.3.rel1 (CubeIDE 1.17.0 plugin),v7e-m/nofp,Control,89,10712,0,0,15,3688,0
+GNU Tools for STM32 12.3.rel1 (CubeIDE 1.17.0 plugin),v7e-m+dp/hard,Main,95,18936,54,14212,19,3904,0
+GNU Tools for STM32 12.3.rel1 (CubeIDE 1.17.0 plugin),v7e-m+dp/softfp,Main,80,9942,2,150,19,3904,0
+GNU Tools for STM32 12.3.rel1 (CubeIDE 1.17.0 plugin),v7e-m+fp/hard,Main,86,10454,19,3572,16,3728,0
+GNU Tools for STM32 12.3.rel1 (CubeIDE 1.17.0 plugin),v7e-m+fp/softfp,Main,80,9942,0,0,16,3728,0
+GNU Tools for STM32 12.3.rel1 (CubeIDE 1.17.0 plugin),v7e-m/nofp,Main,74,7932,0,0,15,3688,0
