@@ -201,7 +201,8 @@ Roadmap mirrors `REVERSE_ENGINEERING_GUIDE.md`, tracked per unit.
 - [ ] Exact library matching with the GNU Tools for STM32 12.3 and STemWin archives (identify_lib_functions.py).
 - [ ] Pin exact sizes of the ≤ RAM objects; identify the Control UI blocks.
 - [ ] CI-V CW handlers (pitch/WPM/break-in) in undisassembled code near 0x08052400; confirm KEY jack wiring to Main PH3/PH4.
-- [ ] ATU: producer of the merit value (meter block +0x20); TUNER TRG/RET connector hardware-only?
+- [x] ATU merit producer: raw block SWR from the ADC ISR FUN_080235e8 (docs/atu.md).
+- [ ] ATU: TUNER TRG/RET connector hardware-only?
 - [ ] H-22: measure the absolute bit period and confirm which mic line feeds PI5.
 - [ ] Control codec slot routing (mic, speaker, Main TX) and what PI6, PE3 and PE4 connect to.
 - [x] GUI screen-id mapping VERIFIED (ids 1-3 unused, 12 = quick setting).

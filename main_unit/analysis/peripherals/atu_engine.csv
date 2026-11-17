@@ -20,3 +20,8 @@ final ok g,3.0,FUN_08042d34,VERIFIED
 min improvement,0.05,FUN_08042d34,VERIFIED
 merit sample timeout ms,25,FUN_08042d34,VERIFIED
 result codes,1 ok 3 fail 4 abort,0x24004848,VERIFIED
+merit source,meter 0x24004D5C +0x20 raw block SWR,FUN_080235e8,VERIFIED
+merit inputs,ADC rank2 fwd + rank3 rev (2x counts) over 15 samples,FUN_080235e8,VERIFIED
+merit block flag,+0x39 set by ISR; cleared by engine,FUN_080235e8;FUN_08042d34,VERIFIED
+merit block reset,+0x74 set by engine,FUN_08042d34,VERIFIED
+merit timeout value,999.9,FUN_08042d34,VERIFIED

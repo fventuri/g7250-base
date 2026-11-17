@@ -63,12 +63,27 @@ dirty flag is set; otherwise the old slot is recalled. Result codes:
    restarts the fine search.
 7. **Final:** success if g ≤ 3.0.
 
-## Merit g (PARTIAL)
+## Merit g — VERIFIED
 
-An SWR-scale value in the meter block (+0x20), with a new-sample flag
-at +0x39. It is separate from the displayed SWR. Its producer is not
-yet located (HYPOTHESIS: a fast SWR from the forward/reflected
-detectors).
+g is the **raw block SWR** at meter block +0x20 (`0x24004D5C`). It is
+computed in the ADC1 DMA interrupt (`FUN_080235e8`) at the end of every
+block of 15 ADC sample sets:
+1. it averages the forward and reflected detector values (2 × ADC
+   counts, not watts);
+2. it scales the reflected average by the per-frequency reverse gain and
+   subtracts the leakage factor times forward (both set by
+   `FUN_0803ec3c`);
+3. it clamps the result to 0…0.999 × forward and divides by forward,
+   which gives Γ;
+4. g = (1+Γ)/(1−Γ), or 999.9 with no forward signal.
+
+Unlike the displayed SWR, g is neither smoothed nor gated by the
+signal-level and 20-block validity checks.
+
+**Handshake.** For each sample the engine (`FUN_08042d34`) sets the
+block-reset byte (+0x74), so the next block contains only post-settle
+samples. It then waits for the block-done byte (+0x39) and clears it. A
+block that does not arrive within 25 ms counts as 999.9.
 
 ## External tuner
 

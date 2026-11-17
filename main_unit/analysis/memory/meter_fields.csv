@@ -25,4 +25,4 @@ offset,type,field,source,confidence
 0x68,f32,REV GAIN (per freq),FUN_0803ec3c,HIGH
 0x6c,f32,LEAK factor (per freq),FUN_0803ec3c,HIGH
 0x70,f32,last valid SWR,-,HIGH
-0x74,u8,block reset flag,-,MEDIUM
+0x74,u8,block restart request from the ATU engine,FUN_08042d34,VERIFIED
