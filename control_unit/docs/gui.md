@@ -24,15 +24,17 @@ only (text, shapes, bitmaps, simple label objects).
 | 4 | Menu 1, general (2 pages × 15 items) | button A0×B3 |
 | 5 | Menu 2, display and EQ (2 pages) | button A1×B3 |
 | 6 | Menu 3, CW | button A0×B4 on the main screen in CW mode |
-| 7 | system; sub-page in UI +0x921: 1 date/time, 2 info (MEDIUM), 3 storage (HYPOTHESIS), 4 Bluetooth (MEDIUM), 5 network, 6 network keyboard, 7 last item (HYPOTHESIS) | button A2×B3 |
+| 7 | system; sub-page in UI +0x921: 1 date/time, 2 system info (app/firmware/FPGA/hardware versions), 3 SD card (capacity, format), 4 Bluetooth setting (name, address, status, on/off), 5 network, 6 network keyboard, 7 factory-reset confirmation (HIGH) | button A2×B3 |
 | 8 | memory channels (with a name keyboard) | button A0×B0, touch |
-| 9 | applications; `appUi` 0 list, 2 SWR scanner, 1 unidentified | button A3×B1 |
+| 9 | applications; `appUi` (+0x922) 0 list, 2 SWR scanner; 1 is never written and has no handler (the list has one entry, HIGH) | button A3×B1 |
 | 10 | keyer memory | button A3×B0 in CW/CWR |
 | 11 | voice memory | button A3×B0 in voice modes |
 | 12 | quick setting (picks the quick-button function) | hold A3×B2 |
 
-The main screen also has overlays in `windows` (UI +0xBAC); 2 is the
-band selector. `FUN_080508d0` redraws whichever of ids 4–12 is open
+The main screen also has overlays in `windows` (UI +0xBAC): 1 mode
+selector (with DIG on/off), 2 band selector, 3 direct frequency entry
+keypad (also H-22 key 0x28; the entered value goes to the active VFO
+frequency) (HIGH). `FUN_080508d0` redraws whichever of ids 4–12 is open
 (correction: it is not the memory-channel page).
 
 The band selector is an overlay on the main screen; quick setting is page 12.
@@ -129,6 +131,6 @@ type, iambic type, trainer, decoder.
 key speed, RF power, BW/shift, filter reset.
 
 Open: the panel legends, the knob/push pairing, FIL1 versus FIL2
-meaning, the PA0 wiring, `appUi` 1, system sub-pages 2/3/4/7 and
-`windows` 1/3.
+meaning, the PA0 wiring, and which system-page slots map to list
+indices 5–9 (no item uses them).
 
