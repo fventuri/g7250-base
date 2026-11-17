@@ -106,8 +106,9 @@ Roadmap mirrors `REVERSE_ENGINEERING_GUIDE.md`, tracked per unit.
 - [x] Main RTC wake-up timer: armed by nobody in V1.0.1; the bootloader jump is dead code.
 - [x] Bluetooth XG-BT-G7250 on Control USART1 (AT commands, PCA9557 power
       bit); see control_unit/docs/peripherals.md.
-- [ ] Bluetooth: identify the module chip, the meaning of +CZ/+B4/+CW, and
-      the analog audio routing into the codec.
+- [~] Bluetooth: +CW/+BD/+B4/+CZ power-on sequence and meanings done (MEDIUM,
+      BT401-family dialect). Open: module chip and the analog BT audio entry
+      point (firmware changes no routing; needs a board trace).
 
 ## Phase 5 — Inter-MCU SLIP protocol (docs/protocol.md)
 
@@ -128,13 +129,13 @@ Roadmap mirrors `REVERSE_ENGINEERING_GUIDE.md`, tracked per unit.
       and the 0x08 sequence/ack scheme.
 - [ ] Who sends SLIP 0x02 in the field (factory tool?).
 - [x] Physical layer: USART2 PD5/PD6 AF7, 460 800 8N1, DMA (docs/protocol.md).
-- [x] UART roles: Main USART1 = console + service menu, Main UART4 unused, Control USART1 = Bluetooth (+ CI-V).
+- [x] UART roles: Main USART1 = console + service menu, Main UART4 unused, Control USART1 = Bluetooth (AT + SPP CI-V) + console.
 - [~] Main Unit networking: CH394 driver, socket plan, HDSDR mode, wfview
       session and self-heal documented (main_unit/docs/network.md).
 - [x] CI-V command map for both parsers (docs/civ.md).
 - [x] wfview audio and scope packet layouts (network.md, wfview_packets.csv).
 - [ ] wfview: scope span set/report factor-2 mismatch (confirm with a wfview client).
-- [ ] Control USART1 CI-V: physical endpoint (BT SPP vs PC serial bridge).
+- [x] Control USART1 CI-V: endpoint is Bluetooth SPP (MEDIUM); both parsers see every byte (civ.md).
 
 ## Tooling
 
@@ -214,11 +215,16 @@ Roadmap mirrors `REVERSE_ENGINEERING_GUIDE.md`, tracked per unit.
 - [ ] CI-V CW handlers (pitch/WPM/break-in) in undisassembled code near 0x08052400; confirm KEY jack wiring to Main PH3/PH4.
 - [x] ATU merit producer: raw block SWR from the ADC ISR FUN_080235e8 (docs/atu.md).
 - [ ] ATU: TUNER TRG/RET connector hardware-only?
-- [ ] H-22: measure the absolute bit period and confirm which mic line feeds PI5.
-- [ ] Control codec slot routing (mic, speaker, Main TX) and what PI6, PE3 and PE4 connect to.
+- [ ] H-22: firmware bounds the high time below about 437 µs (h22_timing.csv); measure
+      the absolute bit period and confirm which mic line feeds PI5.
+- [x] Control codec slot routing (peripherals.md, aic3204_init.csv).
+- [ ] What PI6, PE3 and PE4 connect to.
+- [ ] Control codec: destination of CLKOUT (MFP4) and which of HPR/LOR feeds the Main mic
+      input; confirm IN2R/IN3R = USB sound-card line-in.
 - [x] GUI screen-id mapping VERIFIED (ids 1-3 unused, 12 = quick setting).
 - [ ] GUI: identify appUi 1, system sub-pages 2/3/4/7 and windows 1/3.
-- [ ] PCA9557 bits 0/1/3/5 and 6/7: electrical function (board trace).
+- [ ] PCA9557 bits 0/1/3/5 and 6/7: electrical function (board trace; firmware write sites
+      exhausted, bit 5 is high exactly during the Control shutdown/save).
 - [ ] Which W25Qxx part is fitted (board photo).
 - [x] Control button-code and encoder-to-function tables (gui.md, button_map.csv, encoder_map.csv).
 - [ ] Panel legends for the 22 matrix buttons and the knob/push pairing (needs a photo).

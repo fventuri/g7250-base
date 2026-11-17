@@ -45,10 +45,18 @@ frames addressed to 0xA0 or 0x00 and replies from 0xA0 to the sender (VERIFIED).
 
 ## Control Unit — local CI-V (USART1)
 
-**Transport.** The Control Unit parses CI-V frames from its USART1
-receive stream. The same stream carries the Bluetooth module's AT
-dialogue; the physical endpoint (Bluetooth SPP and/or the PC serial
-bridge) is a HYPOTHESIS.
+**Transport (VERIFIED path; endpoint MEDIUM).**
+- **Receive.** USART1 RX DMA fills a 1 KiB ring. `FUN_08036880` copies
+  every new chunk into two separate rings: one for the Bluetooth AT
+  parser (line-based) and one for the CI-V parser `FUN_08034680` (FE FE …
+  FD). There is no mux; both parsers see every byte, and CI-V is parsed
+  whether or not the module is powered.
+- **Transmit.** CI-V replies, AT commands and the firmware's console log
+  all share USART1 TX.
+- **Endpoint.** The only device on these pins is the Bluetooth module, a
+  BT401-style module that passes SPP data through while accepting AT
+  commands. The CI-V peer is therefore a Bluetooth SPP client (MEDIUM); a
+  PC serial bridge on the same pins is not supported by any code.
 
 **Addressing.** It answers any address and replies with FB/FA. 0x19
 returns the address it was called with.
