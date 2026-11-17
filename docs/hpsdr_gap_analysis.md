@@ -275,7 +275,7 @@ the radio. With stock firmware the bridge has these inputs:
 The LAN modes are mutually exclusive (VERIFIED). A working combination
 is HDSDR-mode I/Q plus CI-V CAT and audio over USB.
 
-**What the bridge does:**
+**What the bridge does (design, HYPOTHESIS):**
 - **RX I/Q:** widens int16 to 24-bit and repacks 192-sample packets
   into 63-sample P1 frames.
 - **Tuning:** turns the P1 RX frequency into `0x0103` LO commands.

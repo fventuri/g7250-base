@@ -123,7 +123,7 @@ except for 4-byte stubs. No match falls outside the toolchain regions
 - The two 64-bit division wrappers are `__aeabi_ldivmod` and
   `__aeabi_uldivmod`.
 - Main `FUN_08053B2C` is the `puts` wrapper; `_puts_r` is at
-  `0x08053A80`.
+  `0x08053A80` (VERIFIED).
 - Main `_read_r` and `_write_r` call application code, which overrides
   the weak CubeMX syscalls (HIGH CONFIDENCE).
 - Control libm is only `llround`, `sinf` and the float error helpers.

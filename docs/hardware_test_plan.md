@@ -349,7 +349,7 @@ checks with the power off.
      CPUFREQ_BOOST (Main), IWDG1_SW and freeze bits, BOR, WRP/PCROP.
      Read DBGMCU_IDCODE and the flash-size register.
   4. Memory view, read only: IWDG1 at `0x58004800`, PR (+0x04) and RLR
-     (+0x08).
+     (+0x08) (addresses VERIFIED, RM0433).
   5. Disconnect. Do not read or save flash contents: a dump is firmware
      and does not belong in this repo.
 - **Expected.** Main DEV_ID 0x483 with CPUFREQ_BOOST set (550 MHz);
