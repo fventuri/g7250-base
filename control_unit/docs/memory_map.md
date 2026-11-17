@@ -82,6 +82,12 @@ without cache maintenance, which would be a coherency risk.
 
 ## RAM objects — HIGH CONFIDENCE unless noted
 
+**UI state (VERIFIED).** The UI state struct is 0xBD0 bytes. Three
+instances are filled with the same compiled defaults at boot: live
+`0x2400AEB8` (the config.ini and SLIP `0x01` source, accessor
+`FUN_0803e754`), defaults `0x24009718` (source for restore-default) and
+the GUI's last-drawn copy `0x2400A2E8` (redraw-on-change).
+
 The key globals (42 objects) are listed in `analysis/memory/ram_objects.csv`.
 Sizes marked ≤ are upper bounds.
 

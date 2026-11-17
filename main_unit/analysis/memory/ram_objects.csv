@@ -1,7 +1,7 @@
 address,size,region,role,owner_function,users,confidence,evidence
-2400484c,<=12,.data,ATU network/bypass GPIO line descriptor (PD13),08044d38,3,VERIFIED,peripherals.md ATU section
-24004858,<=12,.data,ATU reactance bank A line descriptor (PG2),08044e34,1,VERIFIED,peripherals.md ATU section
-24004864,<=12,.data,ATU reactance bank B line descriptor (PG5),08044dc0,1,VERIFIED,peripherals.md ATU section
+2400484c,12,.data,ATU network/bypass GPIO line descriptor (PD13),08044d38,3,HIGH,fields up to +0x0A used; next descriptor 12 B later
+24004858,12,.data,ATU reactance bank A line descriptor (PG2),08044e34,1,HIGH,same layout; 12 B spacing
+24004864,12,.data,ATU reactance bank B line descriptor (PG5),08044dc0,1,HIGH,same layout; 12 B spacing
 2400487c,,.data,AIC3204 driver object (I2C address + I2C1 handle) in .data,0804a65c,3,VERIFIED,peripherals.md; same driver code as the Control codec driver (byte-identical)
 24004a9c,4,.data,newlib _impure_ptr (stdio/errno reentrancy pointer),08053a4c,14,HIGH,read by printf/puts/setvbuf/__errno
 24004f38,,.bss,HAL I2C1 handle,080218b4,11,VERIFIED,peripherals.md I2C
@@ -11,37 +11,37 @@ address,size,region,role,owner_function,users,confidence,evidence
 24005530,,.bss,HAL SPI1 handle (RF shift registers),08023060,3,VERIFIED,peripherals.md
 240055bc,4,.bss,_sbrk heap-end pointer,08023b88,1,HIGH,only object written by _sbrk
 24006bc0,<=1740,.bss,runtime-designed filter coefficient/state block (RX/TX biquads + FIR init),08032020,1,MEDIUM,owned by the filter-design function (dsp.md)
-24007c48,<=1568,.bss,FIR state buffer,08032a94,1,MEDIUM,owner calls the CMSIS FIR init; 1568 B = 201 + 192 - 1 floats
-24008268,<=1568,.bss,FIR state buffer,08032a94,1,MEDIUM,same owner
-24008888,<=1568,.bss,FIR state buffer (size fits a 201-tap FIR on 192-sample blocks),08032020,1,MEDIUM,owned by the filter-design/FIR-init function; 392 floats = 1568 B
-24008ea8,<=1568,.bss,FIR state buffer (same size),08032020,1,MEDIUM,same owner; plausibly the SSB Hilbert/delay pair (HYPOTHESIS)
+24007c48,1568,.bss,FIR state buffer (201 taps + 192 - 1 f32),08032a94,1,VERIFIED,arm_fir_init_f32 numTaps 201 blockSize 192; instance 24006b00
+24008268,1568,.bss,FIR state buffer (201 taps + 192 - 1 f32),08032a94,1,VERIFIED,arm_fir_init_f32; instance 24006b0c
+24008888,1568,.bss,FIR state buffer (201 taps + 192 - 1 f32),08032020,1,VERIFIED,arm_fir_init_f32; instance 24006b18
+24008ea8,1568,.bss,FIR state buffer (201 taps + 192 - 1 f32),08032020,1,VERIFIED,arm_fir_init_f32; instance 24006b24
 240096fc,<=1508,.bss,RX working buffer,08033610,1,MEDIUM,RX block routine only
 24009d04,<=1500,.bss,RX working buffer,08033610,1,MEDIUM,RX block routine only
-2400a304,<=732,.bss,TX working buffer,08034b88,1,MEDIUM,TX block routine only
-2400a604,<=760,.bss,TX working buffer,08034b88,1,MEDIUM,TX block routine only
+2400a2fc,768,.bss,TX working buffer (192 f32),08034b88,5,HIGH,cleared/copied with 0x300 by the TX block routine; base corrected from 2400a304
+2400a5fc,768,.bss,TX working buffer (192 f32),08034b88,5,HIGH,cleared with 0x300; base corrected from 2400a604
 2400b6c0,<=380,.bss,auto-notch NLMS instance/state,08035c50,2,MEDIUM,owned by the auto-notch pair (dsp_functions.csv)
 2400b83c,<=640,.bss,auto-notch NLMS coefficient/state array,08035c50,2,MEDIUM,same owner
 2400bbc6,1,.bss,codec buffer-underrun flag,08035ed4,4,VERIFIED,peripherals.md I2S3
-2400bd80,<=508,.bss,TIM5 DSP-scheduler block state,080239c8,1,MEDIUM,only user is the TIM5 handler
-2400c7c0,<=2044,.bss,scope spectrum buffer A,08038da8,2,MEDIUM,FFT path; also read by the SLIP 0x03 builder
-2400d1c4,<=2044,.bss,scope spectrum buffer B (sent in SLIP 0x03),0804995c,2,MEDIUM,read by slip_tx_status_frames
+2400bd80,1,.bss,TIM5 scheduler TX-block-running flag,080239c8,1,HIGH,set before and cleared after the TX block; next object 2400bd84
+2400c7c0,2048,.bss,FFT window table (512 f32; symmetric),08038070,2,MEDIUM,built with index i and 511-i; applied with index clamp 0x1FF in 08038da8
+2400d1c0,2048,.bss,scope spectrum average (512 f32; sent in SLIP 0x03),08038da8,2,HIGH,EMA over 512 bins; base corrected from 2400d1c4
 2400e9f0,1536,.bss,TX I/Q ring buffer 0 to the FPGA (192 complex x 2 x 32 bit),08039d90,3,VERIFIED,dsp.md
 2400eff0,1536,.bss,TX I/Q ring buffer 1 to the FPGA,08039d90,3,VERIFIED,dsp.md
 2400f5f0,768,.bss,RX I/Q ping-pong buffer (192 x 32 bit),08039a6c,3,HIGH,written by fpga_rx_iq_read; read by the decimator and the underrun check
 2400f8f0,768,.bss,RX I/Q ping-pong buffer (192 x 32 bit),08039a6c,3,HIGH,same
 2400fbf0,768,.bss,RX I/Q ping-pong buffer (192 x 32 bit),08039a6c,3,HIGH,same
 2400fef0,768,.bss,RX I/Q ping-pong buffer (192 x 32 bit),08039a6c,3,HIGH,same
-24010c18,<=3068,.bss,NR 16 kHz frame buffer (in),0803b4c4,1,MEDIUM,NR wrapper only
-24011818,<=3068,.bss,NR 16 kHz frame buffer (out),0803b4c4,1,MEDIUM,NR wrapper only
-24012430,<=1312,.bss,NR resampler state,0803b228,1,MEDIUM,owner sets up decimator/interpolator for the NR path
-24012950,<=3944,.bss,NR engine state,0803b228,1,MEDIUM,same owner
+24010c14,3072,.bss,NR 16 kHz frame buffer (in),0803b228,2,VERIFIED,memset 0xC00 in NR init; base corrected from 24010c18
+24011814,3072,.bss,NR 16 kHz frame buffer (out),0803b228,2,VERIFIED,memset 0xC00 in NR init; base corrected from 24011818
+24012430,1312,.bss,NR-path FIR interpolator state (x3; 219 taps; block 256),0803b228,1,VERIFIED,arm_fir_interpolate_init_f32: 219/3 + 256 - 1 = 328 f32
+24012950,3944,.bss,NR-path FIR decimator state (/3; 219 taps; block 768),0803b228,1,VERIFIED,arm_fir_decimate_init_f32: 219 + 768 - 1 = 986 f32
 24013a9c,1,.bss,calibration dirty flag,0803c534,3,VERIFIED,memory_map.md
 24013aa0,3,.bss,NVPARAM marker record image,0803c448,1,VERIFIED,memory_map.md
 24013aa4,358,.bss,calibration block (EEPROM 0x0800 / SLIP 0x02),0803c5e4,11,VERIFIED,memory_map.md
 24013c0c,424,.bss,TRX-state struct: settings image (EEPROM 0x0000 / SLIP 0x01 layout) + runtime tail to at least +0x241,0803c08c,48,VERIFIED,memory_map.md; trx_runtime_fields.csv; 48 functions use the base
-24014018,<=1536,.bss,XVAD/NR engine working buffer,0803f2f8,1,HYPOTHESIS,owner initialises a block that logs an XVAD init error
-24014618,<=4608,.bss,XVAD/NR engine working buffer,0803f2f8,1,HYPOTHESIS,same owner
-24015818,<=4608,.bss,XVAD/NR engine working buffer,0803f2f8,1,HYPOTHESIS,same owner
+24014018,1536,.bss,XVAD/NR engine working buffer,0803f2f8,1,MEDIUM,engine init passes 0x180 words
+24014618,4608,.bss,XVAD/NR engine working buffer,0803f2f8,1,MEDIUM,engine init passes 0x480 words
+24015818,4608,.bss,XVAD/NR engine working buffer,0803f2f8,1,MEDIUM,engine init passes 0x480 words
 24016a34,1620,.bss,ATU table antenna 0 image,080411d8,4,VERIFIED,memory_map.md
 24017088,1620,.bss,ATU table antenna 1 image,080411d8,,VERIFIED,memory_map.md (reached as base + 0x654)
 240176e8,1,.bss,ATU table dirty flag,08041358,2,VERIFIED,memory_map.md
@@ -59,13 +59,10 @@ address,size,region,role,owner_function,users,confidence,evidence
 240248a8,<=10240,.bss,wfview audio buffers,0804db5c,1,MEDIUM,same
 2402a2b8,<=6016,.bss,wfview gateway (WFV-G) state,0804ea5c,1,MEDIUM,owner is in the WFV-G block
 2402ba40,<=16388,.bss,WFV-G message ring,0804f604,2,MEDIUM,users log WFV-G state/ring messages
-2402fa78,<=1024,.bss,WFV-G reply ring,0804f534,2,MEDIUM,owner logs reply-ring overflow
-2402ffe0,<=4096,.bss,gain-control (AGC?) delay/history buffer,080318d0,2,HYPOTHESIS,owner is the HYPOTHESIS AGC stage
-24030fe0,<=3584,.bss,gain-control history buffer,080318d0,1,HYPOTHESIS,same
-24031e20,<=7680,.bss,TX large working buffer (40x192 B),08034b88,1,MEDIUM,TX block routine only
-24033c2c,<=1012,.bss,FFT working buffer,08038da8,1,MEDIUM,FFT path (CFFT + magnitude)
-24034020,<=1024,.bss,FFT working buffer,08038da8,1,MEDIUM,same
-24034420,<=2048,.bss,FFT complex buffer (256 complex f32),08038da8,1,MEDIUM,size matches 256-point complex CFFT
+2402fa78,1024,.bss,WFV-G reply ring (16 x 64 B),0804f534,2,HIGH,slot index masked to 4 bits x 0x40
+2402ffe0,7720,.bss,gain-control state: two 960-sample delay lines + peak + parameters,08031c60,2,VERIFIED,memset 0x1E28 in init; 24030fe0 is a +0x1000 biased pointer into it (row removed)
+24031e20,7680,.bss,TX large working buffer (ring of 10 x 768 B),08034b88,1,VERIFIED,cleared with 0x1E00; written at index x 0x300
+24033c20,4096,.bss,512-point complex FFT buffer (magnitude in place; halves swapped),08038da8,2,HIGH,cmplx_mag over 512; next object 24034c20; replaces rows 24033c2c/24034020/24034420
 24035420,1024,.bss,scope/FFT ping-pong half 0 (256 samples),08039a6c,4,HIGH,written by fpga_rx_iq_read; dsp.md 256-sample ping-pong
 24035820,1024,.bss,scope/FFT ping-pong half 1,08039a6c,4,HIGH,same
 24035c20,106464,heap,heap (newlib malloc via _sbrk),08023b88,1,HIGH,_sbrk bounds: end of .bss to stack-top minus 0x400
@@ -73,7 +70,7 @@ address,size,region,role,owner_function,users,confidence,evidence
 300000cc,<=756,D2 SRAM1-3,scope decimation/FFT buffer,08037054,1,MEDIUM,owner runs decimate + CFFT + magnitude
 300003d0,<=2032,D2 SRAM1-3,scope FFT buffer,08037054,1,MEDIUM,same
 30000bdc,<=2020,D2 SRAM1-3,scope FFT buffer,08037054,1,MEDIUM,same
-300013c0,<=3072,D2 SRAM1-3,audio buffer in D2,080376c0,1,MEDIUM,size = one I2S3 DMA buffer
+300013c0,3072,D2 SRAM1-3,audio ring in D2 (768 f32),080376c0,1,VERIFIED,wraps at 0x300 elements of 4 B
 30002740,,D2 SRAM1-3,wfview sent-packet (retransmit) ring,0804bc90,9,VERIFIED,network.md
 30003760,3072,D2 SRAM1-3,I2S3 RX DMA buffer (2 halves x 192 frames x 2 x 32 bit),08035fac,5,VERIFIED,peripherals.md I2S3
 30004360,3072,D2 SRAM1-3,I2S3 TX DMA buffer,08035fac,5,VERIFIED,peripherals.md I2S3
