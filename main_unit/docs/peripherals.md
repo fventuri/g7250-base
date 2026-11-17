@@ -152,14 +152,21 @@ datagram arrived", and the code does not ask which socket fired.
 SEND_OK is never enabled. Correction: an earlier version said the
 wfview server reads its flag; it only clears it.
 
-**Reset via 0x0039 (position VERIFIED, meaning HYPOTHESIS).** After
+**Write to 0x0039 (position VERIFIED, effect HYPOTHESIS).** After
 raising RST# (PB5), chip init `FUN_080487d4` writes 0x80 to common
-register `0x0039`, waits 20 ms, then reads the same register and logs it
-as the chip version. The mode register `0x0000` is never written, so the
-driver has no W5500-style MR soft reset. On a W5500, `0x0039` is the
-read-only version register. On the CH394 it apparently also takes a
-soft-reset command on write (bit 7); this is not confirmed from WCH
-documentation.
+register `0x0039`, waits 20 ms, then reads the same register back and
+logs it as the chip version.
+- **What WCH documents (VERIFIED).** The CH394 manual (CH394DS1 V1.2,
+  table 6-1 and §7.1.16) lists `0x0039` as CHIPV, a read-only version
+  register, like VERSIONR on the W5500, with no write function. The
+  documented software reset is bit 7 of MODE (`0x0000`, §7.1.1), which
+  this driver never writes. The common register map is W5500-compatible;
+  the CH394 adds CHIP_CONFIG at `0x003E` (IPv4/IPv6 select).
+- **Reading (HYPOTHESIS).** The write is most likely ineffective and the
+  reset comes from the RST# pulse. The 20 ms wait fits the manual's
+  12–19 ms delay between RSTB going high and the host being allowed to
+  access the chip (§10.4.3). An undocumented vendor function cannot be
+  excluded.
 
 **Transfers.** Register writes are byte-by-byte SPI transmits.
 Single-register reads switch SPI6 to receive-only and poll it. Bulk
