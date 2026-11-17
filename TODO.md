@@ -211,7 +211,8 @@ Roadmap mirrors `REVERSE_ENGINEERING_GUIDE.md`, tracked per unit.
 - [ ] IWDG timeout and the IWDG_SW option byte (needs an SWD read).
 - [x] Exact toolchain matching against ST's GNU Tools 12.3 build (tools/match_static_libs.py, docs/libraries.md).
 - [ ] STemWin 5.44a exact match (needs a licensed download).
-- [ ] Pin exact sizes of the ≤ RAM objects; identify the Control UI blocks.
+- [~] RAM object sizes: 19 Main and 10 Control objects pinned, Control UI state copies identified
+      (ram_objects.csv, memory_map.md). Open: library structs, wfview/WFV-G buffers, RX working buffers.
 - [ ] CI-V CW handlers (pitch/WPM/break-in) in undisassembled code near 0x08052400; confirm KEY jack wiring to Main PH3/PH4.
 - [x] ATU merit producer: raw block SWR from the ADC ISR FUN_080235e8 (docs/atu.md).
 - [ ] ATU: TUNER TRG/RET connector hardware-only?
@@ -222,7 +223,7 @@ Roadmap mirrors `REVERSE_ENGINEERING_GUIDE.md`, tracked per unit.
 - [ ] Control codec: destination of CLKOUT (MFP4) and which of HPR/LOR feeds the Main mic
       input; confirm IN2R/IN3R = USB sound-card line-in.
 - [x] GUI screen-id mapping VERIFIED (ids 1-3 unused, 12 = quick setting).
-- [ ] GUI: identify appUi 1, system sub-pages 2/3/4/7 and windows 1/3.
+- [x] GUI: appUi 1 unused; system sub-pages 2/3/4/7 and windows 1/3 identified (gui.md).
 - [ ] PCA9557 bits 0/1/3/5 and 6/7: electrical function (board trace; firmware write sites
       exhausted, bit 5 is high exactly during the Control shutdown/save).
 - [ ] Which W25Qxx part is fitted (board photo).
